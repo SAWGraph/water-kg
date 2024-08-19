@@ -7,5 +7,5 @@ Anything to do with water and water networks
 Aquifers
 ### Surface water
 Waterbodies, like lakes, rivers, and wetlands. This information comes primarily from USGS NHDPlus data
-### Reaches
+### Flowlines
 How surface waterbodies connect so water can flow. This is modeled from USGS NHDPlus data
