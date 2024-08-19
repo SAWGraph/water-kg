@@ -1,29 +1,39 @@
 from rdflib import Namespace
-from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, XSD
+from rdflib.namespace import GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, XSD
+from shapely import LineString, Point, Polygon
+import geopandas as gpd
 
 SAWGRAPH_NAMESPACE = "http://sawgraph.spatialai.org/v1/"
 
 _PREFIX = {
+    "coso": Namespace(f'http://sawgraph.spatialai.org/v1/contaminoso#'),
     "dcgeoid": Namespace(f'https://datacommons.org/browser/geoId/'),
+    "gcx": Namespace(f'https://geoconnex.us/'),
     "gcx-cid": Namespace(f'https://geoconnex.us/nhdplusv2/comid/'),
-    "gwml": Namespace(f'http://www.opengis.net/gwml-main/2.2/'),
+    "gsmlb": Namespace(f'http://geosciml.org/def/gsmlb#'),
+    "gwml2": Namespace(f'http://gwml2.org/def/gwml2#'),
     "hyf": Namespace(f'https://www.opengis.net/def/schema/hy_features/hyf/'),
     "kwg-ont": Namespace(f'http://stko-kwg.geog.ucsb.edu/lod/ontology/'),
     "kwgr": Namespace(f'http://stko-kwg.geog.ucsb.edu/lod/resource/'),
+    "me_egad": Namespace(f'{SAWGRAPH_NAMESPACE}me_egad#'),
+    "me_egad_data": Namespace(f'{SAWGRAPH_NAMESPACE}me_egad_data#'),
     "me_mgs": Namespace(f'{SAWGRAPH_NAMESPACE}me_mgs#'),
     "me_mgs_data": Namespace(f'{SAWGRAPH_NAMESPACE}me_mgs_data#'),
     "sawgeo": Namespace(f'{SAWGRAPH_NAMESPACE}sawgeo#'),
     "sf": Namespace(f'http://www.opengis.net/ont/sf#'),
+    "wdp": Namespace(f'https://www.wikidata.org/wiki/Property:'),
+    "dcterms": DCTERMS,
     "geo": GEO,
     "owl": OWL,
     "prov": PROV,
     "rdf": RDF,
     "rdfs": RDFS,
+    "schema": SDO,
     "xsd": XSD
 }
 
 
-def find_s2_intersects_geom(poly, s2cells):
+def find_s2_intersects_poly(poly, s2cells):
     """Return the S2 cells within a polygon and the S2 cells overlapping the polygon
 
     :param poly: A polygon representing the boundary of a feature
@@ -38,3 +48,31 @@ def find_s2_intersects_geom(poly, s2cells):
         if row.geometry.overlaps(poly):
             overlaps.append(row.Name)
     return within, overlaps
+
+
+# def find_s2_intersects_pt(pt, s2cells):
+#     """Return the S2 cell that contains a given point
+#
+#     :param pt: A point representing a feature
+#     :param s2cells: A GeoDataFrame of S2 cells for the features state
+#     :return: A list of S2 cells within the feature and a list of S2 cells overlapping the feature
+#     """
+#     intersects = []
+#     for row in s2cells.itertuples():
+#         if row.geometry.intersects(pt):
+#             intersects.append(row.Name)
+#     return intersects
+
+
+def find_s2_intersects_point(point, s2_sindex, s2_cells):
+    """Return the S2 cells that intersect a given point
+
+    :param pt: A point representing a feature
+    :param s2_index: a spatial index object for the S2 cells GeoDataFrame
+    :param s2_cells: A GeoDataFrame of S2 cells for the features state
+    :return: A list of S2 cells within the feature and a list of S2 cells overlapping the feature
+    """
+    bbox = list(point.bounds)
+    poly_candidates_idx = list(s2_sindex.intersection(bbox))
+    poly_candidates = s2_cells.loc[poly_candidates_idx]
+    return poly_candidates.loc[poly_candidates.intersects(point)]
