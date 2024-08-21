@@ -20,6 +20,7 @@ _PREFIX = {
     "me_mgs": Namespace(f'{SAWGRAPH_NAMESPACE}me_mgs#'),
     "me_mgs_data": Namespace(f'{SAWGRAPH_NAMESPACE}me_mgs_data#'),
     "sawgeo": Namespace(f'{SAWGRAPH_NAMESPACE}sawgeo#'),
+    "sawnhd": Namespace(f'{SAWGRAPH_NAMESPACE}sawnhd#'),
     "sf": Namespace(f'http://www.opengis.net/ont/sf#'),
     "wdp": Namespace(f'https://www.wikidata.org/wiki/Property:'),
     "dcterms": DCTERMS,
