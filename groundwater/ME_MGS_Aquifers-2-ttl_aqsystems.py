@@ -1,8 +1,7 @@
 """Create a .ttl file for Maine's aquifers from a .shp file containing fixed aquifer geometries
 
-Under ### INPUT Filenames ###, define
+Under ### INPUT Filename ###, define
     the name (and path) of the input .shp file
-    the name (and path) of the input s2 cells .shp file
 Under ### OUTPUT Filenames ###, define
     the name (and path) of the output .shp file (for the processed aquifer layer)
     the name (and path) of the output .ttl file
@@ -43,7 +42,7 @@ import geopandas as gpd
 import pandas as pd
 from shapely import LineString, Point, Polygon
 from rdflib import Graph, Literal
-from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, XSD
+from rdflib.namespace import GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, XSD
 
 import logging
 import time
@@ -54,22 +53,21 @@ import os
 
 # Modify the system path to find variable.py
 sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
-from variable import _PREFIX, find_s2_intersects_geom
+from variable import _PREFIX, find_s2_intersects_poly
 
 # Set the current directory to this file's directory
 os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Groundwater')
 
-### INPUT Filenames ###
+### INPUT Filename ###
 # mgs_aquifer_shp_path: This is a fixed version of the file from the Maine Geological Survey (MGS)
 # s2_file: Level 13 S2 cells that overlap/are within Maine
-mgs_aquifer_shp_path = '../Geospatial/Maine_Aquifers-shp/Maine_Aquifers-fixed.shp'
-s2_file = '../Geospatial/s2l13_23/s2l13_23.shp'
+mgs_aquifer_shp_path = '../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-fixed.shp'
 
 ### OUTPUT Filenames ###
 # mgs_aqs_shp_outfile: the final saved output from the .shp processing steps; also the input to triplification
 # ttl_file: the resulting (output) .ttl file
-mgs_aqs_shp_outfile = '../Geospatial/Maine_Aquifers-shp/Maine_Aquifers-processed.shp'
-ttl_file = 'me_mgs_aquifers.ttl'
+mgs_aqs_shp_outfile = '../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-processed.shp'
+ttl_file = 'me_saw_aquifers_aqsystems.ttl'
 
 ### VARIABLES ###
 # When True, prints column names, epsg value, and size (rows & columns) for each processing step GeoDataFrame
@@ -91,9 +89,9 @@ epsg_final = 4326
 # max_id_length should be set to the maximum expected length of an id value (or longer)
 max_id_length = 4
 
-logname = 'log.txt'
+logname = 'log_ME_MGS_Aquifers-2-ttl_aqsystems.txt'
 logging.basicConfig(filename=logname,
-                    filemode='w',
+                    filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S',
                     level=logging.INFO)
@@ -273,11 +271,8 @@ def create_id_dict(gdf):
     """
     dic = {}
     for row in gdf.itertuples():
-        if row.saw_id not in dic.keys():
-            dic[row.saw_id] = [row.AQUIFERID]
-        else:
-            dic[row.saw_id].append(row.AQUIFERID)
-    logger.info('Dictionary of new versus old IDs created')
+        dic[row.AQUIFERID] = row.saw_id
+    logger.info('Dictionary of old versus new IDs created')
     return dic
 
 
@@ -316,66 +311,86 @@ def initial_kg(_PREFIX):
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
-    logger.info('Intializing the knowledge graph')
     return graph
 
 
-def build_iris(aqid, _PREFIX):
+def build_mgs_iris(mgsid, _PREFIX):
     """Create IRIs for an aquifer and its geometry
 
-    :param aqid: The aquifer id value for an aquifer
+    :param mgsid: The aquifer id value for an aquifer
     :param _PREFIX: a dictionary of prefixes
     :return: a tuple with the two IRIs
     """
-    return (_PREFIX["me_mgs_data"]['d.MGS-Aquifer.' + str(aqid).zfill(max_id_length)],
-            _PREFIX["me_mgs_data"]['d.MGS-Aquifer.Geometry.' + str(aqid).zfill(max_id_length)])
+    return (_PREFIX["me_mgs_data"]['d.MGS-Aquifer.' + str(mgsid).zfill(max_id_length)],
+            _PREFIX["me_mgs_data"]['d.MGS-Aquifer.Geometry.' + str(mgsid).zfill(max_id_length)])
 
 
-def process_aquifers_shp2ttl(infile, s2file, outfile, ids_dict):
+def build_saw_iris(sawid, _PREFIX):
+    """Create IRIs for an aquifer and its geometry
+
+    :param sawid: The aquifer id value for an aquifer
+    :param _PREFIX: a dictionary of prefixes
+    :return: a tuple with the two IRIs
+    """
+    return _PREFIX["me_mgs_data"]['d.MGS-Aquifer-System.' + str(sawid).zfill(max_id_length)], _PREFIX["me_mgs_data"][
+        'd.MGS-Aquifer-System.Geometry.' + str(sawid).zfill(max_id_length)]
+
+
+def process_aquifers_shp2ttl(mgs_infile, rates, saw_infile, outfile, ids_dict):
     """Triplifies the aquifer data in a .shp file and saves the result as a .ttl file
 
-    :param infile: a processed .shp file with aquifer data
-    :param s2file: Level 13 S2 cells for Maine
+    :param saw_infile: a processed .shp file with aquifer data
+    :param rates:
+    :param mgs_infile:
     :param outfile: the path and name for the .ttl file
-    :param ids_dict: a a dictionary of dissolved ids to lists of original ids
+    :param ids_dict: a dictionary of dissolved ids to lists of original ids
     :return:
     """
     logger.info('BEGIN TRIPLIFYING THE PROCESSED AQUIFERS')
     logger.info('Loading the shapefiles')
-    gdf_aquifers = gpd.read_file(infile)
-    gdf_s2l13 = gpd.read_file(s2file)
+    gdf_mgs_aquifers = gpd.read_file(mgs_infile)
+    gdf_mgs_aquifers = gdf_mgs_aquifers[gdf_mgs_aquifers['SYMBOLOGY'].isin(rates)]
+    gdf_saw_aquifers = gpd.read_file(saw_infile)
+    logger.info('Intializing the knowledge graph')
     kg = initial_kg(_PREFIX)
     count = 1
-    n = len(gdf_aquifers.index)
+    n1 = len(gdf_mgs_aquifers.index)
+    n2 = len(gdf_saw_aquifers.index)
     logger.info('Creating the triples')
-    for row in gdf_aquifers.itertuples():
-        aquiferiri, polyiri = build_iris(row.saw_id, _PREFIX)
-        kg.add((aquiferiri, RDF.type, _PREFIX['gwml']['GW_Aquifer']))
-        kg.add((aquiferiri, _PREFIX['me_mgs']['SAWidAquifer'], Literal(row.saw_id, datatype=XSD.string)))
+    for row in gdf_mgs_aquifers.itertuples():
+        aquiferiri, polyiri = build_mgs_iris(row.AQUIFERID, _PREFIX)
+        kg.add((aquiferiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
+        kg.add((aquiferiri, _PREFIX['me_mgs']['meMgsAqId'], Literal(row.AQUIFERID, datatype=XSD.string)))
+        sysid = str(ids_dict[row.AQUIFERID])
+        aqsystemiri = build_saw_iris(sysid, _PREFIX)[0]
+        kg.add((aquiferiri, _PREFIX['gwml2']['gwAquiferSystem'], aqsystemiri))
+        kg.add((aqsystemiri, _PREFIX['gwml2']['gwAquiferSystemPart'], aquiferiri))
         kg.add((aquiferiri, GEO.hasGeometry, polyiri))
-        kg.add((aquiferiri, GEO['hasDefaultGeometry'], polyiri))
-        kg.add((aquiferiri, PROV.hadPrimarySource, _PREFIX['me_mgs']['MGS']))
-        comment = 'Original MGS IDs:'
-        for aqid in ids_dict[row.saw_id]:
-            comment += ' ' + str(aqid)
-        kg.add((aquiferiri, RDFS.comment, Literal(comment, datatype=XSD.string)))
+        kg.add((aquiferiri, GEO.defaultGeometry, polyiri))
         kg.add((polyiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
         kg.add((polyiri, RDF.type, GEO.Geometry))
         if 'multipolygon' in str(row.geometry).lower():
             kg.add((polyiri, RDF.type, _PREFIX['sf']['MultiPolygon']))
         else:
             kg.add((polyiri, RDF.type, _PREFIX['sf']['Polygon']))
-
-        s2within, s2overlaps = find_s2_intersects_geom(row.geometry, gdf_s2l13)
-        for s2 in s2within:
-            kg.add((_PREFIX["kwgr"]['s2.level13.' + s2], _PREFIX["kwg-ont"]['sfWithin'], aquiferiri))
-        for s2 in s2overlaps:
-            kg.add((_PREFIX["kwgr"]['s2.level13.' + s2], _PREFIX["kwg-ont"]['sfOverlaps'], aquiferiri))
-
-        print(f'Processing row {count:4} of {n} : SAWidAquifer {str(row.saw_id).zfill(max_id_length):5}',
-              end='\r',
-              flush=True)
         count += 1
+    print()
+    print()
+    count = 1
+    for row in gdf_saw_aquifers.itertuples():
+        aqsystemiri, polyiri = build_saw_iris(row.saw_id, _PREFIX)
+        kg.add((aqsystemiri, RDF.type, _PREFIX['gwml2']['GW_AquiferSystem']))
+        kg.add((aqsystemiri, _PREFIX['me_mgs']['meSawAqSysId'], Literal(row.saw_id, datatype=XSD.string)))
+        kg.add((aqsystemiri, GEO.hasGeometry, polyiri))
+        kg.add((aqsystemiri, GEO.defaultGeometry, polyiri))
+        kg.add((polyiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
+        kg.add((polyiri, RDF.type, GEO.Geometry))
+        if 'multipolygon' in str(row.geometry).lower():
+            kg.add((polyiri, RDF.type, _PREFIX['sf']['MultiPolygon']))
+        else:
+            kg.add((polyiri, RDF.type, _PREFIX['sf']['Polygon']))
+        count += 1
+
     kg.serialize(outfile, format='turtle')
     logger.info('TRIPLIFYING COMPLETE AND .ttl FILE CREATED')
 
@@ -383,6 +398,6 @@ def process_aquifers_shp2ttl(infile, s2file, outfile, ids_dict):
 if __name__ == '__main__':
     start_time = time.time()
     ids = process_aquifers_shp2shp(mgs_aquifer_shp_path, mgs_aqs_shp_outfile, diagnostics)
-    process_aquifers_shp2ttl(mgs_aqs_shp_outfile, s2_file, ttl_file, ids)
+    process_aquifers_shp2ttl(mgs_aquifer_shp_path, flow_rates, mgs_aqs_shp_outfile, ttl_file, ids)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
