@@ -207,10 +207,10 @@ def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, headoutlet_outfile,
 
         if not pd.isnull(row.GNIS_NAME):
             kg1.add((flowlineIRI, SDO.name, Literal(row.GNIS_NAME, lang='en')))
-        kg1.add((flowlineIRI, _PREFIX['sawnhd']['hasCOMID'], Literal(str(row.COMID), datatype=XSD.string)))
-        kg1.add((flowlineIRI, _PREFIX['sawnhd']['hasReachCode'], Literal(str(row.REACHCODE), datatype=XSD.string)))
-        kg1.add((flowlineIRI, _PREFIX['sawnhd']['hasFTYPE'], Literal(str(row.FTYPE), datatype=XSD.string)))
-        kg1.add((flowlineIRI, _PREFIX['sawnhd']['hasFCODE'], Literal(str(row.FCODE), datatype=XSD.string)))
+        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasCOMID'], Literal(str(row.COMID), datatype=XSD.string)))
+        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasReachCode'], Literal(str(row.REACHCODE), datatype=XSD.string)))
+        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasFTYPE'], Literal(str(row.FTYPE), datatype=XSD.string)))
+        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasFCODE'], Literal(str(row.FCODE), datatype=XSD.string)))
 
         # TODO: Add a unit (km) to P2043 via Q1978718
         kg1.add((flowlineIRI, _PREFIX['wdp']['P2043'], Literal(row.LENGTHKM, datatype=XSD.float)))
