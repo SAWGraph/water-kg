@@ -361,6 +361,7 @@ def process_aquifers_shp2ttl(mgs_infile, rates, saw_infile, outfile, ids_dict):
         aquiferiri, polyiri = build_mgs_iris(row.AQUIFERID, _PREFIX)
         kg.add((aquiferiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
         kg.add((aquiferiri, _PREFIX['me_mgs']['meMgsAqId'], Literal(row.AQUIFERID, datatype=XSD.string)))
+        kg.add((aquiferiri, _PREFIX['saw_water']['aquiferType'], Literal('sand and gravel', datatype=XSD.string)))
         sysid = str(ids_dict[row.AQUIFERID])
         aqsystemiri = build_saw_iris(sysid, _PREFIX)[0]
         kg.add((aquiferiri, _PREFIX['gwml2']['gwAquiferSystem'], aqsystemiri))
