@@ -32,9 +32,9 @@ import datetime
 import sys
 import os
 
-# Modify the system path to find variable.py
+# Modify the system path to find namespaces.py
 sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
-from variable import _PREFIX, find_s2_intersects_poly
+from namespaces import _PREFIX, find_s2_intersects_poly
 
 # Set the current directory to this file's directory
 os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Surface Water')
