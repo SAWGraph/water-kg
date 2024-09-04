@@ -12,7 +12,7 @@ Required:
     * shapely (LineString, Point, and Polygon)
     * rdflib (Graph and Literal)
     * rdflib.namespace (GEO, PROV, RDF, RDFS, and XSD)
-    * variable (a local .py file with a dictionary of project namespaces)
+    * namespaces (a local .py file with a dictionary of project namespaces)
 
 Functions:
     * namestr - takes an object and returns a string version of its variable name
@@ -51,9 +51,9 @@ import datetime
 import sys
 import os
 
-# Modify the system path to find variable.py
+# Modify the system path to find namespaces.py
 sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
-from variable import _PREFIX, find_s2_intersects_poly
+from namespaces import _PREFIX, find_s2_intersects_poly
 
 # Set the current directory to this file's directory
 os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Groundwater')
@@ -71,7 +71,7 @@ ttl_file = 'me_saw_aquifers_aqsystems.ttl'
 
 ### VARIABLES ###
 # When True, prints column names, epsg value, and size (rows & columns) for each processing step GeoDataFrame
-# When False, only a brief statement is printed acknowledging a step is complete
+# When False, a brief statement is logged acknowledging a step is complete
 diagnostics = False
 # flow_rates is a list of 'SYMBOLOGY' values to keep in the processed aquifer file
 # dissolve_attr_1 is the id column for aquifers from MGS
@@ -80,14 +80,14 @@ diagnostics = False
 flow_rates = ['10-50 GPM', '>50 GPM']
 dissolve_attr_1 = 'AQUIFERID'
 dissolve_attr_2 = 'saw_id'
-buffer = 100  # in meters
+buffer = 50  # in meters
 # epsg_working is an equidistant CRS for working with buffers
 # epsg_final is WGS 84, the default CRS for GeoSPARQL
 epsg_working = 26919  # UTM zone 19N for Maine
 epsg_final = 4326
 # aquifer id values are padded with leading zeros so they are all a fixed length
 # max_id_length should be set to the maximum expected length of an id value (or longer)
-max_id_length = 4
+max_id_length = 5
 
 logname = 'log_ME_MGS_Aquifers-2-ttl_aqsystems.txt'
 logging.basicConfig(filename=logname,
@@ -362,6 +362,7 @@ def process_aquifers_shp2ttl(mgs_infile, rates, saw_infile, outfile, ids_dict):
         kg.add((aquiferiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
         kg.add((aquiferiri, _PREFIX['me_mgs']['meMgsAqId'], Literal(row.AQUIFERID, datatype=XSD.string)))
         kg.add((aquiferiri, _PREFIX['saw_water']['aquiferType'], Literal('sand and gravel', datatype=XSD.string)))
+        kg.add((aquiferiri, RDFS.label, Literal('A sand and gravel aquifer in Maine', lang='en')))
         sysid = str(ids_dict[row.AQUIFERID])
         aqsystemiri = build_saw_iris(sysid, _PREFIX)[0]
         kg.add((aquiferiri, _PREFIX['gwml2']['gwAquiferSystem'], aqsystemiri))
@@ -382,6 +383,8 @@ def process_aquifers_shp2ttl(mgs_infile, rates, saw_infile, outfile, ids_dict):
         aqsystemiri, polyiri = build_saw_iris(row.saw_id, _PREFIX)
         kg.add((aqsystemiri, RDF.type, _PREFIX['gwml2']['GW_AquiferSystem']))
         kg.add((aqsystemiri, _PREFIX['me_mgs']['meSawAqSysId'], Literal(row.saw_id, datatype=XSD.string)))
+        kg.add((aqsystemiri, RDFS.label, Literal('A system of aquifers in Maine', lang='en')))
+        kg.add((aqsystemiri, RDFS.comment, Literal(f'Maine aquifer systems consist of aquifers within {2*buffer}m of each other', lang='en')))
         kg.add((aqsystemiri, GEO.hasGeometry, polyiri))
         kg.add((aqsystemiri, GEO.defaultGeometry, polyiri))
         kg.add((polyiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
