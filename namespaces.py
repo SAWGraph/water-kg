@@ -1,3 +1,23 @@
+"""A  .py file with the namespaces needed to triplify data for SAWGraph
+Modeled after a similar file created by Shirly Stephen
+
+Use:
+Most triplification scripts simply need to include
+    from namespaces import _PREFIX
+
+A system path must be set to find the file. This can be done within the calling .py file
+    import sys
+    sys.path.insert(1, '<path to this file>')
+
+It may be necessary to reset the working directory after adjusting the path above
+    import os
+    os.chdir('<path to working directory>')
+
+Note:
+The s2 integration functions at the end are not currently used.
+S2 integration is accomplished using a more sophisticated KWG script."""
+
+
 from rdflib import Namespace
 from rdflib.namespace import GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, XSD
 from shapely import LineString, Point, Polygon
@@ -13,6 +33,8 @@ _PREFIX = {
     "gsmlb": Namespace(f'http://geosciml.org/def/gsmlb#'),
     "gwml2": Namespace(f'http://gwml2.org/def/gwml2#'),
     "hyf": Namespace(f'https://www.opengis.net/def/schema/hy_features/hyf/'),
+    "il_isgs": Namespace(f'{SAWGRAPH_NAMESPACE}il_isgs'),
+    "il_isgs_data": Namespace(f'{SAWGRAPH_NAMESPACE}il_isgs_data'),
     "kwg-ont": Namespace(f'http://stko-kwg.geog.ucsb.edu/lod/ontology/'),
     "kwgr": Namespace(f'http://stko-kwg.geog.ucsb.edu/lod/resource/'),
     "me_egad": Namespace(f'{SAWGRAPH_NAMESPACE}me_egad#'),
