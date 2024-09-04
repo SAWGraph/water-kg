@@ -40,9 +40,9 @@ import datetime
 import sys
 import os
 
-# Modify the system path to find variable.py
+# Modify the system path to find namespaces.py
 sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
-from variable import _PREFIX
+from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
 os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Surface Water')
@@ -182,6 +182,8 @@ def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, headoutlet_outfile,
 
     logger.info('Begin triplifying the data')
     for row in flowline_df.itertuples():
+        if row.FTYPE == "Coastline":
+            continue
         flowlineIRI, flowlineGeoIRI, outletIRI, outletGeoIRI, headIRI, headGeoIRI = build_iris(row.COMID, _PREFIX)
 
         # There's an assumption that all flowlines are drawn from head to outlet
