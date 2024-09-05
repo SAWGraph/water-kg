@@ -1,0 +1,27 @@
+# Hydrology and Admin Regions Basics
+# CQ 01
+
+# List towns and the waterbodies they intersect
+# This should be run from the Hydrology repository
+# This uses S2 cells to determine the relationships between towns and waterbodies
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?twnlabel ?wblabel WHERE {
+    # Select waterbodies and their S2 cell relations
+    SERVICE <repository:Hydrology> {
+    	?wb rdf:type hyf:HY_WaterBody .
+    	?wb rdfs:label ?wblabel .
+		?wbs2 kwg-ont:sfWithin | kwg-ont:sfOverlaps ?wb .
+    }
+    SERVICE <repository:S2L13_AdminRegions> {
+        SELECT * WHERE {
+            # Select towns and find the S2 cells they have in common with waterbodies
+            ?twn rdf:type kwg-ont:AdministrativeRegion_3 .
+            ?twn rdfs:label ?twnlabel .
+            ?wbs2 kwg-ont:sfWithin | kwg-ont:sfOverlaps ?twn .
+        }
+    }
+} ORDER BY ?twnlabel ?wblabel

@@ -1,0 +1,25 @@
+# Federated queries: Hydrology with SpatialGraph (S2L13 and AdminRegions)
+# CQ 1
+# Retrieve all waterbodies in Penobscot County.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+SELECT ?wb ?s2cell WHERE {
+    SERVICE <repository:Hydrology> {
+        # Select waterbodies and their S2 cell relations
+    	?wb rdf:type hyf:HY_WaterBody .
+    	?wb rdfs:label ?wblabel .
+        # the S2cell is the object, the WB the subject .		
+		?s2cell kwg-ont:sfWithin | kwg-ont:sfOverlaps ?wb .
+    }
+        
+    SERVICE <repository:S2L13_AdminRegions> {
+			?s2cell rdf:type kwg-ont:S2Cell_Level13 .
+        	?s2cell kwg-ont:sfWithin | kwg-ont:sfOverlaps kwgr:administrativeRegion.USA.23019 .
+
+    }
+} 
