@@ -1,0 +1,22 @@
+# Hydrology basics
+# Retrieve all water bodies named Great Pond or Long Pond
+# 
+# This query returns water bodies named Great Pond or Long Pond
+#    The water bodies must have a GNIS name in the NHD Plus
+
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+    SERVICE <repository:Hydrology> {
+        # Select water bodies
+    	?wb rdf:type hyf:HY_WaterBody ;
+        	rdfs:label ?wblabel ;
+        	rdfs:comment ?wbcomment .
+        # Keep only water bodies with the desired names
+        FILTER (?wblabel IN ('GNIS_NAME: Great Pond', 'GNIS_NAME: Long Pond'))
+        # Also return the COMID (but no other comments)
+        FILTER CONTAINS (?wbcomment, 'COMID')
+    }
+} ORDER BY ?wblabel ?wb
