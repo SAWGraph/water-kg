@@ -1,0 +1,23 @@
+# Hydrology basics
+# Retrieve all flowlines named Great Pond or Long Pond
+# 
+# This query returns flowlines named Great Pond or Long Pond
+#    The flowlines must have a GNIS name in the NHD Plus
+
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX saw_water: <http://sawgraph.spatialai.org/v1/saw_water#>
+PREFIX schema: <https://schema.org/>
+
+SELECT * WHERE {
+    SERVICE <repository:Hydrology> {
+        # Select flowlines and desired attributes
+    	?wb rdf:type hyf:HY_FlowPath ;
+        	schema:name ?wblabel ;
+        	saw_water:hasCOMID ?wbcomid ;
+        	saw_water:hasFTYPE ?wbftype .
+        # Keep only flowlines with the desired name
+        FILTER (?wblabel = "Penobscot River"@en)
+    }
+}
