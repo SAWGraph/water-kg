@@ -1,4 +1,5 @@
 # Hydrology and S2L13_AdminRegions basics
+# Retrieve Maine county subdivisions and their water bodies
 # 
 # This query returns county subdivisions from Maine and the waterbodies they intersect, using 
 #    S2 cells to determine the relationships between county subdivisions and waterbodies
