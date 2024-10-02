@@ -1,26 +1,34 @@
 # Hydrology and S2L13_AdminRegions basics
 # 
-# This should be run from the Hydrology repository
-# It List county subdivisions and the waterbodies they intersect, using 
+# This query returns county subdivisions from Maine and the waterbodies they intersect, using 
 #    S2 cells to determine the relationships between county subdivisions and waterbodies
 
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?twnlabel ?wblabel WHERE {
-    # Select waterbodies and their S2 cell relations
-    ?wb rdf:type hyf:HY_WaterBody .
-    ?wb rdfs:label ?wblabel .
-	?wbs2 kwg-ont:sfWithin | kwg-ont:sfOverlaps ?wb .
+SELECT DISTINCT ?cousublabel ?wblabel WHERE {
+    SERVICE <repository:Hydrology> {
+        SELECT * WHERE {
+            # Select waterbodies and their S2 cell relations
+    		?wb rdf:type hyf:HY_WaterBody ;
+    			rdfs:label ?wblabel .
+			?wbs2 kwg-ont:sfWithin | kwg-ont:sfOverlaps ?wb .
+        }
+    }
     
     SERVICE <repository:S2L13_AdminRegions> {
         SELECT * WHERE {
-            # Select towns and find the S2 cells they have in common with waterbodies
-            ?twn rdf:type kwg-ont:AdministrativeRegion_3 .
-            ?twn rdfs:label ?twnlabel .
-            ?wbs2 kwg-ont:sfWithin | kwg-ont:sfOverlaps ?twn .
+            # Select county subdivisions, their counties, and their names
+            ?cousub rdf:type kwg-ont:AdministrativeRegion_3 ;
+            		kwg-ont:sfWithin ?county ;
+            		rdfs:label ?cousublabel .
+            # Limit to counties within Maine (which has FIPS code 23)
+            ?county kwg-ont:sfWithin kwgr:administrativeRegion.USA.23 .
+            # Find the S2 cells they have in common with waterbodies
+            ?wbs2 kwg-ont:sfWithin | kwg-ont:sfOverlaps ?cousub .
         }
     }
-} ORDER BY ?twnlabel ?wblabel
+} ORDER BY ?cousublabel ?wblabel
