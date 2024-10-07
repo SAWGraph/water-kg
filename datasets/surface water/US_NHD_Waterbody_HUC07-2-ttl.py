@@ -34,22 +34,18 @@ import os
 
 # Modify the system path to find namespaces.py
 sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
-from namespaces import _PREFIX, find_s2_intersects_poly
+from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
 os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Surface Water')
 
 ### INPUT Filenames ###
-# nhd_waterbody_shp_file: Region 1 waterbodies (most of New England including all of Maine)
-# s2_file: Level 13 S2 cells that overlap/are within Maine
-nhd_waterbody_shp_file = '../Geospatial/HUC01/NE_01_NHDSnapshot/NHDWaterbody-fixed.shp'
-s2_file = '../Geospatial/Maine/s2l13_23/s2l13_23.shp'
+nhd_waterbody_shp_file = '../Geospatial/HUC07/MS_07_NHDSnapshot/NHDWaterbody-fixed.shp'
 
 ### OUTPUT Filename ###
-# ttl_file: the resulting (output) .ttl file
-ttl_file = 'ttl_files/us_nhd_waterbody_huc01.ttl'
+ttl_file = 'ttl_files/us_nhd_waterbody_huc07.ttl'
 
-logname = 'logs/log_US_NHD_Waterbody_HUC01-2-ttl.txt'
+logname = 'logs/log_US_NHD_Waterbody_HUC07-2-ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -83,11 +79,10 @@ def build_iris(cid, _PREFIX):
     return _PREFIX["gcx-cid"][str(cid)], _PREFIX["gcx-cid"][str(cid) + '.Geometry'], _PREFIX["gcx-cid"][str(cid) + '.Name']
 
 
-def process_waterbodies_shp2ttl(infile, s2file, outfile):
+def process_waterbodies_shp2ttl(infile, outfile):
     """Triplifies the waterbody data in a .shp file and saves the result as a .ttl file
 
     :param infile: a .shp file with NHD waterbody data
-    :param s2file: Level 13 S2 cells for Maine
     :param outfile: the path and name for the .ttl file
     :return:
     """
@@ -96,7 +91,6 @@ def process_waterbodies_shp2ttl(infile, s2file, outfile):
     gdf_waterbody = gpd.read_file(infile)
     for row in gdf_waterbody.itertuples():
         gdf_waterbody._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
-    # gdf_s2l13 = gpd.read_file(s2file)
     logger.info('Intializing the knowledge graph')
     kg = initial_kg(_PREFIX)
     count = 1
@@ -126,13 +120,6 @@ def process_waterbodies_shp2ttl(infile, s2file, outfile):
             kg.add((geomiri, RDF.type, _PREFIX['sf']['MultiPolygon']))
         else:
             kg.add((geomiri, RDF.type, _PREFIX['sf']['Polygon']))
-
-        # s2within, s2overlaps = find_s2_intersects_poly(row.geometry, gdf_s2l13)
-        # for s2 in s2within:
-        #     kg.add((_PREFIX["kwgr"]['s2.level13.' + s2], _PREFIX["kwg-ont"]['sfWithin'], bodyiri))
-        # for s2 in s2overlaps:
-        #     kg.add((_PREFIX["kwgr"]['s2.level13.' + s2], _PREFIX["kwg-ont"]['sfOverlaps'], bodyiri))
-
         print(f'Processing row {count:5} of {n} : COMID {str(row.COMID):9}', end='\r', flush=True)
         count += 1
     kg.serialize(outfile, format='turtle')
@@ -141,6 +128,6 @@ def process_waterbodies_shp2ttl(infile, s2file, outfile):
 
 if __name__ == '__main__':
     start_time = time.time()
-    process_waterbodies_shp2ttl(nhd_waterbody_shp_file, s2_file, ttl_file)
+    process_waterbodies_shp2ttl(nhd_waterbody_shp_file, ttl_file)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
