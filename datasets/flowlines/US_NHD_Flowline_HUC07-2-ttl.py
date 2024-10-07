@@ -48,17 +48,14 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Surface Water')
 
 ### INPUT Filenames ###
-flowplus_file = r'../Geospatial/HUC01/NE_01_NHDPlusAttributes/PlusFlow.dbf'
-flowline_file = r'../Geospatial/HUC01/NE_01_NHDSnapshot/NHDFLowline.shp'
-# flowline_file = r'../Geospatial/Maine/NHDFLowline_BBox.shp'
+flowplus_file = r'../Geospatial/HUC07/MS_07_NHDPlusAttributes/PlusFlow.dbf'
+flowline_file = r'../Geospatial/HUC07/MS_07_NHDSnapshot/NHDFLowline.shp'
 
 ### OUTPUT Filenames ###
-main_ttl_file = 'ttl_files/us_nhd_flowline_huc01.ttl'
-headoutlet_ttl_file = 'ttl_files/us_nhd_flowline_huc01_headoutlet.ttl'
+main_ttl_file = 'ttl_files/us_nhd_flowline_huc07.ttl'
+# headoutlet_ttl_file = 'us_nhd_flowline_huc07_headoutlet.ttl'
 
-# ttl_file = '../ttl files/me_reaches_bbox.ttl'
-
-logname = 'logs/log_US_NHD_Flowline_HUC01-2-ttl.txt'
+logname = 'logs/log_US_NHD_Flowline_HUC07-2-ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -163,12 +160,12 @@ def create_flow_dict(dbf) -> dict:
     return dct
 
 
-def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, headoutlet_outfile, _PREFIX):
+def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, _PREFIX):
     """
 
     :param shpfile:
     :param dbffile:
-    :param outfile:
+    :param main_outfile:
     :param _PREFIX:
     :return:
     """
@@ -178,7 +175,6 @@ def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, headoutlet_outfile,
     grouping = str.maketrans('[]', '()')
     logger.info('Intializing the knowledge graph')
     kg1 = initial_kg(_PREFIX)  # flowlines
-    kg2 = initial_kg(_PREFIX)  # head and outlet points
 
     logger.info('Begin triplifying the data')
     for row in flowline_df.itertuples():
@@ -218,25 +214,6 @@ def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, headoutlet_outfile,
         kg1.add((flowlineIRI, _PREFIX['wdp']['P2043'], Literal(row.LENGTHKM, datatype=XSD.float)))
         # Skipping P2053 since this data is not in NHDFlowline
 
-        # In Geoconnex, P403 and P885 point to COMID objects (LineString objects), not nodes
-        #    as well as HUC12 objects (Point objects). But not all point to HUC12 objects.
-        # This creates new points:
-        #    1: Create the point as a geo:Feature
-        #    2: Assign the object a geo:Geometry
-        #    3: Assign the geometry geo:asWKT coordinates
-        #    4: Assign the feature to P403/P885 as the flowline's outlet/head (see note above)
-        kg2.add((outletIRI, RDF.type, GEO.Feature))
-        kg2.add((outletIRI, GEO.defaultGeometry, outletGeoIRI))
-        kg2.add((outletIRI, GEO.hasGeometry, outletGeoIRI))
-        kg2.add((outletGeoIRI, GEO.asWKT, Literal('POINT ' + outlet, datatype=GEO.wktLiteral)))
-        kg2.add((flowlineIRI, _PREFIX['wdp']['P403'], outletIRI))
-
-        kg2.add((headIRI, RDF.type, GEO.Feature))
-        kg2.add((headIRI, GEO.defaultGeometry, headGeoIRI))
-        kg2.add((headIRI, GEO.hasGeometry, headGeoIRI))
-        kg2.add((headGeoIRI, GEO.asWKT, Literal('POINT ' + head, datatype=GEO.wktLiteral)))
-        kg2.add((flowlineIRI, _PREFIX['wdp']['P885'], headIRI))
-
         if row.COMID in flow_dict.keys():
             for cid in flow_dict[row.COMID]:
                 kg1.add((flowlineIRI, _PREFIX['hyf']['downstreamWaterbody'], _PREFIX['gcx-cid'][cid]))
@@ -245,11 +222,10 @@ def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, headoutlet_outfile,
 
     logger.info('Write the triples to a .ttl file')
     kg1.serialize(main_outfile, format='turtle')
-    kg2.serialize(headoutlet_outfile, format='turtle')
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    process_flowline_shp2ttl(flowline_file, flowplus_file, main_ttl_file, headoutlet_ttl_file, _PREFIX)
+    process_flowline_shp2ttl(flowline_file, flowplus_file, main_ttl_file, _PREFIX)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
