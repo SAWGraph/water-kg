@@ -19,7 +19,7 @@ S2 integration is accomplished using a more sophisticated KWG script."""
 
 
 from rdflib import Namespace
-from rdflib.namespace import GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, XSD
+from rdflib.namespace import DC, GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, SKOS, XSD
 from shapely import LineString, Point, Polygon
 import geopandas as gpd
 
@@ -44,14 +44,17 @@ _PREFIX = {
     "saw_geo": Namespace(f'{SAWGRAPH_NAMESPACE}saw_geo#'),
     "saw_water": Namespace(f'{SAWGRAPH_NAMESPACE}saw_water#'),
     "sf": Namespace(f'http://www.opengis.net/ont/sf#'),
+    "spatial": Namespace(f'http://purl.org/spatialai/spatial/spatial-full#'),
     "wdp": Namespace(f'https://www.wikidata.org/wiki/Property:'),
-    "dcterms": DCTERMS,
+    "dc": DC,
+    "dcterms": DCTERMS,  # or "terms" ?
     "geo": GEO,
     "owl": OWL,
     "prov": PROV,
     "rdf": RDF,
     "rdfs": RDFS,
     "schema": SDO,
+    "skos": SKOS,
     "xsd": XSD
 }
 
