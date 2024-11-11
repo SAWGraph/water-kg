@@ -1,3 +1,7 @@
+
+# Hydrology basics
+# Retrieve all water bodies excluding flowlines
+#
 # This query retrieves water bodies that are not flowlines
 #    That is, lakes/ponds/bogs, etc. instead of streams/rivers/canals, et al.
 
