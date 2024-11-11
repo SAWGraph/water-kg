@@ -1,0 +1,13 @@
+# This query retrieves water bodies that are not flowlines
+#    That is, lakes/ponds/bogs, etc. instead of streams/rivers/canals, et al.
+
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <https://schema.org/>
+
+SELECT * WHERE {
+    ?s rdf:type hyf:HY_WaterBody .
+    FILTER NOT EXISTS { ?s rdf:type hyf:HY_FlowPath }
+    OPTIONAL { ?s schema:name ?name . }
+} ORDER BY ?name
