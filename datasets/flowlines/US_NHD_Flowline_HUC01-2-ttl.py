@@ -1,11 +1,10 @@
 """Create a .ttl file of flowlines and their connectivity from a .shp file and a .dbf file
 
 Under ### INPUT Filenames ###, define
-    the name (and path) of the input .shp file
-    the name (and path) of the input .dbf file
-Under ### OUTPUT Filenames ###, define
+    the name (and path) of the input .shp file (NHDFlowline)
+    the name (and path) of the input .dbf file (PlusFlow)
+Under ### OUTPUT Filename ###, define
     the name (and path) of the main output .ttl file
-    the name (and path) of the output .ttl file for the head/outlet data
 
 Required:
     * simpledbf (DBf5)
@@ -13,12 +12,20 @@ Required:
     * pandas
     * rdflib (Graph and Literal)
     * rdflib.namespace (GEO, PROV, RDF, RDFS, SDO, and XSD)
-    * shapely (to_geojson)
+    * networkx
     * variable (a local .py file with a dictionary of project namespaces)
 
 Functions:
-    * load_dbf_file -
-    * load_shp_file -
+    * load_flowline_file -
+    * load_plusflow_file -
+    * create_simple_flowline_dict -
+    * create_simple_plusflow_dict -
+    * create_digraph -
+    * count_by_degree -
+    * print_digraph_stats -
+    * print_dictionary_stats -
+    * print_root_and_leaf_counts -
+    * analyze_paths_from_source_to_outlet -
     * initial_kg - takes a dictionary of prefixes and returns an empty RDFLib knowledge graph
     * build_iris - takes an id value and a dictionary of prefixes and returns IRIs for a waterbody and its geometry
     * create_flow_dict -
@@ -27,11 +34,11 @@ Functions:
 
 from simpledbf import Dbf5
 import geopandas as gpd
+import shapely
 import pandas as pd
+import networkx as nx
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
-import json
-from shapely import to_geojson
 
 import logging
 import time
@@ -41,22 +48,18 @@ import sys
 import os
 
 # Modify the system path to find namespaces.py
-sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
+sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Surface Water')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Surface Water')
 
 ### INPUT Filenames ###
-flowplus_file = r'../Geospatial/HUC01/NE_01_NHDPlusAttributes/PlusFlow.dbf'
-flowline_file = r'../Geospatial/HUC01/NE_01_NHDSnapshot/NHDFLowline.shp'
-# flowline_file = r'../Geospatial/Maine/NHDFLowline_BBox.shp'
+plusflow_file = r'../Geospatial/HUC01/NE_01_NHDPlusAttributes/PlusFlow.dbf'
+flowline_file = r'../Geospatial/HUC01/NE_01_NHDSnapshot/NHDFlowline.shp'
 
-### OUTPUT Filenames ###
+### OUTPUT Filename ###
 main_ttl_file = 'ttl_files/us_nhd_flowline_huc01.ttl'
-headoutlet_ttl_file = 'ttl_files/us_nhd_flowline_huc01_headoutlet.ttl'
-
-# ttl_file = '../ttl files/me_reaches_bbox.ttl'
 
 logname = 'logs/log_US_NHD_Flowline_HUC01-2-ttl.txt'
 logging.basicConfig(filename=logname,
@@ -69,13 +72,36 @@ logger.info('')
 logger.info('LOGGER INITIALIZED')
 
 
-def load_dbf_file(filename):
-    """
+def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
+    logger.info('Begin loading flowline file')
+    gdf = gpd.read_file(filename)
+    gdf.drop(['FDATE',
+              'GNIS_ID',
+              'WBAREACOMI',
+              'SHAPE_LENG',
+              'ENABLED',
+              'GNIS_NBR'],
+             axis=1,
+             inplace=True)
+    gdf = gdf[gdf.FTYPE != 'Coastline']
+    gdf[['COMID', 'REACHCODE']] = gdf[['COMID', 'REACHCODE']].astype(str)
+    for row in gdf.itertuples():
+        gdf._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
+    logger.info('Finish loading flowline file')
+    return gdf
 
-    :param filename:
-    :return:
-    """
-    logger.info('Loading the dbf file (PlusFlow from the NHD)')
+
+def create_simple_flowline_dict(df: pd.DataFrame) -> dict:
+    logger.info('Begin creating simple flowline dictionary')
+    dct = {}
+    for row in df.itertuples():
+        dct[row.COMID] = (row.FCODE, row.FTYPE, row.GNIS_NAME, row.LENGTHKM, row.REACHCODE, row.geometry)
+    logger.info('Finish creating simple flowline dictionary')
+    return dct
+
+
+def load_plusflow_file(filename: str) -> pd.DataFrame:
+    logger.info('Begin loading plusflow file')
     dbf = Dbf5(filename)
     df = dbf.to_dataframe()
     df.drop(['FROMHYDSEQ',
@@ -92,27 +118,108 @@ def load_dbf_file(filename):
             axis=1,
             inplace=True)
     df[['FROMCOMID', 'TOCOMID']] = df[['FROMCOMID', 'TOCOMID']].astype(str)
-    # print(df.dtypes)
+    logger.info('Finish loading plusflow file')
     return df
 
 
-def load_shp_file(filename):
-    """
+def create_simple_plusflow_dict(df: pd.DataFrame) -> dict:
+    logger.info('Begin creating simple plusflow dictionary')
+    dct = {}
+    for row in df.itertuples():
+        if row.FROMCOMID in dct.keys():
+            dct[row.FROMCOMID].append(row.TOCOMID)
+        else:
+            dct[row.FROMCOMID] = [row.TOCOMID]
+    dct.pop('0')
+    logger.info('Finish creating simple plusflow dictionary')
+    return dct
 
-    :param filename:
-    :return:
-    """
-    logger.info('Loading the shp file (NHDFlowline from the NHD)')
-    df = gpd.read_file(filename)
-    df.drop(['FLOWDIR',
-             'WBAREACOMI',
-             'ENABLED',
-             'GNIS_NBR'],
-            axis=1,
-            inplace=True)
-    df[['COMID', 'REACHCODE']] = df[['COMID', 'REACHCODE']].astype(str)
-    # print(df.dtypes)
-    return df
+
+def create_digraph(flowline_dict: dict, plusflow_dict: dict) -> nx.DiGraph:
+    logger.info('Begin creating digraph')
+    dg = nx.DiGraph()
+    for key in flowline_dict.keys():
+        dg.add_node(key)
+        dg.nodes[key]['fcode'] = flowline_dict[key][0]
+        dg.nodes[key]['ftype'] = flowline_dict[key][1]
+        dg.nodes[key]['gnis_name'] = flowline_dict[key][2]
+        dg.nodes[key]['lengthkm'] = flowline_dict[key][3]
+        dg.nodes[key]['reachcode'] = flowline_dict[key][4]
+        dg.nodes[key]['geometry'] = flowline_dict[key][5]
+    for key in plusflow_dict.keys():
+        for val in plusflow_dict[key]:
+            if key in flowline_dict.keys() and val in flowline_dict.keys() and val != '0':
+                dg.add_edge(key, val)
+    logger.info('Finish creating digraph')
+    return dg
+
+
+def count_by_degree(deg_list: list) -> dict:
+    deg_counts = {}
+    for node in deg_list:
+        if node[1] not in deg_counts.keys():
+            deg_counts[node[1]] = 1
+        else:
+            deg_counts[node[1]] += 1
+    return dict(sorted(deg_counts.items()))
+
+
+def print_digraph_stats(dg: nx.DiGraph):
+    print()
+    print(f'The digraph has {dg.number_of_nodes()} nodes.')
+    print(f'The digraph has {dg.number_of_edges()} edges')
+    print()
+    print(f'Nodes by degree (degree, number of nodes): {count_by_degree(dg.degree)}')
+    print(f'Nodes by in-degree (degree, number of nodes): {count_by_degree(dg.in_degree)}')
+    print(f'Nodes by out-degree (degree, number of nodes): {count_by_degree(dg.out_degree)}')
+    print()
+
+
+def print_dictionary_stats(plusflow_dict: dict):
+    counts = [0, 0, 0]
+    for key in simple_plusflow_dict.keys():
+        if len(simple_plusflow_dict[key]) == 1:
+            counts[0] += 1
+        elif len(simple_plusflow_dict[key]) == 2:
+            counts[1] += 1
+        elif len(simple_plusflow_dict[key]) == 3:
+            counts[2] += 1
+        else:
+            print('COMID found with more than 3 downstream flowlines')
+    print(f'The plusflow dictionary has {counts[0]} COMIDs with 1 downstream flowline')
+    print(f'The plusflow dictionary has {counts[1]} COMIDs with 2 downstream flowlines')
+    print(f'The plusflow dictionary has {counts[2]} COMIDs with 3 downstream flowlines')
+    print(f'The plusflow dictionary has {counts[0] + counts[1] + counts[2]} COMIDs total')
+    print()
+
+
+def print_root_and_leaf_counts(dg: nx.DiGraph):
+    roots = (v for v, d in dg.in_degree() if d == 0)
+    leaves = (v for v, d in dg.out_degree() if d == 0)
+    print(f'The digraph has {len(list(roots))} roots.')
+    print(f'The digraph has {len(list(leaves))} leaves.')
+    print()
+
+
+def analyze_paths_from_source_to_outlet(dg: nx.DiGraph, src: str, out: str):
+    haspath = nx.has_path(dg, source=src, target=out)
+    if haspath:
+        paths_list = []
+        num_paths = 0
+        for path in nx.all_simple_paths(dg, source=src, target=out):
+            paths_list.append(path)
+            num_paths += 1
+        if num_paths > 1:
+            print(f'There are {num_paths} paths from {src} to {out}')
+        else:
+            print(f'There is {num_paths} path from {src} to {out}')
+    else:
+        print(f'There is no path from {src} to {out}')
+    path_count = 1
+    for path in paths_list:
+        print(f'   Path {path_count}: {len(path)} flowlines')
+        path_count += 1
+    print()
 
 
 def initial_kg(_PREFIX):
@@ -121,9 +228,11 @@ def initial_kg(_PREFIX):
     :param _PREFIX: a dictionary of project namespaces
     :return: an RDFLib graph
     """
+    logger.info('Begin initializing knowledge graph')
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
+    logger.info('Finish initializing knowledge graph')
     return graph
 
 
@@ -134,122 +243,56 @@ def build_iris(cid, _PREFIX):
     :param _PREFIX:
     :return:
     """
-    # logger.info('Building the IRIs')
     flowlineIRI = _PREFIX['gcx-cid'][cid]
     flowlineGeoIRI = _PREFIX['gcx-cid'][cid + '.geometry']
-    # The following are a fudge for now.
-    # These points need to be connected to their COMIDs for better integration with Geoconnex
-    outletIRI = _PREFIX['gcx-cid'][cid + '.outlet']
-    outletGeoIRI = _PREFIX['gcx-cid'][cid + '.outlet.geometry']
-    headIRI = _PREFIX['gcx-cid'][cid + '.head']
-    headGeoIRI = _PREFIX['gcx-cid'][cid + '.head.geometry']
-    return flowlineIRI, flowlineGeoIRI, outletIRI, outletGeoIRI, headIRI, headGeoIRI
+    return flowlineIRI, flowlineGeoIRI
 
 
-def create_flow_dict(dbf) -> dict:
-    """
+def triplify_huc_flowlines(dg):
+    logger.info('BEGIN TRIPLIFICATION')
+    kg = initial_kg(_PREFIX)
+    logger.info('Begin creating triples')
+    for node in dg.nodes(data=True):
+        fl_iri, fl_geo_iri = build_iris(node[0], _PREFIX)
+        kg.add((fl_iri, RDF.type, SDO.Place))
+        kg.add((fl_iri, RDF.type, _PREFIX['hyf']['HY_FlowPath']))
+        kg.add((fl_iri, RDF.type, _PREFIX['hyf']['HY_WaterBody']))
 
-    :param dbf:
-    :return:
-    """
-    logger.info('Creating dictionary of flowline connectivity')
-    df = load_dbf_file(dbf)
-    dct = {}
-    for row in df.itertuples():
-        if row.FROMCOMID in dct.keys():
-            dct[row.FROMCOMID].append(row.TOCOMID)
-        else:
-            dct[row.FROMCOMID] = [row.TOCOMID]
-    return dct
+        kg.add((fl_geo_iri, RDF.type, GEO.Geometry))
+        kg.add((fl_iri, GEO.defaultGeometry, fl_geo_iri))
+        kg.add((fl_iri, GEO.hasGeometry, fl_geo_iri))
+        kg.add((fl_geo_iri, GEO.asWKT, Literal(node[1]['geometry'], datatype=GEO.wktLiteral)))
+        kg.add((fl_geo_iri, RDF.type, _PREFIX['sf']['LineString']))
 
+        if not pd.isnull(node[1]['gnis_name']):
+            kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['saw_water']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['saw_water']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['saw_water']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['saw_water']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['wdp']['P2043'], Literal(node[1]['lengthkm'], datatype=XSD.float)))
 
-def process_flowline_shp2ttl(shpfile, dbffile, main_outfile, headoutlet_outfile, _PREFIX):
-    """
-
-    :param shpfile:
-    :param dbffile:
-    :param outfile:
-    :param _PREFIX:
-    :return:
-    """
-    logger.info('Begin processing flowlines and connectivity')
-    flow_dict = create_flow_dict(dbffile)
-    flowline_df = load_shp_file(shpfile)
-    grouping = str.maketrans('[]', '()')
-    logger.info('Intializing the knowledge graph')
-    kg1 = initial_kg(_PREFIX)  # flowlines
-    kg2 = initial_kg(_PREFIX)  # head and outlet points
-
-    logger.info('Begin triplifying the data')
-    for row in flowline_df.itertuples():
-        if row.FTYPE == "Coastline":
-            continue
-        flowlineIRI, flowlineGeoIRI, outletIRI, outletGeoIRI, headIRI, headGeoIRI = build_iris(row.COMID, _PREFIX)
-
-        # There's an assumption that all flowlines are drawn from head to outlet
-        #    Based on a very small sample it is correct
-        #    This should be verified more concretely
-        geom_json = json.loads(to_geojson(row.geometry))
-        head = str(geom_json['coordinates'][0]).translate(grouping)
-        outlet = str(geom_json['coordinates'][-1]).translate(grouping)
-
-        # Create triples for current COMID
-        #    Note: ReachCodes are not unique in NHDFlowline
-        # This is based on Geoconnex as much as possible
-        kg1.add((flowlineIRI, RDF.type, SDO.Place))
-        kg1.add((flowlineIRI, RDF.type, _PREFIX['hyf']['HY_FlowPath']))
-        kg1.add((flowlineIRI, RDF.type, _PREFIX['hyf']['HY_WaterBody']))
-
-        kg1.add((flowlineGeoIRI, RDF.type, GEO.Geometry))
-        kg1.add((flowlineIRI, GEO.defaultGeometry, flowlineGeoIRI))
-        kg1.add((flowlineIRI, GEO.hasGeometry, flowlineGeoIRI))
-        kg1.add((flowlineGeoIRI, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
-        kg1.add((flowlineGeoIRI, RDF.type, _PREFIX['sf']['LineString']))
-        # Skipping schema:geo
-
-        if not pd.isnull(row.GNIS_NAME):
-            kg1.add((flowlineIRI, SDO.name, Literal(row.GNIS_NAME, datatype=XSD.string)))
-        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasCOMID'], Literal(str(row.COMID), datatype=XSD.string)))
-        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasReachCode'], Literal(str(row.REACHCODE), datatype=XSD.string)))
-        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasFTYPE'], Literal(str(row.FTYPE), datatype=XSD.string)))
-        kg1.add((flowlineIRI, _PREFIX['saw_water']['hasFCODE'], Literal(str(row.FCODE), datatype=XSD.string)))
-
-        # TODO: Add a unit (km) to P2043 via Q1978718
-        kg1.add((flowlineIRI, _PREFIX['wdp']['P2043'], Literal(row.LENGTHKM, datatype=XSD.float)))
-        # Skipping P2053 since this data is not in NHDFlowline
-
-        # In Geoconnex, P403 and P885 point to COMID objects (LineString objects), not nodes
-        #    as well as HUC12 objects (Point objects). But not all point to HUC12 objects.
-        # This creates new points:
-        #    1: Create the point as a geo:Feature
-        #    2: Assign the object a geo:Geometry
-        #    3: Assign the geometry geo:asWKT coordinates
-        #    4: Assign the feature to P403/P885 as the flowline's outlet/head (see note above)
-        kg2.add((outletIRI, RDF.type, GEO.Feature))
-        kg2.add((outletIRI, GEO.defaultGeometry, outletGeoIRI))
-        kg2.add((outletIRI, GEO.hasGeometry, outletGeoIRI))
-        kg2.add((outletGeoIRI, GEO.asWKT, Literal('POINT ' + outlet, datatype=GEO.wktLiteral)))
-        kg2.add((flowlineIRI, _PREFIX['wdp']['P403'], outletIRI))
-
-        kg2.add((headIRI, RDF.type, GEO.Feature))
-        kg2.add((headIRI, GEO.defaultGeometry, headGeoIRI))
-        kg2.add((headIRI, GEO.hasGeometry, headGeoIRI))
-        kg2.add((headGeoIRI, GEO.asWKT, Literal('POINT ' + head, datatype=GEO.wktLiteral)))
-        kg2.add((flowlineIRI, _PREFIX['wdp']['P885'], headIRI))
-
-        if row.COMID in flow_dict.keys():
-            for cid in flow_dict[row.COMID]:
-                kg1.add((flowlineIRI, _PREFIX['hyf']['downstreamWaterbody'], _PREFIX['gcx-cid'][cid]))
-        kg1.add((flowlineIRI, _PREFIX['hyf']['downstreamWaterbody'], flowlineIRI))
-        # Skipping hyf:encompassingCatchment
-
-    logger.info('Write the triples to a .ttl file')
-    kg1.serialize(main_outfile, format='turtle')
-    kg2.serialize(headoutlet_outfile, format='turtle')
+        kg.add((fl_iri, _PREFIX['hyf']['downstreamWaterbody'], fl_iri))
+        for key in dg.successors(node[0]):
+            kg.add((fl_iri, _PREFIX['hyf']['downstreamWaterbody'], _PREFIX['gcx-cid'][key]))
+    logger.info('Finish creating triples')
+    logger.info('Begin writing triples to file')
+    kg.serialize(main_ttl_file, format='turtle')
+    logger.info('Finish writiing triples to file')
+    logger.info('FINISH TRIPLIFICATION')
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    process_flowline_shp2ttl(flowline_file, flowplus_file, main_ttl_file, headoutlet_ttl_file, _PREFIX)
+    df_flowline = load_flowline_file(flowline_file)
+    simple_flowline_dict = create_simple_flowline_dict(df_flowline)
+    df_plusflow = load_plusflow_file(plusflow_file)
+    simple_plusflow_dict = create_simple_plusflow_dict(df_plusflow)
+    G = create_digraph(simple_flowline_dict, simple_plusflow_dict)
+    # print_digraph_stats(G)
+    # print_dictionary_stats(simple_plusflow_dict)
+    # print_root_and_leaf_counts(G)
+    # analyze_paths_from_source_to_outlet(G, source_comid, outlet_comid)
+    triplify_huc_flowlines(G)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
