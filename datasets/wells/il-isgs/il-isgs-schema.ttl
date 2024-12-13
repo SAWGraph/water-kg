@@ -7,9 +7,10 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix stad: <http://sawgraph.spatialai.org/v1/stad#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 il_isgs:ISGS-Well a owl:Class ;
-    rdfs:subClassOf coso:Feature.
+    rdfs:subClassOf geo:Feature.
 
 il_isgs:WellDepthInFt a owl:Class ;
     rdfs:subClassOf stad:SingleData.
