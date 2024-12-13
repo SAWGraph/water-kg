@@ -1,0 +1,9 @@
+datasets/wells/me-mgs/towns_located.ttl
+datasets/wells/me-mgs/towns_unlocated.ttl
+datasets/wells/me-mgs/mgs_wells_unlocated_output.ttl
+datasets/wells/me-mgs/mgs_wells_located_output.ttl
+datasets/wells/il-isgs/il-isgs-wellsGeo.ttl
+datasets/wells/il-isgs/il-isgs-wells.ttl
+data/il-isgs/il-wells.geojson
+data/mgs_wells/Maine_Well_Database_-_Unlocated_Wells.csv
+data/mgs_wells/Maine_Well_Database_-_Well_Depth.csv

@@ -1,0 +1,63 @@
+@prefix me_mgs: <http://sawgraph.spatialai.org/v1/me-mgs#> .
+@prefix me_mgs_data: <http://sawgraph.spatialai.org/v1/me-mgs-data#> .
+@prefix coso: <http://sawgraph.spatialai.org/v1/contaminoso#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+
+ <http://sawgraph.spatialai.org/v1/me-mgs> rdf:type owl:Ontology ;
+                                            dcterms:contributor "Shirly Stephen, Torsten Hahmann, Katrina Schweikart"@en ;
+                                            dcterms:created "2024-03-22"@en ;
+                                            dcterms:description "This ontology supports the SAWGraph project"@en ;
+                                            dcterms:title "Ontology for Maine Geological Survey Wells"@en ;
+                                            owl:versionInfo "v 1.0"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+#################################################################
+#    Object Properties
+#################################################################
+
+#these prefixes need to be made consistent but this is what matches the current triples.
+me_mgs:hasUse rdf:type owl:ObjectProperty ;
+    rdfs:domain me_mgs:MGS-Well ;
+    rdfs:range me_mgs:WellUse .
+
+me_mgs:ofWellType rdf:type owl:ObjectProperty ;
+    rdfs:domain me_mgs:MGS-Well ;
+    rdfs:range me_mgs:WellType .
+
+me_mgs:wellDepth rdf:type owl:ObjectProperty ;
+    rdfs:domain me_mgs:MGS-Well ;
+    rdfs:range me_mgs:WellDepthInFt .
+
+me_mgs:wellOverburden rdf:type owl:ObjectProperty ;
+    rdfs:domain me_mgs:MGS-Well ;
+    rdfs:range me_mgs:WellOverburdenThicknessInFt .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+#################################################################
+#    Classes
+#################################################################
+
+me_mgs:MGS-Well rdf:type owl:Class ;
+    rdfs:subClassOf coso:Feature.
+
+me_mgs:WellType rdf:type owl:Class .
+
+me_mgs:WellUse rdf:type owl:Class .
+
+me_mgs:WellDepthInFt rdf:type owl:Class;
+    rdfs:subClassOf stad:SingleData.
+
+me_mgs:WellOverburdenThicknessInFt rdf:type owl:Class;
+    rdfs:subClassOf stad:SingleData.

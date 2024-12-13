@@ -1,0 +1,19 @@
+@prefix il_isgs: <http://sawgraph.spatialai.org/v1/il-isgs#> .
+@prefix il_isgs_data: <http://sawgraph.spatialai.org/v1/il-isgs-data#> .
+@prefix coso: <http://sawgraph.spatialai.org/v1/contaminoso#> .
+@prefix qudt: <https://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix unit: <https://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+il_isgs:ISGS-Well a owl:Class ;
+    rdfs:subClassOf coso:Feature.
+
+il_isgs:WellDepthInFt a owl:Class ;
+    rdfs:subClassOf stad:SingleData.
+
+il_isgs:WellYield a owl:Class ;
+    rdfs:subClassOf stad:SingleData.
+
+il_isgs:WellPurpose a owl:Class.
