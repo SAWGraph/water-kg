@@ -1,7 +1,9 @@
-"""Create a .ttl file for HUC05 NHD water bodies from a .shp file
+"""Create a .ttl file for water bodies from a .shp file
 
+Under ### HUCxx VPU ###, enter
+    the VPU code for the current HUC2 region (valid codes listed below)
 Under ### INPUT Filenames ###, define
-    the name (and path) of the input .shp file
+    the name (and path) of the input .shp file (NHDWaterbody)
 Under ### OUTPUT Filename ###, define
     the name (and path) of the output .ttl file
 
@@ -37,17 +39,25 @@ sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Surface Water')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
+
+### HUCxx VPU ###
+vpu = 'MS_10L'
+vpunum = vpu[3:]
+# Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
+#              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
 
 ### INPUT Filenames ###
-# nhd_waterbody_shp_file: Region 5 water bodies (Ohio River)
-nhd_waterbody_shp_file = '../Geospatial/HUC05/MS_05_NHDSnapshot/NHDWaterbody-fixed.shp'
+# Sometimes there are bad geometries in the NHDWaterbody.shp file
+# The path assumes a "fixed" version but defaults to the original version if the "fixed" version does not exist
+waterbody_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDSnapshot/NHDWaterbody-fixed.shp'
+if not os.path.isfile(waterbody_file):
+    waterbody_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDSnapshot/NHDWaterbody.shp'
 
 ### OUTPUT Filename ###
-# ttl_file: the resulting (output) .ttl file
-ttl_file = 'ttl_files/us_nhd_waterbody_huc05.ttl'
+ttl_file = 'ttl_files/us_nhd_waterbody_huc' + vpunum + '.ttl'
 
-logname = 'logs/log_US_NHD_Waterbody_HUC05-2-ttl.txt'
+logname = 'logs/log_US_NHD_Waterbody_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -139,6 +149,6 @@ def process_waterbodies_shp2ttl(infile, outfile):
 
 if __name__ == '__main__':
     start_time = time.time()
-    process_waterbodies_shp2ttl(nhd_waterbody_shp_file, ttl_file)
+    process_waterbodies_shp2ttl(waterbody_file, ttl_file)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')

@@ -1,5 +1,7 @@
 """Create a .ttl file of flowlines and their connectivity from a .shp file and a .dbf file
 
+Under ### HUCxx VPU ###, enter
+    the VPU code for the current HUC2 region (valid codes listed below)
 Under ### INPUT Filenames ###, define
     the name (and path) of the input .shp file (NHDFlowline)
     the name (and path) of the input .dbf file (PlusFlow)
@@ -52,16 +54,22 @@ sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Surface Water')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
+
+### HUCxx VPU ###
+vpu = 'MS_10L'
+vpunum = vpu[3:]
+# Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
+#              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
 
 ### INPUT Filenames ###
-plusflow_file = r'../Geospatial/HUC01/NE_01_NHDPlusAttributes/PlusFlow.dbf'
-flowline_file = r'../Geospatial/HUC01/NE_01_NHDSnapshot/NHDFlowline.shp'
+plusflow_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDPlusAttributes/PlusFlow.dbf'
+flowline_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDSnapshot/NHDFlowline.shp'
 
 ### OUTPUT Filename ###
-main_ttl_file = 'ttl_files/us_nhd_flowline_huc01.ttl'
+main_ttl_file = 'ttl_files/us_nhd_flowline_huc' + vpunum + '.ttl'
 
-logname = 'logs/log_US_NHD_Flowline_HUC01-2-ttl.txt'
+logname = 'logs/log_US_NHD_Flowline_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
