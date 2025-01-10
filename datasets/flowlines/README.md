@@ -1,5 +1,5 @@
 ## Dataset Overview
-* **Name of dataset:** NHDFlowline.shp and PlusFlow.dbf 
+* **Name of dataset:** NHDFlowline.shp and PlusFlow.dbf (there is one pair of files for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2))
 * **Source Agency:** [United States Geological Survey](https://www.usgs.gov/)
 * **Data source location:** [Get NHDPlus (National Hydrography Dataset Plus) Data](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#v2datamap)
 * **Metadata description:** [NHD*Plus Version2*: User Guide](https://www.epa.gov/system/files/documents/2023-04/NHDPlusV2_User_Guide.pdf)
@@ -20,15 +20,15 @@
 | --- | --- | --- |--- |
 | COMID | Common identifier | Yes | nhdplusv2:hasCOMID |
 | FDATE | Feature currency date | No |  |
-| RESOLUTION | high, medicum, local | No |  |
+| RESOLUTION | high, medium, local | No |  |
 | GNIS_ID | GNIS ID for GNIS_NAME | No |  |
 | GNIS_NAME | Name from GNIS | Yes | schema:name |
 | LENGTHKM | Length | Yes | nhdplusv2:hasFlowPathLength |
 | REACHCODE | Reach code | Yes | nhdplusv2:hasReachCode |
 | FLOWDIR | with digitized, uninitialized | No |  |
 | WBAREACOMI | ComID of the NHD polygonal water feature through which an "artificial path" flows | No |  |
-| FTYPE | NHD feature type | Yes | nhdplusv2:hasFTYPE |
-| FCODE | NHD feature type code | Yes | nhdplusv2:hsFCODE |
+| FTYPE | [NHD feature type](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFTYPE |
+| FCODE | [NHD feature type code](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFCODE |
 | SHAPE_LENG | length in decimal degrees | No |  |
 | ENABLED | Always "True" | No |  |
 | GNIS_NBR | ?? | No |  |
