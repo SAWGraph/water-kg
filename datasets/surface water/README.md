@@ -1,5 +1,5 @@
 ## Dataset Overview
-* **Name of dataset:** NHDWaterbody.shp
+* **Name of dataset:** NHDWaterbody.shp (there is one file for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2))
 * **Source Agency:** [United States Geological Survey](https://www.usgs.gov/)
 * **Data source location:** [Get NHDPlus (National Hydrography Dataset Plus) Data](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#v2datamap)
 * **Metadata description:** [NHD*Plus Version2*: User Guide](https://www.epa.gov/system/files/documents/2023-04/NHDPlusV2_User_Guide.pdf)
