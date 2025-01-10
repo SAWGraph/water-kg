@@ -1,19 +1,31 @@
+# NHDFlowline
+
 ## Dataset Overview
-* **Name of dataset:** NHDFlowline.shp and PlusFlow.dbf (there is one pair of files for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2))
-* **Source Agency:** [United States Geological Survey](https://www.usgs.gov/)
-* **Data source location:** [Get NHDPlus (National Hydrography Dataset Plus) Data](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#v2datamap)
-* **Metadata description:** [NHD*Plus Version2*: User Guide](https://www.epa.gov/system/files/documents/2023-04/NHDPlusV2_User_Guide.pdf)
-* **Other metadata:** 
-* **Format of data:** .shp & .dbf files
-* **Data update interval:** no longer maintained but still available and widely used
-* **General comments**:
+| Dataset Attribute | Description |
+| --- | --- |
+| **Name of dataset:** | NHDFlowline.shp and PlusFlow.dbf <br/> There is one pair of files for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2) |
+| **Source Agency:** | [United States Geological Survey](https://www.usgs.gov/) |
+| **Data source location:** | [Get NHDPlus (National Hydrography Dataset Plus) Data](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#v2datamap) |
+| **Metadata description:** | [NHD*Plus Version2*: User Guide](https://www.epa.gov/system/files/documents/2023-04/NHDPlusV2_User_Guide.pdf) |
+| **Other metadata:** |  |
+| **Format of data:** | .shp & .dbf files |
+| **Data update interval:** | no longer maintained but still available and widely used |
+| **General comments**: | NHDFlowline.shp has the individual flowlines (*HY_ElementaryFlowPath*) <br/> PlusFlow.dbf details how they are networked |
 
 ## Schema Diagram (TO ADD)
-[**Link to schema diagram on lucid chart**]()
+- [**Link to schema diagram on lucid chart**]()
 
 ## Code (TO ADD)
-* [Code Directory]()
-* [GDrive Output Directory]()
+- [Code Directory]()
+- [GDrive Output Directory]()
+
+## IRIs
+| Instance Class | IRI Format |
+| --- | --- |
+| `HY_ElementaryFlowPath` | `gcx-cid:<COMID>` |
+| `geo:Geometry` | `gcx-cid:<COMID>.geometry` |
+| `nhdplusv2:FlowPathLength` | `gcx-cid:<COMID>.flowPathLength` |
+| `qudt:QuantityValue` | `gcx-cid:<COMID>.flowPathLength.quantityValue` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | NHDFLowline | Description | Lift to graph | Ontology property |
@@ -59,11 +71,14 @@
 **Legend description:** (TO ADD)
 - 
 
-## Controlled Vocabularies 
+## Controlled Vocabularies
+- 
 
 ## Sample Data
+- 
 
-## Competency Questions 
+## Competency Questions
+- 
 
 ## Contributors
-* [David Kedrowski](https://github.com/dkedrowski)
+- [David Kedrowski](https://github.com/dkedrowski)
