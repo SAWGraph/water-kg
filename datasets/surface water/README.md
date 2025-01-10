@@ -1,12 +1,16 @@
+# NHDWaterbody
+
 ## Dataset Overview
-* **Name of dataset:** NHDWaterbody.shp (there is one file for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2))
-* **Source Agency:** [United States Geological Survey](https://www.usgs.gov/)
-* **Data source location:** [Get NHDPlus (National Hydrography Dataset Plus) Data](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#v2datamap)
-* **Metadata description:** [NHD*Plus Version2*: User Guide](https://www.epa.gov/system/files/documents/2023-04/NHDPlusV2_User_Guide.pdf)
-* **Other metadata:** 
-* **Format of data:** .shp file
-* **Data update interval:** no longer maintained but still available and widely used
-* **General comments**:
+| Dataset Attribute | Description |
+| --- | --- |
+| **Name of dataset:** | NHDWaterbody.shp <br/> There is one file for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2) |
+| **Source Agency:** | [United States Geological Survey](https://www.usgs.gov/) |
+| **Data source location:** | [Get NHDPlus (National Hydrography Dataset Plus) Data](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#v2datamap) |
+| **Metadata description:** | [NHD*Plus Version2*: User Guide](https://www.epa.gov/system/files/documents/2023-04/NHDPlusV2_User_Guide.pdf) |
+| **Other metadata:** |  |
+| **Format of data:** | .shp file |
+| **Data update interval:** | no longer maintained but still available and widely used |
+| **General comments**: |  |
 
 ## Schema Diagram (TO ADD)
 [**Link to schema diagram on lucid chart**]()
@@ -14,6 +18,12 @@
 ## Code (TO ADD)
 * [Code Directory]()
 * [GDrive Output Directory]()
+
+## IRIs
+| Instance Class | IRI Format |
+| --- | --- |
+| `hyf:HY_Estuary` <br/> `hyf:HY_Lake` <br/> `hyf:HY_WaterBody` | `gcx-cid:<COMID>` |
+| `geo:Geometry` | `gcx-cid:<COMID>.geometry` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | NHDWaterbody | Description | Lift to graph | Ontology property |
