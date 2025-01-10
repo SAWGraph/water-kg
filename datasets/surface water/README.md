@@ -26,8 +26,8 @@
 | AREASQKM | Area in square kilometers | No |  |
 | ELEVATION | Elevation in ft | No |  |
 | REACHCODE | Reach code | Yes | nhdplusv2:hasReachCode |
-| FTYPE | NHD feature type | Yes | nhdplusv2:hasFTYPE |
-| FCODE | NHD feature type code | Yes | nhdplusv2:hasFCODE |
+| FTYPE | [NHD feature type](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFTYPE |
+| FCODE | [NHD feature type code](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFCODE |
 | SHAPE_LENG | length in decimal degrees | No |  |
 | SHAPE_AREA | area in square decimal degrees | No |  |
 | geometry | Polygon | Yes | geo:hasGeometry/geo:asWKT |
