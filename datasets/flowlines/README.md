@@ -22,7 +22,7 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `HY_ElementaryFlowPath` | `gcx-cid:<COMID>` |
+| `hyf:HY_ElementaryFlowPath` | `gcx-cid:<COMID>` |
 | `geo:Geometry` | `gcx-cid:<COMID>.geometry` |
 | `nhdplusv2:FlowPathLength` | `gcx-cid:<COMID>.flowPathLength` |
 | `qudt:QuantityValue` | `gcx-cid:<COMID>.flowPathLength.quantityValue` |
