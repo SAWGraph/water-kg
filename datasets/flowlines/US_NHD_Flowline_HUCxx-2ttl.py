@@ -57,7 +57,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
 
 ### HUCxx VPU ###
-vpu = 'MS_10L'
+vpu = 'MS_11'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
@@ -285,13 +285,14 @@ def triplify_huc_flowlines(dg):
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFlowPathLength'], fl_len_iri))
         kg.add((fl_len_iri, RDF.type, _PREFIX['nhdplusv2']['FlowPathLength']))
         kg.add((fl_len_iri, _PREFIX['qudt']['quantityValue'], fl_qv_iri))
+        kg.add((fl_qv_iri, RDF.type, _PREFIX['qudt']['QuantityValue']))
         kg.add((fl_qv_iri, _PREFIX['qudt']['numericValue'], Literal(node[1]['lengthkm'], datatype=XSD.float)))
         kg.add((fl_qv_iri, _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['KiloM']))
 
         # Triplify the downstream connectivity, including a reflexive statement for the current NHDFlowline
-        kg.add((fl_iri, _PREFIX['hyf']['downstreamWaterBody'], fl_iri))
+        kg.add((fl_iri, _PREFIX['hyf']['downstreamFlowPath'], fl_iri))
         for key in dg.successors(node[0]):
-            kg.add((fl_iri, _PREFIX['hyf']['downstreamWaterBody'], _PREFIX['gcx-cid'][key]))
+            kg.add((fl_iri, _PREFIX['hyf']['downstreamFlowPath'], _PREFIX['gcx-cid'][key]))
     logger.info('Finish creating triples')
     logger.info('Begin writing triples to file')
     kg.serialize(main_ttl_file, format='turtle')  # Write the completed KG to a .ttl file
