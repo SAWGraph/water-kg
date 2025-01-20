@@ -42,7 +42,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
 
 ### HUCxx VPU ###
-vpu = 'GL_04'
+vpu = 'MS_07'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
