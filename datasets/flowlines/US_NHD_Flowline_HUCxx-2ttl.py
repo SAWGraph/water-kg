@@ -57,7 +57,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
 
 ### HUCxx VPU ###
-vpu = 'MS_11'
+vpu = 'GL_04'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
@@ -81,7 +81,7 @@ logger.info('LOGGER INITIALIZED')
 
 
 def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
-    logger.info('Begin loading flowline file')
+    logger.info(f'Load {vpu} flowline shapefile from {filename}')
     gdf = gpd.read_file(filename)
     gdf.drop(['FDATE',
               'GNIS_ID',
@@ -95,21 +95,19 @@ def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
     gdf[['COMID', 'REACHCODE']] = gdf[['COMID', 'REACHCODE']].astype(str)
     for row in gdf.itertuples():
         gdf._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
-    logger.info('Finish loading flowline file')
     return gdf
 
 
 def create_simple_flowline_dict(df: pd.DataFrame) -> dict:
-    logger.info('Begin creating simple flowline dictionary')
+    logger.info(f'Create simple flowline dictionary for {vpu}')
     dct = {}
     for row in df.itertuples():
         dct[row.COMID] = (row.FCODE, row.FTYPE, row.GNIS_NAME, row.LENGTHKM, row.REACHCODE, row.geometry)
-    logger.info('Finish creating simple flowline dictionary')
     return dct
 
 
 def load_plusflow_file(filename: str) -> pd.DataFrame:
-    logger.info('Begin loading plusflow file')
+    logger.info(f'Load {vpu} plusflow file from {filename}')
     dbf = Dbf5(filename)
     df = dbf.to_dataframe()
     df.drop(['FROMHYDSEQ',
@@ -126,12 +124,11 @@ def load_plusflow_file(filename: str) -> pd.DataFrame:
             axis=1,
             inplace=True)
     df[['FROMCOMID', 'TOCOMID']] = df[['FROMCOMID', 'TOCOMID']].astype(str)
-    logger.info('Finish loading plusflow file')
     return df
 
 
 def create_simple_plusflow_dict(df: pd.DataFrame) -> dict:
-    logger.info('Begin creating simple plusflow dictionary')
+    logger.info(f'Create simple plusflow dictionary for {vpu}')
     dct = {}
     for row in df.itertuples():
         if row.FROMCOMID in dct.keys():
@@ -139,12 +136,11 @@ def create_simple_plusflow_dict(df: pd.DataFrame) -> dict:
         else:
             dct[row.FROMCOMID] = [row.TOCOMID]
     dct.pop('0')
-    logger.info('Finish creating simple plusflow dictionary')
     return dct
 
 
 def create_digraph(flowline_dict: dict, plusflow_dict: dict) -> nx.DiGraph:
-    logger.info('Begin creating digraph')
+    logger.info(f'Create and populate networkx DiGraph representing {vpu} flowline network')
     dg = nx.DiGraph()
     for key in flowline_dict.keys():
         dg.add_node(key)
@@ -158,7 +154,6 @@ def create_digraph(flowline_dict: dict, plusflow_dict: dict) -> nx.DiGraph:
         for val in plusflow_dict[key]:
             if key in flowline_dict.keys() and val in flowline_dict.keys() and val != '0':
                 dg.add_edge(key, val)
-    logger.info('Finish creating digraph')
     return dg
 
 
@@ -236,11 +231,10 @@ def initial_kg(_PREFIX):
     :param _PREFIX: a dictionary of project namespaces
     :return: an RDFLib graph
     """
-    logger.info('Begin initializing knowledge graph')
+    logger.info('Initialize RDFLib Graph')
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
-    logger.info('Finish initializing knowledge graph')
     return graph
 
 
@@ -259,9 +253,8 @@ def build_iris(cid, _PREFIX):
 
 
 def triplify_huc_flowlines(dg):
-    logger.info('BEGIN TRIPLIFICATION')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
-    logger.info('Begin creating triples')
+    logger.info(f'Triplify {vpu} flowlines')
     for node in dg.nodes(data=True):
         # Get IRIs for the current NHDFlowline, its geometry, its length object, and the length's qudt:QuantityValue
         fl_iri, fl_geo_iri, fl_len_iri, fl_qv_iri = build_iris(node[0], _PREFIX)
@@ -293,15 +286,13 @@ def triplify_huc_flowlines(dg):
         kg.add((fl_iri, _PREFIX['hyf']['downstreamFlowPath'], fl_iri))
         for key in dg.successors(node[0]):
             kg.add((fl_iri, _PREFIX['hyf']['downstreamFlowPath'], _PREFIX['gcx-cid'][key]))
-    logger.info('Finish creating triples')
-    logger.info('Begin writing triples to file')
+    logger.info(f'Write {vpu} flowline triples to {main_ttl_file}')
     kg.serialize(main_ttl_file, format='turtle')  # Write the completed KG to a .ttl file
-    logger.info('Finish writiing triples to file')
-    logger.info('FINISH TRIPLIFICATION')
 
 
 if __name__ == '__main__':
     start_time = time.time()
+    logger.info(f'Launching script: HUC/VPU = {vpu}')
     df_flowline = load_flowline_file(flowline_file)
     simple_flowline_dict = create_simple_flowline_dict(df_flowline)
     df_plusflow = load_plusflow_file(plusflow_file)
