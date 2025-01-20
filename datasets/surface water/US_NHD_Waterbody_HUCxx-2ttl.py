@@ -42,7 +42,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
 
 ### HUCxx VPU ###
-vpu = 'MS_10L'
+vpu = 'GL_04'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
@@ -64,7 +64,8 @@ logging.basicConfig(filename=logname,
                     datefmt='%Y-%m-%d %H:%M:%S',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
-
+logger.info('')
+logger.info('LOGGER INITIALIZED')
 
 def initial_kg(_PREFIX):
     """Create an empty knowledge graph with project namespaces
@@ -89,7 +90,7 @@ def build_iris(cid, _PREFIX):
     :param _PREFIX:
     :return: a tuple with the two IRIs
     """
-    return _PREFIX["gcx-cid"][str(cid)], _PREFIX["gcx-cid"][str(cid) + '.Geometry']
+    return _PREFIX["gcx-cid"][str(cid)], _PREFIX["gcx-cid"][str(cid) + '.geometry']
 
 
 def process_waterbodies_shp2ttl(infile, outfile):
@@ -99,23 +100,23 @@ def process_waterbodies_shp2ttl(infile, outfile):
     :param outfile: the path and name for the .ttl file
     :return:
     """
-    logger.info('BEGIN TRIPLIFYING NHD WATERBODIES')
-    logger.info('Loading the shapefiles')
+    logger.info(f'Load {vpu} water body shapefile from {infile}')
 
     # Read NHDWaterbody to a GeoDataframe
     gdf_waterbody = gpd.read_file(infile)
 
     # KWG script doesn't like 3D polygons so this forces them all to 2D
     #   The Z value is set to 0 in NHDWaterbody so nothing is lost from this process
+    logger.info('Force geometries to 2D')
     for row in gdf_waterbody.itertuples():
         gdf_waterbody._set_value(row.Index, 'geometry',
                                  shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
 
-    logger.info('Intializing the knowledge graph')
+    logger.info('Intialize RDFLib Graph')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
     count = 1  # For processing updates printed to terminal
     n = len(gdf_waterbody.index)  # For processing updates printed to terminal
-    logger.info('Creating the triples')
+    logger.info(f'Triplify {vpu} water bodies')
     for row in gdf_waterbody.itertuples():
         # Get IRIs for the current NHDWaterbody and its geometry
         bodyiri, geomiri = build_iris(row.COMID, _PREFIX)
@@ -143,12 +144,13 @@ def process_waterbodies_shp2ttl(infile, outfile):
         # Update the processing status to the terminal
         print(f'Processing row {count:5} of {n} : COMID {str(row.COMID):9}', end='\r', flush=True)
         count += 1
+    logger.info(f'Write {vpu} water body triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
-    logger.info('TRIPLIFYING COMPLETE AND .ttl FILE CREATED')
 
 
 if __name__ == '__main__':
     start_time = time.time()
+    logger.info(f'Launching script: HUC/VPU = {vpu}')
     process_waterbodies_shp2ttl(waterbody_file, ttl_file)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
