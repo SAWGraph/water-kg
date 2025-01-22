@@ -25,10 +25,9 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `me_mgs:MGS_Well` | `me_mgs_data:d.MGS-Well.<WELLNO>` |
+| il_isgs:ISGS-Well` | `il_isgs_data:d.ISGS-Well.<API_NUMBER>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
-
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID     | * | No |  |  |
