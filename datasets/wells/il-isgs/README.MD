@@ -4,7 +4,7 @@
 | Dataset Attribute | Description |
 | --- | --- |
 | **Name of dataset:** | ISGS Wells |
-| **Source Agency:** | Illinois State Geological Survey |
+| **Source Agency:** | [Illinois State Geological Survey](https://isgs.illinois.edu/) |
 | **Data Source Location:** | [Illinois Water Water and Related Wells ESRI Rest server](https://maps.isgs.illinois.edu/arcgis/rest/services/ILWATER/Water_and_Related_Wells2/MapServer) |
 | **Metadata description:** | [IL Water map interface](https://prairie-research.maps.arcgis.com/apps/webappviewer/index.html?id=e06b64ae0c814ef3a4e43a191cb57f87) |
 | **Format:** | GEOJSON (pulled via il-get-data-geoserver.py script) |
@@ -17,31 +17,31 @@
 
 **code:** il-wells.py
 
-| Attributes   | Description    | Lift to graph | Ontology Property|
-|--------------|----------------|---------------|------------------|
-| OBJECTID     | *              |               |                  |
-| API_NUMBER   | * - used as unique identifier  | Yes           | il_isgs:ISGS-Well iri|
-| ISWSPNUM     | 152051 of 379496     | Yes     | il_isgs:hasISWSId xsd:string |
-| STATUS       |                | Yes           | il_isgs:ISGS-Well il_isgs:wellPurpose il_isgs:WellPurpose   |
-| STATUSLONG   | Status description   | Yes     | il_isgs:wellPurpose rdfs:label   |
-| LATITUDE     | *              | Yes           | geo:Geometry geo:asWKT     |
-| LONGITUDE    | *              | Yes           | geo:Geometry geo:asWKT       |
-| LOCATION     | ?mapsheet      |   |      |
-| OWNER        |                | Yes           |  il_isgs:ISGS-Well il_isgs:hasOwner xsd:string    |
-| FARM_NAME    | Well Name      | Yes           |      |
-| WELL         | matches FARM_NAME    |   |      |
-| DRILLER      | Drilling company     |   |      |
-| DATE_DRILLED |                | ? |      |
-| ELEVATION    |                | ? |      |
-| ELEVREF      |                | ? |      |
-| ELEVREFLONG  | Elevation reference description  | ? |      |
-| TOTAL_DEPTH  |                | Yes           |      |
-| WFORMATION   | Formation      | ? |      |
-| FORM_TOP     | Formation Top  | ? |      |
-| FORM_BOTTOM  | Formation Bottom  | ? |      |
-| PUMPGPM      | Pumping Rate    | Yes           |      |
-| FLAG_LAS     | Digitized Well Log   |   |      |
-| FLAG_LOG     | Scanned Well Log     |   |      |
-| FLAG_CORE    | Core at ISGS         | ? |      |
-| FLAG_SAMPLES | Samples at ISGS      | ? |      |
-| DataSummary  | Data summary sheet (url to  pdf) | ? |      |
+| ISGS Well | Description | Lift to graph | Ontology Property | Comments |
+| --- | --- | --- | --- | --- |
+| OBJECTID     | * |  |  |  |
+| API_NUMBER   | * | Yes | il_isgs:hasPrimaryStateAgencyId | used as unique identifier |
+| ISWSPNUM     |  | Yes | il_isgs:hasSecondaryStateAgencyId | present for about 40% of records |
+| STATUS       |  | Yes | is_isgs:hasWellPurpose | controlled vocabulary (see below) |
+| STATUSLONG   | Status description | Yes |  | via controlled vocabulary (see below) |
+| LATITUDE     | * | Yes | geo:Geometry/geo:asWKT |  |
+| LONGITUDE    | * | Yes | geo:Geometry/geo:asWKT |  |
+| LOCATION     |  | No |  | ?mapsheet |
+| OWNER        |  | Yes | hyfo:hasOwner | |
+| FARM_NAME    | Well Name | No |  |  |
+| WELL         |  | No |  | matches FARM_NAME |
+| DRILLER      | Drilling company | No |  |  |
+| DATE_DRILLED |  | No |  |  |
+| ELEVATION    |  | No |  |  |
+| ELEVREF      |  | No |  |  |
+| ELEVREFLONG  | Elevation reference description | No |  |  |
+| TOTAL_DEPTH  |  | Yes | hyfo:hasTotalDepth | |
+| WFORMATION   | Formation | Yes | hyfo:hasAquiferType | Need to verify this |
+| FORM_TOP     | Formation Top | Yes | hyfo:hasBedrockDepth | Need to verify this |
+| FORM_BOTTOM  | Formation Bottom | ? |  |  |
+| PUMPGPM      | Pumping Rate | Yes | hyfo:hasYield |  |
+| FLAG_LAS     | Digitized Well Log | No |  |  |
+| FLAG_LOG     | Scanned Well Log   | No |  |  |
+| FLAG_CORE    | Core at ISGS | No |  |  |
+| FLAG_SAMPLES | Samples at ISGS | No |  |  |
+| DataSummary  | Data summary sheet (url to  pdf) | No |  |  |
