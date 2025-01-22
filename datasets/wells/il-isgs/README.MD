@@ -3,7 +3,7 @@
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | ISGS Wells |
+| **Name of dataset:** | Water and Related Wells |
 | **Source Agency:** | [Illinois State Geological Survey](https://isgs.illinois.edu/) |
 | **Data Source Location:** | [Illinois Water Water and Related Wells ESRI Rest server](https://maps.isgs.illinois.edu/arcgis/rest/services/ILWATER/Water_and_Related_Wells2/MapServer) |
 | **Metadata description:** | [IL Water map interface](https://prairie-research.maps.arcgis.com/apps/webappviewer/index.html?id=e06b64ae0c814ef3a4e43a191cb57f87) |
@@ -11,15 +11,27 @@
 | **Data update interval** | last updated on 11/3/2024 and contains 383413 records |
 | **Location of triples:** |  |
 
-## Raw Data Attributes
+## Schema Diagram (TO ADD)
+- [*Draft* schema](https://lucid.app/lucidchart/16e658ef-6f61-4ce3-a770-0c410ecb194a/edit?viewport_loc=-1074%2C-511%2C3767%2C1853%2CssMfXgoENRPy&invitationId=inv_ea094a2c-59da-4347-b175-700b91e5623d)
 
-### Water and Related Wells
+**Legend description:** (TO ADD)
+- 
 
-**code:** il-wells.py
+## Code (TO ADD)
+- il-wells.py
+- [Code Directory]()
+- [GDrive Output Directory]()
+
+## IRIs
+| Instance Class | IRI Format |
+| --- | --- |
+| `me_mgs:MGS_Well` | `me_mgs_data:d.MGS-Well.<WELLNO>` |
+
+## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID     | * |  |  |  |
+| OBJECTID     | * | No |  |  |
 | API_NUMBER   | * | Yes | il_isgs:hasPrimaryStateAgencyId | used as unique identifier |
 | ISWSPNUM     |  | Yes | il_isgs:hasSecondaryStateAgencyId | present for about 40% of records |
 | STATUS       |  | Yes | is_isgs:hasWellPurpose | controlled vocabulary (see below) |
@@ -45,3 +57,47 @@
 | FLAG_CORE    | Core at ISGS | No |  |  |
 | FLAG_SAMPLES | Samples at ISGS | No |  |  |
 | DataSummary  | Data summary sheet (url to  pdf) | No |  |  |
+
+**Notes on the data:**
+- 
+
+## Controlled Vocabularies
+**List 1. STATUS: STATUSLONG**
+- CROP: Outcrop
+- DRIFT: Drift Mine
+- DRY: Dry Hole (water well)
+- DRYP: Dry Hole (water well), Plugged
+- ENG: Engineering Test
+- ENGP: Engineering Test, Plugged
+- LUST: Leaking Underground Storage Tank
+- MINER: Mineral Test
+- MINERP: Mineral Test, Plugged (1)
+- MONIT: Water Well Monitoring Well
+- MONITP: Water Well Monitoring Well Plugged
+- MSERV: Mine Service
+- MSERVP: Mine Service Plugged
+- MSFT: Mine Shaft
+- OBS: Observation Well
+- OBSP: Observation Well, Plugged
+- SLOPE: Slope Mine
+- STRAT: Stratigraphic Test
+- STRATP: Stratigraphic Test, Plugged
+- STRIP: Strip Mine
+- STRIPP: Strip Mine, Plugged
+- WASTE: Waste Disposal Well
+- WASTEP: Waste Disposal Well, Plugged
+- WATER: Water Well
+- WATERP: Water Well, Plugged
+- WATOT: Oil Test, left open for a water well
+- WATRS: Water Supply Well
+- WATRSP: Water Supply Well, Plugged
+- WTST: Water Well Test Hole
+- WTSTP: Water Well Test Hole, Plugged
+
+## Sample Data
+
+## Competency Questions 
+
+## Contributors
+- Katrina Schweikert
+- David Kedrowski
