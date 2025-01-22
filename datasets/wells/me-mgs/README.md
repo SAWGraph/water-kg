@@ -13,7 +13,10 @@
 | **Location of triples:** | [SAWGraph me_mgs](https://drive.google.com/drive/u/0/folders/1Krihr-fqwLHb5d660EAgtSl0v1xz98dZ ) |
 
 ## Schema Diagram (TO ADD)
-- [**Link to schema diagram on lucid chart**]()
+- [*Draft* schema](https://lucid.app/lucidchart/16e658ef-6f61-4ce3-a770-0c410ecb194a/edit?viewport_loc=-1074%2C-511%2C3767%2C1853%2CssMfXgoENRPy&invitationId=inv_ea094a2c-59da-4347-b175-700b91e5623d)
+
+**Legend description:** (TO ADD)
+- 
 
 ## Code (TO ADD)
 - mgs_wells.py
@@ -24,6 +27,7 @@
 | Instance Class | IRI Format |
 | --- | --- |
 | `me_mgs:MGS_Well` | `me_mgs_data:d.MGS-Well.<WELLNO>` |
+| `geo:Geometry` | `me_mgs_data:d.MGS-Well.geometry.<WELLNO>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
@@ -78,12 +82,6 @@
 | *DATE_EDITED* |  | No |  | *In located wells table only* |
 
 **Notes on the data:**
-- 
-
-## Schema Diagram
-- [*Draft* schema](https://lucid.app/lucidchart/16e658ef-6f61-4ce3-a770-0c410ecb194a/edit?viewport_loc=-1074%2C-511%2C3767%2C1853%2CssMfXgoENRPy&invitationId=inv_ea094a2c-59da-4347-b175-700b91e5623d)
-
-**Legend description:** (TO ADD)
 - 
 
 ## Controlled Vocabularies
