@@ -1,14 +1,15 @@
-# Illinois Wells - Illinois State Geological Survey
+# Illinois Wells - Illinois State Geological Survey (ISGS)
 
-## Overview
-
-* **Name of dataset:** ISGS Wells
-* **Source Agency:** Illinois State Geological Survey
-* **Data Source Location:** [Illinois Water Water and Related Wells ESRI Rest server](https://maps.isgs.illinois.edu/arcgis/rest/services/ILWATER/Water_and_Related_Wells2/MapServer)
-* **Metadata description:** [IL Water map interface](https://prairie-research.maps.arcgis.com/apps/webappviewer/index.html?id=e06b64ae0c814ef3a4e43a191cb57f87)
-* **Format:** GEOJSON (pulled via il-get-data-geoserver.py script)
-* **Data update interval** last updated on 11/3/2024 and contains 383413 records.
-* **Location of triples:** 
+## Dataset Overview
+| Dataset Attribute | Description |
+| --- | --- |
+| **Name of dataset:** | ISGS Wells |
+| **Source Agency:** | Illinois State Geological Survey |
+| **Data Source Location:** | [Illinois Water Water and Related Wells ESRI Rest server](https://maps.isgs.illinois.edu/arcgis/rest/services/ILWATER/Water_and_Related_Wells2/MapServer) |
+| **Metadata description:** | [IL Water map interface](https://prairie-research.maps.arcgis.com/apps/webappviewer/index.html?id=e06b64ae0c814ef3a4e43a191cb57f87) |
+| **Format:** | GEOJSON (pulled via il-get-data-geoserver.py script) |
+| **Data update interval** | last updated on 11/3/2024 and contains 383413 records |
+| **Location of triples:** |  |
 
 ## Raw Data Attributes
 
