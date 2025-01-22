@@ -37,16 +37,16 @@
 | TAX_MAP_NO | Tax Map No | ? |  | match to parcels? |
 | TAX_LOT_NO | Tax Map Lot No | ? |  | match to parcels? |
 | DRILL_DATE | Drill Date | No  |  |   |
-| DRILL_DATE_ESTIMATED | Drill Date Estimated | No |  | boolean <br/> ~15% of records |
+| DRILL_DATE_ESTIMATED | Drill Date Estimated | No |  | boolean <br/> ~11% of records |
 | WELL_DRILLER_COMPANY | Driller | No |  |  |
 | WELL_USE | Well Use | Yes | me_mgs:hasWaterUse | controlled vocabulary (see below) |
 | WELL_TYPE | Well Type | Yes | hyfo:hasAquiferType | controlled vocabulary (see below) |
-| WELL_CONSTRUCTION | Well Construction | No |  | controlled vocabulary (see below) <br/> ~19% of records |
-| WELL_DEVELOPMENT | Well Development | No |  | controlled vocabulary (see below) <br/> ~45% of records |
+| WELL_CONSTRUCTION | Well Construction | No |  | controlled vocabulary (see below) <br/> ~14% of records |
+| WELL_DEVELOPMENT | Well Development | No |  | controlled vocabulary (see below) <br/> ~38% of records |
 | CASING_LENGTH_FT | Casing Length (ft) | Yes | hyfo:hasCasingDepth | sparse data in unlocated wells |
 | OVERBURDEN_THICKNESS_FT | Overburden Thickness (ft) | Yes | hyfo:hasBedrockDepth | [sparse data] thickness of earth material until bedrock |
 | WELL_DEPTH_FT | Well Depth (ft) | Yes | hyfo:hasTotalDepth |  |
-| WELL_YIELD_MODIFIER | Yield Modifier | ? |  | '> (GREATER THAN)' or '< (LESS THAN)' <br/> ~2% of records |
+| WELL_YIELD_MODIFIER | Yield Modifier | ? |  | '> (GREATER THAN)' or '< (LESS THAN)' <br/> ~1% of records |
 | WELL_YIELD_GPM | Yield (GPM) | Yes | hyfo:hasYield | sparse in unlocated wells |
 | YIELD_DATE | Yield Date | No |  | sparse |
 | WELL_STATIC_LEVEL_FT | State Level (ft) | Yes | hyfo:hasStaticWaterDepth |  |
@@ -59,8 +59,8 @@
 | VEIN3_YIELD_GPM | Vein3 Yield (gpm) | No |  |  |
 | VEIN4_DEPTH_FT | Vein4 Depth (ft) | No |  |  |
 | VEIN4_YIELD_GPM | Vein4 Yield (gpm) | No |  |  |
-| REPLACEMENT_WELL | Replacement Well | No |  | boolean <br/> ~19% of records |
-| GEOTHERMAL_WELL | Geothermal Well | No |  | boolean <br/> ~14% of records |
+| REPLACEMENT_WELL | Replacement Well | No |  | boolean <br/> ~12% of records |
+| GEOTHERMAL_WELL | Geothermal Well | No |  | boolean <br/> ~8% of records |
 | WELL_COMMENT | Comment | No |  |  |
 | *LOCATION_METHOD* | *Location Method* | No |  | *controlled vocabulary (see below)* <br/> *In located wells table only* |
 | *LOCATION_ACCURACY* | *Location Accuracy* | No |  | *All entries are 0* <br/> *In located wells table only* |
