@@ -1,6 +1,7 @@
 @prefix dc:           <http://purl.org/dc/elements/1.1/> .
-@prefix dcterms:        <http://purl.org/dc/terms/> .
+@prefix dcterms:      <http://purl.org/dc/terms/> .
 @prefix geo:          <http://www.opengis.net/ont/geosparql#> .
+@prefix gwml2:        <http://gwml2.org/def/gwml2#> .
 @prefix hyf:          <https://www.opengis.net/def/schema/hy_features/hyf/> .
 @prefix hyfo:         <http://hyfo.spatialai.org/v1/hyfo#> .
 @prefix kwg-ont:      <http://stko-kwg.geog.ucsb.edu/lod/ontology/> .
@@ -18,16 +19,17 @@
 @prefix xml:          <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd:          <http://www.w3.org/2001/XMLSchema#> .
 
-<http://purl.org/spatialai/spatial/spatial-full> rdf:type owl:Ontology ;
-                                                 dcterms:contributor "Torsten Hahmann"@en, "David Kedrowski"@en, "Katrina Schweikert"@en ;
-                                                 dcterms:created "2024-09-04" ;
-                                                 dcterms:modified "2024-12-03" ;
-                                                 dcterms:publisher "SAWGraph Project Team"@en ;
-                                                 dcterms:creator "David Kedrowski, SAWGraph Project"@en ;
-                                                 dcterms:description "This ontology supports querying the SAWGraph Knowledge Graph. It adapts and extends concepts from HY_Features, HyFO, and GWML2"@en ;
-												 dc:source "KWG Project: http://stko-kwg.geog.ucsb.edu/lod/ontology/" ;
-                                                 dcterms:title "SAWGraph's hydrology (water) ontology - an adaptation and extension of concepts from HY_Features, HyFO, and GWML2"@en ;
-                                                 owl:versionInfo "4.0"@en .
+<http://purl.org/spatialai/spatial/water-full> rdf:type owl:Ontology ;
+                                               dcterms:contributor "Torsten Hahmann"@en, "David Kedrowski"@en, "Katrina Schweikert"@en ;
+                                               dcterms:created "2024-09-04" ;
+                                               dcterms:modified "2024-12-03" ,
+												                "2025-01-21" ;
+                                               dcterms:publisher "SAWGraph Project Team"@en ;
+                                               dcterms:creator "David Kedrowski, SAWGraph Project"@en ;
+                                               dcterms:description "This ontology supports querying the SAWGraph Knowledge Graph. It adapts and extends concepts from HY_Features, HyFO, and GWML2"@en ;
+											   dc:source "KWG Project: http://stko-kwg.geog.ucsb.edu/lod/ontology/" ;
+                                               dcterms:title "SAWGraph's hydrology (water) ontology - an adaptation and extension of concepts from HY_Features, HyFO, and GWML2"@en ;
+                                               owl:versionInfo "4.0"@en .
 
 #################################################################
 #    Annotation properties
@@ -85,6 +87,34 @@ schema:name rdf:type rdf:Property ;
 #################################################################
 #    Object Properties
 #################################################################
+
+###  http://www.opengis.net/ont/geosparql#defaultGeometry
+geo:defaultGeometry rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf geo:hasGeometry .
+
+###  http://www.opengis.net/ont/geosparql#hasGeometry
+geo:hasGeometry rdf:type owl:ObjectProperty .
+
+###  http://gwml2.org/def/gwml2#gwMonitoringHost
+gwml2:gwMonitoringHost rdf:type owl:ObjectProperty ;
+                       rdfs:domain gwml2:GW_MonitoringSite ;
+					   rdfs:range hyfo:WaterFeature .
+
+###  http://gwml2.org/def/gwml2#gwWellUnit
+gwml2:gwWellUnit rdf:type owl:ObjectProperty ;
+                 owl:equivalentProperty hyfo:tapsAquifer ;
+				 rdfs:domain gwml2:GW_Well ;
+				 rdfs:range gwml2:GW_AquiferUnit .
+
+###  http://gwml2.org/def/gwml2#gwAquiferSystemPart
+gwml2:gwAquiferSystemPart rdf:type owl:ObjectProperty ;
+                          rdfs:domain gwml2:GW_AquiferSystem ;
+						  rdfs:range gwml2:GW_Aquifer .
+
+###  http://gwml2.org/def/gwml2#gwAquiferSystem
+gwml2:gwAquiferSystem rdf:type owl:ObjectProperty ;
+                      rdfs:domain gwml2:GW_Aquifer ;
+					  rdfs:range gwml2:GW_AquiferSystem .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/downstreamWaterBody
 hyf:downstreamWaterBody rdf:type owl:ObjectProperty ;
@@ -152,13 +182,6 @@ qudt:hasQuantityKind rdf:type owl:ObjectProperty ;
 					 rdfs:label "has quantity kind" ;
 					 rdfs:range qudt:QuantityKind . 
 
-###  http://www.opengis.net/ont/geosparql#defaultGeometry
-geo:defaultGeometry rdf:type owl:ObjectProperty ;
-                    rdfs:subPropertyOf geo:hasGeometry .
-
-###  http://www.opengis.net/ont/geosparql#hasGeometry
-geo:hasGeometry rdf:type owl:ObjectProperty .
-
 
 #################################################################
 #    Datatype Properties
@@ -187,6 +210,48 @@ qudt:numericValue rdf:type owl:DatatypeProperty ;
 #    Classes
 #################################################################
 
+###  http://www.opengis.net/ont/geosparql#Feature
+geo:Feature rdf:type owl:Class ;
+            rdfs:subClassOf geo:SpatialObject ;
+            rdfs:comment "Source: GeoSPARQL" ;
+            rdfs:label "Feature" ;
+			owl:disjointWith geo:Geometry . 
+
+###  http://www.opengis.net/ont/geosparql#Geometry
+geo:Geometry rdf:type owl:Class ;
+              rdfs:subClassOf geo:SpatialObject ;
+              rdfs:comment "Source: GeoSPARQL" ;
+              rdfs:label "Geometry" .
+
+###  http://www.opengis.net/ont/geosparql#SpatialObject
+geo:SpatialObject rdf:type owl:Class ;
+                  rdfs:comment "Source: GeoSPARQL" ;
+                  rdfs:label "Spatial Object" .
+
+###  http://gwml2.org/def/gwml2#GW_MonitoringSite
+gwml2:GW_MonitoringSite rdf:type owl:Class .
+
+###  http://gwml2.org/def/gwml2#GW_Well
+gwml2:GW_Well rdf:type owl:Class ;
+              rdfs:subClassOf hyfo:SubsurfaceWaterFeature ;
+			  owl:equivalentClass hyfo:WaterWell .
+
+###  http://gwml2.org/def/gwml2#GW_HydrogeoUnit
+gwml2:GW_Well rdf:type owl:Class .
+
+###  http://gwml2.org/def/gwml2#GW_AquiferUnit
+gwml2:GW_AquiferUnit rdf:type owl:Class ;
+                     rdfs:subClassOf gwml2:GW_HydrogeoUnit ,
+					                 hyfo:AquiferWaterFeature .
+
+###  http://gwml2.org/def/gwml2#GW_AquiferSystem
+gwml2:GW_AquiferSystem rdf:type owl:Class ;
+                       rdfs:subClassOf gwml2:GW_AquiferUnit .
+
+###  http://gwml2.org/def/gwml2#GW_Aquifer
+gwml2:GW_Aquifer rdf:type owl:Class ;
+                 rdfs:subClassOf gwml2:GW_AquiferUnit .
+
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_HydroFeature
 hyf:HY_HydroFeature rdf:type owl:Class ;
                     rdfs:subClassOf geo:Feature ;
@@ -194,7 +259,8 @@ hyf:HY_HydroFeature rdf:type owl:Class ;
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_WaterBody
 hyf:HY_WaterBody rdf:type owl:Class ;
-				 rdfs:subClassOf hyf:HY_HydroFeature .
+				 rdfs:subClassOf hyf:HY_HydroFeature ;
+				 rdfs:subClassOf hyfo:SurfaceWaterFeature .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Canal
 hyf:HY_Canal rdf:type owl:Class ;
@@ -242,6 +308,35 @@ hyf:HY_ElementaryFlowPath rdf:type owl:Class ;
 hyf:HY_MainStem rdf:type owl:Class ;
 				rdfs:subClassOf hyf:HY_FlowPath .
 
+###  http://hyfo.spatialai.org/v1/WaterBody
+hyfo:WaterFeature rdf:type owl:Class ;
+                  rdfs:subClassOf geo:Feature ;
+			      owl:disjointWith hyfo:WaterFeatureRepresentation .
+
+###  http://hyfo.spatialai.org/v1/WaterBody
+hyfo:WaterFeatureRepresentation rdf:type owl:Class ;
+                                rdfs:subClassOf geo:Feature ;
+							    owl:disjointWith hyfo:WaterFeature .
+
+###  http://hyfo.spatialai.org/v1/WaterBody
+hyfo:SurfaceWaterFeature rdf:type owl:Class ;
+					     rdfs:subClassOf hyfo:WaterFeature ;
+                         owl:disjointWith hyfo:SubsurfaceWaterFeature .
+
+###  http://hyfo.spatialai.org/v1/WaterBody
+hyfo:SubsurfaceWaterFeature rdf:type owl:Class ;
+						    rdfs:subClassOf hyfo:WaterFeature ;
+                            owl:disjointWith hyfo:SurfaceWaterFeature .
+
+###  http://hyfo.spatialai.org/v1/WaterBody
+hyfo:AquiferWaterFeature rdf:type owl:Class ;
+                         rdfs:subClassOf hyfo:SubsurfaceWaterFeature .
+
+###  http://hyfo.spatialai.org/v1/WaterWell
+hyfo:WaterWell rdf:type owl:Class ;
+               rdfs:subClassOf hyfo:SubsurfaceWaterFeature ;
+			   owl:equivalentClass gwml2:GW_Well .
+
 ###  http://nhdplusv2.spatialai.org/v1/nhdplusv2#FlowPathLength
 nhdplusv2:FlowPathLength rdf:type qudt:Quantity ;
                          qudt:hasQuantityKind quantitykind:Length .
@@ -255,46 +350,3 @@ qudt:QuantityValue rdf:type owl:Class ;
 qudt:Unit rdf:type owl:Class ;
 		  rdfs:isDefinedBy <http://qudt.org/2.1/schema/qudt> ;
 		  rdfs:label "Unit" .
-
-###  http://.../WaterBody
-hyfo:WaterFeature rdf:type owl:Class ;
-               rdfs:subClassOf geo:Feature ;
-			   owl:disjointWith hyfo:WaterFeatureRepresentation .
-
-###  http://.../WaterBody
-hyfo:SurfaceWaterFeature rdf:type owl:Class ;
-					  rdfs:subClassOf hyfo:WaterFeature ;
-                      owl:disjointWith hyfo:SubsurfaceWaterFeature .
-
-###  http://.../WaterBody
-hyfo:SubsurfaceWaterFeature rdf:type owl:Class ;
-						 rdfs:subClassOf hyfo:WaterFeature ;
-                         owl:disjointWith hyfo:SurfaceWaterFeature .
-
-###  http://.../WaterBody
-hyfo:AquiferWaterFeature rdf:type owl:Class ;
-                      rdfs:subClassOf hyfo:SubsurfaceWaterFeature .
-
-###  http://.../WaterBody
-hyfo:WaterFeatureRepresentation rdf:type owl:Class ;
-                             rdfs:subClassOf geo:Feature ;
-							 owl:disjointWith hyfo:WaterFeature .
-
-###  http://www.opengis.net/ont/geosparql#Feature
-geo:Feature rdf:type owl:Class ;
-            rdfs:subClassOf geo:SpatialObject ;
-            rdfs:comment "Source: GeoSPARQL" ;
-            rdfs:label "Feature" ;
-			owl:disjointWith geo:Geometry . 
-
-###  http://www.opengis.net/ont/geosparql#Geometry
-geo:Geometry rdf:type owl:Class ;
-              rdfs:subClassOf geo:SpatialObject ;
-              rdfs:comment "Source: GeoSPARQL" ;
-              rdfs:label "Geometry" .
-
-###  http://www.opengis.net/ont/geosparql#SpatialObject
-geo:SpatialObject rdf:type owl:Class ;
-                  rdfs:comment "Source: GeoSPARQL" ;
-                  rdfs:label "Spatial Object" .
-
