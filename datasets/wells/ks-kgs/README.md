@@ -35,14 +35,14 @@
 | --- | --- | --- | --- | --- |
 | WELL_ID | Unique ID assigned by the Survey for each record | Yes | `ks_kgs:hasWellId` | `rdfs:subPropertyOf hyfo:hasPrimaryStateAgencyId` | 
 | COUNTY | Name of the county where well is located | No |  |  |
-| TOWNSHIP | 	Public Land Survey System township number, 1-35 in Kansas | ? | `kwg-ont:AdministrativeRegion_3` | Need crosswalk from numbers to names |
+| TOWNSHIP | 	Public Land Survey System township number, 1-35 in Kansas | ? | `kwg-ont:sfWithin` | Need crosswalk from numbers to names |
 | TWN_DIR | Township direction. S (south) or N (north), Always south in Kansas | No |  |  |
 | RANGE | Public Land Survey System range number, 1-43 in west and 1-25 in east | No |  |  |
 | RANGE_DIR | Range direction. E (east) or W (west) | No |  |  |
 | SECTION | The PLSS section the site is located in: 1-36 | No |  |  |
 | SPOT | The legal quarter description qualifiers list as NE, NW, SE, and SW, etc. Ordered from smallest to largest. | No  |  |   |
-| LONGITUDE | NAD 1927, generated from the legal location or entered by GPS | No |  |  |
-| LATITUDE | NAD 1927, generated from the legal location or entered by GPS | No |  |  |
+| LONGITUDE | NAD 1927, generated from the legal location or entered by GPS | Yes | `geo:hasGeometry/geo:asWKT` |  |
+| LATITUDE | NAD 1927, generated from the legal location or entered by GPS | Yes | `geo:hasGeometry/geo:asWKT` |  |
 | LONG_LAT_TYPE | Either "GPS" or "From PLSS." If calculated from PLSS, then good to the maximum quarter calls supplied. | No |  |  |
 | OWNER | Name of owner on WWC5 form | Yes | `hyfo:hasOwner` |  |
 | WELL_USE | Description of how the well is being used | Yes | `ks_kgs:hasWellUse` | `rdfs:subPropertyOf hyfo:hasWellPurpose` <br/> controlled vocabulary |
@@ -56,11 +56,48 @@
 | STATIC_DEPTH | Depth to water at time of completion, feet | Yes | `hyfo:hasStaticWaterDepth` |  |
 | EST_YIELD | Yield of well at time of completion, gallons per minute | Yes | `hyfo:hasYield` |  |
 | DRILLER | Name of driller | No |  |  |
+| CASING_TYPE |  | No |  | Not defined in either metadata source |
+| CASING_JOINTS |  | No |  | Not defined in either metadata source |
+| CASING_DIAM_1 |  | No |  | Not defined in either metadata source |
+| CASING_DEPTH_1 |  | Yes | `hyfo:hasCasingDepth` | Not defined in either metadata source |
+| CASING_DIAM_2 |  | No |  | Not defined in either metadata source |
+| CASING_DEPTH_2 |  | No |  | Not defined in either metadata source |
+| CASING_DIAM_3 |  | No |  | Not defined in either metadata source |
+| CASING_DEPTH_3 |  | No |  | Not defined in either metadata source |
+| CASING_HEIGHT |  | No |  | Not defined in either metadata source |
+| CASING_WEIGHT |  | No |  | Not defined in either metadata source |
+| CASING_THICKNESS |  | No |  | Not defined in either metadata source |
+| SCREEN_PERFORATION_MATERIAL |  | No |  | Not defined in either metadata source |
+| SCREEN_OPENINGS_TYPE |  | No |  | Not defined in either metadata source |
+| SCREEN_FROM_1 |  | No |  | Not defined in either metadata source |
+| SCREEN_TO_1 |  | No |  | Not defined in either metadata source |
+| SCREEN_FROM_2 |  | No |  | Not defined in either metadata source |
+| SCREEN_TO_2 |  | No |  | Not defined in either metadata source |
+| SCREEN_FROM_3 |  | No |  | Not defined in either metadata source |
+| SCREEN_TO_3 |  | No |  | Not defined in either metadata source |
+| SCREEN_FROM_4 |  | No |  | Not defined in either metadata source |
+| SCREEN_TO_4 |  | No |  | Not defined in either metadata source |
+| GRAVELPACK_1_FROM |  | No |  | Not defined in either metadata source |
+| GRAVELPACK_1_TO |  | No |  | Not defined in either metadata source |
+| GRAVELPACK_2_FROM |  | No |  | Not defined in either metadata source |
+| GRAVELPACK_2_TO |  | No |  | Not defined in either metadata source |
+| GRAVELPACK_3_FROM |  | No |  | Not defined in either metadata source |
+| GRAVELPACK_3_TO |  | No |  | Not defined in either metadata source |
+| GROUT_TYPE |  | No |  | Not defined in either metadata source |
+| GROUT_FROM_1 |  | No |  | Not defined in either metadata source |
+| GROUT_TO_1 |  | No |  | Not defined in either metadata source |
+| GROUT_FROM_2 |  | No |  | Not defined in either metadata source |
+| GROUT_TO_2 |  | No |  | Not defined in either metadata source |
+| GROUT_FROM_3 |  | No |  | Not defined in either metadata source |
+| GROUT_TO_3 |  | No |  | Not defined in either metadata source |
+| CONTAMINATION_SOURCE_TYPE |  | ? |  | Not defined in either metadata source |
+| CONTAM_SOURCE_DIRECTION |  | ? |  | Not defined in either metadata source |
+| CONTAM_SOURCE_DISTANCE |  | ? |  | Not defined in either metadata source |
 | WELL_KID | Well ID from Master List of Water Wells | Yes | `ks_kgs:hasWellKid` | `rdfs:subPropertyOf hyfo:hasSecondaryStateAgencyId` |
 | SCANNED | Y if the form has been scanned; N if it is not scanned yet | No |  |  |
 | URL | Link to web page for this record | ? |  | Could this be of value to users ? |
-| NAD83_LONGITUDE | NAD 1983, generated from the legal location or entered by GPS | Yes | `geo:hasGeometry/geo:asWKT` |  |
-| NAD83_LATITUDE | NAD 1983, generated from the legal location or entered by GPS | Yes | `geo:hasGeometry/geo:asWKT` |  |
+| NAD83_LONGITUDE | NAD 1983, generated from the legal location or entered by GPS | No |  |  |
+| NAD83_LATITUDE | NAD 1983, generated from the legal location or entered by GPS | No |  |  |
 | CONTRACTORS_LICENSE_NUMBER | KDHE Licence Number of the well driller | No |  |  |
 
 **Notes on the data:**
