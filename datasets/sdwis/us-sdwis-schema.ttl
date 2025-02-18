@@ -1,0 +1,120 @@
+@prefix coso: <http://sawgraph.spatialai.org/v1/contaminoso#> .
+@prefix qudt: <https://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#classes
+us_sdwis:PublicWaterSystem rdf:type owl:Class;
+    rdfs:subClassOf geo:Feature;
+    owl:equivalentClass [
+        rdf:type owl:Restriction;
+        owl:onProperty us_sdwis:hasSource;
+        owl:someValuesFrom us_sdwis:PWS-SubFeature]. #all pws have some water source, even if unidentified
+
+us_sdwis:PublicWaterSystem-CWS rdf:type owl:Class;
+    rdfs:subClassOf us_sdwis:PublicWaterSystem.
+
+us_sdwis:PublicWaterSystem-NCWS rdf:type owl:Class;
+    rdfs:subClassOf us_sdwis:PublicWaterSystem;
+    owl:disjointWith us_sdwis:PublicWaterSystem-CWS.
+
+us_sdwis:PublicWaterSystem-NTNCWS rdf:type owl:Class;
+    rdfs:subClassOf us_sdwis:PublicWaterSystem-NCWS.
+
+us_sdwis:PublicWaterSystem-TNCWS rdf:type owl:Class;
+    rdfs:subClassOf us_sdwis:PublicWaterSystem-NCWS;
+    owl:disjointWith us_sdwis:PublicWaterSystem-NTNCWS.
+
+us_sdwis:PublicWaterSystem-GW rdf:type owl:Class;
+    rdfs:subClassOf us_sdwis:PublicWaterSystem.
+
+us_sdwis:PublicWaterSystem-SW rdf:type owl:Class;
+    rdfs:subClassOf us_sdwis:PublicWaterSystem.
+
+us_sdwis:CombinedDistributionSystem rdf:type owl:Class;
+    rdfs:subClassOf geo:FeatureCollection.
+
+us_sdwis:PWS-ServiceArea rdf:type owl:Class;
+    rdfs:subClassOf geo:Feature.
+
+us_sdwis:PWS-SubFeatureType rdf:type owl:Class.
+
+us_sdwis:PWS-SubFeature rdf:type owl:Class.
+
+us_sdwis:PWS-ServiceAreaType rdf:type owl:Class.
+
+us_sdwis:PWS-SourceWaterType rdf:type owl:Class.
+
+
+## Object Properties
+us_sdwis:serviceArea rdf:type owl:ObjectProperty ;
+    rdfs:domain us_sdwis:PublicWaterSystem ;
+    rdfs:range us_sdwis:PWS-ServiceArea.
+
+us_sdwis:serviceAreaType rdf:type owl:objectProperty;
+    rdfs:domain us_sdwis:PWS-ServiceArea;
+    rdfs:range us_sdwis:PWS-ServiceAreaType.
+
+us_sdwis:inCombinedSystem rdf:type owl:ObjectProperty ;
+    rdfs:domain us_sdwis:PublicWaterSystem ;
+    rdfs:range us_sdwis:CombinedDistributionSystem.
+
+us_sdwis:hasPart rdf:type owl:ObjectProperty ;
+    rdfs:domain us_sdwis:PublicWaterSystem ;
+    rdfs:range us_sdwis:PWS-SubFeature;
+    owl:inverseOf us_sdwis:partOf. 
+
+us_sdwis:hasSource rdf:type owl:ObjectProperty, 
+            owl:AsymmetricProperty;                 
+    rdfs:domain us_sdwis:PublicWaterSystem ;
+    rdfs:range us_sdwis:PWS-SubFeature;
+    owl:inverseOf us_sdwis:sourceFor.
+
+us_sdwis:hasPermanentSource rdf:type owl:ObjectProperty;
+    rdfs:subPropertyOf us_sdwis:hasSource. 
+
+us_sdwis:sellsTo rdf:type owl:ObjectProperty;
+    rdfs:domain us_sdwis:PublicWaterSystem ;
+    rdfs:range us_sdwis:PublicWaterSystem;
+    owl:inverseOf us_sdwis:buysFrom. 
+
+us_sdwis:primarySourceType rdf:type owl:ObjectProperty;
+    rdfs:domain us_sdwis:PublicWaterSystem ;
+    rdfs:range us_sdwis:PWS-SourceWaterType.
+
+
+
+
+
+
+## Data Properties
+
+us_sdwis:hasPWSID rdf:type owl:DataProperty;
+    rdfs:domain us_sdwis:PublicWaterSystem. 
+
+us_sdwis:pwsName rdf:type owl:DataProperty;
+    rdfs:domain us_sdwis:PublicWaterSystem;
+    rdfs:subPropertyOf rdfs:label. 
+
+us_sdwis:populationServed rdf:type owl:DataProperty;
+    rdfs:domain us_sdwis:PublicWaterSystem.
+
+us_sdwis:sizeCategory rdf:type owl:DataProperty;
+    rdfs:domain us_sdwis:PublicWaterSystem.
+
+us_sdwis:hasMethod rdf:type owl:DataProperty ;
+    rdfs:domain us_sdwis:PWS-ServiceArea .
+
+us_sdwis:deactivationDate rdf:type owl:DataProperty ;
+    rdfs:domain us_sdwis:PublicWaterSystem .
+
+us_sdwis:hasOwnership rdf:type owl:DataProperty .
+
+us_sdwis:primarySource rdf:type owl:DataProperty. 
+
+us_sdwis:firstReport rdf:type owl:DataProperty.
+
+us_sdwis:lastReport rdf:type owl:DataProperty. 

@@ -1,0 +1,169 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#> .
+@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#> .
+
+us_sdwis_data:d.PWS-ServiceArea-DC a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Daycare Center" .
+
+us_sdwis_data:d.PWS-ServiceArea-DI a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Dispenser" .
+
+us_sdwis_data:d.PWS-ServiceArea-HA a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Homeowners Association" .
+
+us_sdwis_data:d.PWS-ServiceArea-HM a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Hotel/Motel" .
+
+us_sdwis_data:d.PWS-ServiceArea-HR a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Highway Rest Area" .
+
+us_sdwis_data:d.PWS-ServiceArea-IA a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Industrial/Agricultural" .
+
+us_sdwis_data:d.PWS-ServiceArea-IC a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Interstate Carrier" .
+
+us_sdwis_data:d.PWS-ServiceArea-IN a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Institution" .
+
+us_sdwis_data:d.PWS-ServiceArea-MF a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Medical Facility" .
+
+us_sdwis_data:d.PWS-ServiceArea-MH a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Mobile Home Park" .
+
+us_sdwis_data:d.PWS-ServiceArea-MP a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Mobile Home Park - Principal Residence" .
+
+us_sdwis_data:d.PWS-ServiceArea-MU a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Municipality" .
+
+us_sdwis_data:d.PWS-ServiceArea-OA a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Other Area" .
+
+us_sdwis_data:d.PWS-ServiceArea-ON a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Other Non-transient Area" .
+
+us_sdwis_data:d.PWS-ServiceArea-OR a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Other Residential" .
+
+us_sdwis_data:d.PWS-ServiceArea-OT a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Other Transient Area" .
+
+us_sdwis_data:d.PWS-ServiceArea-PA a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Recreation Area" .
+
+us_sdwis_data:d.PWS-ServiceArea-RA a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Residential Area" .
+
+us_sdwis_data:d.PWS-ServiceArea-RE a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Retail Employees" .
+
+us_sdwis_data:d.PWS-ServiceArea-RS a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Restaurant" .
+
+us_sdwis_data:d.PWS-ServiceArea-SC a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "School" .
+
+us_sdwis_data:d.PWS-ServiceArea-SI a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Sanitary Improvement District" .
+
+us_sdwis_data:d.PWS-ServiceArea-SK a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Summer Camp" .
+
+us_sdwis_data:d.PWS-ServiceArea-SR a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Secondary Residences" .
+
+us_sdwis_data:d.PWS-ServiceArea-SS a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Service Station" .
+
+us_sdwis_data:d.PWS-ServiceArea-SU a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Subdivision" .
+
+us_sdwis_data:d.PWS-ServiceArea-WB a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Water Bottler" .
+
+us_sdwis_data:d.PWS-ServiceArea-WH a us_sdwis:PWS-ServiceAreaType ;
+    rdfs:label "Wholesaler of Water" .
+
+us_sdwis_data:d.PWS-SubFeatureActivity.A a us_sdwis:PWS-SubFeatureActivity ;
+    rdfs:label "Active" .
+
+us_sdwis_data:d.PWS-SubFeatureActivity.I a us_sdwis:PWS-SubFeatureActivity ;
+    rdfs:label "Inactive" .
+
+us_sdwis_data:d.PWS-SubFeatureActivity.M a us_sdwis:PWS-SubFeatureActivity ;
+    rdfs:label "Merged with another system" .
+
+us_sdwis_data:d.PWS-SubFeatureActivity.N a us_sdwis:PWS-SubFeatureActivity ;
+    rdfs:label "Changed from public to non-public" .
+
+us_sdwis_data:d.PWS-SubFeatureActivity.P a us_sdwis:PWS-SubFeatureActivity ;
+    rdfs:label "Potential future system to be regulated" .
+
+us_sdwis_data:d.PWS-SubFeatureType.CC a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Consecutive Connection" .
+
+us_sdwis_data:d.PWS-SubFeatureType.CH a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Common Headers" .
+
+us_sdwis_data:d.PWS-SubFeatureType.CS a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Cistern" .
+
+us_sdwis_data:d.PWS-SubFeatureType.CW a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Clear Well" .
+
+us_sdwis_data:d.PWS-SubFeatureType.DS a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Distribution System/Zone" .
+
+us_sdwis_data:d.PWS-SubFeatureType.IG a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Infiltration Gallery" .
+
+us_sdwis_data:d.PWS-SubFeatureType.IN a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Intake" .
+
+us_sdwis_data:d.PWS-SubFeatureType.NN a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Non-piped, Non-purchased" .
+
+us_sdwis_data:d.PWS-SubFeatureType.NP a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Non-piped" .
+
+us_sdwis_data:d.PWS-SubFeatureType.OT a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Other" .
+
+us_sdwis_data:d.PWS-SubFeatureType.PC a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Pressure Control" .
+
+us_sdwis_data:d.PWS-SubFeatureType.PF a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Pump Facility" .
+
+us_sdwis_data:d.PWS-SubFeatureType.RC a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Roof Catchment" .
+
+us_sdwis_data:d.PWS-SubFeatureType.RS a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Reservoir" .
+
+us_sdwis_data:d.PWS-SubFeatureType.SI a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Surface Impoundment" .
+
+us_sdwis_data:d.PWS-SubFeatureType.SP a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Spring" .
+
+us_sdwis_data:d.PWS-SubFeatureType.SS a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Sampling Station" .
+
+us_sdwis_data:d.PWS-SubFeatureType.ST a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Storage" .
+
+us_sdwis_data:d.PWS-SubFeatureType.TM a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Transmission Main (Manifold)" .
+
+us_sdwis_data:d.PWS-SubFeatureType.TP a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Treatment Plant" .
+
+us_sdwis_data:d.PWS-SubFeatureType.WH a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Wellhead" .
+
+us_sdwis_data:d.PWS-SubFeatureType.WL a us_sdwis:PWS-SubFeatureType ;
+    rdfs:label "Well " .
+
