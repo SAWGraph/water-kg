@@ -36,8 +36,8 @@ output_dir = Path(__file__).resolve().parent
 pfas = Namespace(f'http://sawgraph.spatialai.org/v1/pfas#')
 coso = Namespace(f'http://sawgraph.spatialai.org/v1/contaminoso#')
 geo = Namespace(f'http://www.opengis.net/ont/geosparql#')
-qudt = Namespace(f'https://qudt.org/schema/qudt/')
-unit = Namespace(f'https://qudt.org/vocab/unit/')
+qudt = Namespace(f'http://qudt.org/schema/qudt/')
+unit = Namespace(f'http://qudt.org/vocab/unit/')
 il_isgs = Namespace(f'http://sawgraph.spatialai.org/v1/il-isgs#')
 il_isgs_data = Namespace(f'http://sawgraph.spatialai.org/v1/il-isgs-data#')
 
