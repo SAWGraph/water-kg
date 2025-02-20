@@ -42,7 +42,7 @@ _PREFIX = {
     "time": Namespace("http://www.w3.org/2006/time#"),
     "ssn": Namespace("http://www.w3.org/ns/ssn/"),
     "sosa": Namespace("http://www.w3.org/ns/sosa/"),
-    "qudt": Namespace("https://qudt.org/schema/qudt/"),
+    "qudt": Namespace("http://qudt.org/schema/qudt/"),
     "prov": Namespace("http://www.w3.org/ns/prov#")
 }
 
