@@ -35,7 +35,7 @@
 | --- | --- | --- | --- | --- |
 | WELL_ID | Unique ID assigned by the Survey for each record | Yes | `ks_kgs:hasWellId` | `rdfs:subPropertyOf hyfo:hasPrimaryStateAgencyId` | 
 | COUNTY | Name of the county where well is located | No |  |  |
-| TOWNSHIP | 	Public Land Survey System township number, 1-35 in Kansas | ? | `kwg-ont:sfWithin` | Need crosswalk from numbers to names |
+| TOWNSHIP | Public Land Survey System township number, 1-35 in Kansas | No |  | Civil townships and PLSS townships do not coincide |
 | TWN_DIR | Township direction. S (south) or N (north), Always south in Kansas | No |  |  |
 | RANGE | Public Land Survey System range number, 1-43 in west and 1-25 in east | No |  |  |
 | RANGE_DIR | Range direction. E (east) or W (west) | No |  |  |
