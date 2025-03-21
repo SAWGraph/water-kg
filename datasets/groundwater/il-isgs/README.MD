@@ -26,6 +26,7 @@
 | Instance Class | IRI Format |
 | --- | --- |
 | `il_isgs:ISGS-Aquifer` | `il_isgs_data:d.ISGS-Aquifer.?` |
+| `geo:Geometry` | `il_isgs_data:d.ISGS-Aquifer.geometry.?` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
