@@ -48,7 +48,7 @@
 | ELEVREFLONG  | Elevation reference description | No |  |  |
 | TOTAL_DEPTH  |  | Yes | `hyfo:hasTotalDepth` | Integer, includes 0 and NULL |
 | WFORMATION   | Formation | Yes | `hyfo:hasAquiferType` | Need to verify this |
-| FORM_TOP     | Formation Top | Yes | `hyfo:hasBedrockDepth` | Need to verify this |
+| FORM_TOP     | Formation Top | Yes | `hyfo:hasBedrockDepth` | Need to verify this <br/> Integer, includes 0 and NULL (and ~20 negative values?) |
 | FORM_BOTTOM  | Formation Bottom | ? |  |  |
 | PUMPGPM      | Pumping Rate | Yes | `hyfo:hasWellYield` | Integer, includes 0 and NULL |
 | FLAG_LAS     | Digitized Well Log | No |  |  |
