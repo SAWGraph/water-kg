@@ -51,15 +51,15 @@
 | OTHER_ID | Useful ID from WWC5 such as monitoring well number or oil well name | ? |  | 3rd ID ? |
 | DWR_NUMBER | Water right number if known | No |  |  |
 | DIRECTIONS | Written instructions on how to find the well | No |  |  |
-| WELL_DEPTH | Depth the well is completed, feet | Yes | `hyfo:hasTotalDepth` |  |
+| WELL_DEPTH | Depth the well is completed, feet | Yes | `hyfo:hasTotalDepth` | Decimal, includes 0 and NULL |
 | ELEV | Land surface elevation, feet | No |  |  |
-| STATIC_DEPTH | Depth to water at time of completion, feet | Yes | `hyfo:hasStaticWaterDepth` |  |
-| EST_YIELD | Yield of well at time of completion, gallons per minute | Yes | `hyfo:hasYield` |  |
+| STATIC_DEPTH | Depth to water at time of completion, feet | Yes | `hyfo:hasStaticWaterDepth` | Decimal, includes 0 and NULL (including a few negative values?) |
+| EST_YIELD | Yield of well at time of completion, gallons per minute | Yes | `hyfo:hasWellYield` | Decimal, includes 0 and NULL |
 | DRILLER | Name of driller | No |  |  |
 | CASING_TYPE |  | No |  | Not defined in either metadata source |
 | CASING_JOINTS |  | No |  | Not defined in either metadata source |
 | CASING_DIAM_1 |  | No |  | Not defined in either metadata source |
-| CASING_DEPTH_1 |  | Yes | `hyfo:hasCasingDepth` | Not defined in either metadata source |
+| CASING_DEPTH_1 |  | Yes | `hyfo:hasCasingDepth` | Not defined in either metadata source <br/> Decimal, includes 0 and NULL |
 | CASING_DIAM_2 |  | No |  | Not defined in either metadata source |
 | CASING_DEPTH_2 |  | No |  | Not defined in either metadata source |
 | CASING_DIAM_3 |  | No |  | Not defined in either metadata source |
