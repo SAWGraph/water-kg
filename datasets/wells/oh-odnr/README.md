@@ -45,15 +45,15 @@
 | OWNER |  | Yes | `hyfo:hasOwner` | Last, First or Business / Entity name |
 | LAST_NAME | If owner is a company, association, church, etc., include its full name here | No |  |  |
 | COMPLETION_DATE | The date drilling was completed | No |  |  |
-| TOTAL_DEPTH | Completed depth of the well measured in feet | Yes | `hyfo:hasTotalDepth` |  |
-| BEDROCK_DEPTH | Depth to bedrock measured in feet | Yes | `hyfo:hasBedrockDepth` |  |
+| TOTAL_DEPTH | Completed depth of the well measured in feet | Yes | `hyfo:hasTotalDepth` | Decimal values, including 0 and NULL |
+| BEDROCK_DEPTH | Depth to bedrock measured in feet | Yes | `hyfo:hasBedrockDepth` | Integer values, including 0 and NULL |
 | DEM_ELEV |  | No |  |  |
 | AQUIFER_TYPE | Formation producing the most water. If multiple formations produce similar yields, aquifer type specifies the formation best representing the character of the well | Yes | `oh_odnr:hasAquiferType` | controlled vocabulary |
 | DRILL_TYPE |  | No |  | controlled vocabulary |
-| TEST_RATE_GPM | Rate in gallons per minute | Yes | `hyfo:hasYield` |  |
-| STATIC_WATER_LEVEL_FT | Pre-pumping depth to water once well has stabilized from any pumping, drilling, or bailing  | Yes | `hyfo:hasStaticWaterDepth` |  |
+| TEST_RATE_GPM | Rate in gallons per minute | Yes | `hyfo:hasWellYield` | Decimal values, including 0 and NULL |
+| STATIC_WATER_LEVEL_FT | Pre-pumping depth to water once well has stabilized from any pumping, drilling, or bailing  | Yes | `hyfo:hasStaticWaterDepth` | Decimal values, including 0 and NULL |
 | ELEV |  | No |  |  |
-| CASE_LENGTH | Length of casing, NOT its depth | Yes | `hyfo:hasCasingDepth` |  |
+| CASE_LENGTH | Length of casing, NOT its depth | Yes | `hyfo:hasCasingDepth` | Decimal values, including 0 and NULL |
 | STR_COMP_DATE |  | No |  | Typically one day after COMPLETION_DATE |
 | HOUSE_NO | House or business address number on street (e.g., the 123 in 123 North Main St.) | No |  |  |
 | STREETNAME | Street name (e.g., the Main in 123 North Main St.). For state routes, county roads, township roads, US routes, enter the route or road number (e.g., the 423 in 123 County Road 423) | No |  |  |
