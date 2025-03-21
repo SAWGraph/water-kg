@@ -31,7 +31,7 @@
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
-| MGS Well | Description | Lift to graph | Ontology Property | Comments |
+| MGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID |  | Yes | `me_mgs:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphId` | 
 | QUADNAME |  | No |  |  |
