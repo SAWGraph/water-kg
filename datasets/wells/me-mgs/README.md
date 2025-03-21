@@ -33,9 +33,9 @@
 
 | MGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| *X* |  | Yes | geo:hasGeometry/geo:asWKT | *In located wells table only* | 
-| *Y* |  | Yes | geo:hasGeometry/geo:asWKT | *In located wells table only* |
-| WELLNO | Well Number | Yes | me_mgs:hasPrimaryStateAgencyId |  |
+| *X* |  | Yes | `geo:hasGeometry/geo:asWKT` | *In located wells table only* | 
+| *Y* |  | Yes | `geo:hasGeometry/geo:asWKT` | *In located wells table only* |
+| WELLNO | Well Number | Yes | `me_mgs:hasPrimaryStateAgencyId` |  |
 | WELL_LOCATION_TOWN | Town | ? |  | match to towns? |
 | WELL_LOCATION_ADDRESS | Address | ? |  | match to parcels? |
 | TAX_MAP_NO | Tax Map No | ? |  | match to parcels? |
@@ -43,17 +43,17 @@
 | DRILL_DATE | Drill Date | No  |  |   |
 | DRILL_DATE_ESTIMATED | Drill Date Estimated | No |  | boolean <br/> ~11% of records |
 | WELL_DRILLER_COMPANY | Driller | No |  |  |
-| WELL_USE | Well Use | Yes | me_mgs:hasWaterUse | controlled vocabulary (see below) |
-| WELL_TYPE | Well Type | Yes | hyfo:hasAquiferType | controlled vocabulary (see below) |
+| WELL_USE | Well Use | Yes | `me_mgs:hasWaterUse` | controlled vocabulary (see below) |
+| WELL_TYPE | Well Type | Yes | `hyfo:hasAquiferType` | controlled vocabulary (see below) |
 | WELL_CONSTRUCTION | Well Construction | No |  | controlled vocabulary (see below) <br/> ~14% of records |
 | WELL_DEVELOPMENT | Well Development | No |  | controlled vocabulary (see below) <br/> ~38% of records |
-| CASING_LENGTH_FT | Casing Length (ft) | Yes | hyfo:hasCasingDepth | sparse data in unlocated wells <br/> Decimal, including 0 (and 3 negative values?) |
-| OVERBURDEN_THICKNESS_FT | Overburden Thickness (ft) | Yes | hyfo:hasBedrockDepth | [sparse data] thickness of earth material until bedrock <br/> Decimal, including 0 |
-| WELL_DEPTH_FT | Well Depth (ft) | Yes | hyfo:hasTotalDepth | Decimal, including 0 |
+| CASING_LENGTH_FT | Casing Length (ft) | Yes | `hyfo:hasCasingDepth` | sparse data in unlocated wells <br/> Decimal, including 0 (and 3 negative values?) |
+| OVERBURDEN_THICKNESS_FT | Overburden Thickness (ft) | Yes | `hyfo:hasBedrockDepth` | [sparse data] thickness of earth material until bedrock <br/> Decimal, including 0 |
+| WELL_DEPTH_FT | Well Depth (ft) | Yes | `hyfo:hasTotalDepth` | Decimal, including 0 |
 | WELL_YIELD_MODIFIER | Yield Modifier | ? |  | '> (GREATER THAN)' or '< (LESS THAN)' <br/> ~1% of records |
-| WELL_YIELD_GPM | Yield (GPM) | Yes | hyfo:hasYield | sparse in unlocated wells <br/> Decimal, including 0 |
+| WELL_YIELD_GPM | Yield (GPM) | Yes | `hyfo:hasWellYield` | sparse in unlocated wells <br/> Decimal, including 0 |
 | YIELD_DATE | Yield Date | No |  | sparse |
-| WELL_STATIC_LEVEL_FT | State Level (ft) | Yes | hyfo:hasStaticWaterDepth | Decimal, including 0 (and 2 negative values?) |
+| WELL_STATIC_LEVEL_FT | State Level (ft) | Yes | `hyfo:hasStaticWaterDepth` | Decimal, including 0 (and 2 negative values?) |
 | WELL_STATIC_DATE | Static Level Date | No |  |  |
 | VEIN1_DEPTH_FT | Vein1 Depth (ft) | No |  |  |
 | VEIN1_YIELD_GPM | Vein1 Yield (gpm) | No |  |  |
@@ -75,7 +75,7 @@
 | *WELL_YIELD_CLASS* |  | No |  | *In located wells table only* |
 | *WELL _DEPTH_CLASS* |  | No |  | *In located wells table only* |
 | *WELL_OVERBURDEN_THICKNESS_CLASS* |  | No |  | *In located wells table only* |
-| WELLCARDNO |  | Yes | me_mgs:hasSecondaryStateAgencyId |  |
+| WELLCARDNO |  | Yes | `me_mgs:hasSecondaryStateAgencyId` |  |
 | HYDROFRACTURE |  | No |  |  |
 | ERROR_REPORT_URL |  | No |  |  |
 | *DATE_ENTERED* |  | No |  | *In located wells table only* |
