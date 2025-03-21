@@ -47,13 +47,13 @@
 | WELL_TYPE | Well Type | Yes | hyfo:hasAquiferType | controlled vocabulary (see below) |
 | WELL_CONSTRUCTION | Well Construction | No |  | controlled vocabulary (see below) <br/> ~14% of records |
 | WELL_DEVELOPMENT | Well Development | No |  | controlled vocabulary (see below) <br/> ~38% of records |
-| CASING_LENGTH_FT | Casing Length (ft) | Yes | hyfo:hasCasingDepth | sparse data in unlocated wells |
-| OVERBURDEN_THICKNESS_FT | Overburden Thickness (ft) | Yes | hyfo:hasBedrockDepth | [sparse data] thickness of earth material until bedrock |
-| WELL_DEPTH_FT | Well Depth (ft) | Yes | hyfo:hasTotalDepth |  |
+| CASING_LENGTH_FT | Casing Length (ft) | Yes | hyfo:hasCasingDepth | sparse data in unlocated wells <br/> Decimal, including 0 (and 3 negative values?) |
+| OVERBURDEN_THICKNESS_FT | Overburden Thickness (ft) | Yes | hyfo:hasBedrockDepth | [sparse data] thickness of earth material until bedrock <br/> Decimal, including 0 |
+| WELL_DEPTH_FT | Well Depth (ft) | Yes | hyfo:hasTotalDepth | Decimal, including 0 |
 | WELL_YIELD_MODIFIER | Yield Modifier | ? |  | '> (GREATER THAN)' or '< (LESS THAN)' <br/> ~1% of records |
-| WELL_YIELD_GPM | Yield (GPM) | Yes | hyfo:hasYield | sparse in unlocated wells |
+| WELL_YIELD_GPM | Yield (GPM) | Yes | hyfo:hasYield | sparse in unlocated wells <br/> Decimal, including 0 |
 | YIELD_DATE | Yield Date | No |  | sparse |
-| WELL_STATIC_LEVEL_FT | State Level (ft) | Yes | hyfo:hasStaticWaterDepth |  |
+| WELL_STATIC_LEVEL_FT | State Level (ft) | Yes | hyfo:hasStaticWaterDepth | Decimal, including 0 (and 2 negative values?) |
 | WELL_STATIC_DATE | Static Level Date | No |  |  |
 | VEIN1_DEPTH_FT | Vein1 Depth (ft) | No |  |  |
 | VEIN1_YIELD_GPM | Vein1 Yield (gpm) | No |  |  |
