@@ -25,20 +25,20 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| il_isgs:ISGS-Well` | `il_isgs_data:d.ISGS-Well.<API_NUMBER>` |
+| `il_isgs:ISGS-Well` | `il_isgs_data:d.ISGS-Well.<API_NUMBER>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID     | * | No |  |  |
-| API_NUMBER   | * | Yes | il_isgs:hasPrimaryStateAgencyId | used as unique identifier |
-| ISWSPNUM     |  | Yes | il_isgs:hasSecondaryStateAgencyId | present for about 40% of records |
-| STATUS       |  | Yes | is_isgs:hasWellPurpose | controlled vocabulary (see below) |
+| API_NUMBER   | * | Yes | `il_isgs:hasPrimaryStateAgencyId` | used as unique identifier |
+| ISWSPNUM     |  | Yes | `il_isgs:hasSecondaryStateAgencyId` | present for about 40% of records |
+| STATUS       |  | Yes | `is_isgs:hasWellPurpose` | controlled vocabulary (see below) |
 | STATUSLONG   | Status description | Yes |  | via controlled vocabulary (see below) |
-| LATITUDE     | * | Yes | geo:Geometry/geo:asWKT |  |
-| LONGITUDE    | * | Yes | geo:Geometry/geo:asWKT |  |
+| LATITUDE     | * | Yes | `geo:Geometry/geo:asWKT` |  |
+| LONGITUDE    | * | Yes | `geo:Geometry/geo:asWKT` |  |
 | LOCATION     |  | No |  | ?mapsheet |
-| OWNER        |  | Yes | hyfo:hasOwner | |
+| OWNER        |  | Yes | `hyfo:hasOwner` | |
 | FARM_NAME    | Well Name | No |  |  |
 | WELL         |  | No |  | matches FARM_NAME |
 | DRILLER      | Drilling company | No |  |  |
@@ -46,11 +46,11 @@
 | ELEVATION    |  | No |  |  |
 | ELEVREF      |  | No |  |  |
 | ELEVREFLONG  | Elevation reference description | No |  |  |
-| TOTAL_DEPTH  |  | Yes | hyfo:hasTotalDepth | |
-| WFORMATION   | Formation | Yes | hyfo:hasAquiferType | Need to verify this |
-| FORM_TOP     | Formation Top | Yes | hyfo:hasBedrockDepth | Need to verify this |
+| TOTAL_DEPTH  |  | Yes | `hyfo:hasTotalDepth` | Integer, includes 0 and NULL |
+| WFORMATION   | Formation | Yes | `hyfo:hasAquiferType` | Need to verify this |
+| FORM_TOP     | Formation Top | Yes | `hyfo:hasBedrockDepth` | Need to verify this |
 | FORM_BOTTOM  | Formation Bottom | ? |  |  |
-| PUMPGPM      | Pumping Rate | Yes | hyfo:hasYield |  |
+| PUMPGPM      | Pumping Rate | Yes | `hyfo:hasWellYield` | Integer, includes 0 and NULL |
 | FLAG_LAS     | Digitized Well Log | No |  |  |
 | FLAG_LOG     | Scanned Well Log   | No |  |  |
 | FLAG_CORE    | Core at ISGS | No |  |  |
