@@ -5,8 +5,8 @@
 | --- | --- |
 | **Name of dataset:** | Water Well Completion Records (WWC5) Database |
 | **Source agency:** | [Kansas Geological Survey](https://kgs.ku.edu/) |
-| **Data source location:** |  |
-| **Metadata description**: |  |
+| **Data source location:** | [Aquifer Extents](https://hub.kansasgis.org/maps/7684344eb6854fa3a6d0b567d470fd9e/about) |
+| **Metadata description**: | Specific Aquifers <br/> - [Ozark Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=0) <br/> - [Osage Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=1) <br/> - [High Plains Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=2) <br/> - [Glacial Drift Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=3) <br/> - [Flint Hills Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=4) <br/> - [Dakota Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=5) <br/> - [Alluvial Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=6) <br/> Additional Metadata <br/> - [Aquifer Types and Terminology (2000/11/21)](https://www.kgs.ku.edu/HighPlains/atlas/aptyp.htm) <br/> - [Kansas Ground Water \| Ground-water occurrence](https://www.kgs.ku.edu/Publications/Bulletins/ED10/04_occur.html) <br/> [Water Primer: Part 3 - Groundwater (pdf)](https://bookstore.ksre.ksu.edu/pubs/water-primer-part-3-groundwater_MF3022.pdf) |
 | **Other metadata** |  |
 | **Format of data**: |  |
 | **Data Update Interval**: |  |
