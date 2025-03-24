@@ -6,7 +6,7 @@
 | **Name of dataset:** | Significant Sand And Gravel Aquifers |
 | **Source agency:** | [Maine Geological Survey](https://www.maine.gov/dacf/mgs/) |
 | **Data source location:** | [MGS Significant Sand and Gravel Aquifer Maps Digital Data](https://www.maine.gov/dacf/mgs/pubs/digital/aquifers.htm) <br/> [Maine Aquifers](https://mgs-maine.opendata.arcgis.com/datasets/maine-aquifers/explore) |
-| **Metadata description**: | [Maine Aquifers](https://mgs-maine.opendata.arcgis.com/datasets/maine::maine-aquifers/about) |
+| **Metadata description**: | [Maine Aquifers \| About](https://mgs-maine.opendata.arcgis.com/datasets/maine::maine-aquifers/about) <br/> [Maine Aquifers \| About](https://maine.hub.arcgis.com/datasets/maine::maine-aquifers/about) |
 | **Other metadata** |  |
 | **Format of data**: |  |
 | **Data Update Interval**: | Last updated April 22, 2020 |
@@ -42,7 +42,7 @@
 | SOURCE |  | No |  | 12 records (of 9253) |
 | COMMENTS |  | No |  | 32 records (of 9253) |
 | AQUIFERID |  | Yes | `me_mgs:hasAquiferId` | `rdfs:subPropertyOf hyfo:hasSecondaryStateAgencyId` <br/> 9188 of 9253 values unique |
-| AQUIFERHISTORY | No |  |  |  |
+| AQUIFERHISTORY |  | No |  |  |
 | PUBLISH_DATA |  | No |  |  |
 | created_user |  | No |  |  |
 | created_date |  | No |  |  |
@@ -55,20 +55,18 @@
 - 
 
 ## Controlled Vocabularies
-**List 1. Well Use**
-- Domestic
+**List 1. ATYPE** [count]
+- 0: area not mapped as aquifer [275]
+- 1: 10-50 gallons-per-minute [4668]
+- 2: greater than 50 gallons-per-minute [297]
+- 3: island of non-aquifer material within an area mapped as aquifer [3931]
+- 4: *no definition found* [17]
+- *No value*: [65]
 
-**List 2. Well Type**
-- Bedrock
-
-**List 3. Well Construction**
-- Drilled
-
-**List 4. Well Development** 
-- None
-
-**List 5. Location_Method**
-- TAX MAP AND LOT
+**List 2. SYMBOLOGY** [count]
+- >50 GPM [298]
+- 10-50 GPM [4691]
+- Non-plotting water [4264]
 
 ## Sample Data
 
