@@ -64,7 +64,7 @@
 - *No value*: [65]
 
 **List 2. SYMBOLOGY** [count]
-- >50 GPM [298]
+- \>50 GPM [298]
 - 10-50 GPM [4691]
 - Non-plotting water [4264]
 
