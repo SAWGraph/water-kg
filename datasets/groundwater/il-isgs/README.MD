@@ -28,18 +28,20 @@
 | `il_isgs:ISGS-Aquifer` | `il_isgs_data:d.ISGS-Aquifer.?` |
 | `geo:Geometry` | `il_isgs_data:d.ISGS-Aquifer.geometry.?` |
 
-## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
-| ISGS Well | Description | Lift to graph | Ontology Property | Comments |
+## Raw Data Attribute Lists and Mapping with Ontology Concepts (TO ADD)
+### Major Bedrock Aquifers Greater Than 500 Ft
+| ISGS Aquifer | Description | Lift to graph
 | --- | --- | --- | --- | --- |
-| API_NUMBER   | * | Yes | `il_isgs:hasPrimaryStateAgencyId` | used as unique identifier |
-|  |  |  |  |  |
-
+| CODE | 0 - Major bedrock aquifers containing more than 10,000 mg/L total dissolved solids <br/>
+      1 - Major bedrock aquifers containing from 2,500 to 10,000 mg/L total dissolved solids <br/>
+      2 - Major bedrock aquifers containing less than 2,500 mg/L total dissolved solids | No |
 **Notes on the data:**
 - 
 
 ## Controlled Vocabularies
-**List 1. STATUS: STATUSLONG [number of records]**
-- **WATER: Water Well [301669]**
+**List 1. CODE ** [number of records]
+- 0: Major bedrock aquifer absent
+- 1: Major bedrock aquifer present
 
 ## Sample Data
 
