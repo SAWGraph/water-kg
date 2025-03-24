@@ -31,20 +31,19 @@
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
-| KGS Well | Description | Lift to graph | Ontology Property | Comments |
+| KGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| WELL_ID | Unique ID assigned by the Survey for each record | Yes | `ks_kgs:hasWellId` | `rdfs:subPropertyOf hyfo:hasPrimaryStateAgencyId` | 
-|  |  |  |  |  |
+| OBJECTID |  | No |  | Osage & Flint Hills Aquifers only | 
+| AREA__SQ_M |  | No |  | Osage & Flint Hills Aquifers only | 
+| Shape_Leng |  | No |  | Osage & Flint Hills Aquifers only | 
+| NAME |  | Yes | `hyfo:hasName` |  | 
+| Shape__Area |  | No |  |  |
+| Shape__Length |  | No |  |  |
 
 **Notes on the data:**
 * 
 
 ## Controlled Vocabularies
-**List 1. STATUS**
-* CONSTRUCTED
-
-**List 2. WELL_USE**
-* (unstated)/abandoned
 
 ## Sample Data
 
