@@ -53,6 +53,23 @@
 | ISGS Aquifer | Description | Lift to graph |
 | --- | --- | --- |
 | CODE | 0 - Not a potential aquifer <br/> 1 - Potential aquifer | No |
+| MS |  |  |
+| STACK_UNIT |  |  |
+| MS1 |  |  |
+| MS2 |  |  |
+| MS3 |  |  |
+| MS4 |  |  |
+| MS5 |  |  |
+| UNIT1 |  |  |
+| QUAL1 |  |  |
+| UNIT2 |  |  |
+| QUAL2 |  |  |
+| UNIT3 |  |  |
+| QUAL3 |  |  |
+| UNIT4 |  |  |
+| QUAL4 |  |  |
+| UNIT5 |  |  |
+| QUAL5 |  |  |
 
 **Notes on the data:**
 - 
