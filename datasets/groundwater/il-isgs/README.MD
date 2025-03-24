@@ -37,17 +37,22 @@
 ### Major Bedrock Aquifers Less Than 300 Ft
 | ISGS Aquifer | Description | Lift to graph |
 | --- | --- | --- |
-| CODE | 0 - Major bedrock aquifers absent <br/> 1 - Major bedrock aquifers present | No |
+| CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No |
 
 ### Major Bedrock Aquifers Less Than 500 Ft
 | ISGS Aquifer | Description | Lift to graph |
 | --- | --- | --- |
-| CODE | 0 - Major bedrock aquifers absent <br/> 1 - Major bedrock aquifers present | No |
+| CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No |
 
 ### Major Sand and Gravel Aquifers
 | ISGS Aquifer | Description | Lift to graph |
 | --- | --- | --- |
 | CODE | 0 - Major sand and gravel aquifer absent <br/> 1 - Major sand and gravel aquifer present | No |
+
+### Shallow Coarse materials
+| ISGS Aquifer | Description | Lift to graph |
+| --- | --- | --- |
+| CODE | 0 - Not a potential aquifer <br/> 1 - Potential aquifer | No |
 
 **Notes on the data:**
 - 
