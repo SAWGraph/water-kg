@@ -5,10 +5,10 @@
 | --- | --- |
 | **Name of dataset:** | Water and Related Wells |
 | **Source Agency:** | [Illinois State Geological Survey](https://isgs.illinois.edu/) |
-| **Data Source Location:** |  |
-| **Metadata description:** |  |
-| **Format:** |  |
-| **Data update interval** |  |
+| **Data Source Location:** | [Major Aquifers](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-aquifers) <br/> [Major Bedrock Aquifers at Depths Greater Than 500 Feet Below Ground Surface](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-bedrock-aquifers-depths-greater-500-feet-below-ground-surface) <br/> [Major Bedrock Aquifers Within 300 Feet of Ground Surface](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-bedrock-aquifers-within-300-feet-ground-surface <br/> [Major Bedrock Aquifers Within 500 Feet of Ground Surface](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-bedrock-aquifers-within-500-feet-ground-surface) <br/> [Major Sand and Gravel Aquifers](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-sand-and-gravel-aquifers) <br/> [Coarse-grained Materials Within 50 Feet of the Ground Surface in Illinois](https://clearinghouse.isgs.illinois.edu/data/hydrology/coarse-grained-materials-within-50-feet-ground-surface-illinois) |
+| **Metadata description:** | see *Metadata* tabs at **Data Source Locations** |
+| **Format:** | Shape files |
+| **Data update interval** | Updated April 1, 2004 |
 | **Location of triples:** |  |
 
 ## Schema Diagram (TO ADD)
@@ -52,7 +52,7 @@
 ### Shallow Coarse materials
 | ISGS Aquifer | Description | Lift to graph |
 | --- | --- | --- |
-| CODE | 0 - Not a potential aquifer <br/> 1 - Potential aquifer | No |
+| CODE | 0 - Not a potential aquifer <br/> 1 - Potential aquifer (only potential aquifers are instantiated in SAWGraph) | No |
 | MS | Item MS is the map symbol for each polygon.  It is an alphanumeric character set that describes up to five geologic units present, their order occurrence, and general thickness and depth.  Item MS is directly related to item STACK-UNIT in that STACK-UNIT is a strictly numeric designator that represents the same information as item MS.  MS consists of five concatenated (redefined) items called MS1, MS2, MS3, MS4, MS5.  Each redefined MSx(where x is 1, 2, 3, 4, 5) item represents a single geologic unit, MS1 being the uppermost and MS5 being the lowermost.  Uppercase letters indicate nonlithified a semilithified units greater than 6m (19.7 ft.) thick. Lowercase letters accompanied by asterisk indicatenonlithified and semilithified units less than 6m (19.7 ft.) thick.  Numbers unaccompanied by an asterisk indicatelithified units where the top occurs between depths of 6 to 15m (19.7-49.3 ft.) below ground surface.  Numbers accompanied by an asterisk indicate lithified units where the top occurs between depths of 0 to 6m (0-19.7 ft.) below ground surface. | No |
 | STACK_UNIT | This item is a 15 digit numeric code that indicates up to five geologic units present, their order of occurrence, and general thickness and depth.  It is directly related to item MS in that MS is an alphanumeric designator that represents the same information as STACK-UNIT.  STACK-UNIT consists of ten concatenated (redefined) items called (and in this order) UNIT1, QUAL1, UNIT2, QUAL2, UNIT3, QUAL3, UNIT4, QUAL4, UNIT5, QUAL5.  UNITx (where x is 1, 2, 3, 4, or 5) is a two digit identifier for unit name (see the table below).  QUALx is a single digit qualifier for each UNITx, giving thickness, depth and continuity information for the corresponding UNITx.  For example, QUAL1 contains a code that gives descriptive information for UNIT1.  UNIT1 is the uppermost unit, UNIT5 is the lowermost unit. | No |
 | MS1 | see MS | No |
