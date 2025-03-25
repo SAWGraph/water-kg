@@ -34,7 +34,7 @@
 | OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | fid | Internal feature number | Yes | `hyfo:hasPrimarySawgraphId` |  |
-| AQUA | Abbreviation of the aquifer name | Yes | `hyfo:hasPrimarySawgraphId` | records with "na" are ignored |
+| AQUA | Abbreviation of the aquifer name | Yes | `hyfo:hasPrimarySawgraphId` <br/> `hyfo:hasName`| records with "na" are ignored |
 | THICK | Relative thickness of the aquifer | Yes | `hyfo:hasThickness` | controlled vocabulary |
 | YIELD | Yield of the aquifer | Yes | `hyfo:hasAquiferYield` | controlled vocabularly |
 | created_by |  | No |  |  |
