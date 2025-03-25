@@ -49,8 +49,13 @@
 
 | Shapefile | Geologic Era | Principal Bedrock Type | Yield |
 | --- | --- | --- | --- |
-| mssp_bedford_cussewago | Mississippian | sandstone | \>= 5 gpm |
+| dvnn_antrim | Devonian | carbonate | \< 5 gpm |
+| dvnn_columbus_lucas | Devonian | carbonate | \>= 5 gpm |
+| dvnn_delaware_columbus | Devonian | carbonate | \>= 5 gpm |
+| dvnn_ohio_olentangy | Devonian | carbonate | \< 5 gpm |
+| dvnn_trav_dun_detroitriver | Devonian | carbonate | \>= 5 gpm |
 | mssp_bedford | Mississippian | sandstone | \< 5 gpm |
+| mssp_bedford_cussewago | Mississippian | sandstone | \>= 5 gpm |
 | mssp_berea | Mississippian | sandstone | \>= 5 gpm |
 | mssp_berea_bedford | Mississippian | sandstone | \< 5 gpm |
 | mssp_cold_sun_berea_bed | Mississippian | sandstone | \< 5 gpm |
@@ -60,26 +65,21 @@
 | mssp_sun_berea_bed | Mississippian | sandstone | \< 5 gpm |
 | mssp_sunbury | Mississippian | sandstone | \< 5 gpm |
 | mssp_undivided | Mississippian | sandstone | \< 5 gpm |
+| odvc_undivided | Ordovician | carbonate | \< 5 gpm |
+| pnlv_allgny_lower_pttsvll | Pennsylvanian | sandstone | \>= 5 gpm |
 | pnlv_allgny_pttsvll | Pennsylvanian | sandstone | \>= 5 gpm |
 | pnlv_allgny_upper_pttsvll | Pennsylvanian | sandstone | \>= 5 gpm |
-| pnlv_allgny_lower_pttsvll | Pennsylvanian | sandstone | \>= 5 gpm |
 | pnlv_mnnghla_cnmgh | Pennsylvanian | sandstone | \< 5 gpm |
 | pnlv_undivided | Pennsylvanian | sandstone | \< 5 gpm |
 | prmn_dunkard | Permian | sandstone | \< 5 gpm |
-| dvnn_columbus_lucas | Devonian | carbonate | \>= 5 gpm |
-| dvnn_delaware_columbus | Devonian | carbonate | \>= 5 gpm |
-| dvnn_trav_dun_detroitriver | Devonian | carbonate | \>= 5 gpm |
-| dvnn_antrim | Devonian | carbonate | \< 5 gpm |
-| dvnn_ohio_olentangy | Devonian | carbonate | \< 5 gpm |
 | slrn_cedar_spring_euph | Silurian | carbonate | \>= 5 gpm |
 | slrn_lockport_sublockport | Silurian | carbonate | \>= 5 gpm |
 | slrn_massie_laurel_osg_day_brass | Silurian | carbonate | \>= 5 gpm |
+| slrn_peeb_lilly_bish | Silurian | carbonate | \< 5 gpm |
 | slrn_salina | Silurian | carbonate | \>= 5 gpm |
 | slrn_salina_group | Silurian | carbonate | \>= 5 gpm |
 | slrn_tym_green | Silurian | carbonate | \>= 5 gpm |
-| slrn_peeb_lilly_bish | Silurian | carbonate | \< 5 gpm |
 | slrn_tym_green_peeb_lilly_bish | Silurian | carbonate | \< 5 gpm |
-| odvc_undivided | Ordovician | carbonate | \< 5 gpm |
 
 ### Unconsolidated/Glacial Aquifers
 | OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
