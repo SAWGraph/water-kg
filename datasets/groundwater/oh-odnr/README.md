@@ -45,6 +45,7 @@
 | Shape_STLe |  | No |  |  |
 
 **Notes on the data:**
+
 31 consolidated/bedrock aquifer shapefiles are organized as follows:
 
 | Shapefile | Geologic Era | Principal Bedrock Type | Yield |
