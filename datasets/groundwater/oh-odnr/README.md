@@ -5,8 +5,8 @@
 | --- | --- |
 | **Name of dataset:** | Water Wells of Ohio |
 | **Source agency:** | [Ohio Department of Natural Resources](https://ohiodnr.gov/home) |
-| **Data source location:** |  |
-| **Metadata description**: |  |
+| **Data source location:** | [Ohio Geology Interactive Map](https://gis.ohiodnr.gov/website/dgs/geologyviewer/#) <br/> [Groundwater Maps & Publications (safety-conservation/about-ODNR/geologic-survey)](https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/geologic-survey/groundwater-resources/groundwater-maps-publications) <br/> [Groundwater Maps & Publications (land-water/ohio-river-watershed)](https://ohiodnr.gov/discover-and-learn/land-water/ohio-river-watershed/groundwater-maps-publications) |
+| **Metadata description**: | [Descriptions of Geologic Map Units (pdf)](https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/geology/OFR98_1_Shrake_2011.pdf) |
 | **Other metadata** |  |
 | **Format of data**: |  |
 | **Data Update Interval**: |  |
