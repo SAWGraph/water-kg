@@ -33,7 +33,7 @@ where `<Aquifername>` is 'Ozark', 'Osage', 'HighPlains', 'GlacialDrive', 'FlintH
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
-`ks_kgs:hasPrimarySawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
+`ks_kgs:hasSawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
 
 | KGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
