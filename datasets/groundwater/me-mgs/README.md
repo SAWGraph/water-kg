@@ -29,7 +29,11 @@
 | `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` |
 | `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` |
 
-## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
+## Raw Data Attribute List and Mapping with Ontology Concepts
+
+**Examples of triples from data/metadata sources**
+* `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel"
+* `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other"
 
 | MGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
