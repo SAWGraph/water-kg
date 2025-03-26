@@ -25,8 +25,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `il_isgs:ISGS-Aquifer` | `il_isgs_data:d.ISGS-Aquifer.<SAWGraphId>` |
-| `geo:Geometry` | `il_isgs_data:d.ISGS-Aquifer.geometry.<SAWGraphId>` |
+| `il_isgs:ISGS_Aquifer` | `il_isgs_data:d.ISGS_Aquifer.<SAWGraphId>` |
+| `geo:Geometry` | `il_isgs_data:d.ISGS_Aquifer.geometry.<SAWGraphId>` |
 
 where `<SAWGraphId>` = `<type>-<integer>` with `<type>` = 'BedrockGT500', 'BedrockLT300', 'BedrockLt500', 'SandGravel', or 'ShallowCoarseMatls'
 
