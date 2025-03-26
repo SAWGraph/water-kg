@@ -26,8 +26,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `me_mgs:MGS-Aquifer` | `me_mgs_data:d.MGS-Aquifer.<OBJECTID>` |
-| `geo:Geometry` | `me_mgs_data:d.MGS-Aquifer.geometry.<OBJECTID>` |
+| `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` |
+| `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
