@@ -35,6 +35,12 @@ where `<Aquifername>` is 'Ozark', 'Osage', 'HighPlains', 'GlacialDrive', 'FlintH
 
 `ks_kgs:hasSawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
 
+**Examples of triples from data/metadata sources**
+* `ks_kgs:GW_Aquifer hyfo:hasAltName` "Ogalla, Great Bend Prairie, Equus Bed"
+* `ks_kgs:GW_Aquifer hyfo:hasNotes` "northern portion not potable"
+* `ks_kgs:GW_Aquifer hyfo:hasAquiferTypeDetail` "Cambro-Ordovician"
+* `ks_kgs:GW_Aquifer hyfo:hasAquiferMaterial` "dolomite"
+
 | KGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID |  | No |  | Osage & Flint Hills Aquifers only | 
