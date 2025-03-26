@@ -25,51 +25,55 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `il_isgs:ISGS-Aquifer` | `il_isgs_data:d.ISGS-Aquifer.?` |
-| `geo:Geometry` | `il_isgs_data:d.ISGS-Aquifer.geometry.?` |
+| `il_isgs:ISGS-Aquifer` | `il_isgs_data:d.ISGS-Aquifer.<SAWGraphId>` |
+| `geo:Geometry` | `il_isgs_data:d.ISGS-Aquifer.geometry.<SAWGraphId>` |
+
+where <SAWGraphId> = <type>-<integer> with <type> = 'BedrockGT500', 'BedrockLT300', 'BedrockLt500', 'SandGravel', or 'ShallowCoarseMatls'
 
 ## Raw Data Attribute Lists and Mapping with Ontology Concepts (TO ADD)
 ### Major Bedrock Aquifers Greater Than 500 Ft
-| ISGS Aquifer | Description | Lift to graph |
+| ISGS Aquifer | Description | Lift to graph | Comments |
 | --- | --- | --- |
-| CODE | 0 - Major bedrock aquifers containing more than 10,000 mg/L total dissolved solids <br/> 1 - Major bedrock aquifers containing from 2,500 to 10,000 mg/L total dissolved solids <br/> 2 - Major bedrock aquifers containing less than 2,500 mg/L total dissolved solids | No |
+| CODE | 0 - Major bedrock aquifers containing more than 10,000 mg/L total dissolved solids <br/> 1 - Major bedrock aquifers containing from 2,500 to 10,000 mg/L total dissolved solids <br/> 2 - Major bedrock aquifers containing less than 2,500 mg/L total dissolved solids | No | only CODE = 2 lifted to graph |
 
 ### Major Bedrock Aquifers Less Than 300 Ft
-| ISGS Aquifer | Description | Lift to graph |
+| ISGS Aquifer | Description | Lift to graph | Comments |
 | --- | --- | --- |
-| CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No |
+| CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No | only CODE = 1 lifted to graph |
 
 ### Major Bedrock Aquifers Less Than 500 Ft
-| ISGS Aquifer | Description | Lift to graph |
+| ISGS Aquifer | Description | Lift to graph | Comments |
 | --- | --- | --- |
-| CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No |
+| CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No | only CODE = 1 lifted to graph |
 
 ### Major Sand and Gravel Aquifers
-| ISGS Aquifer | Description | Lift to graph |
+| ISGS Aquifer | Description | Lift to graph | Comments |
 | --- | --- | --- |
-| CODE | 0 - Major sand and gravel aquifer absent <br/> 1 - Major sand and gravel aquifer present | No |
+| CODE | 0 - Major sand and gravel aquifer absent <br/> 1 - Major sand and gravel aquifer present | No | only CODE = 1 lifted to graph |
 
-### Shallow Coarse materials
-| ISGS Aquifer | Description | Lift to graph |
+### Shallow Coarse Materials
+| ISGS Aquifer | Description | Lift to graph | Comments |
 | --- | --- | --- |
-| CODE | 0 - Not a potential aquifer <br/> 1 - Potential aquifer (only potential aquifers are instantiated in SAWGraph) | No |
+| CODE | 0 - Not a potential aquifer <br/> 1 - Potential aquifer (only potential aquifers are instantiated in SAWGraph) | No | Only CODE = 1 lifted to graph |
 | MS | Item MS is the map symbol for each polygon.  It is an alphanumeric character set that describes up to five geologic units present, their order occurrence, and general thickness and depth.  Item MS is directly related to item STACK-UNIT in that STACK-UNIT is a strictly numeric designator that represents the same information as item MS.  MS consists of five concatenated (redefined) items called MS1, MS2, MS3, MS4, MS5.  Each redefined MSx(where x is 1, 2, 3, 4, 5) item represents a single geologic unit, MS1 being the uppermost and MS5 being the lowermost.  Uppercase letters indicate nonlithified a semilithified units greater than 6m (19.7 ft.) thick. Lowercase letters accompanied by asterisk indicatenonlithified and semilithified units less than 6m (19.7 ft.) thick.  Numbers unaccompanied by an asterisk indicatelithified units where the top occurs between depths of 6 to 15m (19.7-49.3 ft.) below ground surface.  Numbers accompanied by an asterisk indicate lithified units where the top occurs between depths of 0 to 6m (0-19.7 ft.) below ground surface. | No |
-| STACK_UNIT | This item is a 15 digit numeric code that indicates up to five geologic units present, their order of occurrence, and general thickness and depth.  It is directly related to item MS in that MS is an alphanumeric designator that represents the same information as STACK-UNIT.  STACK-UNIT consists of ten concatenated (redefined) items called (and in this order) UNIT1, QUAL1, UNIT2, QUAL2, UNIT3, QUAL3, UNIT4, QUAL4, UNIT5, QUAL5.  UNITx (where x is 1, 2, 3, 4, or 5) is a two digit identifier for unit name (see the table below).  QUALx is a single digit qualifier for each UNITx, giving thickness, depth and continuity information for the corresponding UNITx.  For example, QUAL1 contains a code that gives descriptive information for UNIT1.  UNIT1 is the uppermost unit, UNIT5 is the lowermost unit. | No |
-| MS1 | see MS | No |
-| MS2 | see MS | No |
-| MS3 | see MS | No |
-| MS4 | see MS | No |
-| MS5 | see MS | No |
-| UNIT1 | see STACK_UNIT | No |
-| QUAL1 | see STACK_UNIT | No |
-| UNIT2 | see STACK_UNIT | No |
-| QUAL2 | see STACK_UNIT | No |
-| UNIT3 | see STACK_UNIT | No |
-| QUAL3 | see STACK_UNIT | No |
-| UNIT4 | see STACK_UNIT | No |
-| QUAL4 | see STACK_UNIT | No |
-| UNIT5 | see STACK_UNIT | No |
-| QUAL5 | see STACK_UNIT | No |
+| STACK_UNIT | This item is a 15 digit numeric code that indicates up to five geologic units present, their order of occurrence, and general thickness and depth.  It is directly related to item MS in that MS is an alphanumeric designator that represents the same information as STACK-UNIT.  STACK-UNIT consists of ten concatenated (redefined) items called (and in this order) UNIT1, QUAL1, UNIT2, QUAL2, UNIT3, QUAL3, UNIT4, QUAL4, UNIT5, QUAL5.  UNITx (where x is 1, 2, 3, 4, or 5) is a two digit identifier for unit name (see the table below).  QUALx is a single digit qualifier for each UNITx, giving thickness, depth and continuity information for the corresponding UNITx.  For example, QUAL1 contains a code that gives descriptive information for UNIT1.  UNIT1 is the uppermost unit, UNIT5 is the lowermost unit. | No |  |
+| MS1 | see MS | No |  |
+| MS2 | see MS | No |  |
+| MS3 | see MS | No |  |
+| MS4 | see MS | No |  |
+| MS5 | see MS | No |  |
+| UNIT1 | see STACK_UNIT | No |  |
+| QUAL1 | see STACK_UNIT | No |  |
+| UNIT2 | see STACK_UNIT | No |  |
+| QUAL2 | see STACK_UNIT | No |  |
+| UNIT3 | see STACK_UNIT | No |  |
+| QUAL3 | see STACK_UNIT | No |  |
+| UNIT4 | see STACK_UNIT | No |  |
+| QUAL4 | see STACK_UNIT | No |  |
+| UNIT5 | see STACK_UNIT | No |  |
+| QUAL5 | see STACK_UNIT | No |  |
+
+**Notes on the Shallow Coarse Materials data:**
 
       UNITx   MSx             Corresponding Geologic Unit
       (MAP-SYMBOL)
@@ -127,9 +131,6 @@
       7 - Bedrock unit not present continuously between 6 and 15 meters below surface; locally present at or just below 15 meters
       8 - Bedrock unit present within 6 meters of surface
       9 - Bedrock unit not present continuously above 6 meters below surface; but then is present between 6-15 meters
-
-**Notes on the data:**
-- 
 
 ## Controlled Vocabularies
 
