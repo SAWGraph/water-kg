@@ -30,9 +30,14 @@
 
 where `<SAWGraphId>` = `<type>-<integer>` with `<type>` = 'BedrockGT500', 'BedrockLT300', 'BedrockLt500', 'SandGravel', or 'ShallowCoarseMatls'
 
-## Raw Data Attribute Lists and Mapping with Ontology Concepts (TO ADD)
+## Raw Data Attribute Lists and Mapping with Ontology Concepts
 
 `il_isgs:hasSawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
+
+**Examples of triples from data/metadata sources**
+* `il_isgs:GW_Aquifer hyfo:hasNotes` "may not yield potable water"
+* `il_isgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel: quaternary deposits within pre-glacial bedrock valleys or along modern streams and rivers"
+* `il_isgs:GW_Aquifer hyfo:hasDescription` "Illinois aquifer systems consist of adjacent potential aquifers in coarse-grained materials within 50ft of the ground surface"
 
 ### Major Bedrock Aquifers Greater Than 500 Ft
 | ISGS Aquifer | Description | Lift to graph | Comments |
