@@ -3,7 +3,7 @@
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Water Wells of Ohio |
+| **Name of dataset:** | Statewide Aquifer Maps |
 | **Source agency:** | [Ohio Department of Natural Resources](https://ohiodnr.gov/home) |
 | **Data source location:** | [Ohio Geology Interactive Map](https://gis.ohiodnr.gov/website/dgs/geologyviewer/#) <br/> [Groundwater Maps & Publications (safety-conservation/about-ODNR/geologic-survey)](https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/geologic-survey/groundwater-resources/groundwater-maps-publications) <br/> [Groundwater Maps & Publications (land-water/ohio-river-watershed)](https://ohiodnr.gov/discover-and-learn/land-water/ohio-river-watershed/groundwater-maps-publications) |
 | **Metadata description**: | [Descriptions of Geologic Map Units (pdf)](https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/geology/OFR98_1_Shrake_2011.pdf) |
@@ -27,14 +27,14 @@
 ### IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `oh_odnr:ODNR-Aquifer` | `oh_odnr_data:d.ODNR-Aquifer.<AQUA>-<fid>` |
-| `geo:Geometry` | `oh_odnr_data:d.ODNR-Aquifer.geometry.<AQUA>-<fid>` |
+| `oh_odnr:ODNR_Aquifer` | `oh_odnr_data:d.ODNR_Aquifer.<AQUA>-<fid>` |
+| `geo:Geometry` | `oh_odnr_data:d.ODNR_Aquifer.geometry.<AQUA>-<fid>` |
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| fid | Internal feature number | Yes | `hyfo:hasPrimarySawgraphId` |  |
-| AQUA | Abbreviation of the aquifer name | Yes | `hyfo:hasPrimarySawgraphId` <br/> `hyfo:hasName`| records with "na" are ignored |
+| fid | Internal feature number | Yes | `oh_odnr:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphId` |
+| AQUA | Abbreviation of the aquifer name | Yes | `oh_odnr:hasSawgraphId` <br/> `hyfo:hasName`| records with "na" are ignored |
 | THICK | Relative thickness of the aquifer | Yes | `hyfo:hasThickness` | controlled vocabulary |
 | YIELD | Yield of the aquifer | Yes | `hyfo:hasAquiferYield` | controlled vocabularly |
 | created_by |  | No |  |  |
@@ -98,13 +98,13 @@
 ### IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `oh_odnr:ODNR-Aquifer` | `oh_odnr_data:d.ODNR-Aquifer.glacial-<OBJECTID>` |
-| `geo:Geometry` | `oh_odnr_data:d.ODNR-Aquifer.geometry.glacial-<OBJECTID>` |
+| `oh_odnr:ODNR_Aquifer` | `oh_odnr_data:d.ODNR_Aquifer.glacial-<OBJECTID>` |
+| `geo:Geometry` | `oh_odnr_data:d.ODNR_Aquifer.geometry.glacial-<OBJECTID>` |
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID |  | Yes | `hyfo:hasPrimarySawgraphId` |  |
+| OBJECTID |  | Yes | `oh_odnr:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphId` |
 | LITH | lithology | No |  | controlled vocabulary |
 | THICK | thickness | Yes | `hyfo:hasThickness` | controlled vocabulary |
 | THICKCODE |  | No |  | controlled vocabulary |
