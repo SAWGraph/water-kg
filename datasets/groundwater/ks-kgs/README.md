@@ -3,7 +3,7 @@
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Kansas Aquifer Extents |
+| **Name of dataset:** | Aquifer Extents |
 | **Source agency:** | [Kansas Geological Survey](https://kgs.ku.edu/) |
 | **Data source location:** | [Aquifer Extents](https://hub.kansasgis.org/maps/7684344eb6854fa3a6d0b567d470fd9e/about) |
 | **Metadata description**: | [Ozark Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=0) <br/> [Osage Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=1) <br/> [High Plains Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=2) <br/> [Glacial Drift Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=3) <br/> [Flint Hills Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=4) <br/> [Dakota Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=5) <br/> [Alluvial Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=6) |
