@@ -8,7 +8,7 @@
 | **Data source location:** | [Aquifer Extents](https://hub.kansasgis.org/maps/7684344eb6854fa3a6d0b567d470fd9e/about) |
 | **Metadata description**: | [Ozark Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=0) <br/> [Osage Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=1) <br/> [High Plains Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=2) <br/> [Glacial Drift Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=3) <br/> [Flint Hills Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=4) <br/> [Dakota Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=5) <br/> [Alluvial Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=6) |
 | **Other metadata** | [Aquifer Types and Terminology (2000/11/21)](https://www.kgs.ku.edu/HighPlains/atlas/aptyp.htm) <br/> [Kansas Ground Water \| Ground-water occurrence](https://www.kgs.ku.edu/Publications/Bulletins/ED10/04_occur.html) <br/> [Water Primer: Part 3 - Groundwater (pdf)](https://bookstore.ksre.ksu.edu/pubs/water-primer-part-3-groundwater_MF3022.pdf) |
-| **Format of data**: | Shapefile |
+| **Format of data**: | shapefile |
 | **Data Update Interval**: | February 2, 2024 |
 | **Location of triples:** |  |
 
