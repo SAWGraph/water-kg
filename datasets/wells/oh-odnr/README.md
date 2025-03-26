@@ -26,8 +26,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `oh_odnr:ODNR-Well` | `oh_odnr_data:d.ODNR-Well.<WELL_NO>` |
-| `geo:Geometry` | `oh_odnr_data:d.ODNR-Well.geometry.<WELL_NO>` |
+| `oh_odnr:ODNR_Well` | `oh_odnr_data:d.ODNR_Well.<WELL_NO>` |
+| `geo:Geometry` | `oh_odnr_data:d.ODNR_Well.geometry.<WELL_NO>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
