@@ -25,8 +25,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `il_isgs:ISGS-Well` | `il_isgs_data:d.ISGS-Well.<API_NUMBER>` |
-| `geo:Geometry` | `il_isgs_data:d.ISGS-Well.geometry.<API_NUMBER>` |
+| `il_isgs:ISGS_Well` | `il_isgs_data:d.ISGS_Well.<API_NUMBER>` |
+| `geo:Geometry` | `il_isgs_data:d.ISGS_Well.geometry.<API_NUMBER>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
