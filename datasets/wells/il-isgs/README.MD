@@ -12,7 +12,7 @@
 | **Location of triples:** |  |
 
 ## Schema Diagram (TO ADD)
-- [*Draft* schema](https://lucid.app/lucidchart/16e658ef-6f61-4ce3-a770-0c410ecb194a/edit?viewport_loc=-1074%2C-511%2C3767%2C1853%2CssMfXgoENRPy&invitationId=inv_ea094a2c-59da-4347-b175-700b91e5623d)
+- [*Draft* schema]()
 
 **Legend description:** (TO ADD)
 - 
@@ -26,8 +26,9 @@
 | Instance Class | IRI Format |
 | --- | --- |
 | `il_isgs:ISGS-Well` | `il_isgs_data:d.ISGS-Well.<API_NUMBER>` |
+| `geo:Geometry` | `il_isgs_data:d.ISGS-Well.geometry.<API_NUMBER>` |
 
-## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
+## Raw Data Attribute List and Mapping with Ontology Concepts
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID     | * | No |  |  |
@@ -61,21 +62,21 @@
 - 
 
 ## Controlled Vocabularies
-**List 1. STATUS: STATUSLONG [number of records]**
-- **WATER: Water Well [301669]**
+**List 1. STATUS: STATUSLONG** [number of records]
+- **WATER: Water Well** [301669]
 - ENG: Engineering Test [52943]
-- **MONIT: Water Well Monitoring Well [5804]**
-- **WTST: Water Well Test Hole [5576]**
+- **MONIT: Water Well Monitoring Well** [5804]
+- **WTST: Water Well Test Hole** [5576]
 - STRAT: Stratigraphic Test [4588]
 - MINER: Mineral Test [4160]
-- **DRY: Dry Hole (water well) [2699]**
+- **DRY: Dry Hole (water well)** [2699]
 - CROP: Outcrop [1397]
 - DRYP: Dry Hole (water well), Plugged [1209]
-- **OBS: Observation Well [831]**
+- **OBS: Observation Well** [831]
 - WATERP: Water Well, Plugged [739]
 - OBSP: Observation Well, Plugged [576]
 - MSFT: Mine Shaft [557]
-- **WATRS: Water Supply Well [530]**
+- **WATRS: Water Supply Well** [530]
 - WATRSP: Water Supply Well, Plugged [417]
 - SLOPE: Slope Mine [120]
 - WTSTP: Water Well Test Hole, Plugged [102]
