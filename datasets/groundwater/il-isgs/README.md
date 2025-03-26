@@ -1,4 +1,4 @@
-# Illinois Wells - Illinois State Geological Survey (ISGS)
+# Illinois Aquifers - Illinois State Geological Survey (ISGS)
 
 ## Dataset Overview
 | Dataset Attribute | Description |
