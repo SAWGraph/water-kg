@@ -3,7 +3,7 @@
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Water and Related Wells |
+| **Name of dataset:** | Major Aquifers |
 | **Source Agency:** | [Illinois State Geological Survey](https://isgs.illinois.edu/) |
 | **Data Source Location:** | Combined data sets (zipped) <br/> - [Major Aquifers](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-aquifers) <br/> Individual Datasets <br/> - [Major Bedrock Aquifers at Depths Greater Than 500 Feet Below Ground Surface](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-bedrock-aquifers-depths-greater-500-feet-below-ground-surface) <br/> - [Major Bedrock Aquifers Within 300 Feet of Ground Surface](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-bedrock-aquifers-within-300-feet-ground-surface) <br/> - [Major Bedrock Aquifers Within 500 Feet of Ground Surface](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-bedrock-aquifers-within-500-feet-ground-surface) <br/> - [Major Sand and Gravel Aquifers](https://clearinghouse.isgs.illinois.edu/data/hydrology/major-sand-and-gravel-aquifers) <br/> - [Coarse-grained Materials Within 50 Feet of the Ground Surface in Illinois](https://clearinghouse.isgs.illinois.edu/data/hydrology/coarse-grained-materials-within-50-feet-ground-surface-illinois) |
 | **Metadata description:** | see *Metadata* tabs at **Data Source Locations** |
