@@ -26,8 +26,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `ks_kgs:KGS-Well` | `ks_kgs_data:d.KGS-Well.<WELL_ID>` |
-| `geo:Geometry` | `ks_kgs_data:d.KGS-Well.geometry.<WELL_ID>` |
+| `ks_kgs:KGS_Well` | `ks_kgs_data:d.KGS_Well.<WELL_ID>` |
+| `geo:Geometry` | `ks_kgs_data:d.KGS_Well.geometry.<WELL_ID>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
