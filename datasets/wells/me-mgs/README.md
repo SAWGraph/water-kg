@@ -26,8 +26,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `me_mgs:MGS-Well` | `me_mgs_data:d.MGS-Well.<WELLNO>` |
-| `geo:Geometry` | `me_mgs_data:d.MGS-Well.geometry.<WELLNO>` |
+| `me_mgs:MGS_Well` | `me_mgs_data:d.MGS_Well.<WELLNO>` |
+| `geo:Geometry` | `me_mgs_data:d.MGS_Well.geometry.<WELLNO>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 
