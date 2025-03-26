@@ -1,9 +1,9 @@
-# Kansas Wells - Kansas Geological Survey (KGS)
+# Kansas Aquifers - Kansas Geological Survey (KGS)
 
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Water Well Completion Records (WWC5) Database |
+| **Name of dataset:** | Kansas Aquifer Extents |
 | **Source agency:** | [Kansas Geological Survey](https://kgs.ku.edu/) |
 | **Data source location:** | [Aquifer Extents](https://hub.kansasgis.org/maps/7684344eb6854fa3a6d0b567d470fd9e/about) |
 | **Metadata description**: | [Ozark Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=0) <br/> [Osage Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=1) <br/> [High Plains Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=2) <br/> [Glacial Drift Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=3) <br/> [Flint Hills Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=4) <br/> [Dakota Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=5) <br/> [Alluvial Aquifer Extent](https://hub.kansasgis.org/datasets/KU::aquifer-extents/about?layer=6) |
@@ -26,10 +26,14 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `ks_kgs:KGS-Aquifer` | `ks_kgs_data:d.KGS-Aquifer.?` |
-| `geo:Geometry` | `ks_kgs_data:d.KGS-Aquifer.geometry.?` |
+| `ks_kgs:KGS-Aquifer` | `ks_kgs_data:d.KGS-Aquifer.<AquiferName>` |
+| `geo:Geometry` | `ks_kgs_data:d.KGS-Aquifer.geometry.<AquiferName>` |
 
-## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
+where `<Aquifername>` is 'Ozark', 'Osage', 'HighPlains', 'GlacialDrive', 'FlintHills', 'Dakota', or 'Alluvial' 
+
+## Raw Data Attribute List and Mapping with Ontology Concepts
+
+`ks_kgs:hasPrimarySawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
 
 | KGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
