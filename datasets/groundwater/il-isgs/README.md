@@ -31,6 +31,9 @@
 where `<SAWGraphId>` = `<type>-<integer>` with `<type>` = 'BedrockGT500', 'BedrockLT300', 'BedrockLt500', 'SandGravel', or 'ShallowCoarseMatls'
 
 ## Raw Data Attribute Lists and Mapping with Ontology Concepts (TO ADD)
+
+`il_isgs:hasPrimarySawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
+
 ### Major Bedrock Aquifers Greater Than 500 Ft
 | ISGS Aquifer | Description | Lift to graph | Comments |
 | --- | --- | --- | --- |
