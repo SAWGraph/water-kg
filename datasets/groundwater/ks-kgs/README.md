@@ -26,8 +26,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `ks_kgs:KGS-Aquifer` | `ks_kgs_data:d.KGS-Aquifer.<AquiferName>` |
-| `geo:Geometry` | `ks_kgs_data:d.KGS-Aquifer.geometry.<AquiferName>` |
+| `ks_kgs:KGS_Aquifer` | `ks_kgs_data:d.KGS_Aquifer.<AquiferName>` |
+| `geo:Geometry` | `ks_kgs_data:d.KGS_Aquifer.geometry.<AquiferName>` |
 
 where `<Aquifername>` is 'Ozark', 'Osage', 'HighPlains', 'GlacialDrive', 'FlintHills', 'Dakota', or 'Alluvial' 
 
