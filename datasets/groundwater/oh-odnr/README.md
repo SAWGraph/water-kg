@@ -1,4 +1,4 @@
-# Ohio Wells - Ohio Department of Natural Resources (ODNR)
+# Ohio Aquifers - Ohio Department of Natural Resources (ODNR)
 
 ## Dataset Overview
 | Dataset Attribute | Description |
@@ -29,6 +29,9 @@
 | --- | --- |
 | `oh_odnr:ODNR_Aquifer` | `oh_odnr_data:d.ODNR_Aquifer.<AQUA>-<fid>` |
 | `geo:Geometry` | `oh_odnr_data:d.ODNR_Aquifer.geometry.<AQUA>-<fid>` |
+
+**Examples of triples from data/metadata sources**
+* `il_isgs:GW_Aquifer hyfo:hasAquiferMaterial` "carbonate"
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
@@ -105,14 +108,14 @@
 | OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID |  | Yes | `oh_odnr:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphId` |
-| LITH | lithology | No |  | controlled vocabulary |
+| LITH | lithology | Yes | `hyfo:hasAquiferMaterial` | controlled vocabulary |
 | THICK | thickness | Yes | `hyfo:hasThickness` | controlled vocabulary |
 | THICKCODE |  | No |  | controlled vocabulary |
 | YIELD | yield | Yes | `hyfo:hasAquiferYield` | controlled vocabularly |
 | YIELDCODE |  | No |  | controlled vocabulary |
 | LOCAL | local aquifer name | No |  |  |
 | SETCODE |  | No |  | controlled vocabulary |
-| SETTING | hydrogeologic setting | No |  | controlled vocabulary |
+| SETTING | hydrogeologic setting | Yes | `hyfo:hasAquiferTypeDetail` | controlled vocabulary |
 | NAME | complete aquifer name <br/> a concatenation of LOCAL and SETTING | Yes | `hyfo:hasName` |  |
 | created_by |  | No |  |  |
 | created_date |  | No |  |  |
