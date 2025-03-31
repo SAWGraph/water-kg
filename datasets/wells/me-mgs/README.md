@@ -35,7 +35,7 @@
 | --- | --- | --- | --- | --- |
 | *X* |  | Yes | `geo:hasGeometry/geo:asWKT` | *In located wells table only* | 
 | *Y* |  | Yes | `geo:hasGeometry/geo:asWKT` | *In located wells table only* |
-| WELLNO | Well Number | Yes | `me_mgs:hasPrimaryStateAgencyId` |  |
+| WELLNO | Well Number | Yes | `me_mgs:hasWellNumber` |  |
 | WELL_LOCATION_TOWN | Town | ? |  | match to towns? |
 | WELL_LOCATION_ADDRESS | Address | ? |  | match to parcels? |
 | TAX_MAP_NO | Tax Map No | ? |  | match to parcels? |
@@ -43,8 +43,8 @@
 | DRILL_DATE | Drill Date | No  |  |   |
 | DRILL_DATE_ESTIMATED | Drill Date Estimated | No |  | boolean <br/> ~11% of records |
 | WELL_DRILLER_COMPANY | Driller | No |  |  |
-| WELL_USE | Well Use | Yes | `me_mgs:hasWaterUse` | controlled vocabulary (see below) |
-| WELL_TYPE | Well Type | Yes | `hyfo:hasAquiferType` | controlled vocabulary (see below) |
+| WELL_USE | Well Use | Yes | `me_mgs:hasWellUse` | controlled vocabulary (see below) |
+| WELL_TYPE | Well Type | Yes | `hyfo:hasWellType` | controlled vocabulary (see below) |
 | WELL_CONSTRUCTION | Well Construction | No |  | controlled vocabulary (see below) <br/> ~14% of records |
 | WELL_DEVELOPMENT | Well Development | No |  | controlled vocabulary (see below) <br/> ~38% of records |
 | CASING_LENGTH_FT | Casing Length (ft) | Yes | `hyfo:hasCasingDepth` | sparse data in unlocated wells <br/> Decimal, including 0 (and 3 negative values?) |
@@ -75,7 +75,7 @@
 | *WELL_YIELD_CLASS* |  | No |  | *In located wells table only* |
 | *WELL _DEPTH_CLASS* |  | No |  | *In located wells table only* |
 | *WELL_OVERBURDEN_THICKNESS_CLASS* |  | No |  | *In located wells table only* |
-| WELLCARDNO |  | Yes | `me_mgs:hasSecondaryStateAgencyId` |  |
+| WELLCARDNO |  | Yes | `me_mgs:hasWellCardNumber` |  |
 | HYDROFRACTURE |  | No |  |  |
 | ERROR_REPORT_URL |  | No |  |  |
 | *DATE_ENTERED* |  | No |  | *In located wells table only* |
