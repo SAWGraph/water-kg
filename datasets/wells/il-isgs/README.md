@@ -32,9 +32,9 @@
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID     | * | No |  |  |
-| API_NUMBER   | * | Yes | `il_isgs:hasPrimaryStateAgencyId` | used as unique identifier |
-| ISWSPNUM     |  | Yes | `il_isgs:hasSecondaryStateAgencyId` | present for about 40% of records |
-| STATUS       |  | Yes | `is_isgs:hasWellPurpose` | controlled vocabulary (see below) |
+| API_NUMBER   | * | Yes | `il_isgs:hasApiNumber` | used as unique identifier |
+| ISWSPNUM     |  | Yes | `il_isgs:hasIswsNumber` | present for about 40% of records |
+| STATUS       |  | Yes | `is_isgs:hasStatus` | controlled vocabulary (see below) |
 | STATUSLONG   | Status description | Yes |  | via controlled vocabulary (see below) |
 | LATITUDE     | * | Yes | `geo:Geometry/geo:asWKT` |  |
 | LONGITUDE    | * | Yes | `geo:Geometry/geo:asWKT` |  |
