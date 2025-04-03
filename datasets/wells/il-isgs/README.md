@@ -36,8 +36,8 @@
 | ISWSPNUM     |  | Yes | `il_isgs:hasIswsNumber` | present for about 40% of records |
 | STATUS       |  | Yes | `is_isgs:hasStatus` | controlled vocabulary (see below) |
 | STATUSLONG   | Status description | Yes |  | via controlled vocabulary (see below) |
-| LATITUDE     | * | Yes | `geo:Geometry/geo:asWKT` |  |
-| LONGITUDE    | * | Yes | `geo:Geometry/geo:asWKT` |  |
+| LATITUDE     | * | Yes | `geo:hasGeometry/geo:asWKT` |  |
+| LONGITUDE    | * | Yes | `geo:hasGeometry/geo:asWKT` |  |
 | LOCATION     |  | No |  | ?mapsheet |
 | OWNER        |  | Yes | `hyfo:hasOwner` | |
 | FARM_NAME    | Well Name | No |  |  |
