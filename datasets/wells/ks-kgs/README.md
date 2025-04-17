@@ -33,7 +33,7 @@
 
 | KGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| WELL_ID | Unique ID assigned by the Survey for each record | Yes | `ks_kgs:hasWellId` | `rdfs:subPropertyOf hyfo:hasPrimaryStateAgencyId` | 
+| WELL_ID | Unique ID assigned by the Survey for each record | Yes | `ks_kgs:hasWellId` | `rdfs:subPropertyOf hyfo:hasPrimaryStateWellId` | 
 | COUNTY | Name of the county where well is located | No |  |  |
 | TOWNSHIP | Public Land Survey System township number, 1-35 in Kansas | No |  | Civil townships and PLSS townships do not coincide |
 | TWN_DIR | Township direction. S (south) or N (north), Always south in Kansas | No |  |  |
@@ -93,7 +93,7 @@
 | CONTAMINATION_SOURCE_TYPE |  | ? |  | Not defined in either metadata source |
 | CONTAM_SOURCE_DIRECTION |  | ? |  | Not defined in either metadata source |
 | CONTAM_SOURCE_DISTANCE |  | ? |  | Not defined in either metadata source |
-| WELL_KID | Well ID from Master List of Water Wells | Yes | `ks_kgs:hasWellKid` | `rdfs:subPropertyOf hyfo:hasSecondaryStateAgencyId` |
+| WELL_KID | Well ID from Master List of Water Wells | Yes | `ks_kgs:hasWellKid` | `rdfs:subPropertyOf hyfo:hasSecondaryStateWellId` |
 | SCANNED | Y if the form has been scanned; N if it is not scanned yet | No |  |  |
 | URL | Link to web page for this record | ? |  | Could this be of value to users ? |
 | NAD83_LONGITUDE | NAD 1983, generated from the legal location or entered by GPS | No |  |  |
