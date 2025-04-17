@@ -32,7 +32,7 @@ where `<SAWGraphId>` = `<type>-<integer>` with `<type>` = 'BedrockGT500', 'Bedro
 
 ## Raw Data Attribute Lists and Mapping with Ontology Concepts
 
-`il_isgs:hasSawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
+`il_isgs:hasSawgraphAqId rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId`
 
 **Examples of triples from data/metadata sources**
 * `il_isgs:GW_Aquifer hyfo:hasNotes` "may not yield potable water"
