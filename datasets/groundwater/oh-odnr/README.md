@@ -36,7 +36,7 @@
 ### Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| fid | Internal feature number | Yes | `oh_odnr:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphId` |
+| fid | Internal feature number | Yes | `oh_odnr:hasSawgraphAqId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId` |
 | AQUA | Abbreviation of the aquifer name | Yes | `oh_odnr:hasSawgraphId` <br/> `hyfo:hasName`| records with "na" are ignored |
 | THICK | Relative thickness of the aquifer | Yes | `hyfo:hasThickness` | controlled vocabulary |
 | YIELD | Yield of the aquifer | Yes | `hyfo:hasAquiferYield` | controlled vocabularly |
