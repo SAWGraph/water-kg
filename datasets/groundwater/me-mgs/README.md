@@ -37,7 +37,7 @@
 
 | MGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID |  | Yes | `me_mgs:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphId` | 
+| OBJECTID |  | Yes | `me_mgs:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId` | 
 | QUADNAME |  | No |  |  |
 | COMPID |  | No |  |  |
 | ATYPE |  | No |  | integer IDs for SYMBOLOGY categories |
@@ -45,7 +45,7 @@
 | DRAW |  | No |  |  |
 | SOURCE |  | No |  | 12 records (of 9253) |
 | COMMENTS |  | No |  | 32 records (of 9253) |
-| AQUIFERID |  | Yes | `me_mgs:hasAquiferId` | `rdfs:subPropertyOf hyfo:hasSecondaryStateAgencyId` <br/> 9188 of 9253 values unique |
+| AQUIFERID |  | Yes | `me_mgs:hasAquiferId` | `rdfs:subPropertyOf hyfo:hasSecondaryStateAqId` <br/> 9188 of 9253 values unique |
 | AQUIFERHISTORY |  | No |  |  |
 | PUBLISH_DATA |  | No |  |  |
 | created_user |  | No |  |  |
