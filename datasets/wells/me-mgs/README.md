@@ -35,7 +35,7 @@
 | --- | --- | --- | --- | --- |
 | *X* |  | Yes | `geo:hasGeometry/geo:asWKT` | *In located wells table only* | 
 | *Y* |  | Yes | `geo:hasGeometry/geo:asWKT` | *In located wells table only* |
-| WELLNO | Well Number | Yes | `me_mgs:hasWellNumber` |  |
+| WELLNO | Well Number | Yes | `me_mgs:hasWellNumber` | `rdfs:subPropertyOf hyfo:hasPrimaryStateWellId` |
 | WELL_LOCATION_TOWN | Town | ? |  | match to towns? |
 | WELL_LOCATION_ADDRESS | Address | ? |  | match to parcels? |
 | TAX_MAP_NO | Tax Map No | ? |  | match to parcels? |
@@ -75,7 +75,7 @@
 | *WELL_YIELD_CLASS* |  | No |  | *In located wells table only* |
 | *WELL _DEPTH_CLASS* |  | No |  | *In located wells table only* |
 | *WELL_OVERBURDEN_THICKNESS_CLASS* |  | No |  | *In located wells table only* |
-| WELLCARDNO |  | Yes | `me_mgs:hasWellCardNumber` |  |
+| WELLCARDNO |  | Yes | `me_mgs:hasWellCardNumber` | These are nearly but not quite unique <br/> `rdfs:subPropertyOf hyfo:hasSecondaryStateWellId` |
 | HYDROFRACTURE |  | No |  |  |
 | ERROR_REPORT_URL |  | No |  |  |
 | *DATE_ENTERED* |  | No |  | *In located wells table only* |
