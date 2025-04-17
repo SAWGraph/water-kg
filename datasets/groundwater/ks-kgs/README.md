@@ -33,7 +33,7 @@ where `<Aquifername>` is 'Ozark', 'Osage', 'HighPlains', 'GlacialDrive', 'FlintH
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
-`ks_kgs:hasSawgraphId rdfs:subPropertyOf hyfo:hasPrimarySawgraphId`
+`ks_kgs:hasSawgraphAqId rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId`
 
 **Examples of triples from data/metadata sources**
 * `ks_kgs:GW_Aquifer hyfo:hasAltName` "Ogalla, Great Bend Prairie, Equus Bed"
