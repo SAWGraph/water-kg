@@ -32,8 +32,8 @@
 | ISGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID     | * | No |  |  |
-| API_NUMBER   | * | Yes | `il_isgs:hasApiNumber` | used as unique identifier |
-| ISWSPNUM     |  | Yes | `il_isgs:hasIswsNumber` | present for about 40% of records |
+| API_NUMBER   | * | Yes | `il_isgs:hasApiNumber` | used as unique identifier <br/> `rdfs:subPropertyOf hyfo:hasPrimaryStateWellId` |
+| ISWSPNUM     |  | Yes | `il_isgs:hasIswsNumber` | present for about 40% of records <br/> `rdfs:subPropertyOf hyfo:hasSecondaryStateWellId` |
 | STATUS       |  | Yes | `is_isgs:hasStatus` | controlled vocabulary (see below) |
 | STATUSLONG   | Status description | Yes |  | via controlled vocabulary (see below) |
 | LATITUDE     | * | Yes | `geo:hasGeometry/geo:asWKT` |  |
