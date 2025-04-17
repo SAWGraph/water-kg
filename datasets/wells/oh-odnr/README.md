@@ -34,7 +34,7 @@
 | MGS Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID |  | No |  |  |
-| WELL_NO | ODNR Well Log Number (?) | Yes | `oh_odnr:hasWellNo` | `rdfs:subPropertyOf hyfo:hasPrimaryStateAgencyId` |
+| WELL_NO | ODNR Well Log Number (?) | Yes | `oh_odnr:hasWellNo` | `rdfs:subPropertyOf hyfo:hasPrimaryStateWellId` |
 | TYPE |  | No |  | Always W |
 | WELL_USE | Primary well use. DOMESTIC includes residential and private wells. AGRIC/IRRIG includes livestock watering, lawn watering, agricultural, golf course, and barn wells. MUNICIPAL is for city, village, or town wells, and PUBLIC/SEMI-PUB is for schools, restaurants, gas stations, and rest areas | Yes | `oh_odnr:hasWellUse` | `rdfs:subPropertyOf hyfo:hasWellPurpose` <br/> controlled vocabulary |
 | LONG83 |  | Yes | `geo:hasGeometry/geo:asWKT` |  |
