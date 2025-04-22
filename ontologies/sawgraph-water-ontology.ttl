@@ -161,7 +161,8 @@ hyf:downstreamWaterBody rdf:type owl:ObjectProperty ;
 						owl:inverseOf hyf:upstreamWaterBody ;
 				        rdfs:label "hyf:downstreamWaterBody"^^xsd:string ;
 				        rdfs:comment "Identifies another waterbody immediately downstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the waterbody"^^xsd:string ;
-						rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+						rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						                 <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/realizedCatchment
 hyf:realizedCatchment rdf:type owl:ObjectProperty ;
@@ -169,14 +170,16 @@ hyf:realizedCatchment rdf:type owl:ObjectProperty ;
 					  rdfs:range hyf:HY_Catchment ;
 				      rdfs:label "hyf:realizedCatchment"^^xsd:string ;
 				      rdfs:comment "Identifies the one and only one catchment that is realized by a particular feature"^^xsd:string ;
-					  rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+					  rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						               <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/upstreamWaterBody
 hyf:upstreamWaterBody rdf:type owl:ObjectProperty ;
 					  owl:inverseOf hyf:downstreamWaterBody ;
 				      rdfs:label "hyf:upstreamWaterBody"^^xsd:string ;
 				      rdfs:comment "Identifies another waterbody immediately upstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the waterbody"^^xsd:string ;
-					  rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+					  rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						               <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ### HY_Features (SAWGraph extension) ###
 
@@ -224,6 +227,7 @@ hyf:partOfFlowpath rdf:type owl:ObjectProperty ;
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/upstreamFlowPath
 hyf:upstreamFlowPath rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf hyf:upstreamWaterBody ;
 					 owl:inverseOf hyf:downstreamFlowPath ;
 				     rdfs:label "hyf:upstreamFlowPath"^^xsd:string ;
 				     rdfs:comment "Identifies another flowpath immediately upstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the flowpath"^^xsd:string .
@@ -391,84 +395,96 @@ hyf:HY_Canal rdf:type owl:Class ;
 			 rdfs:subClassOf hyf:HY_WaterBody ;
 			 rdfs:label "hyf:HY_Canal"^^xsd:string ;
 			 rdfs:comment "a body of surface water, participating in a hydrographic network, that is special due to its artificial origin (man-made)"^^xsd:string ;
-			 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+			 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						      <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Catchment
 hyf:HY_Catchment rdf:type owl:Class ;
 				 rdfs:subClassOf hyf:HY_HydroFeature ;
 				 rdfs:label "hyf:HY_Catchment"^^xsd:string ;
 				 rdfs:comment "captures the union of catchment and hydro nexus, and the multiple realizations of the holistic catchment concept"^^xsd:string ;
-				 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+				 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						          <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_CatchmentArea
 hyf:HY_CatchmentArea rdf:type owl:Class ;
                      rdfs:subClassOf hyf:HY_CatchmentRealization ;
 				     rdfs:label "hyf:HY_CatchmentArea"^^xsd:string ;
 				     rdfs:comment "Two-dimensional (areal) hydrology-specific realization of the holistic catchment"^^xsd:string ;
-					 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+					 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						              <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_CatchmentDivide
 hyf:HY_CatchmentDivide rdf:type owl:Class ;
                        rdfs:subClassOf hyf:HY_CatchmentRealization ;
 				       rdfs:label "hyf:HY_CatchmentDivide"^^xsd:string ;
 				       rdfs:comment "One-dimensional (linear) feature that is a hydrology-specific realization of the holistic catchment"^^xsd:string ;
-					   rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+					   rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						                <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_CatchmentRealization
 hyf:HY_CatchmentRealization rdf:type owl:Class ;
                             rdfs:subClassOf hyfo:WaterFeatureRepresentation ;
 				            rdfs:label "hyf:HY_CatchmentRealization"^^xsd:string ;
 				            rdfs:comment "based on the idea that there are multiple hydrology-specific perspectives of the holistic catchment concept that are used to describe a catchment as a unit of study shared across sub-domains and studies"^^xsd:string ;
-							rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+							rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						                     <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Estuary
 hyf:HY_Estuary rdf:type owl:Class ;
 			   rdfs:subClassOf hyf:HY_WaterBody ;
 			   rdfs:label "hyf:HY_Estuary"^^xsd:string ;
 			   rdfs:comment "a body of surface water, participating in a hydrographic network, made special due to branching and its interaction with the open sea"^^xsd:string ;
-			   rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+			   rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						        <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_FlowPath
 hyf:HY_FlowPath rdf:type owl:Class ;
 				rdfs:subClassOf hyfo:WaterFeatureRepresentation ;
 				rdfs:label "hyf:HY_FlowPath"^^xsd:string ;
 				rdfs:comment "realizes a catchment specifically as a path connecting the inflow and outflow of the catchment it realizes"^^xsd:string ;
-				rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+				rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						         <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_HydroFeature
 hyf:HY_HydroFeature rdf:type owl:Class ;
                     rdfs:subClassOf geo:Feature ;
 				    rdfs:label "hyf:HY_HydroFeature"^^xsd:string ;
-				    rdfs:comment "hydrology-specific instance of the General Feature metaclass (as defined in the OGC General Feature Model, GFM); a basic feature to reflect the properties that all hydrologic features have"^^xsd:string ;
-					rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+				    rdfs:comment "a basic feature to reflect the properties that all hydrologic features have"^^xsd:string ;
+					rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						             <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Impoundment
 hyf:HY_Impoundment rdf:type owl:Class ;
 				   rdfs:subClassOf hyf:HY_WaterBody ;
 				   rdfs:label "hyf:HY_Impoundment"^^xsd:string ;
 				   rdfs:comment "a body of surface water, participating in a hydrographic network, seen as being special due to being formed by collecting water, for example in the case of a dam"^^xsd:string ;
-				   rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+				   rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						            <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Lagoon
 hyf:HY_Lagoon rdf:type owl:Class ;
 			  rdfs:subClassOf hyf:HY_WaterBody ;
 			  rdfs:label "hyf:HY_Lagoon"^^xsd:string ;
 			  rdfs:comment "a body of surface water, participating in a hydrographic network, which is special due to its shallow depth and interaction with the open sea"^^xsd:string ;
-			  rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+			  rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						       <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Lake
 hyf:HY_Lake rdf:type owl:Class ;
 			rdfs:subClassOf hyf:HY_WaterBody ;
 			rdfs:label "hyf:HY_Lake"^^xsd:string ;
 			rdfs:comment "a body of surface water, participating in a hydrographic network, made special due to its considerable size"^^xsd:string ;
-			rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+			rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						     <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_River
 hyf:HY_River rdf:type owl:Class ;
 			 rdfs:subClassOf hyf:HY_WaterBody ;
 		     rdfs:label "hyf:HY_River"^^xsd:string ;
 			 rdfs:comment "a body of surface water, participating in a hydrographic network, which is special due to its property to permanently or temporarily flow"^^xsd:string ;
-			 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+			 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						      <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_WaterBody
 hyf:HY_WaterBody rdf:type owl:Class ;
@@ -476,7 +492,8 @@ hyf:HY_WaterBody rdf:type owl:Class ;
 				 rdfs:subClassOf hyfo:SurfaceWaterFeature ;
 				 rdfs:label "hyf:HY_WaterBody"^^xsd:string ;
 				 rdfs:comment "A waterbody is part of the hydrographic network and is either standing in a depression or flowing in a channel, which are parts of the channel network"^^xsd:string ;
-				 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI .
+				 rdfs:isDefinedBy "https://docs.ogc.org/is/14-111r6/14-111r6.html"^^xsd:anyURI ,
+						          <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
 ### HY_Features (SAWGraph extension) ###
 
@@ -548,7 +565,7 @@ hyfo:WaterWell rdf:type owl:Class ;
                rdfs:subClassOf hyfo:SubsurfaceWaterFeature ;
 			   owl:equivalentClass gwml2:GW_Well ;
 			   rdfs:label "hyfo:WaterWell"^^xsd:string ;
-			   rdfs:comment "A well water feature including water, container, and void"^^xsd:string .
+			   rdfs:comment "A water well, with focus on the hole/shaft itself (see gwml2:GW_Well)"^^xsd:string .
 
 ### NHDPlus V2 ###
 
