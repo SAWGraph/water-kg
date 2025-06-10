@@ -4,16 +4,18 @@
 # This query returns aquifers and a few of their attributes
 # NOTE: New and improved aquifers, aquifer systems, and data are coming
 
-PREFIX gwml: <http://www.opengis.net/gwml-main/2.2/>
+PREFIX gwml2: <http://gwml2.org/def/gwml2#>
 PREFIX me_mgs: <http://sawgraph.spatialai.org/v1/me_mgs#>
+PREFIX saw-water: <http://sawgraph.spatialai.org/v1/saw_water#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT * WHERE {
     SERVICE <repository:Hydrology> {
         # Select aquifers and desired attributes
-    	?aq rdf:type gwml:GW_Aquifer ;
-        	me_mgs:SAWidAquifer ?aqid ;
-        	rdfs:comment ?aqcomment .
+    	?aquifer rdf:type gwml2:GW_Aquifer ;
+        	me_mgs:meMgsAqId ?MGS_id ;
+        	saw-water:aquiferType ?type ;
+        	rdfs:label ?description .
     }
 }
