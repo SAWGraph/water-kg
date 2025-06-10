@@ -2,29 +2,28 @@
 # CQ 3 (low complexity)
 # What surface water bodies are downstream from a particular S2 cell?
 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX schema: <https://schema.org/>
-
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
-PREFIX saw_water: <http://sawgraph.spatialai.org/v1/saw_water#>
+PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
+PREFIX schema: <https://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?fl_ds ?fl_ds_type ?fl_ds_name WHERE {
+SELECT DISTINCT ?upstream_flowline ?us_fl_name ?downstream_flowline ?ds_fl_name ?ds_fl_ftype WHERE {
     SERVICE <repository:Hydrology> {
-		?fl rdf:type hyf:HY_FlowPath ;
-		kwg-ont:sfCrosses <http://stko-kwg.geog.ucsb.edu/lod/resource/s2.level13.5526595845832572928> ;
+		?upstream_flowline rdf:type hyf:HY_FlowPath ;
+		                   spatial:connectedTo <http://stko-kwg.geog.ucsb.edu/lod/resource/s2.level13.5526595845832572928> ;
 		# find all flowlines downstream of them
-		# "+" gets the transitive closure, alternatively we can use the hyf:downstreamWaterbodyTC relation
-		hyf:downstreamWaterbodyTC ?fl_ds ;		
-		#geo:hasGeometry/geo:asWKT ?fl_wkt .
+		# "+" gets the transitive closure, alternatively we can use the hyf:downstreamWaterBodyTC relation
+		                   hyf:downstreamWaterBodyTC ?downstream_flowline ;
+		                   geo:hasGeometry/geo:asWKT ?us_fl_geom .
 		# If available, pull the GNIS name for each flowline
-		OPTIONAL { ?fl schema:name ?fl_name . }
-		OPTIONAL { ?fl_ds schema:name ?fl_ds_name . }
-		# Retrieve the flowline type for each flowline and filter out 'Coastline'
-		?fl_ds saw_water:hasFTYPE ?fl_ds_type .
-		#?fl_ds geo:hasGeometry/geo:asWKT ?fl_ds_wkt .
-		FILTER ( ?fl_ds_type != "Coastline" )
+		OPTIONAL { ?upstream_flowline schema:name ?us_fl_name . }
+		OPTIONAL { ?downstream_flowline schema:name ?ds_fl_name . }
+#		# Retrieve the flowline type and geometry for each downstream flowline
+		?downstream_flowline nhdplusv2:hasFTYPE ?ds_fl_ftype ;
+			                 geo:hasGeometry/geo:asWKT ?ds_fl_geom .
 	}
-}
+} ORDER BY ?downstream_flowline
