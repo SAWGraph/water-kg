@@ -1,17 +1,19 @@
 
 # Hydrology basics
-# Retrieve all water bodies excluding flowlines
+# Retrieve all water bodies that are reservoirs
 #
-# This query retrieves water bodies that are not flowlines
-#    That is, lakes/ponds/bogs, etc. instead of streams/rivers/canals, et al.
+# This query retrieves water bodies that are reservoirs
+#    Not LakePond, SwampMarsh, or Inundation Area
 
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX schema: <https://schema.org/>
 
 SELECT * WHERE {
-    ?s rdf:type hyf:HY_WaterBody .
-    FILTER NOT EXISTS { ?s rdf:type hyf:HY_FlowPath }
-    OPTIONAL { ?s schema:name ?name . }
-} ORDER BY ?name
+    ?waterbody rdf:type hyf:HY_WaterBody ;
+               nhdplusv2:hasFTYPE ?ftype .
+    VALUES ?ftype { 'Reservoir' } 
+    OPTIONAL { ?waterbody schema:name ?name . }
+}
