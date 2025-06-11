@@ -1,4 +1,4 @@
-# Hydrology and S2L13_AdminRegions basics
+# Hydrology and Spatial basics
 # Retrieve all waterbodies in Penobscot County, Maine
 # 
 # This query returns the waterbodies that intersect Penobscot County in Maine
@@ -7,24 +7,23 @@
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?wblabel WHERE {
-    SERVICE <repository:Hydrology> {
-        # Select waterbodies
-    	?wb rdf:type hyf:HY_WaterBody ;
-        	rdfs:label ?wblabel .
-        # Find S2 cells that intersect the water bodies		
-		?s2cell kwg-ont:sfWithin | kwg-ont:sfOverlaps ?wb .
-    }
-        
-    SERVICE <repository:S2L13_AdminRegions> {
-        # Make sure only s2 cells are considered
+SELECT DISTINCT ?waterbody ?wb_name WHERE {
+    SERVICE <repository:Spatial> {
         # Find S2 cells that intersect the county
         #    FIPS code 23019: 23 for Maine and 019 for Penobscot County
         ?s2cell rdf:type kwg-ont:S2Cell_Level13 ;
-        		kwg-ont:sfWithin | kwg-ont:sfOverlaps kwgr:administrativeRegion.USA.23019 .
-
+        	spatial:connectedTo kwgr:administrativeRegion.USA.23019 .
     }
-} ORDER BY ?wblabel
+    
+    SERVICE <repository:Hydrology> {
+        # Select waterbodies and their names (if they have one)
+    	?waterbody rdf:type hyf:HY_WaterBody .
+        OPTIONAL { ?waterbody rdfs:label ?wb_name . }
+        # Find S2 cells that intersect the water bodies		
+	?s2cell spatial:connectedTo ?waterbody .
+    }
+} ORDER BY ?waterbody
