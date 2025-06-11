@@ -16,14 +16,14 @@ SELECT DISTINCT ?waterbody ?wb_name WHERE {
         # Find S2 cells that intersect the county
         #    FIPS code 23019: 23 for Maine and 019 for Penobscot County
         ?s2cell rdf:type kwg-ont:S2Cell_Level13 ;
-        	spatial:connectedTo kwgr:administrativeRegion.USA.23019 .
+                spatial:connectedTo kwgr:administrativeRegion.USA.23019 .
     }
     
     SERVICE <repository:Hydrology> {
         # Select waterbodies and their names (if they have one)
-    	?waterbody rdf:type hyf:HY_WaterBody .
+        ?waterbody rdf:type hyf:HY_WaterBody .
         OPTIONAL { ?waterbody rdfs:label ?wb_name . }
         # Find S2 cells that intersect the water bodies		
-	?s2cell spatial:connectedTo ?waterbody .
+        ?s2cell spatial:connectedTo ?waterbody .
     }
 } ORDER BY ?waterbody
