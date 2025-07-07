@@ -7,3 +7,4 @@ datasets/wells/il-isgs/il-isgs-wells.ttl
 data/il-isgs/il-wells.geojson
 data/mgs_wells/Maine_Well_Database_-_Unlocated_Wells.csv
 data/mgs_wells/Maine_Well_Database_-_Well_Depth.csv
+data/mgs_wells/Maine_Well_Database_-_Well_Depth_original.csv
