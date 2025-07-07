@@ -23,15 +23,16 @@ from pathlib import Path
 code_dir = Path(__file__).resolve().parent.parent.parent.parent
 print(code_dir)
 sys.path.insert(0, str(code_dir))
-from datasets.wells.me-mgs.variable import NAME_SPACE, _PREFIX
-from datasets import utilities
+# from datasets.wells.me-mgs.variable import NAME_SPACE, _PREFIX
+from variable import NAME_SPACE, _PREFIX
+# from datasets import utilities
 
 
 ## declare variables
 logname = "log"
 
 ## data path
-root_folder =Path(__file__).resolve().parent.parent.parent
+root_folder = Path(__file__).resolve().parent.parent.parent
 data_dir = root_folder / "data/mgs_wells/"
 metadata_dir = root_folder / "data/mgs_wells/metadata/"
 output_dir = Path(__file__).resolve().parent #root_folder / "code/MGS_wells/"
@@ -40,7 +41,7 @@ me_mgs = Namespace(f"http://sawgraph.spatialai.org/v1/me-mgs#")
 me_mgs_data = Namespace(f"http://sawgraph.spatialai.org/v1/me-mgs-data#")
 
 
-## data dictioaries -- for controlled vocabularies
+## data dictionaries -- for controlled vocabularies
 
 # with open(metadata_dir + 'analysis_lab.csv', mode='r') as infile:
 #     reader = csv.reader(infile)
@@ -58,7 +59,7 @@ logging.info("Running triplification for MGS Wells")
 
 def main():
     #unlocated wells
-    mgs_wells_unlocated_df = pd.read_csv(data_dir / 'Maine_Well_Database_-_Unlocated_Wells.csv', header=0, encoding='ISO-8859-1', low_memory=False)
+    mgs_wells_unlocated_df = pd.read_csv(data_dir / 'Maine_Well_Database_-_Unlocated_Wells.csv', header=0, low_memory=False)
     logger = logging.getLogger('Data loaded to dataframe.')
 
     kg, towns = triplify_well_data(mgs_wells_unlocated_df, _PREFIX)
@@ -104,6 +105,7 @@ def get_attributes(row):
     try:
         well_point = shapely.Point((row['LONGITUDE'], row['LATITUDE']))
         geom = well_point.wkt
+        print(geom)
     except:
         geom = None
 
@@ -118,11 +120,11 @@ def triplify_well_data(df, _PREFIX):
     ## materialize each well record
     df.info()
 
-<<<<<<< HEAD
-    if get_towns:     
-=======
+# <<<<<<< HEAD
+#     if get_towns:
+# =======
     if get_towns:
->>>>>>> 6768acf (Add maine and illinois well scripts,  readmes, and schemas)
+# >>>>>>> 6768acf (Add maine and illinois well scripts,  readmes, and schemas)
         #get dcids for each unique town
         towns = df.WELL_LOCATION_TOWN.unique()
         town_dcid = {}
