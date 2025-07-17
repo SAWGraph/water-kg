@@ -53,24 +53,24 @@ sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX, find_s2_intersects_poly
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Groundwater')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Groundwater')
 
 ### INPUT Filename ###
 # isgs_bedrocklt500_aq_shp_path: Illinois major bedrock aquifers (at least 70 gpm)
 # isgs_sandgravel_aq_shp_path: Illinois major sand and gravel aquifers (at least 70 gpm)
 # isgs_coarsemtls_aq_shp_path: Illinois coarse-grained materials potential aquifers (5 to 70 gpm)
-isgs_bedrocklt500_aq_shp_path = '../Geospatial/Illinois/IL_Major_Aquifers/il_bedrock_lt500ft_aqs.shp'
-isgs_sandgravel_aq_shp_path = '../Geospatial/Illinois/IL_Major_Aquifers/il_maj_sand_gravel_aqs.shp'
-isgs_coarsemtls_aq_shp_path = '../Geospatial/Illinois/IL_Major_Aquifers/il_shallow_coarse_mtls_fixed_aqs.shp'
+isgs_bedrocklt500_aq_shp_path = '../../Geospatial/Illinois/IL_Major_Aquifers/il_bedrock_lt500ft_aqs.shp'
+isgs_sandgravel_aq_shp_path = '../../Geospatial/Illinois/IL_Major_Aquifers/il_maj_sand_gravel_aqs.shp'
+isgs_coarsemtls_aq_shp_path = '../../Geospatial/Illinois/IL_Major_Aquifers/il_shallow_coarse_mtls_fixed_aqs.shp'
 
 ### OUTPUT Filenames ###
 # isgs_coarsemtls_aqsys_shp_path: the final saved output from the .shp processing steps; also an input to triplification
 #                                 it consists of dissolved coarse-grained materials aquifers to create aquifer systems
 # aq_ttl_file: the resulting (output) .ttl file for aquifers
 # aqsys_ttl_file: the resulting (output) .ttl file for aquifer systems
-isgs_coarsemtls_aqsys_shp_path = '../Geospatial/Illinois/IL_Major_Aquifers/il_shallow_coarse_mtls_fixed_aq_sys.shp'
-aq_ttl_file = 'ttl_files/il_isgs_aquifers.ttl'
-aqsys_ttl_file = 'ttl_files/il_saw_aqsystems.ttl'
+isgs_coarsemtls_aqsys_shp_path = '../../Geospatial/Illinois/IL_Major_Aquifers/il_shallow_coarse_mtls_fixed_aq_sys.shp'
+aq_ttl_file = 'ttl_files/il_17_isgs_aquifers.ttl'
+aqsys_ttl_file = 'ttl_files/il_17_saw_aqsystems.ttl'
 
 ### VARIABLES ###
 # When True, prints column names, epsg value, and size (rows & columns) for each processing step GeoDataFrame
