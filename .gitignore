@@ -1,6 +1,9 @@
-# flowlines files
-datasets/flowlines/DS_Flowline_Query_distance_checks.xlsx
+################################
+# flowlines files & folders
+################################
+
 datasets/flowlines/*.ipynb
+datasets/flowlines/DS_Flowline_Query_distance_checks.xlsx
 datasets/flowlines/ME_Flowline_Network.gexf
 datasets/flowlines/Surface_Water.qgz
 datasets/flowlines/US_NHD_Flowline_HUC01-2ttl_nxTC.py
@@ -10,36 +13,62 @@ datasets/flowlines/OLD/
 datasets/flowlines/Orphaned_flowlines/
 datasets/flowlines/ttl_files/
 
-# sdwis files
+################################
+# groundwater files & folders
+################################
+
+datasets/groundwater/Aquifer_Attributes.xlsx
+
+datasets/groundwater/il-isgs/logs/
+datasets/groundwater/il-isgs/ttl_files/
+
+datasets/groundwater/me-mgs/*.ipynb
+datasets/groundwater/me-mgs/Maine_Aquifers_&_Wells_2.qgz
+datasets/groundwater/me-mgs/QGIS_processing_notes.txt
+datasets/groundwater/me-mgs/.ipynb_checkpoints/
+datasets/groundwater/me-mgs/logs/
+datasets/groundwater/me-mgs/OLD/
+datasets/groundwater/me-mgs/ttl_files/
+
+################################
+# sdwis files & folders
+################################
+
 datasets/sdwis/ttl_files/
 
-# surface_water files
+################################
+# surface_water files & folders
+################################
+
 datasets/surface_water/*.ipynb
 datasets/surface_water/.ipynb_checkpoints/
 datasets/surface_water/logs/
 datasets/surface_water/OLD/
 datasets/surface_water/ttl_files/
 
-# wells files
+################################
+# wells files & folders
+################################
+
 datasets/wells/Well_Attributes.xlsx
 datasets/wells/Wells_Across_States.qgz
 
-datasets/wells/il-isgs/il-isgs-wellsGeo.ttl
-datasets/wells/il-isgs/il-isgs-wells.ttl
 datasets/wells/il-isgs/*.ipynb
 datasets/wells/il-isgs/*.tsv
+datasets/wells/il-isgs/il-isgs-wells.ttl
+datasets/wells/il-isgs/il-isgs-wellsGeo.ttl
 datasets/wells/il-isgs/README_2025-01-22_ISGS.MD
 datasets/wells/il-isgs/.ipynb_checkpoints/
-datasets/wells/il-isgs/ttl_files
 datasets/wells/il-isgs/__pycache__/
+datasets/wells/il-isgs/ttl_files
 
+datasets/wells/me-mgs/*.ipynb
+datasets/wells/me-mgs/log
+datasets/wells/me-mgs/mgs_wells_located_output.ttl
+datasets/wells/me-mgs/mgs_wells_unlocated_output.ttl
+datasets/wells/me-mgs/README_2025-01-22_MGS.MD
 datasets/wells/me-mgs/towns_located.ttl
 datasets/wells/me-mgs/towns_unlocated.ttl
-datasets/wells/me-mgs/mgs_wells_unlocated_output.ttl
-datasets/wells/me-mgs/mgs_wells_located_output.ttl
-datasets/wells/me-mgs/README_2025-01-22_MGS.MD
-datasets/wells/me-mgs/log
-datasets/wells/me-mgs/*.ipynb
 datasets/wells/me-mgs/.ipynb_checkpoints/
 datasets/wells/me-mgs/__pycache__/
 datasets/wells/me-mgs/ttl_files/
