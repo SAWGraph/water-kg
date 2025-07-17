@@ -1,3 +1,15 @@
+# Flowlines files
+datasets/flowlines/DS_Flowline_Query_distance_checks.xlsx
+datasets/flowlines/*.ipynb
+datasets/flowlines/ME_Flowline_Network.gexf
+datasets/flowlines/Surface_Water.qgz
+datasets/flowlines/US_NHD_Flowline_HUC01-2ttl_nxTC.py
+datasets/flowlines/.ipynb_checkpoints/
+datasets/flowlines/logs/
+datasets/flowlines/OLD/
+datasets/flowlines/Orphaned_flowlines/
+datasets/flowlines/ttl_files/
+
 # Wells output files
 datasets/wells/me-mgs/towns_located.ttl
 datasets/wells/me-mgs/towns_unlocated.ttl
