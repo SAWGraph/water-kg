@@ -35,6 +35,7 @@ datasets/wells/me-mgs/towns_unlocated.ttl
 datasets/wells/me-mgs/mgs_wells_unlocated_output.ttl
 datasets/wells/me-mgs/mgs_wells_located_output.ttl
 datasets/wells/me-mgs/README_2025-01-22_MGS.MD
+datasets/wells/me-mgs/log
 datasets/wells/me-mgs/*.ipynb
 datasets/wells/me-mgs/.ipynb_checkpoints/
 datasets/wells/me-mgs/__pycache__/
