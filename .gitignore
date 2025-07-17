@@ -28,13 +28,17 @@ datasets/wells/il-isgs/*.tsv
 datasets/wells/il-isgs/README_2025-01-22_ISGS.MD
 datasets/wells/il-isgs/.ipynb_checkpoints/
 datasets/wells/il-isgs/ttl_files
-datasets/wells/me-mgs/__pycache__/
+datasets/wells/il-isgs/__pycache__/
 
 datasets/wells/me-mgs/towns_located.ttl
 datasets/wells/me-mgs/towns_unlocated.ttl
 datasets/wells/me-mgs/mgs_wells_unlocated_output.ttl
 datasets/wells/me-mgs/mgs_wells_located_output.ttl
+datasets/wells/me-mgs/README_2025-01-22_MGS.MD
+datasets/wells/me-mgs/*.ipynb
+datasets/wells/me-mgs/.ipynb_checkpoints/
 datasets/wells/me-mgs/__pycache__/
+datasets/wells/me-mgs/ttl_files/
 
 data/il-isgs/il-wells.geojson
 
