@@ -57,19 +57,19 @@ sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX, find_s2_intersects_poly
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Groundwater')
+os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Hydrology/Groundwater')
 
 ### INPUT Filename ###
 # mgs_aquifer_shp_path: This is a fixed version of the file from the Maine Geological Survey (MGS)
 # s2_file: Level 13 S2 cells that overlap/are within Maine
-mgs_aquifer_shp_path = '../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-fixed.shp'
+mgs_aquifer_shp_path = '../../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-fixed.shp'
 
 ### OUTPUT Filenames ###
 # mgs_aqs_shp_outfile: the final saved output from the .shp processing steps; also the input to triplification
 # aq_ttl_file: the resulting (output) .ttl file
-mgs_aqs_shp_outfile = '../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-processed.shp'
-aq_ttl_file = 'ttl_files/me_mgs_aquifers.ttl'
-aqs_ttl_file = 'ttl_files/me_saw_aqsystems.ttl'
+mgs_aqs_shp_outfile = '../../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-processed.shp'
+aq_ttl_file = 'ttl_files/me_23_mgs_aquifers.ttl'
+aqs_ttl_file = 'ttl_files/me_23_saw_aqsystems.ttl'
 
 ### VARIABLES ###
 # When True, prints column names, epsg value, and size (rows & columns) for each processing step GeoDataFrame
