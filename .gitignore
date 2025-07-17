@@ -10,6 +10,13 @@ datasets/flowlines/OLD/
 datasets/flowlines/Orphaned_flowlines/
 datasets/flowlines/ttl_files/
 
+# surface water files
+datasets/surface water/*.ipynb
+datasets/flowlines/.ipynb_checkpoints/
+datasets/flowlines/logs/
+datasets/flowlines/OLD/
+datasets/flowlines/ttl_files/
+
 # Wells output files
 datasets/wells/me-mgs/towns_located.ttl
 datasets/wells/me-mgs/towns_unlocated.ttl
