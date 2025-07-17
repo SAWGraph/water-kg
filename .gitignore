@@ -17,16 +17,27 @@ datasets/surface_water/logs/
 datasets/surface_water/OLD/
 datasets/surface_water/ttl_files/
 
-# Wells output files
+# Wells files
+datasets/wells/Well_Attributes.xlsx
+datasets/wells/Wells_Across_States.qgz
+
+datasets/wells/il-isgs/il-isgs-wellsGeo.ttl
+datasets/wells/il-isgs/il-isgs-wells.ttl
+datasets/wells/il-isgs/*.ipynb
+datasets/wells/il-isgs/*.tsv
+datasets/wells/il-isgs/README_2025-01-22_ISGS.MD
+datasets/wells/il-isgs/.ipynb_checkpoints/
+datasets/wells/il-isgs/ttl_files
+datasets/wells/me-mgs/__pycache__/
+
 datasets/wells/me-mgs/towns_located.ttl
 datasets/wells/me-mgs/towns_unlocated.ttl
 datasets/wells/me-mgs/mgs_wells_unlocated_output.ttl
 datasets/wells/me-mgs/mgs_wells_located_output.ttl
-datasets/wells/il-isgs/il-isgs-wellsGeo.ttl
-datasets/wells/il-isgs/il-isgs-wells.ttl
+datasets/wells/me-mgs/__pycache__/
 
-# Wells input files
 data/il-isgs/il-wells.geojson
+
 data/mgs_wells/Maine_Well_Database_-_Unlocated_Wells.csv
 data/mgs_wells/Maine_Well_Database_-_Well_Depth.csv
 data/mgs_wells/Maine_Well_Database_-_Well_Depth_original.csv
