@@ -157,7 +157,7 @@ gwml2:gwWellUnit rdf:type owl:ObjectProperty ;
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/downstreamWaterBody
 hyf:downstreamWaterBody rdf:type owl:ObjectProperty ;
-						rdfs:subPropertyOf hyf:downstreamWaterBodyTC ;
+						rdfs:subPropertyOf nhdplusv2:downstreamWaterBodyTC ;
 						owl:inverseOf hyf:upstreamWaterBody ;
 				        rdfs:label "hyf:downstreamWaterBody"^^xsd:string ;
 				        rdfs:comment "Identifies another waterbody immediately downstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the waterbody"^^xsd:string ;
@@ -183,63 +183,63 @@ hyf:upstreamWaterBody rdf:type owl:ObjectProperty ;
 
 ### HY_Features (SAWGraph extension) ###
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/downstreamFlowPath
-hyf:downstreamFlowPath rdf:type owl:ObjectProperty ;
-					   rdfs:subPropertyOf hyf:downstreamFlowPathTC ;
-					   rdfs:subPropertyOf hyf:downstreamWaterBody ;
-					   owl:inverseOf hyf:upstreamFlowPath ;
-				       rdfs:label "hyf:downstreamFlowPath"^^xsd:string ;
-				       rdfs:comment "Identifies another flowpath immediately downstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the flowpath"^^xsd:string .
-
-###  https://www.opengis.net/def/schema/hy_features/hyf/downstreamFlowPathTC
-hyf:downstreamFlowPathTC rdf:type owl:ObjectProperty ,
-								  owl:TransitiveProperty ;
-						 rdfs:subPropertyOf hyf:downstreamWaterBodyTC ;
-						 rdfs:domain hyf:HY_FlowPath ;
-						 rdfs:range hyf:HY_FlowPath ;
-				         rdfs:label "hyf:downstreamFlowPathTC"^^xsd:string ;
-				         rdfs:comment "The transitive closure of the hyf:downstreamFlowPath object property"^^xsd:string .
+###  http://nhdplusv2.spatialai.org/v1/nhdplusv2#downstreamWaterBodyTC
+nhdplusv2:downstreamWaterBodyTC rdf:type owl:ObjectProperty ,
+								         owl:TransitiveProperty ;
+						        rdfs:domain _:UnionHydrofeatureWaterfeaturerealization ;
+						        rdfs:range _:UnionHydrofeatureWaterfeaturerealization ;
+				                rdfs:label "nhdplusv2:downstreamWaterBodyTC"^^xsd:string ;
+				                rdfs:comment "The transitive closure of the nhdplusv2:downstreamWaterBody object property"^^xsd:string .
 
 _:UnionHydrofeatureWaterfeaturerealization rdf:type owl:Class ;
-                                              owl:unionOf ( hyf:HY_HydroFeature hyfo:WaterFeatureRealization ) .
+                                           owl:unionOf ( hyf:HY_HydroFeature hyfo:WaterFeatureRepresentation ) .
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/downstreamWaterBodyTC
-hyf:downstreamWaterBodyTC rdf:type owl:ObjectProperty ,
-								   owl:TransitiveProperty ;
-						  rdfs:domain _:UnionHydrofeatureWaterfeaturerealization ;
-						  rdfs:range _:UnionHydrofeatureWaterfeaturerealization ;
-				          rdfs:label "hyf:downstreamWaterBodyTC"^^xsd:string ;
-				          rdfs:comment "The transitive closure of the hyf:downstreamWaterBody object property"^^xsd:string .
+###  http://nhdplusv2.spatialai.org/v1/nhdplusv2#downstreamFlowPath
+nhdplusv2:downstreamFlowPath rdf:type owl:ObjectProperty ;
+					         rdfs:subPropertyOf nhdplusv2:downstreamFlowPathTC ,
+					                            hyf:downstreamWaterBody ;
+					         owl:inverseOf nhdplusv2:upstreamFlowPath ;
+				             rdfs:label "nhdplusv2:downstreamFlowPath"^^xsd:string ;
+				             rdfs:comment "Identifies another flowpath immediately downstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the flowpath"^^xsd:string .
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/associatedCatchmentArea
-hyf:associatedCatchmentArea rdf:type owl:ObjectProperty ;
-					        rdfs:domain nhdplusv2:FlowPath ;
-					        rdfs:range hyf:HY_CatchmentArea ;
-				            rdfs:label "hyf:associatedCatchmentArea"^^xsd:string ;
-				            rdfs:comment "Identifies the one and only one catchment area that is associated with a particular flowpath"^^xsd:string .
+###  http://nhdplusv2.spatialai.org/v1/nhdplusv2#downstreamFlowPathTC
+nhdplusv2:downstreamFlowPathTC rdf:type owl:ObjectProperty ,
+								        owl:TransitiveProperty ;
+						       rdfs:subPropertyOf nhdplusv2:downstreamWaterBodyTC ;
+						       rdfs:domain hyf:HY_FlowPath ;
+						       rdfs:range hyf:HY_FlowPath ;
+				               rdfs:label "nhdplusv2:downstreamFlowPathTC"^^xsd:string ;
+				               rdfs:comment "The transitive closure of the nhdplusv2:downstreamFlowPath object property"^^xsd:string .
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/partOfFlowPath
-hyf:partOfFlowPath rdf:type owl:ObjectProperty ;
-				   rdfs:domain nhdplusv2:FlowLine ;
-				   rdfs:range nhdplusv2:FlowPath ;
-				   rdfs:label "hyf:partOfFlowPath"^^xsd:string ;
-				   rdfs:comment "Connects an elementary flowpath (e.g., NHDFlowline) to any non-elementary flowpath it is a part of"^^xsd:string .
+###  http://nhdplusv2.spatialai.org/v1/nhdplusv2#upstreamFlowPath
+nhdplusv2:upstreamFlowPath rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf hyf:upstreamWaterBody ;
+					       owl:inverseOf nhdplusv2:downstreamFlowPath ;
+				           rdfs:label "nhdplusv2:upstreamFlowPath"^^xsd:string ;
+				           rdfs:comment "Identifies another flowpath immediately upstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the flowpath"^^xsd:string .
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/upstreamFlowPath
-hyf:upstreamFlowPath rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf hyf:upstreamWaterBody ;
-					 owl:inverseOf hyf:downstreamFlowPath ;
-				     rdfs:label "hyf:upstreamFlowPath"^^xsd:string ;
-				     rdfs:comment "Identifies another flowpath immediately upstream, allowing network navigation without knowing an inflow or outflow of the catchment realized by the flowpath"^^xsd:string .
+###  http://nhdplusv2.spatialai.org/v1/nhdplusv2#partOfFlowPath
+nhdplusv2:partOfFlowPath rdf:type owl:ObjectProperty ;
+				         rdfs:domain nhdplusv2:FlowLine ;
+				         rdfs:range nhdplusv2:FlowPath ;
+				         rdfs:label "nhdplusv2:partOfFlowPath"^^xsd:string ;
+				         rdfs:comment "Connects an elementary flowpath (e.g., NHDFlowline) to any non-elementary flowpath it is a part of"^^xsd:string .
+
+###  http://nhdplusv2.spatialai.org/v1/nhdplusv2#associatedCatchmentArea
+nhdplusv2:associatedCatchmentArea rdf:type owl:ObjectProperty ;
+					              rdfs:domain nhdplusv2:FlowPath ;
+					              rdfs:range hyf:HY_CatchmentArea ;
+				                  rdfs:label "nhdplusv2:associatedCatchmentArea"^^xsd:string ;
+				                  rdfs:comment "Identifies the one and only one catchment area that is associated with a particular flowpath"^^xsd:string .
 
 ### Hydro Foundational Ontology ###
 
-###  http://hyfo.spatialai.org/v1/hyfo#isRealizedByWFT
-hyfo:isRealizedByWFT rdf:type owl:ObjectProperty ;
+###  http://hyfo.spatialai.org/v1/hyfo#isRepresentedByWFR
+hyfo:isRepresentedByWFR rdf:type owl:ObjectProperty ;
 					    rdfs:domain hyfo:WaterFeature ;
-					    rdfs:range hyfo:WaterFeatureRealization ;
-				        rdfs:label "hyfo:isRealizedByWFT"^^xsd:string ;
-				        rdfs:comment "Relates a water feature to a realization of that water feature"^^xsd:string .
+					    rdfs:range hyfo:WaterFeatureRepresentation ;
+				        rdfs:label "hyfo:isRepresentedByWFR"^^xsd:string ;
+				        rdfs:comment "Relates a water feature to a representation of that water feature"^^xsd:string .
 
 ### NHDPlus V2 ###
 
@@ -424,7 +424,7 @@ hyf:HY_CatchmentDivide rdf:type owl:Class ;
 
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_CatchmentRealization
 hyf:HY_CatchmentRealization rdf:type owl:Class ;
-                            rdfs:subClassOf hyfo:WaterFeatureRealization ;
+                            rdfs:subClassOf hyfo:WaterFeatureRepresentation ;
 				            rdfs:label "hyf:HY_CatchmentRealization"^^xsd:string ;
 				            rdfs:comment "based on the idea that there are multiple hydrology-specific perspectives of the holistic catchment concept that are used to describe a catchment as a unit of study shared across sub-domains and studies"^^xsd:string ;
 							rdfs:isDefinedBy <https://docs.ogc.org/is/14-111r6/14-111r6.html> ,
@@ -497,7 +497,7 @@ hyf:HY_WaterBody rdf:type owl:Class ;
 
 ### NHDPlus V2 ###
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Flowline
+###  https://nhdplusv2.spatialai.org/v1/nhdplusv2#FlowLine
 nhdplusv2:FlowLine rdf:type owl:Class ;
 				   rdfs:subClassOf nhdplusv2:FlowPath ;
 				   rdfs:label "nhdplusv2:FlowLine"^^xsd:string ;
@@ -505,18 +505,18 @@ nhdplusv2:FlowLine rdf:type owl:Class ;
 				   rdfs:comment "area of associated catchment may be zero (per hydrologic fabric logic model)"^^xsd:string ;
 				   rdfs:comment "can be part of at most one mainstem"^^xsd:string ;
 				   rdfs:subClassOf [ rdf:type owl:Restriction ;
-				                     owl:onProperty hyf:partOfFlowPath ;
+				                     owl:onProperty nhdplusv2:partOfFlowPath ;
 								     owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
 								     owl:onClass nhdplusv2:MainStem
 								   ] .
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/flowpath
+###  https://nhdplusv2.spatialai.org/v1/nhdplusv2#FlowPath
 nhdplusv2:FlowPath rdf:type owl:Class ;
 			       rdfs:subClassOf hyf:HY_FlowPath ;
 			       rdfs:label "nhdplusv2:FlowPath"^^xsd:string ;
 			       rdfs:comment "any non-atomic/non-elementary kind of HY_FlowPath comprised of a contiguous set of atomic/elementary flowpaths"^^xsd:string .
 
-###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Mainstem
+###  https://nhdplusv2.spatialai.org/v1/nhdplusv2#MainStem
 nhdplusv2:MainStem rdf:type owl:Class ;
 				   rdfs:subClassOf nhdplusv2:FlowPath ;
 				   rdfs:label "nhdplusv2:MainStem"^^xsd:string ;
@@ -561,10 +561,10 @@ hyfo:WaterFeature rdf:type owl:Class ;
 				  rdfs:label "hyfo:WaterFeature"^^xsd:string ;
 				  rdfs:comment "A complete water feature including water, container, and void; includes surface and subsurface water features"^^xsd:string .
 
-###  http://hyfo.spatialai.org/v1/hyfo#WaterFeatureRealization
-hyfo:WaterFeatureRealization rdf:type owl:Class ;
+###  http://hyfo.spatialai.org/v1/hyfo#WaterFeatureRepresentation
+hyfo:WaterFeatureRepresentation rdf:type owl:Class ;
                                 rdfs:subClassOf geo:Geometry ;
-				                rdfs:label "hyfo:WaterFeatureRealization"^^xsd:string ;
+				                rdfs:label "hyfo:WaterFeatureRepresentation"^^xsd:string ;
 				                rdfs:comment "A realization of a water feature (for example, a line or polygon)"^^xsd:string .
 
 ###  http://hyfo.spatialai.org/v1/hyfo#WaterWell
@@ -641,7 +641,7 @@ qudt:Unit rdf:type owl:Class ;
 
 [ rdf:type owl:AllDisjointClasses ;
   owl:members ( hyfo:WaterFeature
-				hyfo:WaterFeatureRealization
+				hyfo:WaterFeatureRepresentation
 			  )
 ] .
 
