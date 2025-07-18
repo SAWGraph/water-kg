@@ -8,7 +8,7 @@ datasets/flowlines/ME_Flowline_Network.gexf
 datasets/flowlines/Surface_Water.qgz
 datasets/flowlines/US_NHD_Flowline_HUC01-2ttl_nxTC.py
 datasets/flowlines/.ipynb_checkpoints/
-datasets/flowlines/data/
+datasets/data/
 datasets/flowlines/logs/
 datasets/flowlines/OLD/
 datasets/flowlines/Orphaned_flowlines/
@@ -43,7 +43,7 @@ datasets/sdwis/ttl_files/
 
 datasets/surface_water/*.ipynb
 datasets/surface_water/.ipynb_checkpoints/
-datasets/surface_water/data/
+datasets/data/
 datasets/surface_water/logs/
 datasets/surface_water/OLD/
 datasets/surface_water/ttl_files/
