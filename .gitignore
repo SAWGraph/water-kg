@@ -43,6 +43,7 @@ datasets/sdwis/ttl_files/
 
 datasets/surface_water/*.ipynb
 datasets/surface_water/.ipynb_checkpoints/
+datasets/surface_water/data/
 datasets/surface_water/logs/
 datasets/surface_water/OLD/
 datasets/surface_water/ttl_files/
