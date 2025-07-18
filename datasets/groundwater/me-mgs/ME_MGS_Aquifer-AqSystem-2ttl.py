@@ -42,6 +42,7 @@ Functions:
 import geopandas as gpd
 import pandas as pd
 from shapely import LineString, Point, Polygon
+from pathlib import Path
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, XSD
 
@@ -52,24 +53,36 @@ import datetime
 import sys
 import os
 
+# Set working path variables and output for verification
+cwd = Path(__file__).resolve().parent
+ns_dir = cwd.parent.parent.parent.parent
+data_dir = cwd.parent.parent / "data"
+ttl_dir = cwd / "ttl_files"
+log_dir = cwd / "logs"
+# print(f"Current working directory:      {cwd}")
+# print(f"Github repos and namespaces.py: {ns_dir}")
+# print(f"Data (input) directory:         {data_dir}")
+# print(f"Turtle (output) directory:      {ttl_dir}")
+# print(f"Logging directory:              {log_dir}")
+
 # Modify the system path to find namespaces.py
-sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
+sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX, find_s2_intersects_poly
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Hydrology/Groundwater')
+os.chdir(cwd)
 
 ### INPUT Filename ###
 # mgs_aquifer_shp_path: This is a fixed version of the file from the Maine Geological Survey (MGS)
 # s2_file: Level 13 S2 cells that overlap/are within Maine
-mgs_aquifer_shp_path = '../../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-fixed.shp'
+mgs_aquifer_shp_path = data_dir / 'Maine_Aquifers-shp/Maine_Aquifers-fixed.shp'
 
 ### OUTPUT Filenames ###
 # mgs_aqs_shp_outfile: the final saved output from the .shp processing steps; also the input to triplification
 # aq_ttl_file: the resulting (output) .ttl file
-mgs_aqs_shp_outfile = '../../Geospatial/Maine/Maine_Aquifers-shp/Maine_Aquifers-processed.shp'
-aq_ttl_file = 'ttl_files/me_23_mgs_aquifers.ttl'
-aqs_ttl_file = 'ttl_files/me_23_saw_aqsystems.ttl'
+mgs_aqs_shp_outfile = data_dir / 'Maine_Aquifers-shp/Maine_Aquifers-processed.shp'
+aq_ttl_file = ttl_dir / 'me_23_mgs_aquifers.ttl'
+aqs_ttl_file = ttl_dir / 'me_23_saw_aqsystems.ttl'
 
 ### VARIABLES ###
 # When True, prints column names, epsg value, and size (rows & columns) for each processing step GeoDataFrame
@@ -91,7 +104,7 @@ epsg_final = 4326
 # max_id_length should be set to the maximum expected length of an id value (or longer)
 max_id_length = 5
 
-logname = 'logs/log_ME_MGS_Aquifers-2-ttl_aqsystems.txt'
+logname = log_dir / 'log_ME_MGS_Aquifers-2-ttl_aqsystems.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
