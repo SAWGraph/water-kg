@@ -2,9 +2,9 @@
 
 Under ### HUCxx VPU ###, enter
     the VPU code for the current HUC2 region (valid codes listed below)
-Under ### INPUT Filenames ###, define
+Under ### INPUT Filenames ###, modify (if necessary)
     the name (and path) of the input .shp file (NHDWaterbody)
-Under ### OUTPUT Filename ###, define
+Under ### OUTPUT Filename ###, modify (if necessary)
     the name (and path) of the output .ttl file
 
 Required:
@@ -13,6 +13,7 @@ Required:
     * shapely (LineString, Point, and Polygon)
     * rdflib (Graph and Literal)
     * rdflib.namespace (GEO, PROV, RDF, RDFS, and XSD)
+    * pathlib (Path)
     * namespaces (a local .py file with a dictionary of project namespaces)
 
 Functions:
@@ -24,6 +25,7 @@ Functions:
 import geopandas as gpd
 import pandas as pd
 import shapely
+from pathlib import Path
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 
@@ -34,15 +36,28 @@ import datetime
 import sys
 import os
 
+# Set working path variables and output for verification
+cwd = Path(__file__).resolve().parent
+ns_dir = cwd.parent.parent.parent
+data_dir = cwd.parent / "data"
+ttl_dir = cwd / "ttl_files"
+log_dir = cwd / "logs"
+# print(f"Current working directory:      {cwd}")
+# print(f"Github repos and namespaces.py: {ns_dir}")
+# print(f"Data (input) directory:         {data_dir}")
+# print(f"Turtle (output) directory:      {ttl_dir}")
+# print(f"Logging directory:              {log_dir}")
+
 # Modify the system path to find namespaces.py
-sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
+# sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
+sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
+os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpu = 'MS_07'
+vpu = 'NE_01'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
@@ -50,14 +65,14 @@ vpunum = vpu[3:]
 ### INPUT Filenames ###
 # Sometimes there are bad geometries in the NHDWaterbody.shp file
 # The path assumes a "fixed" version but defaults to the original version if the "fixed" version does not exist
-waterbody_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDSnapshot/NHDWaterbody-fixed.shp'
+waterbody_file = data_dir / f"HUC{vpunum}/{vpu}_NHDSnapshot/NHDWaterbody-fixed.shp"
 if not os.path.isfile(waterbody_file):
-    waterbody_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDSnapshot/NHDWaterbody.shp'
+    waterbody_file = data_dir / f"HUC{vpunum}/{vpu}_NHDSnapshot/NHDWaterbody.shp"
 
 ### OUTPUT Filename ###
-ttl_file = 'ttl_files/us_nhd_waterbody_huc' + vpunum + '.ttl'
+ttl_file = ttl_dir / f"us_nhd_waterbody_huc{vpunum}.ttl"
 
-logname = 'logs/log_US_NHD_Waterbody_HUCxx-2ttl.txt'
+logname = log_dir / f"log_US_NHD_Waterbody_HUCxx-2ttl.txt"
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',

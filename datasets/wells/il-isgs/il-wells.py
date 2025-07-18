@@ -28,7 +28,7 @@ logname = "log"
 
 ## data path
 root_folder = Path(__file__).resolve().parent.parent.parent  # datasets folder
-data_dir = root_folder / "data/il-epa/"
+data_dir = root_folder / "datasets/data/il-isgs/"
 metadata_dir = None
 output_dir = Path(__file__).resolve().parent
 

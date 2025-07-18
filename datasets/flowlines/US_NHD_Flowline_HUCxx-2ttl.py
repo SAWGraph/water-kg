@@ -56,7 +56,7 @@ import os
 # Set working path variables and output for verification
 cwd = Path(__file__).resolve().parent
 ns_dir = cwd.parent.parent.parent
-data_dir = cwd / "data"
+data_dir = cwd.parent / "data"
 ttl_dir = cwd / "ttl_files"
 log_dir = cwd / "logs"
 # print(f"Current working directory:      {cwd}")

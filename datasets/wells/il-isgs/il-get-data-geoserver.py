@@ -8,7 +8,7 @@ def dump_file(filename, geojson):
     '''Outputs the geojson to a file in data/maine_dep_esri_server directory'''
     # dump the geojson to data folder
     root_dir = Path(__file__).resolve().parent.parent.parent
-    output = root_dir / "data" / "il-isgs" / filename
+    output = root_dir / "datasets" / "data" / "il-isgs" / filename
     # print(output)
     try:
         with open(output, 'w') as outfile:
