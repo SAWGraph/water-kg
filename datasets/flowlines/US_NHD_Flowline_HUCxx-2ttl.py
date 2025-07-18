@@ -2,10 +2,10 @@
 
 Under ### HUCxx VPU ###, enter
     the VPU code for the current HUC2 region (valid codes listed below)
-Under ### INPUT Filenames ###, define
+Under ### INPUT Filenames ###, modify (if necessary)
     the name (and path) of the input .shp file (NHDFlowline)
     the name (and path) of the input .dbf file (PlusFlow)
-Under ### OUTPUT Filename ###, define
+Under ### OUTPUT Filename ###, modify (if necessary)
     the name (and path) of the main output .ttl file
 
 Required:
@@ -59,11 +59,11 @@ ns_dir = cwd.parent.parent.parent
 data_dir = cwd / "data"
 ttl_dir = cwd / "ttl_files"
 log_dir = cwd / "logs"
-print(f"Current working directory: {cwd}")
-print(f"Github repos and namespaces.py: {ns_dir}")
-print(f"Data (input) directory: {data_dir}")
-print(f"Turtle (output) directory: {ttl_dir}")
-print(f"Logging directory: {log_dir}")
+# print(f"Current working directory:      {cwd}")
+# print(f"Github repos and namespaces.py: {ns_dir}")
+# print(f"Data (input) directory:         {data_dir}")
+# print(f"Turtle (output) directory:      {ttl_dir}")
+# print(f"Logging directory:              {log_dir}")
 
 # Modify the system path to find namespaces.py
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
@@ -74,19 +74,19 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpu = 'GL_04'
+vpu = 'NE_01'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
 
 ### INPUT Filenames ###
-plusflow_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDPlusAttributes/PlusFlow.dbf'
-flowline_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDSnapshot/NHDFlowline.shp'
+plusflow_file = data_dir / f"HUC{vpunum}/{vpu}_NHDPlusAttributes/PlusFlow.dbf"
+flowline_file = data_dir / f"HUC{vpunum}/{vpu}_NHDSnapshot/NHDFlowline.shp"
 
 ### OUTPUT Filename ###
-main_ttl_file = 'ttl_files/us_nhd_flowline_huc' + vpunum + '.ttl'
+main_ttl_file = ttl_dir / f"us_nhd_flowline_huc{vpunum}.ttl"
 
-logname = 'logs/log_US_NHD_Flowline_HUCxx-2ttl.txt'
+logname = log_dir / f"log_US_NHD_Flowline_HUCxx-2ttl.txt"
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
