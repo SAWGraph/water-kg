@@ -8,6 +8,7 @@ datasets/flowlines/ME_Flowline_Network.gexf
 datasets/flowlines/Surface_Water.qgz
 datasets/flowlines/US_NHD_Flowline_HUC01-2ttl_nxTC.py
 datasets/flowlines/.ipynb_checkpoints/
+datasets/flowlines/data/
 datasets/flowlines/logs/
 datasets/flowlines/OLD/
 datasets/flowlines/Orphaned_flowlines/
