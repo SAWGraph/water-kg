@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2320dfc-7996-4127-b6ee-5a9a783823cd" name="Changes" comment="A few small edits while checking geometries">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/groundwater/me-mgs/ME_MGS_Aquifer-AqSystem-2ttl.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/groundwater/me-mgs/ME_MGS_Aquifer-AqSystem-2ttl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/groundwater/il-isgs/IL_ISGS_Aquifer-AqSystem-2ttl.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/groundwater/il-isgs/IL_ISGS_Aquifer-AqSystem-2ttl.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +37,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.ME_MGS_Aquifer-AqSystem-2ttl.executor": "Run",
     "Python.US_NHD_Flowline_HUCxx-2ttl.executor": "Run",
     "Python.US_NHD_Waterbody_HUCxx-2ttl.executor": "Run",
     "Python.mgs_wells.executor": "Run",
