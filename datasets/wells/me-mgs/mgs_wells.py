@@ -33,8 +33,8 @@ logname = "log"
 
 ## data path
 root_folder = Path(__file__).resolve().parent.parent.parent
-data_dir = root_folder / "data/mgs_wells/"
-metadata_dir = root_folder / "data/mgs_wells/metadata/"
+data_dir = root_folder / "datasets/data/mgs_wells/"
+metadata_dir = root_folder / "datasets/data/mgs_wells/metadata/"
 output_dir = Path(__file__).resolve().parent #root_folder / "code/MGS_wells/"
 
 me_mgs = Namespace(f"http://sawgraph.spatialai.org/v1/me-mgs#")
