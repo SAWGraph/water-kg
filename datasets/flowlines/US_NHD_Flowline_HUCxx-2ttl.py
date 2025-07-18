@@ -2,10 +2,10 @@
 
 Under ### HUCxx VPU ###, enter
     the VPU code for the current HUC2 region (valid codes listed below)
-Under ### INPUT Filenames ###, define
+Under ### INPUT Filenames ###, modify (if necessary)
     the name (and path) of the input .shp file (NHDFlowline)
     the name (and path) of the input .dbf file (PlusFlow)
-Under ### OUTPUT Filename ###, define
+Under ### OUTPUT Filename ###, modify (if necessary)
     the name (and path) of the main output .ttl file
 
 Required:
@@ -15,23 +15,26 @@ Required:
     * rdflib (Graph and Literal)
     * rdflib.namespace (GEO, PROV, RDF, RDFS, SDO, and XSD)
     * networkx
+    * pathlib (Path)
     * namespaces (a local .py file with a dictionary of project namespaces)
 
 Functions:
-    * load_flowline_file -
-    * load_plusflow_file -
-    * create_simple_flowline_dict -
-    * create_simple_plusflow_dict -
-    * create_digraph -
-    * count_by_degree -
-    * print_digraph_stats -
-    * print_dictionary_stats -
-    * print_root_and_leaf_counts -
-    * analyze_paths_from_source_to_outlet -
+    * load_flowline_file - loads a .shp file of NHDPlus v2 flowlines as a GeoPandas geodataframe
+    * create_simple_flowline_dict - takes a Pandas dataframe of NHDPlus v2 flowline data and creates a dictionary where
+                                    a flowline COMID is a key and values are a triple of flowline attributes
+    * load_plusflow_file - loads a .dbf file of NHDPlus v2 PlusFlow attributes as a Pandas dataframe
+    * create_simple_plusflow_dict - takes a Pandas dataframe of NHDPlus v2 PlusFlow data and creates a dictionary where
+                                    a flowline COMID is a key and values are a list of connected downstream flowlines
+    * create_digraph - takes a flowline dictionary and a PlusFlow dictionary and returns a directed graph
     * initial_kg - takes a dictionary of prefixes and returns an empty RDFLib knowledge graph
-    * build_iris - takes an id value and a dictionary of prefixes and returns IRIs for a waterbody and its geometry
-    * create_flow_dict -
-    * process_flowline_shp2ttl -
+    * build_iris - takes an id value and a dictionary of prefixes and returns IRIs for a flowline and its geometry
+    * triplify_huc_flowlines - takes a digraph of NHDPlus v2 flowlines and creates a .ttl file representing the digraph
+    * count_by_degree - takes a DegreeView object and returns a dictionary of degrees (key) and counts (values)
+    * print_digraph_stats - takes a digraph and prints a set of statistics describing its structure
+    * print_dictionary_stats - takes a dictionary of PlusFlow data and prints statistics about flowline connectivity
+    * print_root_and_leaf_counts - takes a digraph and prints counts of root nodes and leaf nodes
+    * analyze_paths_from_source_to_outlet - takes a digraph and two nodes (COMIDs) and prints the number of paths
+                                            connecting the nodes and the length of each such path
 """
 
 from simpledbf import Dbf5
@@ -39,6 +42,7 @@ import geopandas as gpd
 import shapely
 import pandas as pd
 import networkx as nx
+from pathlib import Path
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 
@@ -49,27 +53,40 @@ import datetime
 import sys
 import os
 
+# Set working path variables and output for verification
+cwd = Path(__file__).resolve().parent
+ns_dir = cwd.parent.parent.parent
+data_dir = cwd / "data"
+ttl_dir = cwd / "ttl_files"
+log_dir = cwd / "logs"
+# print(f"Current working directory:      {cwd}")
+# print(f"Github repos and namespaces.py: {ns_dir}")
+# print(f"Data (input) directory:         {data_dir}")
+# print(f"Turtle (output) directory:      {ttl_dir}")
+# print(f"Logging directory:              {log_dir}")
+
 # Modify the system path to find namespaces.py
-sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
+# sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
+sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Hydrology/Surface Water')
+os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpu = 'GL_04'
+vpu = 'NE_01'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
 
 ### INPUT Filenames ###
-plusflow_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDPlusAttributes/PlusFlow.dbf'
-flowline_file = '../../Geospatial/HUC' + vpunum + '/' + vpu + '_NHDSnapshot/NHDFlowline.shp'
+plusflow_file = data_dir / f"HUC{vpunum}/{vpu}_NHDPlusAttributes/PlusFlow.dbf"
+flowline_file = data_dir / f"HUC{vpunum}/{vpu}_NHDSnapshot/NHDFlowline.shp"
 
 ### OUTPUT Filename ###
-main_ttl_file = 'ttl_files/us_nhd_flowline_huc' + vpunum + '.ttl'
+main_ttl_file = ttl_dir / f"us_nhd_flowline_huc{vpunum}.ttl"
 
-logname = 'logs/log_US_NHD_Flowline_HUCxx-2ttl.txt'
+logname = log_dir / f"log_US_NHD_Flowline_HUCxx-2ttl.txt"
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',

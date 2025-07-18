@@ -41,6 +41,7 @@ _PREFIX = {
     "me_egad_data": Namespace(f'{SAWGRAPH_NAMESPACE}me_egad_data#'),
     "me_mgs": Namespace(f'{SAWGRAPH_NAMESPACE}me_mgs#'),
     "me_mgs_data": Namespace(f'{SAWGRAPH_NAMESPACE}me_mgs_data#'),
+    "nhdplusv2": Namespace(f'http://nhdplusv2.spatialai.org/v1/nhdplusv2#'),
     "saw_geo": Namespace(f'{SAWGRAPH_NAMESPACE}saw_geo#'),
     "saw_water": Namespace(f'{SAWGRAPH_NAMESPACE}saw_water#'),
     "sf": Namespace(f'http://www.opengis.net/ont/sf#'),
