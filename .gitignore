@@ -79,8 +79,8 @@ datasets/wells/me-mgs/.ipynb_checkpoints/
 datasets/wells/me-mgs/__pycache__/
 datasets/wells/me-mgs/ttl_files/
 
-data/il-isgs/il-wells.geojson
+#data/il-isgs/il-wells.geojson
 
-data/mgs_wells/Maine_Well_Database_-_Unlocated_Wells.csv
-data/mgs_wells/Maine_Well_Database_-_Well_Depth.csv
-data/mgs_wells/Maine_Well_Database_-_Well_Depth_original.csv
+#data/mgs_wells/Maine_Well_Database_-_Unlocated_Wells.csv
+#data/mgs_wells/Maine_Well_Database_-_Well_Depth.csv
+#data/mgs_wells/Maine_Well_Database_-_Well_Depth_original.csv
