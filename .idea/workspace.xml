@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2320dfc-7996-4127-b6ee-5a9a783823cd" name="Changes" comment="A few small edits while checking geometries">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/wells/il-isgs/il-get-data-geoserver.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/wells/il-isgs/il-get-data-geoserver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,18 +36,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.IL_ISGS_Aquifer-AqSystem-2ttl.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ME_MGS_Aquifer-AqSystem-2ttl.executor&quot;: &quot;Run&quot;,
-    &quot;Python.US_NHD_Flowline_HUCxx-2ttl.executor&quot;: &quot;Run&quot;,
-    &quot;Python.US_NHD_Waterbody_HUCxx-2ttl.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mgs_wells.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.IL_ISGS_Aquifer-AqSystem-2ttl.executor": "Run",
+    "Python.ME_MGS_Aquifer-AqSystem-2ttl.executor": "Run",
+    "Python.US_NHD_Flowline_HUCxx-2ttl.executor": "Run",
+    "Python.US_NHD_Waterbody_HUCxx-2ttl.executor": "Run",
+    "Python.il-get-data-geoserver.executor": "Run",
+    "Python.mgs_wells.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

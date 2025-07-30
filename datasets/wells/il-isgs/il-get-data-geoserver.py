@@ -7,7 +7,8 @@ from pathlib import Path
 def dump_file(filename, geojson):
     '''Outputs the geojson to a file in data/maine_dep_esri_server directory'''
     # dump the geojson to data folder
-    root_dir = Path(__file__).resolve().parent.parent.parent
+    root_dir = Path(__file__).resolve().parent.parent.parent.parent
+    # print(root_dir)
     output = root_dir / "datasets" / "data" / "il-isgs" / filename
     # print(output)
     try:
@@ -21,7 +22,7 @@ def dump_file(filename, geojson):
 def get_wells():
     check= urllib3.request("GET", 'https://maps.isgs.illinois.edu/arcgis/rest/services/ILWATER/Water_and_Related_Wells2/MapServer/2/query?where=OBJECTID+%3E+-1&returnCountOnly=true&f=geojson')
     feature_count = json.loads(check.data.decode())['count']
-    print(feature_count, ' Wells')
+    print(feature_count, 'Wells')
     #This server also contains aquifers
     #max record count for requests is 3000
     f=0
