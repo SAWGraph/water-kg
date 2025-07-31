@@ -1,15 +1,15 @@
-# Maine Aquifers - Maine Geological Survey (MGS)
+# Secondary Hydrogeologic Regions of the Conterminous US - United States Geological Survey (USGS)
 
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Significant Sand And Gravel Aquifers |
-| **Source agency:** | [Maine Geological Survey](https://www.maine.gov/dacf/mgs/) |
-| **Data source location:** | [MGS Significant Sand and Gravel Aquifer Maps Digital Data](https://www.maine.gov/dacf/mgs/pubs/digital/aquifers.htm) <br/> [Maine Aquifers](https://mgs-maine.opendata.arcgis.com/datasets/maine-aquifers/explore) |
-| **Metadata description**: | [Maine Aquifers \| About](https://mgs-maine.opendata.arcgis.com/datasets/maine::maine-aquifers/about) <br/> [Maine Aquifers \| About](https://maine.hub.arcgis.com/datasets/maine::maine-aquifers/about) |
+| **Name of dataset:** | Principal Aquifers of the United States |
+| **Source agency:** | [United States Geological Survey](https://www.usgs.gov/) |
+| **Data source location:** | [Secondary Hydrogeologic Regions of the Conterminous United States](https://www.sciencebase.gov/catalog/item/5a5643b6e4b01e7be24449fc) |
+| **Metadata description**: | [Metadata](https://www.sciencebase.gov/catalog/file/get/5a5643b6e4b01e7be24449fc?f=__disk__0c%2F28%2F49%2F0c2849f573af3233fad59dd89b5fa8a69b033060&transform=1&allowOpen=true) |
 | **Other metadata** |  |
-| **Format of data**: |  |
-| **Data Update Interval**: | Last updated April 22, 2020 |
+| **Format of data**: | .shp files |
+| **Data Update Interval**: | Last updated June 29, 2022 |
 | **Location of triples:** |  |
 
 ## Schema Diagram (TO ADD)
@@ -26,51 +26,40 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` |
-| `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` |
+<!-- | `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` | -->
+<!-- | `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` | -->
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
 **Examples of triples from data/metadata sources**
-* `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel"
-* `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other"
+<!-- * `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel" -->
+<!-- * `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other" -->
 
-| MGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
+| Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID |  | Yes | `me_mgs:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId` | 
-| QUADNAME |  | No |  |  |
-| COMPID |  | No |  |  |
-| ATYPE |  | No |  | integer IDs for SYMBOLOGY categories |
-| SYMBOLOGY |  | Yes | `hyfo:hasAquiferYield hyfo:AquiferFieldMin` <br/> `hyfo:hasAquiferYield hyfo:hasAquiferYieldMax` | Values are intervals |
-| DRAW |  | No |  |  |
-| SOURCE |  | No |  | 12 records (of 9253) |
-| COMMENTS |  | No |  | 32 records (of 9253) |
-| AQUIFERID |  | Yes | `me_mgs:hasAquiferId` | `rdfs:subPropertyOf hyfo:hasSecondaryStateAqId` <br/> 9188 of 9253 values unique |
-| AQUIFERHISTORY |  | No |  |  |
-| PUBLISH_DATA |  | No |  |  |
-| created_user |  | No |  |  |
-| created_date |  | No |  |  |
-| last_edited_user |  | No |  |  |
-| last_edited_date |  | No |  |  |
-| Shape_Area |  | No |  |  |
-| Shape_Length |  | No |  |  |
+| OBJECTID | Internal feature number | No |  |  |
+| SHR | Secondary Hydrogeologic Regions are ORRs of comparable age, lithology, and relationship to Principal Aquifers or glacial deposits. | Yes | `rdfs:label` |  |
+| KM2 | Size of the Secondary Hydrogeologic Unit, in square kilometers. | No |  |  |
+| PrimaryLith | Primary Lithology of the Secondary Hydrogeologic Region, derived from the "ROCKTYPE" attribute in Other_Aquifers feature class.  Named PrimaryLit in shapefile version. | Yes | TBD |  |
+| Type | Classification of Secondary Hydrogeologic Regions by type, where type indicates the relationship between an SHR and the presence or absence of underlying Principal Aquifers (PAs) or overlying glacial deposits. | Yes | TBD | See controlled vocabulary below |
+| GeologicProvince | Geologic province associated with each Secondary Hydrogeologic Regions, as identified by Reed and Bush, 2007.  Named GeologicPr in shapefile version. | Yes | TBD |  |
+| Subprovince | Subprovince of geologic provinces associated with each Secondary Hydrogeologic Regions. Named Subprovinc in shapefile version. | Yes | TBD |  |
+| Shape_Length | Length of feature in internal units (meters).  Named Shape_Leng in shapefile version. | No |  |  |
+| Shape_Area | Area of feature in internal units squared (meters). | No |  |  |
+| SHR_ID | The number following the leading "S" in SHR_ID corresponds to the numbering shown in Figure 1 of this data release and figure 3 in the associated larger work [](https://ngwa.onlinelibrary.wiley.com/doi/10.1111/gwat.12806). | Yes | TBD | Use as unique identifier |
+| SHR_CODE | SHR_Code is a combination of the SHR_ID and a shortened version of the SHR. | No |  |  |
 
 **Notes on the data:**
 - 
 
 ## Controlled Vocabularies
-**List 1. ATYPE** [count]
-- 0: area not mapped as aquifer [275]
-- 1: 10-50 gallons-per-minute [4668]
-- 2: greater than 50 gallons-per-minute [297]
-- 3: island of non-aquifer material within an area mapped as aquifer [3931]
-- 4: *no definition found* [17]
-- *No value*: [65]
+**List 1. Type
+* NN - Not underlain by Principal Aquifers and not overlain by glacial deposits
+* NY - Not underlain by Principal Aquifers and overlain by glacial deposits
+* YN - Underlain by Principal Aquifers and not overlain by glacial deposits
+* YY - Underlain by Principal Aquifers and overlain by glacial deposits
 
-**List 2. SYMBOLOGY** [count]
-- \>50 GPM [298]
-- 10-50 GPM [4691]
-- Non-plotting water [4264]
+**List 2. 
 
 ## Sample Data
 
