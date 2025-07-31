@@ -35,7 +35,7 @@
 * `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel"
 * `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other"
 
-| MGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
+| Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID |  | Yes | `me_mgs:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId` | 
 | QUADNAME |  | No |  |  |
