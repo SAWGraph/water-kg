@@ -18,7 +18,7 @@
 ### Schema Diagram (TO ADD)
 - [*Draft* schema]()
 
-**Legend description:** (TO ADD)
+### Legend description:** (TO ADD)
 - 
 
 ### Code (TO ADD)
@@ -34,7 +34,7 @@
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts
 
-**Examples of triples from data/metadata sources**
+### Examples of triples from data/metadata sources**
 <!-- * `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel" -->
 <!-- * `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other" -->
 
@@ -48,7 +48,7 @@
 | Shape_Leng | The perimeter of the shape in file units.  In the distributed file, file units represent decimal degrees. | No |  |  |
 | Shape_Area | The size of the shape in file units.  In the distributed file, file units represent square decimal degrees. | No |  |  |
 
-**Notes on the data:**
+### Notes on the data:**
 - 
 
 ### Controlled Vocabularies
@@ -63,7 +63,7 @@
 ### Schema Diagram (TO ADD)
 - [*Draft* schema]()
 
-**Legend description:** (TO ADD)
+### Legend description:** (TO ADD)
 - 
 
 ### Code (TO ADD)
@@ -79,7 +79,7 @@
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts
 
-**Examples of triples from data/metadata sources**
+### Examples of triples from data/metadata sources**
 <!-- * `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel" -->
 <!-- * `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other" -->
 
