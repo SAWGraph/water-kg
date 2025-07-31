@@ -40,27 +40,27 @@ where `<SAWGraphId>` = `<type>-<integer>` with `<type>` = 'BedrockGT500', 'Bedro
 * `il_isgs:GW_Aquifer hyfo:hasDescription` "Illinois aquifer systems consist of adjacent potential aquifers in coarse-grained materials within 50ft of the ground surface"
 
 ### Major Bedrock Aquifers Greater Than 500 Ft
-| ISGS Aquifer | Description | Lift to graph | Comments |
+| Attribute | Description | Lift to graph | Comments |
 | --- | --- | --- | --- |
 | CODE | 0 - Major bedrock aquifers containing more than 10,000 mg/L total dissolved solids <br/> 1 - Major bedrock aquifers containing from 2,500 to 10,000 mg/L total dissolved solids <br/> 2 - Major bedrock aquifers containing less than 2,500 mg/L total dissolved solids | No | only CODE = 2 lifted to graph |
 
 ### Major Bedrock Aquifers Less Than 300 Ft
-| ISGS Aquifer | Description | Lift to graph | Comments |
+| Attribute | Description | Lift to graph | Comments |
 | --- | --- | --- | --- |
 | CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No | only CODE = 1 lifted to graph |
 
 ### Major Bedrock Aquifers Less Than 500 Ft
-| ISGS Aquifer | Description | Lift to graph | Comments |
+| Attribute | Description | Lift to graph | Comments |
 | --- | --- | --- | --- |
 | CODE | 0 - Major bedrock aquifer absent <br/> 1 - Major bedrock aquifer present | No | only CODE = 1 lifted to graph |
 
 ### Major Sand and Gravel Aquifers
-| ISGS Aquifer | Description | Lift to graph | Comments |
+| Attribute | Description | Lift to graph | Comments |
 | --- | --- | --- | --- |
 | CODE | 0 - Major sand and gravel aquifer absent <br/> 1 - Major sand and gravel aquifer present | No | only CODE = 1 lifted to graph |
 
 ### Shallow Coarse Materials
-| ISGS Aquifer | Description | Lift to graph | Comments |
+| Attribute | Description | Lift to graph | Comments |
 | --- | --- | --- | --- |
 | CODE | 0 - Not a potential aquifer <br/> 1 - Potential aquifer (only potential aquifers are instantiated in SAWGraph) | No | Only CODE = 1 lifted to graph |
 | MS | Item MS is the map symbol for each polygon.  It is an alphanumeric character set that describes up to five geologic units present, their order occurrence, and general thickness and depth.  Item MS is directly related to item STACK-UNIT in that STACK-UNIT is a strictly numeric designator that represents the same information as item MS.  MS consists of five concatenated (redefined) items called MS1, MS2, MS3, MS4, MS5.  Each redefined MSx(where x is 1, 2, 3, 4, 5) item represents a single geologic unit, MS1 being the uppermost and MS5 being the lowermost.  Uppercase letters indicate nonlithified a semilithified units greater than 6m (19.7 ft.) thick. Lowercase letters accompanied by asterisk indicatenonlithified and semilithified units less than 6m (19.7 ft.) thick.  Numbers unaccompanied by an asterisk indicatelithified units where the top occurs between depths of 6 to 15m (19.7-49.3 ft.) below ground surface.  Numbers accompanied by an asterisk indicate lithified units where the top occurs between depths of 0 to 6m (0-19.7 ft.) below ground surface. | No |
