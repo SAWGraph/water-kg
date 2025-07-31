@@ -35,7 +35,7 @@
 <!-- * `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel" -->
 <!-- * `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other" -->
 
-| Principal Aquifer | Description | Lift to graph | Ontology Property | Comments |
+| Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID_1 | Internal feature number | Yes | TBD | Use as unique identifier | 
 | ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` |  |
