@@ -37,7 +37,7 @@
 
 | Principal Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID_1 | Internal feature number | Yes |  | Use as unique identifier | 
+| OBJECTID_1 | Internal feature number | Yes | TBD | Use as unique identifier | 
 | ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` |  |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  |  |
 | AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` |  |
