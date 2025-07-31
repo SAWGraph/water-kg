@@ -35,7 +35,7 @@
 | sourceoriginator | SourceOriginator is the description of the agency that created the base data used to improve the WBD. | No |  |  |
 | sourcefeatured | SourceFeatureID is a long, unique code. This code identifies the parent of the feature if the feature is the result of a split or merge. | No |  |  |
 | loaddate | LoadDate represents the date when the data were loaded into the official USGS WBD ArcSDE database. The field is the effective date for all feature edits. | No |  |  |
-| referencegnis_ids | holds one or more Geographic Names Information System (GNIS) IDs of the feature or features for which the HU is named. Multiple GNIS IDs in the field are organized by listing the GNIS ID of the primary feature followed by the GNIS ID of additional features | ? |  |  |
+| referencegnis_ids | Holds one or more Geographic Names Information System (GNIS) IDs of the feature or features for which the HU is named. Multiple GNIS IDs in the field are organized by listing the GNIS ID of the primary feature followed by the GNIS ID of additional features | ? |  |  |
 | areaacres | The area of each hydrologic unit including non-contributing areas stored in acres. | No |  |  |
 | areasqkm | The area of each hydrologic unit including non-contributing areas stored in square kilometers. | No |  |  |
 | states | The States or outlying area attribute identifies the State(s) or outlying areas that the hydrologic unit falls within or touches. | Yes | TBD |  |
