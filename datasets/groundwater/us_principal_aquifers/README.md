@@ -1,15 +1,15 @@
-# Maine Aquifers - Maine Geological Survey (MGS)
+# Principal Aquifers of the US - United States Geological Survey (USGS)
 
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Significant Sand And Gravel Aquifers |
-| **Source agency:** | [Maine Geological Survey](https://www.maine.gov/dacf/mgs/) |
-| **Data source location:** | [MGS Significant Sand and Gravel Aquifer Maps Digital Data](https://www.maine.gov/dacf/mgs/pubs/digital/aquifers.htm) <br/> [Maine Aquifers](https://mgs-maine.opendata.arcgis.com/datasets/maine-aquifers/explore) |
-| **Metadata description**: | [Maine Aquifers \| About](https://mgs-maine.opendata.arcgis.com/datasets/maine::maine-aquifers/about) <br/> [Maine Aquifers \| About](https://maine.hub.arcgis.com/datasets/maine::maine-aquifers/about) |
+| **Name of dataset:** | Principal Aquifers of the United States |
+| **Source agency:** | [United States Geological Survey](https://www.usgs.gov/) |
+| **Data source location:** | [Principal Aquifers of the 48 Conterminous United States, Hawaii, Puerto Rico, and the U.S. Virgin Islands](https://www.sciencebase.gov/catalog/item/63140610d34e36012efa385d) |
+| **Metadata description**: | [Metadata](https://www.sciencebase.gov/catalog/file/get/63140610d34e36012efa385d?f=__disk__77%2F4c%2F7d%2F774c7d2a6f3083f01530581c537ed1c1e9ae4a70&transform=1&allowOpen=true) |
 | **Other metadata** |  |
-| **Format of data**: |  |
-| **Data Update Interval**: | Last updated April 22, 2020 |
+| **Format of data**: | .shp files |
+| **Data Update Interval**: | Last updated September 15, 2023 |
 | **Location of triples:** |  |
 
 ## Schema Diagram (TO ADD)
@@ -26,51 +26,32 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` |
-| `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` |
+<!-- | `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` | -->
+<!-- | `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` | -->
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
 **Examples of triples from data/metadata sources**
-* `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel"
-* `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other"
+<!-- * `me_mgs:GW_Aquifer hyfo:hasAquiferMaterial` "sand and gravel" -->
+<!-- * `me_mgs:GW_Aquifer hyfo:hasDescription` "Maine aquifer systems consist of aquifers within 100m of each other" -->
 
-| MGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
+| Principal Aquifer | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID |  | Yes | `me_mgs:hasSawgraphId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId` | 
-| QUADNAME |  | No |  |  |
-| COMPID |  | No |  |  |
-| ATYPE |  | No |  | integer IDs for SYMBOLOGY categories |
-| SYMBOLOGY |  | Yes | `hyfo:hasAquiferYield hyfo:AquiferFieldMin` <br/> `hyfo:hasAquiferYield hyfo:hasAquiferYieldMax` | Values are intervals |
-| DRAW |  | No |  |  |
-| SOURCE |  | No |  | 12 records (of 9253) |
-| COMMENTS |  | No |  | 32 records (of 9253) |
-| AQUIFERID |  | Yes | `me_mgs:hasAquiferId` | `rdfs:subPropertyOf hyfo:hasSecondaryStateAqId` <br/> 9188 of 9253 values unique |
-| AQUIFERHISTORY |  | No |  |  |
-| PUBLISH_DATA |  | No |  |  |
-| created_user |  | No |  |  |
-| created_date |  | No |  |  |
-| last_edited_user |  | No |  |  |
-| last_edited_date |  | No |  |  |
-| Shape_Area |  | No |  |  |
-| Shape_Length |  | No |  |  |
+| OBJECTID_1 | Internal feature number | Yes |  | Use as unique identifier | 
+| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` |  |
+| ROCK_TYPE | The code number relating to the rock_name. | No |  |  |
+| AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` |  |
+| AQ_CODE | The code number relating to the aquifer unit name. | No |  |  |
+| Shape_Leng | The perimeter of the shape in file units.  In the distributed file, file units represent decimal degrees. | No |  |  |
+| Shape_Area | The size of the shape in file units.  In the distributed file, file units represent square decimal degrees. | No |  |  |
 
 **Notes on the data:**
 - 
 
 ## Controlled Vocabularies
-**List 1. ATYPE** [count]
-- 0: area not mapped as aquifer [275]
-- 1: 10-50 gallons-per-minute [4668]
-- 2: greater than 50 gallons-per-minute [297]
-- 3: island of non-aquifer material within an area mapped as aquifer [3931]
-- 4: *no definition found* [17]
-- *No value*: [65]
+**List 1. 
 
-**List 2. SYMBOLOGY** [count]
-- \>50 GPM [298]
-- 10-50 GPM [4691]
-- Non-plotting water [4264]
+**List 2. 
 
 ## Sample Data
 
