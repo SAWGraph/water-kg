@@ -41,7 +41,7 @@ where `<Aquifername>` is 'Ozark', 'Osage', 'HighPlains', 'GlacialDrive', 'FlintH
 * `ks_kgs:GW_Aquifer hyfo:hasAquiferTypeDetail` "Cambro-Ordovician"
 * `ks_kgs:GW_Aquifer hyfo:hasAquiferMaterial` "dolomite"
 
-| KGS Aquifer | Description | Lift to graph | Ontology Property | Comments |
+| Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID |  | No |  | Osage & Flint Hills Aquifers only | 
 | AREA__SQ_M |  | No |  | Osage & Flint Hills Aquifers only | 
