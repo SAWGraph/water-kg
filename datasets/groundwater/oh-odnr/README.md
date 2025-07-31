@@ -34,7 +34,7 @@
 * `il_isgs:GW_Aquifer hyfo:hasAquiferMaterial` "carbonate"
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
-| OHDNR Aquifer | Description | Lift to graph | Ontology Property | Comments |
+| Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | fid | Internal feature number | Yes | `oh_odnr:hasSawgraphAqId` | `rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId` |
 | AQUA | Abbreviation of the aquifer name | Yes | `oh_odnr:hasSawgraphId` <br/> `hyfo:hasName`| records with "na" are ignored |
