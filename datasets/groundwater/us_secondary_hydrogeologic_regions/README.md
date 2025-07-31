@@ -3,7 +3,7 @@
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Principal Aquifers of the United States |
+| **Name of dataset:** | Secondary Hydrogeologic Regions of the Conterminous United States |
 | **Source agency:** | [United States Geological Survey](https://www.usgs.gov/) |
 | **Data source location:** | [Secondary Hydrogeologic Regions of the Conterminous United States](https://www.sciencebase.gov/catalog/item/5a5643b6e4b01e7be24449fc) |
 | **Metadata description**: | [Metadata](https://www.sciencebase.gov/catalog/file/get/5a5643b6e4b01e7be24449fc?f=__disk__0c%2F28%2F49%2F0c2849f573af3233fad59dd89b5fa8a69b033060&transform=1&allowOpen=true) |
