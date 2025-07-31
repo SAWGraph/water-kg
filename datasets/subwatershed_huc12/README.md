@@ -5,10 +5,10 @@
 | --- | --- |
 | **Name of dataset:** | WBDHU12 <br/> There is one layer (and .gpkg) for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2) |
 | **Source Agency:** | [United States Geological Survey](https://www.usgs.gov/) |
-| **Data source location:** | [The National Map]([https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#v2datamap](https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/HU2/GPKG/)) |
+| **Data source location:** | [The National Map](https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/HU2/GPKG/) |
 | **Metadata description:** | See the .xml file associated with each .gpkg file for each Vector Processing Unit (VPU)/2-digit Hydrologic Unit (HUC2) |
 | **Other metadata:** | [Federal Standards and Procedures for the National Watershed Boundary Dataset (WBD)](https://pubs.usgs.gov/tm/11/a3/) |
-| **Format of data:** | .shp file |
+| **Format of data:** | .gpkg layer |
 | **Data update interval:** | January 8, 2025 |
 | **General comments**: |  |
 
