@@ -27,7 +27,7 @@
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | Attribute | Description | Lift to graph | Ontology property | Comments |
-| --- | --- | --- |--- |
+| --- | --- | --- |--- | --- |
 | objectid | Internal feature number. | No |  | See `huc12` attribute |
 | tnmid | TNMID (short for The National Map Identification) is a unique 40-character field that identifies each element in the database exclusively. | No |  |  |
 | metasourceid | MetaSourceID is a unique identifier that links the element to the metadata tables. | No |  |  |
