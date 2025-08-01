@@ -40,10 +40,10 @@
 | OBJECTID | Internal feature number | No |  |  |
 | SHR | Secondary Hydrogeologic Regions are ORRs of comparable age, lithology, and relationship to Principal Aquifers or glacial deposits. | Yes | `rdfs:label` |  |
 | KM2 | Size of the Secondary Hydrogeologic Unit, in square kilometers. | No |  |  |
-| PrimaryLith | Primary Lithology of the Secondary Hydrogeologic Region, derived from the "ROCKTYPE" attribute in Other_Aquifers feature class.  Named PrimaryLit in shapefile version. | Yes | TBD |  |
+| PrimaryLith | Primary Lithology of the Secondary Hydrogeologic Region, derived from the "ROCKTYPE" attribute in Other_Aquifers feature class.  Named PrimaryLit in shapefile version. | Yes | TBD | Controlled vocabulary |
 | Type | Classification of Secondary Hydrogeologic Regions by type, where type indicates the relationship between an SHR and the presence or absence of underlying Principal Aquifers (PAs) or overlying glacial deposits. | Yes | TBD | See controlled vocabulary below |
-| GeologicProvince | Geologic province associated with each Secondary Hydrogeologic Regions, as identified by Reed and Bush, 2007.  Named GeologicPr in shapefile version. | Yes | TBD |  |
-| Subprovince | Subprovince of geologic provinces associated with each Secondary Hydrogeologic Regions. Named Subprovinc in shapefile version. | Yes | TBD |  |
+| GeologicProvince | Geologic province associated with each Secondary Hydrogeologic Regions, as identified by Reed and Bush, 2007.  Named GeologicPr in shapefile version. | Yes | TBD | Controlled vocabulary |
+| Subprovince | Subprovince of geologic provinces associated with each Secondary Hydrogeologic Regions. Named Subprovinc in shapefile version. | Yes | TBD | Controlled vocabulary |
 | Shape_Length | Length of feature in internal units (meters).  Named Shape_Leng in shapefile version. | No |  |  |
 | Shape_Area | Area of feature in internal units squared (meters). | No |  |  |
 | SHR_ID | The number following the leading "S" in SHR_ID corresponds to the numbering shown in Figure 1 of this data release and figure 3 in the associated larger work [](https://ngwa.onlinelibrary.wiley.com/doi/10.1111/gwat.12806). | Yes | TBD | Use as unique identifier |
@@ -53,13 +53,23 @@
 - 
 
 ## Controlled Vocabularies
-**List 1. Type
+**List 1. PrimaryLith
+* Crystalline
+* Mixed
+* Sedimentary
+* Volcanic
+
+**List 2. Type
 * NN - Not underlain by Principal Aquifers and not overlain by glacial deposits
 * NY - Not underlain by Principal Aquifers and overlain by glacial deposits
 * YN - Underlain by Principal Aquifers and not overlain by glacial deposits
 * YY - Underlain by Principal Aquifers and overlain by glacial deposits
 
-**List 2. 
+**List 3. GeologicProvince - Subprovince
+* Appalachian - Appalachian, Ouachita
+* Central Interior - Glaciated, Unglaciated
+* Coastal Plain - Coastal Plain
+* Cordilleran - Intermountain, Rocky Mountains, Western
 
 ## Sample Data
 
