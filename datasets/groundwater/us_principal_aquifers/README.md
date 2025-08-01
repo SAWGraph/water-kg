@@ -40,10 +40,10 @@ Examples of triples from data/metadata sources
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID_1 | Internal feature number | Yes | TBD | Use as unique identifier | 
-| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` |  |
-| ROCK_TYPE | The code number relating to the rock_name. | No |  |  |
-| AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` |  |
-| AQ_CODE | The code number relating to the aquifer unit name. | No |  |  |
+| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` | Controlled vocabulary |
+| ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
+| AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` | Controlled vocabulary |
+| AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled Vocabulary |
 | Shape_Leng | The perimeter of the shape in file units.  In the distributed file, file units represent decimal degrees. | No |  |  |
 | Shape_Area | The size of the shape in file units.  In the distributed file, file units represent square decimal degrees. | No |  |  |
 
@@ -51,9 +51,18 @@ Examples of triples from data/metadata sources
 - 
 
 ### Controlled Vocabularies
-List 1. 
+List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
+* 0 - <NULL> (only one row, likely an error)
+* 100 - Unconsolidated sand and gravel aquifers
+* 200 - Semiconsolidated sand aquifers
+* 300 - Sandstone aquifers
+* 400 - Carbonate-rock aquifers
+* 500 - Sandstone and carbonate-rock aquifers
+* 600 - Igneous and metamorphic-rock aquifers
+* 999 - <NULL>
 
-List 2. 
+List 2. AQ_CODE - AQ_NAME (for just this dataset)
+62 pairs of values
 
 ### Sample Data
 
@@ -88,10 +97,31 @@ Examples of triples from data/metadata sources**
 | PERIMETER | The perimeter of the shape in coverage units. | No |  |  |
 | ALLUVIAL_ | Internal feature number. | Yes | TBD | Use as unique identifier |
 | ALLUVIAL_I | User-assigned feature number. | No |  |  |
-| ROCK_TYPE | The code number relating to the rock_name. | No |  |  |
-| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` |  |
-| AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` |  |
-| AQ_CODE | The code number relating to the aquifer unit name. | No |  |  |
+| ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
+| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` | Controlled vocabulary |
+| AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` | Controlled vocabulary |
+| AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary |
+
+### Notes on the data
+- 
+
+### Controlled Vocabularies
+List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
+* 0 - <NULL> (only one row, likely an error)
+* 100 - Unconsolidated sand and gravel aquifers
+* 200 - Semiconsolidated sand aquifers
+* 300 - Sandstone aquifers
+* 400 - Carbonate-rock aquifers
+* 500 - Sandstone and carbonate-rock aquifers
+* 600 - Igneous and metamorphic-rock aquifers
+* 999 - <NULL>
+
+List 2. AQ_CODE - AQ_NAME (for just this dataset)
+* 0 - <NULL> (only one row, likely an error)
+* 113 - Aquifers of Alluvial and Glacial Origin
+* 999 - <NULL>
+
+### Sample Data
 
 ## Competency Questions 
 
