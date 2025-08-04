@@ -15,6 +15,7 @@
 @prefix skos:         <http://www.w3.org/2004/02/skos/core#> .
 @prefix spatial:      <http://purl.org/spatialai/spatial/spatial-full#> .
 @prefix unit:         <http://qudt.org/vocab/unit/> .
+@prefix wbd:          <http://wbd.spatialai.org/v1/wbd#> .
 @prefix wdt:          <https://www.wikidata.org/prop/direct/> .
 @prefix xml:          <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd:          <http://www.w3.org/2001/XMLSchema#> .
@@ -25,7 +26,7 @@
                                                dcterms:contributor <https://orcid.org/0000-0002-5331-5052> , # Torsten Hahmann
 																   <https://orcid.org/0000-0002-9070-3169> , # David Kedrowski
 																   <https://orcid.org/0000-0003-3271-6700> ; # Katrina Schweikert
-                                               dcterms:modified "2025-04-21"^^xsd:date ;
+                                               dcterms:modified "2025-08-01"^^xsd:date ;
                                                dcterms:publisher <https://sawgraph.github.io/> ;
 											   dcterms:issued "2025-04-21"^^xsd:date ;
 											   dc:source <https://raw.githubusercontent.com/SAWGraph/water-kg/refs/heads/main/ontologies/sawgraph-water-ontology.ttl> ;
@@ -249,6 +250,23 @@ nhdplusv2:hasFlowPathLength rdf:type owl:ObjectProperty ;
 				            rdfs:label "nhdplusv2:hasFlowPathLength"^^xsd:string ;
 				            rdfs:comment "Relates any flowpath to its length, represented as, for example, a qudt:Quantity object"^^xsd:string .
 
+### WBD (Watershed Boundary Dataset) ###
+
+###  http://wbd.spatialai.org/v1/wbd#primaryFlowPath
+wbd:primaryFlowPath rdf:type owl:ObjectProperty ;
+                    rdfs:domain wbd:DrainageBasin ;
+				    rdfs:range nhdplusv2:MainStem ;
+				    rdfs:label "wbd:primaryFlowPath"^^xsd:string ;
+				    rdfs:comment "Relates a drainage basin (area) to the primary mainstem flowing through it"^^xsd:string .
+
+###  http://wbd.spatialai.org/v1/wbd#contributingDrainageBasin
+wbd:contributingDrainageBasin rdf:type owl:ObjectProperty ;
+                              owl:inverseOf wbd:primaryFlowPath ;
+                              rdfs:domain nhdplusv2:MainStem ;
+				              rdfs:range wbd:DrainageBasin ;
+				              rdfs:label "wbd:contributingDrainageBasin"^^xsd:string ;
+				              rdfs:comment "Relates a mainstem to the drainage basin (area) it drains"^^xsd:string .
+
 ### QUDT ###
 
 ###  http://qudt.org/schema/qudt/quantityValue
@@ -430,6 +448,14 @@ hyf:HY_CatchmentRealization rdf:type owl:Class ;
 							rdfs:isDefinedBy <https://docs.ogc.org/is/14-111r6/14-111r6.html> ,
 						                     <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
 
+###  https://www.opengis.net/def/schema/hy_features/hyf/HY_DendriticCatchment
+hyf:HY_DendriticCatchment rdf:type owl:Class ;
+				          rdfs:subClassOf hyf:HY_Catchment ;
+				          rdfs:label "hyf:HY_DendriticCatchment"^^xsd:string ;
+				          rdfs:comment "a catchment which is determined by a single common downstream catchment"^^xsd:string ;
+				          rdfs:isDefinedBy <https://docs.ogc.org/is/14-111r6/14-111r6.html> ,
+						                   <https://github.com/opengeospatial/HY_Features/tree/master/ontology> .
+
 ###  https://www.opengis.net/def/schema/hy_features/hyf/HY_Estuary
 hyf:HY_Estuary rdf:type owl:Class ;
 			   rdfs:subClassOf hyf:HY_WaterBody ;
@@ -528,6 +554,14 @@ nhdplusv2:FlowPathLength rdf:type owl:Class ;
 						 rdfs:label "nhdplusv2:FlowPathLength"^^xsd:string ;
 						 rdfs:comment "The length of a flowpath"^^xsd:string .
 
+### WBD (Watershed Boundary Dataset) ###
+
+###  http://wbd.spatialai.org/v1/wbd#DrainageBasin
+wbd:DrainageBasin rdf:type owl:Class ;
+                  rdfs:subClassOf hyf:HY_DendriticCatchment ;
+				  rdfs:label "wbd:DrainageBasin"^^xsd:string ;
+				  rdfs:comment "A HUC12 watershed (drainage area) from the WBD"^^xsd:string .
+
 ### HyFO ###
 
 ###  http://hyfo.spatialai.org/v1/hyfo#AquiferWaterFeature
@@ -565,7 +599,7 @@ hyfo:WaterFeature rdf:type owl:Class ;
 hyfo:WaterFeatureRepresentation rdf:type owl:Class ;
                                 rdfs:subClassOf geo:Geometry ;
 				                rdfs:label "hyfo:WaterFeatureRepresentation"^^xsd:string ;
-				                rdfs:comment "A realization of a water feature (for example, a line or polygon)"^^xsd:string .
+				                rdfs:comment "A representation of a water feature (for example, a line or polygon)"^^xsd:string .
 
 ###  http://hyfo.spatialai.org/v1/hyfo#WaterWell
 hyfo:WaterWell rdf:type owl:Class ;
