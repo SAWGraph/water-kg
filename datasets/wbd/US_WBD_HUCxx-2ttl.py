@@ -52,7 +52,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunum = '05'
+vpunum = '01'
 # Valid codes: 01 to 22
 
 ### INPUT File and GPKG names ###
@@ -76,7 +76,7 @@ logger.info('LOGGER INITIALIZED')
 def load_huc_layer(gpkg_uri: str, level: int) -> gpd.GeoDataFrame:
     try:
         gdf = gpd.read_file(gpkg_uri, layer=f'WBDHU{level}')
-        print(gdf.head())
+        print(f'Level {level} has {gdf.shape[0]} rows')
         return gdf
     except Exception as e:
         print(f'Error loading layer: {e}')
@@ -102,12 +102,12 @@ def process_huc_level_2_to_8(gpkg, huclevel):
     gdf = load_huc_layer(gpkg, huclevel)
 
 
-def process_huc_level_10():
-    pass
+def process_huc_level_10(gpkg):
+    gdf = load_huc_layer(gpkg, '10')
 
 
-def process_huc_level_12():
-    pass
+def process_huc_level_12(gpkg):
+    gdf = load_huc_layer(gpkg, '12')
 
 
 def write_data_to_ttl():
@@ -120,8 +120,8 @@ if __name__ == '__main__':
     gpkg_handle = f'/vsizip/{wbd_file}/{gpkg_name}'
     for level in [2, 4, 6, 8]:
         process_huc_level_2_to_8(gpkg_handle, level)
-    process_huc_level_10()
-    process_huc_level_12()
+    process_huc_level_10(gpkg_handle)
+    process_huc_level_12(gpkg_handle)
     write_data_to_ttl()
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
