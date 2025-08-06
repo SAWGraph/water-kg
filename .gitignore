@@ -53,6 +53,16 @@ datasets/surface_water/OLD/
 datasets/surface_water/ttl_files/
 
 ################################
+# wbd files & folders
+################################
+
+datasets/wbd/*.ipynb
+datasets/wbd/.ipynb_checkpoints/
+datasets/wbd/logs/
+datasets/wbd/OLD/
+datasets/wbd/ttl_files/
+
+################################
 # wells files & folders
 ################################
 
