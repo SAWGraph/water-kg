@@ -42,7 +42,7 @@
 | areaacres | The area of each hydrologic unit including non-contributing areas stored in acres. | No |  |  |
 | areasqkm | The area of each hydrologic unit including non-contributing areas stored in square kilometers. | No |  |  |
 | states | The States or outlying area attribute identifies the State(s) or outlying areas that the hydrologic unit falls within or touches. | Yes | `wbd:hucState` | Object property connecting to Administrative Region 1 instances |
-| huc# | The HUC# field is a unique #-digit hydrologic unit code <br> # is 2 (region), 4 (subregion), 6 (basin), or 8 (subbasin) | Yes | `wbd:hucCode` | Use as unique identifier |
+| huc<#> | The HUC# field is a unique #-digit hydrologic unit code <br> # is 2 (region), 4 (subregion), 6 (basin), 8 (subbasin), 10 (watershed), or 12 (subwatershed) | Yes | `wbd:hucCode` | Use as unique identifier |
 | name | Name refers to the GNIS name for the geographic area in which the hydrologic unit is located. | Yes | `schema:name` |  |
 | shape_Length | Length of feature in internal units. | No |  |  |
 | shape_Area | Area of feature in internal units squared. | No |  |  |
