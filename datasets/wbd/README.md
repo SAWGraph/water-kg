@@ -30,7 +30,7 @@
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 | Attribute | Description | Lift to graph | Ontology property | Comments |
-| --- | --- | --- |--- | --- |
+| --- | --- | :---: | --- | --- |
 | objectid | Internal feature number. | No |  |  |
 | tnmid | TNMID (short for The National Map Identification) is a unique 40-character field that identifies each element in the database exclusively. | No |  |  |
 | metasourceid | MetaSourceID is a unique identifier that links the element to the metadata tables. | No |  |  |
@@ -46,32 +46,50 @@
 | name | Name refers to the GNIS name for the geographic area in which the hydrologic unit is located. | Yes | `schema:name` |  |
 | shape_Length | Length of feature in internal units. | No |  |  |
 | shape_Area | Area of feature in internal units squared. | No |  |  |
-| hutype | The 12-digit hydrologic unit type attribute is the single-letter abbreviation for Watershed type from the list of official names provided in the WBD Standards. | Yes | `wbd:hucType` | HUC10 & HUC12 only <br/> See controlled vocabulary below |
-| humod | Two-character, uppercase abbreviation used to track either a modification to natural overland flow that alters the location of the hydrologic unit boundary or special conditions that are applied to a specific boundary line segment. The value identifies the type of modification, from the list provided, that has been applied to the boundary segment. If more than one abbreviation is used, the list is separated by commas without spaces and organized from most to least predominant. | No |  | HUC10 & HUC12 only <br/> See controlled vocabulary below |
-| hutype_description |  | Yes | `wbd:hucTypeDescription` | HUC10 & HUC12 only <br/> See controlled vocabulary below |
-| tohuc | The 12-digit hydrologic unit ToHUC code attribute is the code for the 12-digit hydrologic unit that is downstream from and naturally receives the majority of the flow from another 12-digit hydrologic unit. | Yes | `wbd:toHUC` | HUC12 only |
-| noncontributingareaacres | The noncontributing area attribute represents the area, in acres, of hydrologic units that do not contribute to downstream accumulation of streamflow under normal flow conditions. | No |  | HUC12 only |
-| noncontributingareasqkm | The noncontributing area attribute represents the area, in square kilometers, of hydrologic units that do not contribute to downstream accumulation of streamflow under normal flow conditions. | No |  | HUC12 only |
+| hutype | The 12-digit hydrologic unit type attribute is the single-letter abbreviation for Watershed type from the list of official names provided in the WBD Standards. | Yes | `wbd:hucType` | HUC10+ only <br/> See controlled vocabulary below |
+| humod | Two-character, uppercase abbreviation used to track either a modification to natural overland flow that alters the location of the hydrologic unit boundary or special conditions that are applied to a specific boundary line segment. The value identifies the type of modification, from the list provided, that has been applied to the boundary segment. If more than one abbreviation is used, the list is separated by commas without spaces and organized from most to least predominant. | No |  | HUC10+ only <br/> See controlled vocabulary below |
+| hutype_description |  | Yes | `wbd:hucTypeDescription` | HUC10+ only <br/> See controlled vocabulary below |
+| tohuc | The 12-digit hydrologic unit ToHUC code attribute is the code for the 12-digit hydrologic unit that is downstream from and naturally receives the majority of the flow from another 12-digit hydrologic unit. | Yes | `wbd:toHUC` | HUC12+ only |
+| noncontributingareaacres | The noncontributing area attribute represents the area, in acres, of hydrologic units that do not contribute to downstream accumulation of streamflow under normal flow conditions. | No |  | HUC12+ only |
+| noncontributingareasqkm | The noncontributing area attribute represents the area, in square kilometers, of hydrologic units that do not contribute to downstream accumulation of streamflow under normal flow conditions. | No |  | HUC12+ only |
 
 **Notes on the data:**
-* Need to add Canada as an Administrative Region 0 to fully capture `states` attribute
+* Need to add Canada and Mexico as Administrative Region 1 entity to fully capture `states` attribute
 
 ## Controlled Vocabularies 
 List 1. humod
-* GL - glacier
-* IF - ice field
-* KA - karst
-* NC - non-contributing area
+| “HUMod” code | “HUMod” description | “HUMod” definition |
+| :---: | --- | --- |
+| AW | Artificial waterway | A canal, ditch, or drain used to transport surface water that alters the natural flow out of the hydrologic unit. Withdrawing and receiving hydrologic units should carry this designation, as well as all hydrologic units in which the flow is altered by an artificial waterway. <br> *Retired codes AD (Aqueduct), DD (Drainage Ditch), GC (General Canal/Ditch), ID (Irrigation Ditch), IT (Interbasin Transfer), SD (Stormwater Ditch), SC (Stormwater Canal), and BC (Barge Canal) are grouped into this single modification code.* |
+| GF | Groundwater or shallow subsurface flow | Hydrologic unit in which most of the runoff drains underground. |
+| GL | Glacier | The hydrologic unit crosses or includes a body or stream of ice moving outward and downslope from an area of accumulation; area of relatively permanent snow or ice on the top or side of a mountain or mountainous area. |
+| IF | Ice field | The hydrologic unit crosses or includes a field of ice, formed in regions of perennial frost. |
+| KA | Karst | The hydrologic unit is within an area of, or includes an area of, geologic formations of irregular limestone deposits with sinks, underground streams, or caverns. |
+| LA | Lava field | The hydrologic unit contains or crosses nearly flat-lying lava flows. |
+| MA | Mining activity | Topographic modification by surface mining that alters the natural flow in or out of the hydrologic unit. |
+| NC | Noncontributing area | A naturally formed area that does not contribute surface-water runoff to a hydrologic unit outlet under normal conditions, for example, a playa. This does not include groundwater flow. |
+| NM | No modifications | No modifications are present. Use if no other options with the modification domain have been cited. |
+| OC | Overflow channel or flume | An artificial channel built to control excess high flow from a natural channel; alters the natural flow out of the hydrologic unit. |
+| OF | Overbank flow | A natural condition in which a stream surpasses bankfull stage and the excess flows into a nearby channel draining to a different hydrologic unit. The losing and receiving hydrologic units should both carry the HUMod code “OF”. An example of overbank flow is shown in figure 3. |
+| PD | Pipe diversion | A redirection of surface water by a pipeline from one hydrologic unit to another, which alters the natural flow into or out of the hydrologic unit. |
+| PS | Pumping station | A facility along a stream or other water body used to move water over a levee or other obstruction that alters the natural boundary location. |
+| RC | Receiving | A hydrologic unit that receives diverted water. |
+| RS | Reservoir | A constructed basin formed to contain and store water for future use in an artificial lake; alters the natural flow out of the hydrologic unit. |
+| SI | Siphon | An artificial diversion, which is usually named “siphon” on maps, to move surface water from one stream channel to another; alters the natural boundary location. |
+| UA | Urban area | Heavy modification of hydrologic unit topography by urban development. |
+| WD | Withdrawal | A hydrologic unit from which water is diverted. |
 
-List 2. hutype - hutype_description
-* S - Standard (An HU with drainage flowing to a single outlet point, excluding noncontributing areas.)
-* F - Frontal (An HU that has more than one hydrologic feature discharging along the coastline of a lake, ocean, bay, playa, or other receiving feature.)
-* C - Closed (An HU where no surface flow leaves through an outlet point.)
-* M - Multiple outlet (An HU with more than one natural outlet; for example, an outlet located on a stream with multiple channels. This HUType classification does not include frontal or water hydrologic units, hydrologic units with artificial interbasin transfers, or drainage outlets through karst or shallow subsurface flow.)
-* W - Water (An HU that is predominantly water but may include small land areas, for example, a lake, estuary, or harbor.)
-* I - Island (An HU composed of one or more islands and adjacent water.)
-* U - Urban (An HU in urban areas that are altered by engineered surface and subsurface drainage systems.)
-* D - Indeterminant flow (An HU in areas of complex terrain or hydrology where flow within and connections between hydrologic units are uncertain or have the potential to change.)
+List 2. Hydrologic unit type (Note: *"HUType" description* values populate both `hutype` and `hutype_description` attributes in the shapefiles)
+| "HUType" code | "HUType" description | "HUType" definition |
+| :---: | :---: | --- |
+| C | Closed Basin | An HU where no surface flow leaves through an outlet point. |
+| D | Indeterminant Flow | An HU in areas of complex terrain or hydrology where flow within and connections between hydrologic units are uncertain or have the potential to change. |
+| F | Frontal | An HU that has more than one hydrologic feature discharging along the coastline of a lake, ocean, bay, playa, or other receiving feature. |
+| I | Island | An HU composed of one or more islands and adjacent water. |
+| M | Multiple Outlet | An HU with more than one natural outlet; for example, an outlet located on a stream with multiple channels. This HUType classification does not include frontal or water hydrologic units, hydrologic units with artificial interbasin transfers, or drainage outlets through karst or shallow subsurface flow. |
+| S | Standard | An HU with drainage flowing to a single outlet point, excluding noncontributing areas. |
+| U | Urban | An HU in urban areas that are altered by engineered surface and subsurface drainage systems. |
+| W | Water | An HU that is predominantly water but may include small land areas, for example, a lake, estuary, or harbor. |
 
 ## Sample Data
 
