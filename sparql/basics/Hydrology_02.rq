@@ -4,6 +4,7 @@
 # This query returns flowlines named Penobsccot River
 #    The flowlines must have a GNIS name in the NHD Plus v2
 
+### GraphDB Version ###
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -20,4 +21,22 @@ SELECT * WHERE {
         # Keep only flowlines with the desired name
         FILTER (?name = "Penobscot River")
     }
+} ORDER BY ?COMID
+
+
+### FRINK Version ###
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+
+SELECT * WHERE {
+  # Select flowlines and desired attributes
+  ?flowline rdf:type hyf:HY_FlowPath ;
+            schema:name ?name ;
+            nhdplusv2:hasCOMID ?COMID ;
+            nhdplusv2:hasFTYPE ?FTYPE .
+  # Keep only flowlines with the desired name
+  FILTER (?name = "Penobscot River")
 } ORDER BY ?COMID
