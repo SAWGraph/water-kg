@@ -5,6 +5,7 @@
 # This query retrieves water bodies that are reservoirs
 #    Not LakePond, SwampMarsh, or Inundation Area
 
+### This version works on both GraphDB and FRINK ###
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
