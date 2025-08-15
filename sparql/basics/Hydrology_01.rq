@@ -4,6 +4,7 @@
 # This query returns water bodies named Great Pond or Long Pond
 #    The water bodies must have a GNIS name in the NHD Plus v2
 
+### GraphDB Version ###
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -20,4 +21,22 @@ SELECT * WHERE {
         # Keep only water bodies with the desired names
         VALUES ?name { 'Great Pond' 'Long Pond' }
     }
+} ORDER BY ?name ?wb
+
+
+### FRINK Version ###
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+
+SELECT * WHERE {
+  # Select water bodies along with their names, type, and comid
+  ?waterbody rdf:type hyf:HY_WaterBody ;
+             schema:name ?name ;
+             nhdplusv2:hasFTYPE ?FTYPE ;
+             nhdplusv2:hasCOMID ?COMID .
+  # Keep only water bodies with the desired names
+  VALUES ?name { 'Great Pond' 'Long Pond' }
 } ORDER BY ?name ?wb
