@@ -17,3 +17,24 @@
 13:52:06,339 root INFO Running triplification for MGS Wells
 14:02:51,803 root INFO Running triplification for MGS Wells
 14:06:00,359 root INFO Running triplification for MGS Wells
+13:13:32,800 root INFO Running triplification for MGS Wells
+13:18:19,398 root INFO Running triplification for MGS Wells
+13:25:34,873 root INFO Running triplification for MGS Wells
+13:35:25,803 root INFO 
+Running triplification for MGS Wells
+13:35:26,600 root INFO MGS unlocated wells data loaded to dataframe.
+13:35:54,535 root INFO Finished triplifying MGS unlocated well data.
+13:35:55,879 root INFO MGS Located wells data loaded to dataframe.
+13:37:00,912 root INFO Finished triplifying MGS located well data.
+13:40:55,48 root INFO 
+Running triplification for MGS Wells
+13:40:55,962 root INFO MGS unlocated wells data loaded to dataframe.
+13:41:23,377 root INFO Finished triplifying MGS unlocated well data.
+13:41:24,694 root INFO MGS Located wells data loaded to dataframe.
+13:42:22,748 root INFO Finished triplifying MGS located well data.
+13:45:59,650 __main__ INFO 
+13:45:59,658 __main__ INFO Running triplification for MGS Wells
+13:46:00,636 __main__ INFO MGS unlocated wells data loaded to dataframe.
+13:46:32,852 __main__ INFO Finished triplifying MGS unlocated well data.
+13:46:34,154 __main__ INFO MGS Located wells data loaded to dataframe.
+13:47:53,651 __main__ INFO Finished triplifying MGS located well data.

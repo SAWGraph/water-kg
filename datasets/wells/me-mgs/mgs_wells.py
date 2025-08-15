@@ -21,7 +21,7 @@ from pathlib import Path
 
 ## importing utility/variable file
 code_dir = Path(__file__).resolve().parent.parent.parent.parent
-print(code_dir)
+# print(code_dir)
 sys.path.insert(0, str(code_dir))
 # from datasets.wells.me-mgs.variable import NAME_SPACE, _PREFIX
 from variable import NAME_SPACE, _PREFIX
@@ -33,9 +33,9 @@ logname = "log"
 
 ## data path
 root_folder = Path(__file__).resolve().parent.parent.parent
-data_dir = root_folder / "datasets/data/mgs_wells/"
-metadata_dir = root_folder / "datasets/data/mgs_wells/metadata/"
-output_dir = Path(__file__).resolve().parent #root_folder / "code/MGS_wells/"
+data_dir = root_folder / "data/mgs_wells/"
+metadata_dir = root_folder / "data/mgs_wells/metadata/"
+output_dir = root_folder / "wells/me-mgs/ttl_files/"
 
 me_mgs = Namespace(f"http://sawgraph.spatialai.org/v1/me-mgs#")
 me_mgs_data = Namespace(f"http://sawgraph.spatialai.org/v1/me-mgs-data#")
@@ -54,30 +54,32 @@ logging.basicConfig(filename=logname,
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
                     level=logging.DEBUG)
-
-logging.info("Running triplification for MGS Wells")
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler(sys.stdout))
+logger.info('')
+logger.info("Running triplification for MGS Wells")
 
 def main():
     #unlocated wells
     mgs_wells_unlocated_df = pd.read_csv(data_dir / 'Maine_Well_Database_-_Unlocated_Wells.csv', header=0, low_memory=False)
-    logger = logging.getLogger('Data loaded to dataframe.')
+    logger.info('MGS unlocated wells data loaded to dataframe.')
 
     kg, towns = triplify_well_data(mgs_wells_unlocated_df, _PREFIX)
-    kg_turtle_file = "mgs_wells_unlocated_output.ttl".format(output_dir)
+    kg_turtle_file = output_dir / "mgs_wells_unlocated_output.ttl"
     kg.serialize(kg_turtle_file, format='turtle')
-    towns.serialize('towns_unlocated.ttl'.format(output_dir), format='turtle')
-    logger = logging.getLogger('Finished triplifying MGS unlocated well data.')
+    towns.serialize(output_dir / 'towns_unlocated.ttl', format='turtle')
+    logger.info('Finished triplifying MGS unlocated well data.')
 
     #located wells
     mgs_wells_located_df = pd.read_csv(data_dir / 'Maine_Well_Database_-_Well_Depth.csv', header=0,
                                          encoding='ISO-8859-1')
-    logger = logging.getLogger('Data loaded to dataframe.')
+    logger.info('MGS located wells data loaded to dataframe.')
 
     kg2, towns2 = triplify_well_data(mgs_wells_located_df, _PREFIX)
-    kg_turtle_file = "mgs_wells_located_output.ttl".format(output_dir)
+    kg_turtle_file = output_dir / "mgs_wells_located_output.ttl"
     kg2.serialize(kg_turtle_file, format='turtle')
-    towns2.serialize('towns_located.ttl'.format(output_dir), format='turtle')
-    logger = logging.getLogger('Finished triplifying MGS unlocated well data.')
+    towns2.serialize(output_dir / 'towns_located.ttl', format='turtle')
+    logger.info('Finished triplifying MGS located well data.')
 
 
 def Initial_KG(_PREFIX):
@@ -105,7 +107,7 @@ def get_attributes(row):
     try:
         well_point = shapely.Point((row['LONGITUDE'], row['LATITUDE']))
         geom = well_point.wkt
-        print(geom)
+        # print(f'Shapely point: {well_point}; WKT point: {geom}')
     except:
         geom = None
 
@@ -118,7 +120,7 @@ def triplify_well_data(df, _PREFIX):
     kg2 = Initial_KG(_PREFIX)
     get_towns = False
     ## materialize each well record
-    df.info()
+    # df.info()
 
 # <<<<<<< HEAD
 #     if get_towns:
@@ -142,9 +144,9 @@ def triplify_well_data(df, _PREFIX):
     else:
         with open('towns.txt', 'r') as town_file:
             town_dcid = json.load(town_file)
-            print(town_dcid)
+            # print(town_dcid)
     for town in town_dcid.keys():
-        print(town, town_dcid[town])
+        # print(town, town_dcid[town])
         if town_dcid[town] != []:
             for place in town_dcid[town]:
                 kg2.add((_PREFIX['dc'][place], RDF.type, _PREFIX['kwg-ont']["AdministrativeRegion_3"]))
@@ -180,7 +182,7 @@ def triplify_well_data(df, _PREFIX):
             # extract the geometry
             well_geometry_iri = me_mgs_data[f"d.MGS-Well-Geometry.{well_no}"]
             kg.add((well_iri, _PREFIX['geo']['hasGeometry'], well_geometry_iri))
-            kg.add((well_iri, _PREFIX['geo']['hasDefaultGeometry'], well_geometry_iri))
+            kg.add((well_iri, _PREFIX['geo']['defaultGeometry'], well_geometry_iri))
             kg.add((well_geometry_iri, _PREFIX["geo"]["asWKT"], Literal(geom, datatype=_PREFIX["geo"]["wktLiteral"])))
             kg.add((well_geometry_iri, RDF.type, _PREFIX['geo']['Geometry']))
 
@@ -200,7 +202,7 @@ def triplify_well_data(df, _PREFIX):
     f_use=open("well_uses.txt", "w")
 
     well_types = df.WELL_TYPE.unique().flatten()
-    print('well types: ', well_types)
+    # print('well types: ', well_types)
     for t in well_types:
         wt = str(t).lower().title().replace(' ', '')
         if wt != 'Nan':
@@ -209,7 +211,7 @@ def triplify_well_data(df, _PREFIX):
     f_type.close()
 
     well_use = df.WELL_USE.unique().flatten()
-    print('well use: ', well_use)
+    # print('well use: ', well_use)
     for t in well_use:
         wu = str(t).lower().title().replace(', ', '')
         if wu != 'Nan':
