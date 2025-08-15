@@ -4,6 +4,7 @@
 # This query returns aquifers and a few of their attributes
 # NOTE: New and improved aquifers, aquifer systems, and data are coming
 
+### GraphDB Version ###
 PREFIX gwml2: <http://gwml2.org/def/gwml2#>
 PREFIX me_mgs: <http://sawgraph.spatialai.org/v1/me_mgs#>
 PREFIX saw-water: <http://sawgraph.spatialai.org/v1/saw_water#>
@@ -18,4 +19,20 @@ SELECT * WHERE {
         	saw-water:aquiferType ?type ;
         	rdfs:label ?description .
     }
+}
+
+
+### FRINK Version ###
+PREFIX gwml2: <http://gwml2.org/def/gwml2#>
+PREFIX me_mgs: <http://sawgraph.spatialai.org/v1/me_mgs#>
+PREFIX saw-water: <http://sawgraph.spatialai.org/v1/saw_water#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+  # Select aquifers and desired attributes
+  ?aquifer rdf:type gwml2:GW_Aquifer ;
+           me_mgs:meMgsAqId ?MGS_id ;
+           saw-water:aquiferType ?type ;
+           rdfs:label ?description .
 }
