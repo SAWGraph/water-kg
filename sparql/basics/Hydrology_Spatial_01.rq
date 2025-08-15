@@ -4,6 +4,7 @@
 # This query returns county subdivisions from Maine and the waterbodies they intersect, using 
 #    S2 cells to determine the relationships between county subdivisions and waterbodies
 
+### GraphDB Version ###
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
@@ -33,4 +34,28 @@ SELECT DISTINCT ?cousub_label ?wb_name WHERE {
 			?wb_s2 spatial:connectedTo ?waterbody .
         }
     }
+} ORDER BY ?cousub_label ?wb_name
+
+
+### FRINK Version ###
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX schema: <https://schema.org/>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?cousub_label ?wb_name WHERE {
+  # Select county subdivisions, their counties, and their names
+  ?countysubdivision rdf:type kwg-ont:AdministrativeRegion_3 ;
+                     kwg-ont:sfWithin+ kwgr:administrativeRegion.USA.23 ;
+                     rdfs:label ?cousub_label .
+  # Find the S2 cells they have in common with waterbodies
+  ?wb_s2 spatial:connectedTo ?countysubdivision ;
+         rdf:type kwg-ont:S2Cell_Level13 .
+  # Select waterbodies and their S2 cell relations
+  ?waterbody rdf:type hyf:HY_WaterBody ;
+             schema:name ?wb_name .
+  ?wb_s2 spatial:connectedTo ?waterbody .
 } ORDER BY ?cousub_label ?wb_name
