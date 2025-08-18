@@ -57,7 +57,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpu = 'NE_01'
+vpu = 'MS_11'
 vpunum = vpu[3:]
 # Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
 #              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
@@ -79,6 +79,7 @@ logging.basicConfig(filename=logname,
                     datefmt='%Y-%m-%d %H:%M:%S',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
 
@@ -139,6 +140,8 @@ def process_waterbodies_shp2ttl(infile, outfile):
             kg.add((bodyiri, RDF.type, _PREFIX['hyf']['HY_Estuary']))
         elif 'lake' in row.FTYPE.lower():
             kg.add((bodyiri, RDF.type, _PREFIX['hyf']['HY_Lake']))
+        elif 'reservoir' in row.FTYPE.lower():
+            kg.add((bodyiri, RDF.type, _PREFIX['hyf']['HY_Impoundment']))
         else:
             kg.add((bodyiri, RDF.type, _PREFIX['hyf']['HY_WaterBody']))
 
@@ -152,9 +155,11 @@ def process_waterbodies_shp2ttl(infile, outfile):
         if not pd.isnull(row.GNIS_NAME):
             kg.add((bodyiri, SDO.name, Literal(row.GNIS_NAME, datatype=XSD.string)))
         kg.add((bodyiri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(row.COMID), datatype=XSD.string)))
-        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(row.REACHCODE), datatype=XSD.string)))
         kg.add((bodyiri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(row.FTYPE), datatype=XSD.string)))
         kg.add((bodyiri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(row.FCODE), datatype=XSD.string)))
+        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(row.REACHCODE), datatype=XSD.string)))
+        if row.REACHCODE is not None:
+            kg.add((bodyiri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(row.REACHCODE)[:8]]))
 
         # Update the processing status to the terminal
         print(f'Processing row {count:5} of {n} : COMID {str(row.COMID):9}', end='\r', flush=True)
