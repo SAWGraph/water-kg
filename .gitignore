@@ -77,6 +77,7 @@ datasets/wells/il-isgs/README_2025-01-22_ISGS.MD
 datasets/wells/il-isgs/.ipynb_checkpoints/
 datasets/wells/il-isgs/__pycache__/
 datasets/wells/il-isgs/ttl_files
+datasets/wells/il-isgs/ttl_files/*.ipynb
 
 datasets/wells/me-mgs/*.ipynb
 datasets/wells/me-mgs/log
