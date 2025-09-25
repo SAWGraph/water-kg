@@ -86,7 +86,7 @@
 
 ## Controlled Vocabularies
 **List 1. WELL_USE**
-| WELL_USE | # located | # unlocated | Class | 
+| WELL_USE | # located | # unlocated | Proposed Upper Level Class | 
 | --- | ---: | ---: | --- |
 | Domestic | 83,254 | 59,486 | `gwml2:WellWaterUseType` |
 | Commercial | 1099 | 1357 | `gwml2:WellWaterUseType` |
@@ -104,7 +104,7 @@
 | `NULL` | 1754 | 2350 |  |
 
 **List 2. WELL_TYPE** (Align with `hyfo:AquiferType`?)
-| WELL_TYPE | # located | # unlocated | Class |
+| WELL_TYPE | # located | # unlocated | Proposed Upper Level Class |
 | --- | ---: | ---: | --- |
 | Bedrock | 83,893 | 60,389 | `hyfo:AquiferType` |
 | Gravel | 1531 | 1333 | `hyfo:AquiferType` |
