@@ -88,19 +88,19 @@
 **List 1. Well Use**
 | Value | `gwml2` | 
 | --- | --- |
-| Commercial | `:gwWellWaterUse` |
-| Domestic | `:gwWellWaterUse` |
-| Farm | `:gwWellWaterUse` |
-| Farm, Domestic | `:gwWellWaterUse` |
-| Geothermal | `:gwWellPurposeType` |
-| Industrial | `:gwWellWaterUse` |
-| Institutional | `:gwWellWaterUse` |
-| Irrigation | `:gwWellWaterUse` |
-| Monitoring | `:gwWellPurposeType` |
-| Municipal | `:gwWellWaterUse` |
-| Observation | `:gwWellPurposeType` |
-| Other | `:gwWellWaterUse` |
-| Test | `:gwWellPurposeType` |
+| Commercial | `:WellWaterUseType` |
+| Domestic | `:WellWaterUseType` |
+| Farm | `:WellWaterUseType` |
+| Farm, Domestic | `:WellWaterUseType` |
+| Geothermal | `:WellPurposeType` |
+| Industrial | `:WellWaterUseType` |
+| Institutional | `:WellWaterUseType` |
+| Irrigation | `:WellWaterUseType` |
+| Monitoring | `:WellPurposeType` |
+| Municipal | `:WellWaterUseType` |
+| Observation | `:WellPurposeType` |
+| Other | `:WellWaterUseType` |
+| Test | `:WellPurposeType` |
 
 **List 2. Well Type** (Align with `hyfo:AquiferType`?)
 - Bedrock
