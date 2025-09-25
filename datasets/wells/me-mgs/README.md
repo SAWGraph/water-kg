@@ -86,64 +86,66 @@
 
 ## Controlled Vocabularies
 **List 1. Well Use**
-- Domestic
-- Commercial
-- Other
-- Municipal
-- Farm, Domestic
-- Institutional
-- Test
-- Geothermal
-- Industrial
-- Irrigation
-- Farm
-- Observation
-- Monitoring
+| Value | `gwml2` | 
+| --- | --- |
+| Commercial | `:gwWellWaterUse` |
+| Domestic | `:gwWellWaterUse` |
+| Farm | `:gwWellWaterUse` |
+| Farm, Domestic | `:gwWellWaterUse` |
+| Geothermal | `:gwWellPurposeType` |
+| Industrial | `:gwWellWaterUse` |
+| Institutional | `:gwWellWaterUse` |
+| Irrigation | `:gwWellWaterUse` |
+| Monitoring | `:gwWellPurposeType` |
+| Municipal | `:gwWellWaterUse` |
+| Observation | `:gwWellPurposeType` |
+| Other | `:gwWellWaterUse` |
+| Test | `:gwWellPurposeType` |
 
-**List 2. Well Type**
+**List 2. Well Type** (Align with `hyfo:AquiferType`?)
 - Bedrock
+- Dug
 - Gravel
+- Gravel Packed
+- Observation
+- Other
 - Overburden
 - Spring
-- Other
-- Gravel Packed
-- Dug
-- Observation
 
 **List 3. Well Construction**
+- Auger
+- Cable Tool
 - Drilled
-- Rotary Drilled
+- Drilled Overburden
+- Driven Point
 - Dug
 - Hammer Drilled
-- Cable Tool
-- Driven Point
 - Jet
-- Auger
-- Drilled Overburden
+- Rotary Drilled
 
 **List 4. Well Development** 
-- None
 - Air
 - Air/Water
-- Other
-- Jetting
 - Blasting
 - Dry Ice
 - Dynamite
+- Jetting
+- None
 - Not Sure
+- Other
 
 **List 5. Location_Method**
-- TAX MAP AND LOT
-- GEOCODED STREET ADDRESS MAINE E911
-- GPS
+- DRILLER PROVIDED - CORRECTED BY MGS	
+- DRILLER PROVIDED - INCORRECT	
 - DRILLER PROVIDED - OK	
 - GEOCODED ADDRESS POINT MAINE E911	
+- GEOCODED STREET ADDRESS MAINE E911
 - GEOCODED STREET ADDRESS OTHER	
-- OWNER PROVIDED - OK	
-- DRILLER PROVIDED - CORRECTED BY MGS	
+- GPS
 - ORTHOIMAGERY	
-- DRILLER PROVIDED - INCORRECT	
 - OWNER PROVIDED - CORRECTED BY MGS
+- OWNER PROVIDED - OK	
+- TAX MAP AND LOT
 
 ## Sample Data
 
