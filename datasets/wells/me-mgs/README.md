@@ -112,8 +112,8 @@
 | Other | 146 | 14 |  |
 | Spring | 116 | 11 |  |
 | Gravel Packed | 27 | 35 | `hyfo:AquiferType` |
-| Dug | 13 | 7 |  |
 | Observation | 11 | 12 | `gwml2:WellPurposeType` |
+| Dug | 13 | 7 |  |
 | `NULL` | 1343 | 2042 |  |
 
 **List 3. WELL_CONSTRUCTION**
