@@ -63,42 +63,42 @@
 
 ## Controlled Vocabularies
 **List 1. WELL_USE**
-| WELL_USE | `gwml2` |
+| WELL_USE | # wells | Proposed Upper Level Class |
 | --- | --- |
-| ABANDONED | `:WellStatusType` |
-| AGRIC/IRRIG | `:WellWaterUseType` |
-| ALIGNMENT HOLE | `:WellPurposeType` |
-| CATHODE PROTECT | `:WellPurposeType` |
-| COMMERCIAL | `:WellWaterUseType` |
-| CONSTRUCTION | `:WellPurposeType` |
-| DEWATERING WELL | `:WellPurposeType` |
-| DOMESTIC | `:WellWaterUseType` |
-| DRAINAGE | `:WellPurposeType` |
-| DRY/NO WATER | `:WellStatusType` |
-| FIRE PROTECTION | `:WellPurposeType` |
-| FRACK WATER | `:WellPurposeType` |
-| GAS | `:WellPurposeType` |
-| GAS PROB | `:WellPurposeType` |
-| HTG/COOLING | `:WellPurposeType` |
-| INCLINOMETER | `:WellPurposeType` |
-| INDUSTRIAL | `:WellWaterUseType` |
-| INJECTION/DISPO | `:WellPurposeType` |
-| MONITOR | `:WellPurposeType` |
-| MUNICIPAL | `:WellWaterUseType` |
-| `NULL` |  |
-| OBSERVATION | `:WellPurposeType` |
-| OTHER |  |
-| PIEZOMETER | `:WellPurposeType` |
-| PRESSURE RELIEF | `:WellPurposeType` |
-| PUBLIC/SEMI-PUB | `:WellWaterUseType` |
-| RECOVERY WELL | `:WellPurposeType` |
-| SEALED | `:WellStatusType` |
-| SOIL BORING | `:WellPurposeType` |
-| TEST BORING | `:WellPurposeType` |
-| TEST WELL | `:WellPurposeType` |
-| VAPOR EXTRACTIO | `:WellPurposeType` |
+| DOMESTIC | 417,876 | `:WellWaterUseType` |
+| MONITOR | 30,477 | `:WellPurposeType` |
+| AGRIC/IRRIG | 10,447 | `:WellWaterUseType` |
+| PUBLIC/SEMI-PUB | 2862 | `:WellWaterUseType` |
+| HTG/COOLING | 1642 | `:WellPurposeType` |
+| DEWATERING WELL | 1633 | `:WellPurposeType` |
+| OTHER | 1177 |  |
+| COMMERCIAL | 903 | `:WellWaterUseType` |
+| DRY/NO WATER | 870 | `:WellStatusType` |
+| TEST WELL | 738 | `:WellPurposeType` |
+| INDUSTRIAL | 687 | `:WellWaterUseType` |
+| TEST BORING | 465 | `:WellPurposeType` |
+| ABANDONED | 456 | `:WellStatusType` |
+| PIEZOMETER | 446 | `:WellPurposeType` |
+| MUNICIPAL | 418 | `:WellWaterUseType` |
+| RECOVERY WELL | 412 | `:WellPurposeType` |
+| VAPOR EXTRACTIO | 289 | `:WellPurposeType` |
+| INJECTION/DISPO | 269 | `:WellPurposeType` |
+| SOIL BORING | 206 | `:WellPurposeType` |
+| OBSERVATION | 204 | `:WellPurposeType` |
+| DRAINAGE | 181 | `:WellPurposeType` |
+| CONSTRUCTION | 104 | `:WellPurposeType` |
+| GAS PROBE | 70 | `:WellPurposeType` |
+| PRESSURE RELIEF | 66 | `:WellPurposeType` |
+| SEALED | 52 | `:WellStatusType` |
+| FIRE PROTECTION | 30 | `:WellPurposeType` |
+| GAS | 28 | `:WellPurposeType` |
+| CATHODE PROTECT | 19 | `:WellPurposeType` |
+| ALIGNMENT HOLE | 9 | `:WellPurposeType` |
+| INCLINOMETER | 4 | `:WellPurposeType` |
+| FRACK WATER | 3 | `:WellPurposeType` |
+| `NULL` | 76,347 |  |
 
-**List 2. AQUIFER_TYPE**
+**List 2. AQUIFER_TYPE** (136 unique values, 20 (including `NULL`) account for 95% of the records, many differ only be the order of the constituents)
 * ASPHALT
 * BEDROCK
 * BEREA
