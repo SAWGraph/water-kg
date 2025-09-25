@@ -86,31 +86,35 @@
 
 ## Controlled Vocabularies
 **List 1. WELL_USE**
-| WELL_USE | `gwml2` | 
-| --- | --- |
-| Commercial | `:WellWaterUseType` |
-| Domestic | `:WellWaterUseType` |
-| Farm | `:WellWaterUseType` |
-| Farm, Domestic | `:WellWaterUseType` |
-| Geothermal | `:WellPurposeType` |
-| Industrial | `:WellWaterUseType` |
-| Institutional | `:WellWaterUseType` |
-| Irrigation | `:WellWaterUseType` |
-| Monitoring | `:WellPurposeType` |
-| Municipal | `:WellWaterUseType` |
-| Observation | `:WellPurposeType` |
-| Other | `:WellWaterUseType` |
-| Test | `:WellPurposeType` |
+| WELL_USE | # located | # unlocated | Class | 
+| --- | ---: | ---: | --- |
+| Domestic | 83,254 | 59,486 | `gwml2:WellWaterUseType` |
+| Commercial | 1099 | 1357 | `gwml2:WellWaterUseType` |
+| Other | 502 | 376 | `gwml2:WellWaterUseType` |
+| Municipal | 239 | 356 | `gwml2:WellWaterUseType` |
+| Institutional | 192 | 148 | `gwml2:WellWaterUseType` |
+| Farm, Domestic | 208 | 18 | `gwml2:WellWaterUseType` |
+| Geothermal | 213 | 7 | `gwml2:WellPurposeType` |
+| Test | 146 | 60 | `gwml2:WellPurposeType` |
+| Industrial | 108 | 81 | `gwml2:WellWaterUseType` |
+| Irrigation | 72 | 3 | `gwml2:WellWaterUseType` |
+| Farm | 27 | 17 | `gwml2:WellWaterUseType` |
+| Observation | 7 | 27 | `gwml2:WellPurposeType` |
+| Monitoring | 4 | 17 | `gwml2:WellPurposeType` |
+| `NULL` | 1754 | 2350 |  |
 
 **List 2. WELL_TYPE** (Align with `hyfo:AquiferType`?)
-- Bedrock
-- Dug
-- Gravel
-- Gravel Packed
-- Observation
-- Other
-- Overburden
-- Spring
+| WELL_TYPE | # located | # unlocated | Class |
+| --- | ---: | ---: | --- |
+| Bedrock | 83,893 | 60,389 | `hyfo:AquiferType` |
+| Gravel | 1531 | 1333 | `hyfo:AquiferType` |
+| Overburden | 745 | 460 | `hyfo:AquiferType` |
+| Other | 146 | 14 |  |
+| Spring | 116 11 |  |
+| Gravel Packed | 27 | 35 | `hyfo:AquiferType` |
+| Dug | 13 | 7 |  |
+| Observation | 11 | 12 | `gwml2:WellPurposeType` |
+| `NULL` | 1343 | 2042 |  |
 
 **List 3. WELL_CONSTRUCTION**
 - Auger
