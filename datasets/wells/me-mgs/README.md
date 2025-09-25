@@ -85,8 +85,8 @@
 - 
 
 ## Controlled Vocabularies
-**List 1. Well Use**
-| Value | `gwml2` | 
+**List 1. WELL_USE**
+| WELL_USE | `gwml2` | 
 | --- | --- |
 | Commercial | `:WellWaterUseType` |
 | Domestic | `:WellWaterUseType` |
@@ -102,7 +102,7 @@
 | Other | `:WellWaterUseType` |
 | Test | `:WellPurposeType` |
 
-**List 2. Well Type** (Align with `hyfo:AquiferType`?)
+**List 2. WELL_TYPE** (Align with `hyfo:AquiferType`?)
 - Bedrock
 - Dug
 - Gravel
@@ -112,7 +112,7 @@
 - Overburden
 - Spring
 
-**List 3. Well Construction**
+**List 3. WELL_CONSTRUCTION**
 - Auger
 - Cable Tool
 - Drilled
@@ -123,7 +123,7 @@
 - Jet
 - Rotary Drilled
 
-**List 4. Well Development** 
+**List 4. WELL_DEVELOPMENT** 
 - Air
 - Air/Water
 - Blasting
@@ -134,7 +134,7 @@
 - Not Sure
 - Other
 
-**List 5. Location_Method**
+**List 5. LOCATION_METHOD** (located wells only)
 - DRILLER PROVIDED - CORRECTED BY MGS	
 - DRILLER PROVIDED - INCORRECT	
 - DRILLER PROVIDED - OK	
