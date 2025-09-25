@@ -62,41 +62,43 @@
 - 
 
 ## Controlled Vocabularies
-**List 1. STATUS: STATUSLONG** [number of records]
-- **WATER: Water Well** [301669]
-- ENG: Engineering Test [52943]
-- **MONIT: Water Well Monitoring Well** [5804]
-- **WTST: Water Well Test Hole** [5576]
-- STRAT: Stratigraphic Test [4588]
-- MINER: Mineral Test [4160]
-- **DRY: Dry Hole (water well)** [2699]
-- CROP: Outcrop [1397]
-- DRYP: Dry Hole (water well), Plugged [1209]
-- **OBS: Observation Well** [831]
-- WATERP: Water Well, Plugged [739]
-- OBSP: Observation Well, Plugged [576]
-- MSFT: Mine Shaft [557]
-- **WATRS: Water Supply Well** [530]
-- WATRSP: Water Supply Well, Plugged [417]
-- SLOPE: Slope Mine [120]
-- WTSTP: Water Well Test Hole, Plugged [102]
-- MONITP: Water Well Monitoring Well Plugged [77]
-- DRIFT: Drift Mine [64]
-- STRATP: Stratigraphic Test, Plugged [58]
-- STRIP: Strip Mine [51]
-- ENGP: Engineering Test, Plugged [24]
-- MSERV: Mine Service [20]
-- WASTE: Waste Disposal Well [14]
-- MSERVP: Mine Service Plugged [12]
-- WATOT: Oil Test, left open for a water well [12]
-- LUST: Leaking Underground Storage Tank [7]
-- OBSO: Observation Well, Oil Shows [7]
-- WASTEP: Waste Disposal Well, Plugged [3]
-- OBSOP: Observation Well, Oil Shows, Plugged [2]
-- MINERP: Mineral Test, Plugged [1]
-- OBSG: Observation Well, Gas Shows [1]
-- OBSOG: Observation Well, Oil & Gas Shows [1]
-- STRIPP: Strip Mine, Plugged [1]
+**List 1. STATUS
+| STATUS | STATUSLONG | # of records | `gwml2` |
+| --- | --- | ---: | --- |
+| ***WATER*** | ***Water Well*** | 301,669 |  |
+| ENG | Engineering Test | 52,943 |  |
+| ***MONIT*** | ***Water Well Monitoring Well*** | 5804 |  |
+| ***WTST*** | ***Water Well Test Hole*** | 5576 |  |
+| STRAT | Stratigraphic Test | 4588 |  |
+| MINER | Mineral Test | 4160 |  |
+| ***DRY*** | ***Dry Hole (water well)*** | 2699 |  |
+| CROP | Outcrop | 1397 |  |
+| DRYP | Dry Hole (water well), Plugged | 1209 |  |
+| ***OBS*** | ***Observation Well*** | 831 |  |
+| WATERP | Water Well, Plugged | 739 |  |
+| OBSP | Observation Well, Plugged | 576 |  |
+| MSFT | Mine Shaft | 557 |  |
+| ***WATRS*** | ***Water Supply Well*** | 530 |  |
+| WATRSP | Water Supply Well, Plugged | 417 |  |
+| SLOPE | Slope Mine | 120 |  |
+| WTSTP | Water Well Test Hole, Plugged | 102 |  |
+| MONITP | Water Well Monitoring Well Plugged | 77 |  |
+| DRIFT | Drift Mine | 64 |  |
+| STRATP | Stratigraphic Test, Plugged | 58 |  |
+| STRIP | Strip Mine | 51 |  |
+| ENGP | Engineering Test, Plugged | 24 |  |
+| MSERV | Mine Service | 20 |  |
+| WASTE | Waste Disposal Well | 14 |  |
+| MSERVP | Mine Service Plugged | 12 |  |
+| WATOT | Oil Test, left open for a water well | 12 |  |
+| LUST | Leaking Underground Storage Tank | 7 |  |
+| OBSO | Observation Well, Oil Shows | 7 |  |
+| WASTEP | Waste Disposal Well, Plugged | 3 |  |
+| OBSOP | Observation Well, Oil Shows, Plugged | 2 |  |
+| MINERP | Mineral Test, Plugged | 1 |  |
+| OBSG | Observation Well, Gas Shows | 1 |  |
+| OBSOG | Observation Well, Oil & Gas Shows | 1 |  |
+| STRIPP | Strip Mine, Plugged | 1 |  |
 
 ## Sample Data
 
