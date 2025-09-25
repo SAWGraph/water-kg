@@ -110,7 +110,7 @@
 | Gravel | 1531 | 1333 | `hyfo:AquiferType` |
 | Overburden | 745 | 460 | `hyfo:AquiferType` |
 | Other | 146 | 14 |  |
-| Spring | 116 11 |  |
+| Spring | 116 | 11 |  |
 | Gravel Packed | 27 | 35 | `hyfo:AquiferType` |
 | Dug | 13 | 7 |  |
 | Observation | 11 | 12 | `gwml2:WellPurposeType` |
