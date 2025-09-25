@@ -64,6 +64,7 @@
 ## Controlled Vocabularies
 **List 1. WELL_USE**
 | WELL_USE | `gwml2` |
+| --- | --- |
 | ABANDONED | `:WellStatusType` |
 | AGRIC/IRRIG | `:WellWaterUseType` |
 | ALIGNMENT HOLE | `:WellPurposeType` |
