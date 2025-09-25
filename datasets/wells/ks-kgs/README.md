@@ -112,8 +112,10 @@
 | RECONSTRUCTED | 2287 | `gwml2:WellStatusType` |
 | unknown | 3 | `gwml2:WellStatusType` |
 
-**List 2. WELL_USE** There are a few shallow hierarchies here. Some entries contain history we don't need. 142 of the 176 entries are some form of *Other* (they account for 0.5% of values overall).
-| WELL_USE | enumerated | # wells | Proposed Upper Level Class |
+**List 2. WELL_USE**
+
+There are a few shallow hierarchies here. Some entries contain history we don't need. 142 of the 176 entries are some form of *Other* (they account for 0.5% of values overall).
+| WELL_USE | WELL_USE code | # wells | Proposed Upper Level Class |
 | --- | :---: | ---: | --- |
 | Monitoring well/observation/piezometer | 10 | 83,905 | `gwml2:WellPurposeType` |
 | Domestic | 1 | 76,220 | `gwml2:WellWaterUseType` |
