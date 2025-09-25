@@ -64,7 +64,7 @@
 ## Controlled Vocabularies
 **List 1. WELL_USE**
 | WELL_USE | # wells | Proposed Upper Level Class |
-| --- | --- |
+| --- | ---: | --- |
 | DOMESTIC | 417,876 | `:WellWaterUseType` |
 | MONITOR | 30,477 | `:WellPurposeType` |
 | AGRIC/IRRIG | 10,447 | `:WellWaterUseType` |
