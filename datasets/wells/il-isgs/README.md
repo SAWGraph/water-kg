@@ -63,42 +63,42 @@
 
 ## Controlled Vocabularies
 **List 1. STATUS**
-| STATUS | STATUSLONG | # of records | `gwml2` |
+| STATUS | STATUSLONG | # of records | Proposed Upper Level Class |
 | --- | --- | ---: | --- |
-| ***WATER*** | ***Water Well*** | 301,669 | `:WellPurposeType` |
-| ENG | Engineering Test | 52,943 | `:WellPurposeType` |
-| ***MONIT*** | ***Water Well Monitoring Well*** | 5804 | `:WellPurposeType` |
-| ***WTST*** | ***Water Well Test Hole*** | 5576 | `:WellPurposeType` |
-| STRAT | Stratigraphic Test | 4588 | `:WellPurposeType` |
-| MINER | Mineral Test | 4160 | `:WellPurposeType` |
-| ***DRY*** | ***Dry Hole (water well)*** | 2699 | `:WellStatusType` |
+| ***WATER*** | ***Water Well*** | 301,669 | `gwml2:WellPurposeType` |
+| ENG | Engineering Test | 52,943 | `gwml2:WellPurposeType` |
+| ***MONIT*** | ***Water Well Monitoring Well*** | 5804 | `gwml2:WellPurposeType` |
+| ***WTST*** | ***Water Well Test Hole*** | 5576 | `gwml2:WellPurposeType` |
+| STRAT | Stratigraphic Test | 4588 | `gwml2:WellPurposeType` |
+| MINER | Mineral Test | 4160 | `gwml2:WellPurposeType` |
+| ***DRY*** | ***Dry Hole (water well)*** | 2699 | `gwml2:WellStatusType` |
 | CROP | Outcrop | 1397 |  |
-| DRYP | Dry Hole (water well), Plugged | 1209 | `:WellStatusType` |
-| ***OBS*** | ***Observation Well*** | 831 | `:WellPurposeType` |
-| WATERP | Water Well, Plugged | 739 | `:WellStatusType` |
-| OBSP | Observation Well, Plugged | 576 | `:WellStatusType` |
-| MSFT | Mine Shaft | 557 | `:WellPurposeType` |
-| ***WATRS*** | ***Water Supply Well*** | 530 | `:WellPurposeType` |
-| WATRSP | Water Supply Well, Plugged | 417 | `:WellStatusType` |
-| SLOPE | Slope Mine | 120 | `:WellPurposeType` |
-| WTSTP | Water Well Test Hole, Plugged | 102 | `:WellStatusType` |
-| MONITP | Water Well Monitoring Well Plugged | 77 | `:WellStatusType` |
-| DRIFT | Drift Mine | 64 | `:WellPurposeType` |
-| STRATP | Stratigraphic Test, Plugged | 58 | `:WellStatusType` |
-| STRIP | Strip Mine | 51 | `:WellPurposeType` |
-| ENGP | Engineering Test, Plugged | 24 | `:WellStatusType` |
-| MSERV | Mine Service | 20 | `:WellPurposeType` |
-| WASTE | Waste Disposal Well | 14 | `:WellPurposeType` |
-| MSERVP | Mine Service Plugged | 12 | `:WellStatusType` |
-| WATOT | Oil Test, left open for a water well | 12 | `:WellStatusType` |
-| LUST | Leaking Underground Storage Tank | 7 | `:WellStatusType` |
-| OBSO | Observation Well, Oil Shows | 7 | `:WellPurposeType` |
-| WASTEP | Waste Disposal Well, Plugged | 3 | `:WellStatusType` |
-| OBSOP | Observation Well, Oil Shows, Plugged | 2 | `:WellStatusType` |
-| MINERP | Mineral Test, Plugged | 1 | `:WellStatusType` |
-| OBSG | Observation Well, Gas Shows | 1 | `:WellPurposeType` |
-| OBSOG | Observation Well, Oil & Gas Shows | 1 | `:WellPurposeType` |
-| STRIPP | Strip Mine, Plugged | 1 | `:WellStatusType` |
+| DRYP | Dry Hole (water well), Plugged | 1209 | `gwml2:WellStatusType` |
+| ***OBS*** | ***Observation Well*** | 831 | `gwml2:WellPurposeType` |
+| WATERP | Water Well, Plugged | 739 | `gwml2:WellStatusType` |
+| OBSP | Observation Well, Plugged | 576 | `gwml2:WellStatusType` |
+| MSFT | Mine Shaft | 557 | `gwml2:WellPurposeType` |
+| ***WATRS*** | ***Water Supply Well*** | 530 | `gwml2:WellPurposeType` |
+| WATRSP | Water Supply Well, Plugged | 417 | `gwml2:WellStatusType` |
+| SLOPE | Slope Mine | 120 | `gwml2:WellPurposeType` |
+| WTSTP | Water Well Test Hole, Plugged | 102 | `gwml2:WellStatusType` |
+| MONITP | Water Well Monitoring Well Plugged | 77 | `gwml2:WellStatusType` |
+| DRIFT | Drift Mine | 64 | `gwml2:WellPurposeType` |
+| STRATP | Stratigraphic Test, Plugged | 58 | `gwml2:WellStatusType` |
+| STRIP | Strip Mine | 51 | `gwml2:WellPurposeType` |
+| ENGP | Engineering Test, Plugged | 24 | `gwml2:WellStatusType` |
+| MSERV | Mine Service | 20 | `gwml2:WellPurposeType` |
+| WASTE | Waste Disposal Well | 14 | `gwml2:WellPurposeType` |
+| MSERVP | Mine Service Plugged | 12 | `gwml2:WellStatusType` |
+| WATOT | Oil Test, left open for a water well | 12 | `gwml2:WellStatusType` |
+| LUST | Leaking Underground Storage Tank | 7 | `gwml2:WellStatusType` |
+| OBSO | Observation Well, Oil Shows | 7 | `gwml2:WellPurposeType` |
+| WASTEP | Waste Disposal Well, Plugged | 3 | `gwml2:WellStatusType` |
+| OBSOP | Observation Well, Oil Shows, Plugged | 2 | `gwml2:WellStatusType` |
+| MINERP | Mineral Test, Plugged | 1 | `gwml2:WellStatusType` |
+| OBSG | Observation Well, Gas Shows | 1 | `gwml2:WellPurposeType` |
+| OBSOG | Observation Well, Oil & Gas Shows | 1 | `gwml2:WellPurposeType` |
+| STRIPP | Strip Mine, Plugged | 1 | `gwml2:WellStatusType` |
 
 ## Sample Data
 
