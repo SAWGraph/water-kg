@@ -63,38 +63,39 @@
 
 ## Controlled Vocabularies
 **List 1. WELL_USE**
-* ABANDONED
-* AGRIC/IRRIG
-* ALIGNMENT  HOLE
-* CATHODE PROTECT
-* COMMERCIAL
-* CONSTRUCTION
-* DEWATERING WELL
-* DOMESTIC
-* DRAINAGE
-* DRY/NO WATER
-* FIRE PROTECTION
-* FRACK WATER
-* GAS
-* GAS PROBE
-* HTG/COOLING
-* INCLINOMETER
-* INDUSTRIAL
-* INJECTION/DISPO
-* MONITOR
-* MUNICIPAL
-* NULL
-* OBSERVATION
-* OTHER
-* PIEZOMETER
-* PRESSURE RELIEF
-* PUBLIC/SEMI-PUB
-* RECOVERY WELL
-* SEALED
-* SOIL BORING
-* TEST BORING
-* TEST WELL
-* VAPOR EXTRACTIO
+| WELL_USE | `gwml2` |
+| ABANDONED | `:WellStatusType` |
+| AGRIC/IRRIG | `:WellWaterUseType` |
+| ALIGNMENT HOLE | `:WellPurposeType` |
+| CATHODE PROTECT | `:WellPurposeType` |
+| COMMERCIAL | `:WellWaterUseType` |
+| CONSTRUCTION | `:WellPurposeType` |
+| DEWATERING WELL | `:WellPurposeType` |
+| DOMESTIC | `:WellWaterUseType` |
+| DRAINAGE | `:WellPurposeType` |
+| DRY/NO WATER | `:WellStatusType` |
+| FIRE PROTECTION | `:WellPurposeType` |
+| FRACK WATER | `:WellPurposeType` |
+| GAS | `:WellPurposeType` |
+| GAS PROB | `:WellPurposeType` |
+| HTG/COOLING | `:WellPurposeType` |
+| INCLINOMETER | `:WellPurposeType` |
+| INDUSTRIAL | `:WellWaterUseType` |
+| INJECTION/DISPO | `:WellPurposeType` |
+| MONITOR | `:WellPurposeType` |
+| MUNICIPAL | `:WellWaterUseType` |
+| `NULL` |  |
+| OBSERVATION | `:WellPurposeType` |
+| OTHER |  |
+| PIEZOMETER | `:WellPurposeType` |
+| PRESSURE RELIEF | `:WellPurposeType` |
+| PUBLIC/SEMI-PUB | `:WellWaterUseType` |
+| RECOVERY WELL | `:WellPurposeType` |
+| SEALED | `:WellStatusType` |
+| SOIL BORING | `:WellPurposeType` |
+| TEST BORING | `:WellPurposeType` |
+| TEST WELL | `:WellPurposeType` |
+| VAPOR EXTRACTIO | `:WellPurposeType` |
 
 **List 2. AQUIFER_TYPE**
 * ASPHALT
