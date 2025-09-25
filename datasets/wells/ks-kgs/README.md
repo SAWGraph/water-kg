@@ -105,188 +105,192 @@
 
 ## Controlled Vocabularies
 **List 1. STATUS**
-* CONSTRUCTED
-* RECONSTRUCTED
-* PLUGGED
-* unknown
+| STATUS | # wells | Proposed Upper Level Class |
+| --- | ---: | --- |
+| CONSTRUCTED | 240,629 | `gwml2:WellStatusType` |
+| PLUGGED | 63,415 | `gwml2:WellStatusType` |
+| RECONSTRUCTED | 2287 | `gwml2:WellStatusType` |
+| unknown | 3 | `gwml2:WellStatusType` |
 
-**List 2. WELL_USE**
-* (unstated)/abandoned
-* Air Conditioning
-* Cathodic Protection Borehole
-* Dewatering
-* Domestic
-* Domestic, changed from Irrigation
-* Domestic, changed from Oil Field Water Supply
-* Domestic, Lawn and Garden
-* Domestic, Livestock
-* Environmental Remediation, Air Sparge
-* Environmental Remediation, Injection
-* Environmental Remediation, Recovery
-* Environmental Remediation, Soil Vapor Extraction
-* Feedlot
-* Feedlot/Livestock/Windmill
-* Geothermal, Closed Loop, Horizontal
-* Geothermal, Closed Loop, Vertical
-* Geothermal, Open Loop, Inj. of Water
-* Geothermal, Open Loop, Surface Discharge
-* Heat Pump (Closed Loop/Disposal), Geothermal
-* Industrial
-* Injection well/air sparge (AS)/shallow
-* Irrigation
-* Monitoring well/observation/piezometer
-* Oil Field Water Supply
-* Other
-* Other ( Abandoned water well)
-* Other ( Control water in basement)
-* Other (abandoned hand dug well)
-* Other (adding water to dry soil to change plasticity for compaction as road bed)
-* Other (Air Sparge)
-* Other (Airport Fire Rescue)
-* Other (Barn Well)
-* Other (car wash)
-* Other (cathodic protection)
-* Other (Check Water Level)
-* Other (cistern)
-* Other (CO2 Pilot Flood)
-* Other (concrete plant)
-* Other (construction supply)
-* Other (Construction Water Supply)
-* Other (construction well)
-* Other (cooling)
-* Other (creek supply)
-* Other (dam building)
-* Other (Depressure)
-* Other (Disposal)
-* Other (disposal)
-* Other (Dog Kennel)
-* Other (Draw down tube)
-* Other (drilling supply)
-* Other (dry hole)
-* Other (Dry Hole)
-* Other (Duck Marsh)
-* Other (Dump Well)
-* Other (dust control)
-* Other (exploratory)
-* Other (fill fire trucks)
-* Other (fill sprayer tanks)
-* Other (fill water tanks)
-* Other (Fire Protection)
-* Other (fire protection)
-* Other (Fire Well)
-* Other (fish farming)
-* Other (fish pond)
-* Other (fish tanks)
-* Other (Floor Heat)
-* Other (For cooling towers only)
-* Other (Formation Test)
-* Other (fresh water withdrawl)
-* Other (gas probe well)
-* Other (gas vapor monitoring)
-* Other (gas vent well)
-* Other (Geotechnical Test Hole)
-* Other (Geothermal Dump Well)
-* Other (grain elevator)
-* Other (gravel pit well)
-* Other (hand dug)
-* Other (hand pump)
-* Other (Highway Dept Water Supply Well)
-* Other (Hwy project approved by State)
-* Other (Hwy project water supply)
-* Other (interceptor)
-* Other (IRRIGATION TEST HOLE)
-* Other (irrigation test well)
-* Other (Irrigation Test Well)
-* Other (IRRIGATION TEST WELL)
-* Other (Irrigation Test well)
-* Other (Irrigation test well)
-* Other (IRRIGATION TEST)
-* Other (irrigation test)
-* Other (Landfill well)
-* Other (Levee Flood Relief Well)
-* Other (Levee Pressure Relief Well)
-* Other (livestock, pasture, oil field)
-* Other (locker cooler)
-* Other (Lysimeters)
-* Other (makeup water for sewer plant)
-* Other (making brine for streets)
-* Other (Methane gas vent)
-* Other (Monitor well for environmental compliance)
-* Other (never used)
-* Other (non potable)
-* Other (Not Used)
-* Other (Personal Safety)
-* Other (Pond Well)
-* Other (Pond)
-* Other (pond)
-* Other (Portable Cement Plant)
-* Other (Pressure Relief)
-* Other (Pump Test)
-* Other (Recreation)
-* Other (Recreational)
-* Other (Relief Well)
-* Other (Remediation)
-* Other (Road construction)
-* Other (rock washing at quarry)
-* Other (rural fire protection)
-* Other (salt water disposal)
-* Other (sand pit well)
-* Other (Sand Pit)
-* Other (sand pit)
-* Other (sewage plant)
-* Other (shop use)
-* Other (Shop)
-* Other (small pond)
-* Other (Soil Boring)
-* Other (soil boring)
-* Other (SOIL BORINGS)
-* Other (spill clean up)
-* Other (Spray waterer)
-* Other (standby well)
-* Other (supply well)
-* Other (Supply well)
-* Other (Supply Well)
-* Other (SUPPLY WELL)
-* Other (Supply)
-* Other (supply)
-* Other (Tailwater Well)
-* Other (Temp Supply Concrete Plant)
-* Other (Temp water for batch plant)
-* Other (temp. construction)
-* Other (Temp. Irrigation Well Supply)
-* Other (temporary job trailer)
-* Other (Test Boring)
-* Other (Test Hole)
-* Other (test well for irrigation drilling)
-* Other (Test Well)
-* Other (treatment well)
-* Other (Tree conservation)
-* Other (Truck and trailer washing)
-* Other (truck wash)
-* Other (Truck Wash)
-* Other (Unknown hand dug well)
-* Other (ventilation shaft)
-* Other (Wash Bay)
-* Other (wash bay)
-* Other (wash cement slab)
-* Other (Water Coolers)
-* Other (water flood operation)
-* Other (Water supply for dam)
-* Other (waterflood project)
-* Other (Wildlife)
-* Other (wildlife)
-* Other (Windmill Farm)
-* Other (WINDMILL)
-* Other (Windmill)
-* Pond/Swimming Pool/Recreation
-* Public Water Supply
-* Recharge Well
-* Recovery/Soil Vapor Extraction/Soil Vent
-* Road Construction
-* Test Hole, Cased
-* Test Hole, Geotechnical
-* Test Hole, Uncased
-* Test hole/well
+**List 2. WELL_USE** There are a few shallow hierarchies here. Some entries contain history we don't need. 142 of the 176 entries are some form of *Other* (they account for 0.5% of values overall).
+| WELL_USE | enumerated | # wells | Proposed Upper Level Class |
+| --- | :---: | ---: | --- |
+| Monitoring well/observation/piezometer | 10 | 83,905 | `gwml2:WellPurposeType` |
+| Domestic | 1 | 76,220 | `gwml2:WellWaterUseType` |
+| Domestic, Lawn and Garden | 7 | 52,552 | `gwml2:WellWaterUseType` |
+| Irrigation | 2 | 23,809 | `gwml2:WellWaterUseType` |
+| Oil Field Water Supply | 6 | 18,406 |  |
+| Domestic, Livestock |  | 15,936 | `gwml2:WellWaterUseType` |
+| Dewatering | 9 | 6117 | `gwml2:WellPurposeType` |
+| Environmental Remediation, Air Sparge |  | 4446 | `gwml2:WellPurposeType` |
+| Environmental Remediation, Soil Vapor Extraction |  | 3579 | `gwml2:WellPurposeType` |
+| Public Water Supply | 5 | 2673 | `gwml2:WellWaterUseType` |
+| (unstated)/abandoned | 183 | 2621 | `gwml2:WellStatusType` |
+| Geothermal, Closed Loop, Vertical |  | 1886 | `gwml2:WellPurposeType` |
+| Environmental Remediation, Injection |  | 1789 | `gwml2:WellPurposeType` |
+| Test hole/well | 107 | 1614 | `gwml2:WellPurposeType` |
+| Heat Pump (Closed Loop/Disposal), Geothermal | 245 | 1570 | `gwml2:WellPurposeType` |
+| Industrial | 4 | 1433 | `gwml2:WellWaterUseType` |
+| Feedlot | 3 | 1283 | `gwml2:WellWaterUseType` |
+| Environmental Remediation, Recovery |  | 1209 | `gwml2:WellPurposeType` |
+| Air Conditioning | 8 | 872 |  |
+| Other | 12 | 870 |  |
+| Recovery/Soil Vapor Extraction/Soil Vent | 122 | 428 |  |
+| Domestic, changed from Oil Field Water Supply |  | 394 |  |
+| Pond/Swimming Pool/Recreation | 237 | 348 |  |
+| Injection well/air sparge (AS)/shallow | 11 | 298 |  |
+| Test Hole, Geotechnical |  | 276 |  |
+| Test Hole, Uncased |  | 268 |  |
+| Test Hole, Cased |  | 258 |  |
+| Feedlot/Livestock/Windmill | 116 | 245 |  |
+| Other (gas vent well) |  | 159 |  |
+| Geothermal, Open Loop, Surface Discharge |  | 141 |  |
+| Cathodic Protection Borehole | 240 | 125 |  |
+| Geothermal, Open Loop, Inj. of Water |  | 94 |  |
+| Other (Levee Pressure Relief Well) |  | 42 |  |
+| Road Construction | 189 | 38 |  |
+| Other (Soil Boring) |  | 32 |  |
+| Other (Relief Well) |  | 30 |  |
+| Recharge Well | 242 | 25 |  |
+| Geothermal, Closed Loop, Horizontal |  | 21 |  |
+| Other (gas probe well) |  | 17 |  |
+| Other (supply well) |  | 16 |  |
+| Domestic, changed from Irrigation |  | 15 |  |
+| Other (Fire Protection) |  | 12 |  |
+| Other (gas vapor monitoring) |  | 11 |  |
+| Other (IRRIGATION TEST) |  | 8 |  |
+| Other (fire protection) |  | 7 |  |
+| Other (Lysimeters) |  | 7 |  |
+| Other (Pond) |  | 7 |  |
+| Other (pond) |  | 7 |  |
+| Other (Supply) |  | 7 |  |
+| Other (Pressure Relief) |  | 6 |  |
+| Other (cistern) |  | 5 |  |
+| Other (construction well) |  | 5 |  |
+| Other (exploratory) |  | 5 |  |
+| Other (SOIL BORINGS) |  | 5 |  |
+| Other (Supply well) |  | 5 |  |
+| Other (car wash) |  | 4 |  |
+| Other (Disposal) |  | 4 |  |
+| Other (dry hole) |  | 4 |  |
+| Other (irrigation test well) |  | 4 |  |
+| Other (Monitor well for environmental compliance) |  | 4 |  |
+| Other (Test Boring) |  | 4 |  |
+| Other (cathodic protection) |  | 3 |  |
+| Other (rock washing at quarry) |  | 3 |  |
+| Other (Shop) |  | 3 |  |
+| Other (small pond) |  | 3 |  |
+| Other (soil boring) |  | 3 |  |
+| Other (Test Hole) |  | 3 |  |
+| Other (Test Well) |  | 3 |  |
+| Other (Water Coolers) |  | 3 |  |
+| Other (Wildlife) |  | 3 |  |
+| Other (Windmill Farm) |  | 3 |  |
+| Other (Airport Fire Rescue) |  | 2 |  |
+| Other (Barn Well) |  | 2 |  |
+| Other (concrete plant) |  | 2 |  |
+| Other (Depressure) |  | 2 |  |
+| Other (drilling supply) |  | 2 |  |
+| Other (fill sprayer tanks) |  | 2 |  |
+| Other (fish farming) |  | 2 |  |
+| Other (fresh water withdrawl) |  | 2 |  |
+| Other (Geotechnical Test Hole) |  | 2 |  |
+| Other (interceptor) |  | 2 |  |
+| Other (Irrigation Test Well) |  | 2 |  |
+| Other (irrigation test) |  | 2 |  |
+| Other (Not Used) |  | 2 |  |
+| Other (Remediation) |  | 2 |  |
+| Other (Temp Supply Concrete Plant) |  | 2 |  |
+| Other (Water supply for dam) |  | 2 |  |
+| Other (wildlife) |  | 2 |  |
+| Other (WINDMILL) |  | 2 |  |
+| Other ( Abandoned water well) |  | 1 |  |
+| Other ( Control water in basement) |  | 1 |  |
+| Other (abandoned hand dug well) |  | 1 |  |
+| Other (adding water to dry soil to change plasticity for compaction as road bed) |  | 1 |  |
+| Other (Air Sparge) |  | 1 |  |
+| Other (Check Water Level) |  | 1 |  |
+| Other (CO2 Pilot Flood) |  | 1 |  |
+| Other (construction supply) |  | 1 |  |
+| Other (Construction Water Supply) |  | 1 |  |
+| Other (cooling) |  | 1 |  |
+| Other (creek supply) |  | 1 |  |
+| Other (dam building) |  | 1 |  |
+| Other (disposal) |  | 1 |  |
+| Other (Dog Kennel) |  | 1 |  |
+| Other (Draw down tube) |  | 1 |  |
+| Other (Dry Hole) |  | 1 |  |
+| Other (Duck Marsh) |  | 1 |  |
+| Other (Dump Well) |  | 1 |  |
+| Other (dust control) |  | 1 |  |
+| Other (fill fire trucks) |  | 1 |  |
+| Other (fill water tanks) |  | 1 |  |
+| Other (Fire Well) |  | 1 |  |
+| Other (fish pond) |  | 1 |  |
+| Other (fish tanks) |  | 1 |  |
+| Other (Floor Heat) |  | 1 |  |
+| Other (For cooling towers only) |  | 1 |  |
+| Other (Formation Test) |  | 1 |  |
+| Other (Geothermal Dump Well) |  | 1 |  |
+| Other (grain elevator) |  | 1 |  |
+| Other (gravel pit well) |  | 1 |  |
+| Other (hand dug) |  | 1 |  |
+| Other (hand pump) |  | 1 |  |
+| Other (Highway Dept Water Supply Well) |  | 1 |  |
+| Other (Hwy project approved by State) |  | 1 |  |
+| Other (Hwy project water supply) |  | 1 |  |
+| Other (IRRIGATION TEST HOLE) |  | 1 |  |
+| Other (IRRIGATION TEST WELL) |  | 1 |  |
+| Other (Irrigation Test well) |  | 1 |  |
+| Other (Irrigation test well) |  | 1 |  |
+| Other (Landfill well) |  | 1 |  |
+| Other (Levee Flood Relief Well) |  | 1 |  |
+| Other (livestock, pasture, oil field) |  | 1 |  |
+| Other (locker cooler) |  | 1 |  |
+| Other (makeup water for sewer plant) |  | 1 |  |
+| Other (making brine for streets) |  | 1 |  |
+| Other (Methane gas vent) |  | 1 |  |
+| Other (never used) |  | 1 |  |
+| Other (non potable) |  | 1 |  |
+| Other (Personal Safety) |  | 1 |  |
+| Other (Pond Well) |  | 1 |  |
+| Other (Portable Cement Plant) |  | 1 |  |
+| Other (Pump Test) |  | 1 |  |
+| Other (Recreation) |  | 1 |  |
+| Other (Recreational) |  | 1 |  |
+| Other (Road construction) |  | 1 |  |
+| Other (rural fire protection) |  | 1 |  |
+| Other (salt water disposal) |  | 1 |  |
+| Other (sand pit well) |  | 1 |  |
+| Other (Sand Pit) |  | 1 |  |
+| Other (sand pit) |  | 1 |  |
+| Other (sewage plant) |  | 1 |  |
+| Other (shop use) |  | 1 |  |
+| Other (spill clean up) |  | 1 |  |
+| Other (Spray waterer) |  | 1 |  |
+| Other (standby well) |  | 1 |  |
+| Other (Supply Well) |  | 1 |  |
+| Other (SUPPLY WELL) |  | 1 |  |
+| Other (supply) |  | 1 |  |
+| Other (Tailwater Well) |  | 1 |  |
+| Other (Temp water for batch plant) |  | 1 |  |
+| Other (temp. construction) |  | 1 |  |
+| Other (Temp. Irrigation Well Supply) |  | 1 |  |
+| Other (temporary job trailer) |  | 1 |  |
+| Other (test well for irrigation drilling) |  | 1 |  |
+| Other (treatment well) |  | 1 |  |
+| Other (Tree conservation) |  | 1 |  |
+| Other (Truck and trailer washing) |  | 1 |  |
+| Other (truck wash) |  | 1 |  |
+| Other (Truck Wash) |  | 1 |  |
+| Other (Unknown hand dug well) |  | 1 |  |
+| Other (ventilation shaft) |  | 1 |  |
+| Other (Wash Bay) |  | 1 |  |
+| Other (wash bay) |  | 1 |  |
+| Other (wash cement slab) |  | 1 |  |
+| Other (water flood operation) |  | 1 |  |
+| Other (waterflood project) |  | 1 |  |
+| Other (Windmill) |  | 1 |  |
 
 ## Sample Data
 
