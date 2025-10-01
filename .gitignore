@@ -36,6 +36,12 @@ datasets/groundwater/me-mgs/logs/
 datasets/groundwater/me-mgs/OLD/
 datasets/groundwater/me-mgs/ttl_files/
 
+datasets/groundwater/us_principal_aquifers/*.ipynb
+datasets/groundwater/us_principal_aquifers/.ipynb_checkpoints/
+datasets/groundwater/us_principal_aquifers/logs/
+datasets/groundwater/us_principal_aquifers/OLD/
+datasets/groundwater/us_principal_aquifers/ttl_files/
+
 ################################
 # sdwis files & folders
 ################################
