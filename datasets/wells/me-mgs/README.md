@@ -85,65 +85,71 @@
 - 
 
 ## Controlled Vocabularies
-**List 1. Well Use**
-- Domestic
-- Commercial
-- Other
-- Municipal
-- Farm, Domestic
-- Institutional
-- Test
-- Geothermal
-- Industrial
-- Irrigation
-- Farm
-- Observation
-- Monitoring
+**List 1. WELL_USE**
+| WELL_USE | # located | # unlocated | Proposed Upper Level Class | 
+| --- | ---: | ---: | --- |
+| Domestic | 83,254 | 59,486 | `gwml2:WellWaterUseType` |
+| Commercial | 1099 | 1357 | `gwml2:WellWaterUseType` |
+| Other | 502 | 376 | `gwml2:WellWaterUseType` |
+| Municipal | 239 | 356 | `gwml2:WellWaterUseType` |
+| Institutional | 192 | 148 | `gwml2:WellWaterUseType` |
+| Farm, Domestic | 208 | 18 | `gwml2:WellWaterUseType` |
+| Geothermal | 213 | 7 | `gwml2:WellPurposeType` |
+| Test | 146 | 60 | `gwml2:WellPurposeType` |
+| Industrial | 108 | 81 | `gwml2:WellWaterUseType` |
+| Irrigation | 72 | 3 | `gwml2:WellWaterUseType` |
+| Farm | 27 | 17 | `gwml2:WellWaterUseType` |
+| Observation | 7 | 27 | `gwml2:WellPurposeType` |
+| Monitoring | 4 | 17 | `gwml2:WellPurposeType` |
+| `NULL` | 1754 | 2350 |  |
 
-**List 2. Well Type**
-- Bedrock
-- Gravel
-- Overburden
-- Spring
-- Other
-- Gravel Packed
-- Dug
-- Observation
+**List 2. WELL_TYPE** (Align with `hyfo:AquiferType`?)
+| WELL_TYPE | # located | # unlocated | Proposed Upper Level Class |
+| --- | ---: | ---: | --- |
+| Bedrock | 83,893 | 60,389 | `hyfo:AquiferType` |
+| Gravel | 1531 | 1333 | `hyfo:AquiferType` |
+| Overburden | 745 | 460 | `hyfo:AquiferType` |
+| Other | 146 | 14 |  |
+| Spring | 116 | 11 |  |
+| Gravel Packed | 27 | 35 | `hyfo:AquiferType` |
+| Observation | 11 | 12 | `gwml2:WellPurposeType` |
+| Dug | 13 | 7 |  |
+| `NULL` | 1343 | 2042 |  |
 
-**List 3. Well Construction**
+**List 3. WELL_CONSTRUCTION**
+- Auger
+- Cable Tool
 - Drilled
-- Rotary Drilled
+- Drilled Overburden
+- Driven Point
 - Dug
 - Hammer Drilled
-- Cable Tool
-- Driven Point
 - Jet
-- Auger
-- Drilled Overburden
+- Rotary Drilled
 
-**List 4. Well Development** 
-- None
+**List 4. WELL_DEVELOPMENT** 
 - Air
 - Air/Water
-- Other
-- Jetting
 - Blasting
 - Dry Ice
 - Dynamite
+- Jetting
+- None
 - Not Sure
+- Other
 
-**List 5. Location_Method**
-- TAX MAP AND LOT
-- GEOCODED STREET ADDRESS MAINE E911
-- GPS
+**List 5. LOCATION_METHOD** (located wells only)
+- DRILLER PROVIDED - CORRECTED BY MGS	
+- DRILLER PROVIDED - INCORRECT	
 - DRILLER PROVIDED - OK	
 - GEOCODED ADDRESS POINT MAINE E911	
+- GEOCODED STREET ADDRESS MAINE E911
 - GEOCODED STREET ADDRESS OTHER	
-- OWNER PROVIDED - OK	
-- DRILLER PROVIDED - CORRECTED BY MGS	
+- GPS
 - ORTHOIMAGERY	
-- DRILLER PROVIDED - INCORRECT	
 - OWNER PROVIDED - CORRECTED BY MGS
+- OWNER PROVIDED - OK	
+- TAX MAP AND LOT
 
 ## Sample Data
 

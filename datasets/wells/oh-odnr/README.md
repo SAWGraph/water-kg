@@ -63,40 +63,42 @@
 
 ## Controlled Vocabularies
 **List 1. WELL_USE**
-* ABANDONED
-* AGRIC/IRRIG
-* ALIGNMENT  HOLE
-* CATHODE PROTECT
-* COMMERCIAL
-* CONSTRUCTION
-* DEWATERING WELL
-* DOMESTIC
-* DRAINAGE
-* DRY/NO WATER
-* FIRE PROTECTION
-* FRACK WATER
-* GAS
-* GAS PROBE
-* HTG/COOLING
-* INCLINOMETER
-* INDUSTRIAL
-* INJECTION/DISPO
-* MONITOR
-* MUNICIPAL
-* NULL
-* OBSERVATION
-* OTHER
-* PIEZOMETER
-* PRESSURE RELIEF
-* PUBLIC/SEMI-PUB
-* RECOVERY WELL
-* SEALED
-* SOIL BORING
-* TEST BORING
-* TEST WELL
-* VAPOR EXTRACTIO
+| WELL_USE | # wells | Proposed Upper Level Class |
+| --- | ---: | --- |
+| DOMESTIC | 417,876 | `:WellWaterUseType` |
+| MONITOR | 30,477 | `:WellPurposeType` |
+| AGRIC/IRRIG | 10,447 | `:WellWaterUseType` |
+| PUBLIC/SEMI-PUB | 2862 | `:WellWaterUseType` |
+| HTG/COOLING | 1642 | `:WellPurposeType` |
+| DEWATERING WELL | 1633 | `:WellPurposeType` |
+| OTHER | 1177 |  |
+| COMMERCIAL | 903 | `:WellWaterUseType` |
+| DRY/NO WATER | 870 | `:WellStatusType` |
+| TEST WELL | 738 | `:WellPurposeType` |
+| INDUSTRIAL | 687 | `:WellWaterUseType` |
+| TEST BORING | 465 | `:WellPurposeType` |
+| ABANDONED | 456 | `:WellStatusType` |
+| PIEZOMETER | 446 | `:WellPurposeType` |
+| MUNICIPAL | 418 | `:WellWaterUseType` |
+| RECOVERY WELL | 412 | `:WellPurposeType` |
+| VAPOR EXTRACTIO | 289 | `:WellPurposeType` |
+| INJECTION/DISPO | 269 | `:WellPurposeType` |
+| SOIL BORING | 206 | `:WellPurposeType` |
+| OBSERVATION | 204 | `:WellPurposeType` |
+| DRAINAGE | 181 | `:WellPurposeType` |
+| CONSTRUCTION | 104 | `:WellPurposeType` |
+| GAS PROBE | 70 | `:WellPurposeType` |
+| PRESSURE RELIEF | 66 | `:WellPurposeType` |
+| SEALED | 52 | `:WellStatusType` |
+| FIRE PROTECTION | 30 | `:WellPurposeType` |
+| GAS | 28 | `:WellPurposeType` |
+| CATHODE PROTECT | 19 | `:WellPurposeType` |
+| ALIGNMENT HOLE | 9 | `:WellPurposeType` |
+| INCLINOMETER | 4 | `:WellPurposeType` |
+| FRACK WATER | 3 | `:WellPurposeType` |
+| `NULL` | 76,347 |  |
 
-**List 2. AQUIFER_TYPE**
+**List 2. AQUIFER_TYPE** (136 unique values, 20 (including `NULL`) account for 95% of the records, many differ only be the order of the constituents)
 * ASPHALT
 * BEDROCK
 * BEREA
