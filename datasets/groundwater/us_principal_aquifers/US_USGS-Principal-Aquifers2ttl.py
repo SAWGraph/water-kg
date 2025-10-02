@@ -1,7 +1,7 @@
 """Create a .ttl file for USGS principal aquifers from a .shp file
 
 Under ### INPUT Filenames ###, modify (if necessary)
-    the name (and path) of the input .shp file (us_aquifers)
+    the name (and path) of the input .shp file (us_aquifers_no-other)
 Under ### OUTPUT Filename ###, modify (if necessary)
     the name (and path) of the output .ttl file
 
@@ -84,13 +84,9 @@ def initial_kg(_PREFIX):
 
 
 def build_iris(objectid, _PREFIX):
-    """Create IRIs for a water body and its geometry
+    """Create IRIs for an aquifer and its geometry
 
-    This varies from Geoconnex notation which currently contains no water bodies beyond mainstems
-        They have a mainstem URI; e.g., https://geoconnex.us/ref/mainstems/######
-        The connected geometry is a blank node that connects to the geo:asWKT object
-
-    :param cid: The COMID value for a water body
+    :param objectid: The unique id value for an aquifer
     :param _PREFIX:
     :return: a tuple with the two IRIs
     """
