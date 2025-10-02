@@ -1,7 +1,7 @@
 """Create a .ttl file for USGS alluvial/glacial aquifers from a .shp file
 
 Under ### INPUT Filenames ###, modify (if necessary)
-    the name (and path) of the input .shp file (us_aquifers)
+    the name (and path) of the input .shp file (alluvial)
 Under ### OUTPUT Filename ###, modify (if necessary)
     the name (and path) of the output .ttl file
 
@@ -132,7 +132,7 @@ def process_aquifers_shp2ttl(infile, outfile):
         kg.add((geomiri, RDF.type, GEO.Geometry))
 
         # Triplify current principal aquifer attributes
-        kg.add((aqiri, _PREFIX['usgs']['hasAqId'], Literal(str(row.ALLUVIAL_).zfill(4), datatype=XSD.string)))
+        kg.add((aqiri, _PREFIX['usgs']['hasAlluvialGlacialId'], Literal(str(row.ALLUVIAL_).zfill(4), datatype=XSD.string)))
         kg.add((aqiri, _PREFIX['usgs']['hasRockName'], _PREFIX['usgs'][f'RockName.{get_rock_name(row.ROCK_NAME)}']))
         kg.add((aqiri, _PREFIX['usgs']['hasAqName'], Literal(row.AQ_NAME, datatype=XSD.string)))
 
