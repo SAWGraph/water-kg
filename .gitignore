@@ -104,3 +104,5 @@ datasets/wells/me-mgs/ttl_files/
 #data/mgs_wells/Maine_Well_Database_-_Unlocated_Wells.csv
 #data/mgs_wells/Maine_Well_Database_-_Well_Depth.csv
 #data/mgs_wells/Maine_Well_Database_-_Well_Depth_original.csv
+/datasets/groundwater/us_secondary_hydrogeologic_regions/logs
+/datasets/groundwater/us_secondary_hydrogeologic_regions/ttl_files
