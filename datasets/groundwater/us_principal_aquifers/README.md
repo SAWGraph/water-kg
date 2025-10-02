@@ -28,8 +28,8 @@
 ### IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-<!-- | `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` | -->
-<!-- | `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` | -->
+| `gwml2:GW_Aquifer` | `usgs_data:d.USGS_PrincipalAquifer_<OBJECTID_1>` |
+| `geo:Geometry` | `usgs_data:d.USGS_PrincipalAquifer_<OBJECTID_1>.geometry` |
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts
 
@@ -39,11 +39,11 @@ Examples of triples from data/metadata sources
 
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID_1 | Internal feature number | Yes | TBD | Use as unique identifier | 
-| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` | Controlled vocabulary |
+| OBJECTID_1 | Internal feature number | Yes | `usgs:hasAqId` | Use as unique identifier | 
+| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasRockName` | Controlled vocabulary |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
-| AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` | Controlled vocabulary |
-| AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary |
+| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text (62 distinct values) |
+| AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary ? |
 | Shape_Leng | The perimeter of the shape in file units.  In the distributed file, file units represent decimal degrees. | No |  |  |
 | Shape_Area | The size of the shape in file units.  In the distributed file, file units represent square decimal degrees. | No |  |  |
 
@@ -52,14 +52,16 @@ Examples of triples from data/metadata sources
 
 ### Controlled Vocabularies
 List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
-* 0 - `NULL` (only one row, likely an error)
-* 100 - Unconsolidated sand and gravel aquifers
-* 200 - Semiconsolidated sand aquifers
-* 300 - Sandstone aquifers
-* 400 - Carbonate-rock aquifers
-* 500 - Sandstone and carbonate-rock aquifers
-* 600 - Igneous and metamorphic-rock aquifers
-* 999 - `NULL`
+| ROCK_TYPE | ROCK_NAME | controlled vocab instance |
+| --- | --- | --- |
+| 0 | `NULL` (only one row, likely an error) | *not triplified* |
+| 100 | Unconsolidated sand and gravel aquifers | `usgs:UnconsolidatedSandGravel` |
+| 200 | Semiconsolidated sand aquifers | `usgs:SemiconsolidatedSand` |
+| 300 | Sandstone aquifers | `usgs:Sandstone` |
+| 400 | Carbonate-rock aquifers | `usgs:CarbonateRock` |
+| 500 | Sandstone and carbonate-rock aquifers | `usgs:SandstoneCarbonateRock` |
+| 600 | Igneous and metamorphic-rock aquifers | `usgs:IgneousMetamorphic` |
+| 999 | `NULL` | *not triplified* |
 
 List 2. AQ_CODE - AQ_NAME (for just this dataset)
 62 pairs of values
@@ -82,8 +84,8 @@ List 2. AQ_CODE - AQ_NAME (for just this dataset)
 ### IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-<!-- | `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` | -->
-<!-- | `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` | -->
+| `gwml2:GW_Aquifer` | `usgs_data:d.USGS_AlluvialGlacialAquifer_<OBJECTID_1>` |
+| `geo:Geometry` | `usgs_data:d.USGS_AlluvialGlacialAquifer_<OBJECTID_1>.geometry` |
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts
 
@@ -95,11 +97,11 @@ Examples of triples from data/metadata sources**
 | --- | --- | --- | --- | --- |
 | AREA | The size of the shape in coverage units. | No |  |  | 
 | PERIMETER | The perimeter of the shape in coverage units. | No |  |  |
-| ALLUVIAL_ | Internal feature number. | Yes | TBD | Use as unique identifier |
+| ALLUVIAL_ | Internal feature number. | Yes | `usgs:hasAqId` | Use as unique identifier |
 | ALLUVIAL_I | User-assigned feature number. | No |  |  |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
-| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `rdfs:comment` | Controlled vocabulary |
-| AQ_NAME | The aquifer unit name. | Yes | `rdfs:label` | Controlled vocabulary |
+| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasRockName` | Controlled vocabulary |
+| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | Controlled vocabulary |
 | AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary |
 
 ### Notes on the data
@@ -107,19 +109,23 @@ Examples of triples from data/metadata sources**
 
 ### Controlled Vocabularies
 List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
-* 0 - `NULL` (only one row, likely an error)
-* 100 - Unconsolidated sand and gravel aquifers
-* 200 - Semiconsolidated sand aquifers
-* 300 - Sandstone aquifers
-* 400 - Carbonate-rock aquifers
-* 500 - Sandstone and carbonate-rock aquifers
-* 600 - Igneous and metamorphic-rock aquifers
-* 999 - `NULL`
+| ROCK_TYPE | ROCK_NAME | controlled vocab instance |
+| --- | --- | ---
+| 0 | `NULL` (only one row, likely an error) | *not triplified* |
+| 100 | Unconsolidated sand and gravel aquifers | `usgs:UnconsolidatedSandGravel` |
+| 200 | Semiconsolidated sand aquifers | `usgs:SemiconsolidatedSand` |
+| 300 | Sandstone aquifers | `usgs:Sandstone` |
+| 400 | Carbonate-rock aquifers | `usgs:CarbonateRock` |
+| 500 | Sandstone and carbonate-rock aquifers | `usgs:SandstoneCarbonateRock` |
+| 600 | Igneous and metamorphic-rock aquifers | `usgs:IgneousMetamorphic` |
+| 999 | `NULL` | *not triplified* |
 
 List 2. AQ_CODE - AQ_NAME (for just this dataset)
-* 0 - `NULL` (only one row, likely an error)
-* 113 - Aquifers of Alluvial and Glacial Origin
-* 999 - `NULL`
+| ROCK_TYPE | ROCK_NAME | controlled vocab instance |
+| --- | --- | --- |
+| 0 | `NULL` (only one row, likely an error) | *not triplified* |
+| 113 | Aquifers of Alluvial and Glacial Origin | `usgs:RockName.AlluvialGlacial` |
+| 999 | `NULL` | *not triplified* |
 
 ### Sample Data
 
