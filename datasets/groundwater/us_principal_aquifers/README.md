@@ -54,14 +54,14 @@ Examples of triples from data/metadata sources
 List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
 | ROCK_TYPE | ROCK_NAME | controlled vocab instance |
 | --- | --- | --- |
-| 0 | `NULL` (only one row, likely an error) | *not triplified* |
+| 0 | `NULL` (only one row, likely an error) | `usgs:RockName.Unspecified` |
 | 100 | Unconsolidated sand and gravel aquifers | `usgs:UnconsolidatedSandGravel` |
 | 200 | Semiconsolidated sand aquifers | `usgs:SemiconsolidatedSand` |
 | 300 | Sandstone aquifers | `usgs:Sandstone` |
 | 400 | Carbonate-rock aquifers | `usgs:CarbonateRock` |
 | 500 | Sandstone and carbonate-rock aquifers | `usgs:SandstoneCarbonateRock` |
 | 600 | Igneous and metamorphic-rock aquifers | `usgs:IgneousMetamorphic` |
-| 999 | `NULL` | *not triplified* |
+| 999 | `NULL` | `usgs:RockName.Unspecified` |
 
 List 2. AQ_CODE - AQ_NAME (for just this dataset)
 62 pairs of values
@@ -101,7 +101,7 @@ Examples of triples from data/metadata sources**
 | ALLUVIAL_I | User-assigned feature number. | No |  |  |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
 | ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasRockName` | Controlled vocabulary |
-| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | Controlled vocabulary |
+| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text |
 | AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary |
 
 ### Notes on the data
@@ -111,21 +111,19 @@ Examples of triples from data/metadata sources**
 List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
 | ROCK_TYPE | ROCK_NAME | controlled vocab instance |
 | --- | --- | ---
-| 0 | `NULL` (only one row, likely an error) | *not triplified* |
-| 100 | Unconsolidated sand and gravel aquifers | `usgs:UnconsolidatedSandGravel` |
-| 200 | Semiconsolidated sand aquifers | `usgs:SemiconsolidatedSand` |
-| 300 | Sandstone aquifers | `usgs:Sandstone` |
-| 400 | Carbonate-rock aquifers | `usgs:CarbonateRock` |
-| 500 | Sandstone and carbonate-rock aquifers | `usgs:SandstoneCarbonateRock` |
-| 600 | Igneous and metamorphic-rock aquifers | `usgs:IgneousMetamorphic` |
-| 999 | `NULL` | *not triplified* |
+| 0 | `NULL` (only one row, likely an error) | `usgs:RockName.Unspecified` |
+| 100 | Unconsolidated sand and gravel aquifers | `usgs:RockName.UnconsolidatedSandGravel` |
+| 200 | Semiconsolidated sand aquifers | `usgs:RockName.SemiconsolidatedSand` |
+| 300 | Sandstone aquifers | `usgs:RockName.Sandstone` |
+| 400 | Carbonate-rock aquifers | `usgs:RockName.CarbonateRock` |
+| 500 | Sandstone and carbonate-rock aquifers | `usgs:RockName.SandstoneCarbonateRock` |
+| 600 | Igneous and metamorphic-rock aquifers | `usgs:RockName.IgneousMetamorphic` |
+| 999 | `NULL` | `usgs:RockName.Unspecified` |
 
 List 2. AQ_CODE - AQ_NAME (for just this dataset)
-| ROCK_TYPE | ROCK_NAME | controlled vocab instance |
-| --- | --- | --- |
-| 0 | `NULL` (only one row, likely an error) | *not triplified* |
-| 113 | Aquifers of Alluvial and Glacial Origin | `usgs:RockName.AlluvialGlacial` |
-| 999 | `NULL` | *not triplified* |
+* 0 - `NULL` (only one row, likely an error)
+* 113 - Aquifers of Alluvial and Glacial Origin
+* 999 - `NULL`
 
 ### Sample Data
 
