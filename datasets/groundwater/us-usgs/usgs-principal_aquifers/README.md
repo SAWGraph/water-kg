@@ -40,7 +40,7 @@ Examples of triples from data/metadata sources
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | OBJECTID_1 | Internal feature number | Yes | `usgs:hasAqId` | Use as unique identifier | 
-| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasRockName` | Controlled vocabulary |
+| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasLithology` | Controlled vocabulary |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
 | AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text (62 distinct values) |
 | AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary ? |
@@ -54,14 +54,14 @@ Examples of triples from data/metadata sources
 List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
 | ROCK_TYPE | ROCK_NAME | controlled vocab instance |
 | --- | --- | --- |
-| 0 | `NULL` (only one row, likely an error) | `usgs:RockName.Unspecified` |
-| 100 | Unconsolidated sand and gravel aquifers | `usgs:UnconsolidatedSandGravel` |
-| 200 | Semiconsolidated sand aquifers | `usgs:SemiconsolidatedSand` |
-| 300 | Sandstone aquifers | `usgs:Sandstone` |
-| 400 | Carbonate-rock aquifers | `usgs:CarbonateRock` |
-| 500 | Sandstone and carbonate-rock aquifers | `usgs:SandstoneCarbonateRock` |
-| 600 | Igneous and metamorphic-rock aquifers | `usgs:IgneousMetamorphic` |
-| 999 | `NULL` | `usgs:RockName.Unspecified` |
+| 0 | `NULL` (only one row, likely an error) | `usgs:Lithology.Unspecified` |
+| 100 | Unconsolidated sand and gravel aquifers | `usgs:Lithology.UnconsolidatedSandGravel` |
+| 200 | Semiconsolidated sand aquifers | `usgs:Lithology.SemiconsolidatedSand` |
+| 300 | Sandstone aquifers | `usgs:Lithology.Sandstone` |
+| 400 | Carbonate-rock aquifers | `usgs:Lithology.CarbonateRock` |
+| 500 | Sandstone and carbonate-rock aquifers | `usgs:Lithology.SandstoneCarbonateRock` |
+| 600 | Igneous and metamorphic-rock aquifers | `usgs:Lithology.IgneousMetamorphic` |
+| 999 | `NULL` | `usgs:Lithology..Unspecified` |
 
 List 2. AQ_CODE - AQ_NAME (for just this dataset)
 62 pairs of values
@@ -100,7 +100,7 @@ Examples of triples from data/metadata sources**
 | ALLUVIAL_ | Internal feature number. | Yes | `usgs:hasAqId` | Use as unique identifier |
 | ALLUVIAL_I | User-assigned feature number. | No |  |  |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
-| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasRockName` | Controlled vocabulary |
+| ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasLithology.` | Controlled vocabulary |
 | AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text |
 | AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary |
 
@@ -111,14 +111,14 @@ Examples of triples from data/metadata sources**
 List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
 | ROCK_TYPE | ROCK_NAME | controlled vocab instance |
 | --- | --- | ---
-| 0 | `NULL` (only one row, likely an error) | `usgs:RockName.Unspecified` |
-| 100 | Unconsolidated sand and gravel aquifers | `usgs:RockName.UnconsolidatedSandGravel` |
-| 200 | Semiconsolidated sand aquifers | `usgs:RockName.SemiconsolidatedSand` |
-| 300 | Sandstone aquifers | `usgs:RockName.Sandstone` |
-| 400 | Carbonate-rock aquifers | `usgs:RockName.CarbonateRock` |
-| 500 | Sandstone and carbonate-rock aquifers | `usgs:RockName.SandstoneCarbonateRock` |
-| 600 | Igneous and metamorphic-rock aquifers | `usgs:RockName.IgneousMetamorphic` |
-| 999 | `NULL` | `usgs:RockName.Unspecified` |
+| 0 | `NULL` (only one row, likely an error) | `usgs:Lithology..Unspecified` |
+| 100 | Unconsolidated sand and gravel aquifers | `usgs:Lithology..UnconsolidatedSandGravel` |
+| 200 | Semiconsolidated sand aquifers | `usgs:Lithology..SemiconsolidatedSand` |
+| 300 | Sandstone aquifers | `usgs:Lithology..Sandstone` |
+| 400 | Carbonate-rock aquifers | `usgs:Lithology..CarbonateRock` |
+| 500 | Sandstone and carbonate-rock aquifers | `usgs:Lithology..SandstoneCarbonateRock` |
+| 600 | Igneous and metamorphic-rock aquifers | `usgs:Lithology..IgneousMetamorphic` |
+| 999 | `NULL` | `usgs:Lithology..Unspecified` |
 
 List 2. AQ_CODE - AQ_NAME (for just this dataset)
 * 0 - `NULL` (only one row, likely an error)

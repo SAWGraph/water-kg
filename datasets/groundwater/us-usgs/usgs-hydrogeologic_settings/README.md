@@ -38,7 +38,7 @@
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | PASHR_ID | An identifier for the principal aquifer or secondary hydrogeologic region (The first letter is P for principal aquifers, S for secondary hydrogeologic regions. The numbers match those used in Figure 1 of Lovelace and others (2020) for principal aquifers and Figure 3 of Belitz and others (2018) for secondary hydrogeologic regions) | Yes | `usgs:hasHGSettingId` | Not unique, so combined with Overlay attribute |
-| PASHR | Names of principal aquifer or secondary hydrogeologic region | Yes | `usgs:hasPAorSHRName` |  |
+| PASHR | Names of principal aquifer or secondary hydrogeologic region | No | Contained in HG_Setting |  |
 | Overlay | Overlying sediment type if present | Yes | `usgs:hasHGSettingId` <br> `usgs:hasOverlay` | Not unique, so combined with PASHR_ID attribute <br> Controlled vocabulary |
 | HG_Setting | Hydrogeologic setting name (A combination of the name of the principal aquifer or secondary hydrogeologic region and overlying sediment type acronym) | Yes | `usgs:hasHGSettingName` |  |
 | Lithology | Hydrogeologic setting lithology | Yes | `usgs:hasLithology` | Controlled vocabulary |
