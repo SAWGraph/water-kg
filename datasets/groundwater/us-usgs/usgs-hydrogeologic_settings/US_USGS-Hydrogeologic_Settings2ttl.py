@@ -55,7 +55,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### INPUT Filenames ###
-aquifers_file = data_dir / f"USGS_Depth_of_Groundwater_Data/HG_Settings.shp"
+hgsettings_file = data_dir / f"USGS_Depth_of_Groundwater_Data/HG_Settings.shp"
 
 ### OUTPUT Filename ###
 ttl_file = ttl_dir / f"us_usgs-hydrogeologic-settings.ttl"
@@ -90,8 +90,35 @@ def build_iris(objectid, _PREFIX):
     :param _PREFIX:
     :return: a tuple with the two IRIs
     """
-    base_iri = f'd.USGS_HydroGeol_Setting_{str(objectid)}'
+    base_iri = f'd.USGS_HG_Setting_{str(objectid)}'
     return _PREFIX["usgs_data"][base_iri], _PREFIX["usgs_data"][base_iri + '.geometry']
+
+
+def get_lithology(lith):
+    if lith == 'Carbonate-rock aquifers':
+        return 'CarbonateRock'
+    elif lith == 'Crystalline':
+        return 'Crystalline'
+    elif lith == 'Igneous and metamorphic-rock aquifers':
+        return 'IgneousMetamorphic'
+    elif lith == 'Mixed':
+        return 'Mixed'
+    elif lith == 'Sandstone and carbonate-rock aquifers':
+        return 'SandstoneCarbonateRock'
+    elif lith == 'Sandstone aquifers':
+        return 'Sandstone'
+    elif lith == 'Sedimentary':
+        return 'Sedimentary'
+    elif lith == 'Semiconsolidated sand aquifers':
+        return 'SemiconsolidatedSand'
+    elif lith == 'Unconsolidated sand and gravel aquifers':
+        return 'UnconsolidatedSandGravel'
+    elif lith == 'Volcanic':
+        return 'Volcanic'
+    elif lith == None:
+        return 'Unspecified'
+    else:
+        raise ValueError("Unexpected Lithology from hydrogeologic settings shape file")
 
 
 def process_hgsetting_shp2ttl(infile, outfile):
@@ -108,37 +135,45 @@ def process_hgsetting_shp2ttl(infile, outfile):
 
     logger.info('Intialize RDFLib Graph')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
-    count = 1  # For processing updates printed to terminal
-    n = len(gdf_hgsettings.index)  # For processing updates printed to terminal
     logger.info(f'Triplify hydrogeologic settings')
     for row in gdf_hgsettings.itertuples():
-        # Get IRIs for the current shr and its geometry
+        # Get IRIs for the current HG setting and its geometry
         hgsiri, geomiri = build_iris(row.PASHR_ID + '-' + row.Overlay, _PREFIX)
         kg.add((hgsiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
 
-        # Triplify the geometry for the current SHR
+        # Triplify the geometry for the current HG settings
         kg.add((hgsiri, GEO.hasGeometry, geomiri))
         kg.add((hgsiri, GEO.defaultGeometry, geomiri))
         kg.add((geomiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
         kg.add((geomiri, RDF.type, GEO.Geometry))
 
-        # Triplify current SHR attributes
-        kg.add((hgsiri, _PREFIX['usgs']['hasSHRId'], Literal(str(row.SHR_ID), datatype=XSD.string)))
-        kg.add((hgsiri, _PREFIX['usgs']['hasSHRName'], Literal(row.SHR, datatype=XSD.string)))
-        kg.add((hgsiri, _PREFIX['usgs']['hasPrimaryLithology'], _PREFIX['usgs'][f'PrimaryLith.{row.PrimaryLit}']))
-        kg.add((hgsiri, _PREFIX['usgs']['hasSHRType'], _PREFIX['usgs'][f'SHRType.{row.Type}']))
-        kg.add((hgsiri, _PREFIX['usgs']['hasGeolProvince'], _PREFIX['usgs'][f'GeologicProvince.{row.GeologicPr.replace(' ', '')}']))
-        kg.add((hgsiri, _PREFIX['usgs']['hasGeolSubprovince'], _PREFIX['usgs'][f'GeologicSubprovince.{row.Subprovinc.replace(' ', '')}']))
+        # Triplify current HG settings attributes
+        base_iri = f'd.USGS_HG_Setting_{row.PASHR_ID}-{row.Overlay}'
+        kg.add((hgsiri, _PREFIX['usgs']['hasHGSettingId'], Literal(row.PASHR_ID + '-' + row.Overlay, datatype=XSD.string)))
+        kg.add((hgsiri, _PREFIX['usgs']['hasOverlay'], _PREFIX['usgs'][f'Overlay.{row.Overlay}']))
+        kg.add((hgsiri, _PREFIX['usgs']['hasHGSettingName'], Literal(row.HG_Setting, datatype=XSD.string)))
+        kg.add((hgsiri, _PREFIX['usgs']['hasLithology'], _PREFIX['usgs'][f'Lithology.{get_lithology(row.Lithology)}']))
 
-        # Update the processing status to the terminal
-        print(f'Processing row {count:4} of {n} : SHR_ID {str(row.SHR_ID):4}', end='\r', flush=True)
-        count += 1
-    logger.info(f'Write secondary hydrogeologic region triples to {outfile}')
+        medians = { 'DomesticMedianTopDepth': row.DomMedTop,
+                    'DomesticMedianBottomDepth': row.DomMedBot,
+                    'DomesticMedianOpenIntervalLength': row.DomMedOL,
+                    'PublicMedianTopDepth': row.PubMedTop,
+                    'PublicMedianBottomDepth': row.PubMedBot,
+                    'PublicMedianOpenIntervalLength': row.PubMedOL }
+        for k, v in medians.items():
+            kg.add((hgsiri, _PREFIX['usgs']['has' + k], _PREFIX['usgs_data'][base_iri + '.' + k]))
+            kg.add((_PREFIX['usgs_data'][base_iri + '.' + k], RDF.type, _PREFIX['usgs'][k]))
+            kg.add((_PREFIX['usgs_data'][base_iri + '.' + k], _PREFIX['qudt']['hasQuantityValue'], _PREFIX['usgs_data'][base_iri + '.' + k + '.QV']))
+            kg.add((_PREFIX['usgs_data'][base_iri + '.' + k + '.QV'], RDF.type, _PREFIX['qudt']['QuantityValue']))
+            kg.add((_PREFIX['usgs_data'][base_iri + '.' + k + '.QV'], _PREFIX['qudt']['numericValue'], Literal(v, datatype=XSD.decimal)))
+            kg.add((_PREFIX['usgs_data'][base_iri + '.' + k + '.QV'], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
+
+    logger.info(f'Write hydrogeologic settings triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
 
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script')
-    process_shr_shp2ttl(aquifers_file, ttl_file)
+    process_hgsetting_shp2ttl(hgsettings_file, ttl_file)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')

@@ -94,10 +94,28 @@ def build_iris(objectid, _PREFIX):
     return _PREFIX["usgs_data"][base_iri], _PREFIX["usgs_data"][base_iri + '.geometry']
 
 
-def get_rock_name(rockname):
-    if rockname == 'Unconsolidated sand and gravel aquifers':
+def get_lithology(lith):
+    if lith == 'Carbonate-rock aquifers':
+        return 'CarbonateRock'
+    elif lith == 'Crystalline':
+        return 'Crystalline'
+    elif lith == 'Igneous and metamorphic-rock aquifers':
+        return 'IgneousMetamorphic'
+    elif lith == 'Mixed':
+        return 'Mixed'
+    elif lith == 'Sandstone and carbonate-rock aquifers':
+        return 'SandstoneCarbonateRock'
+    elif lith == 'Sandstone aquifers':
+        return 'Sandstone'
+    elif lith == 'Sedimentary':
+        return 'Sedimentary'
+    elif lith == 'Semiconsolidated sand aquifers':
+        return 'SemiconsolidatedSand'
+    elif lith == 'Unconsolidated sand and gravel aquifers':
         return 'UnconsolidatedSandGravel'
-    elif rockname == None:
+    elif lith == 'Volcanic':
+        return 'Volcanic'
+    elif lith == None:
         return 'Unspecified'
     else:
         raise ValueError("Unexpected ROCK_NAME from alluvial & glacial aquifers shape file")
@@ -133,7 +151,7 @@ def process_aquifers_shp2ttl(infile, outfile):
 
         # Triplify current principal aquifer attributes
         kg.add((aqiri, _PREFIX['usgs']['hasAlluvialGlacialId'], Literal(str(row.ALLUVIAL_).zfill(4), datatype=XSD.string)))
-        kg.add((aqiri, _PREFIX['usgs']['hasRockName'], _PREFIX['usgs'][f'RockName.{get_rock_name(row.ROCK_NAME)}']))
+        kg.add((aqiri, _PREFIX['usgs']['hasLithology'], _PREFIX['usgs'][f'Lithology.{get_lithology(row.ROCK_NAME)}']))
         kg.add((aqiri, _PREFIX['usgs']['hasAqName'], Literal(row.AQ_NAME, datatype=XSD.string)))
 
         # Update the processing status to the terminal

@@ -94,21 +94,31 @@ def build_iris(objectid, _PREFIX):
     return _PREFIX["usgs_data"][base_iri], _PREFIX["usgs_data"][base_iri + '.geometry']
 
 
-def get_rock_name(rockname):
-    if rockname == 'Carbonate-rock aquifers':
+def get_lithology(lith):
+    if lith == 'Carbonate-rock aquifers':
         return 'CarbonateRock'
-    elif rockname == 'Igneous and metamorphic-rock aquifers':
+    elif lith == 'Crystalline':
+        return 'Crystalline'
+    elif lith == 'Igneous and metamorphic-rock aquifers':
         return 'IgneousMetamorphic'
-    elif rockname == 'Sandstone and carbonate-rock aquifers':
+    elif lith == 'Mixed':
+        return 'Mixed'
+    elif lith == 'Sandstone and carbonate-rock aquifers':
         return 'SandstoneCarbonateRock'
-    elif rockname == 'Sandstone aquifers':
+    elif lith == 'Sandstone aquifers':
         return 'Sandstone'
-    elif rockname == 'Semiconsolidated sand aquifers':
+    elif lith == 'Sedimentary':
+        return 'Sedimentary'
+    elif lith == 'Semiconsolidated sand aquifers':
         return 'SemiconsolidatedSand'
-    elif rockname == 'Unconsolidated sand and gravel aquifers':
+    elif lith == 'Unconsolidated sand and gravel aquifers':
         return 'UnconsolidatedSandGravel'
+    elif lith == 'Volcanic':
+        return 'Volcanic'
+    elif lith == None:
+        return 'Unspecified'
     else:
-        raise ValueError("Unexpected ROCK_NAME from principal aquifers shape file")
+        raise ValueError("Unexpected ROCK_NAME from principal aquifersshape file")
 
 
 def process_aquifers_shp2ttl(infile, outfile):
@@ -141,7 +151,7 @@ def process_aquifers_shp2ttl(infile, outfile):
 
         # Triplify current principal aquifer attributes
         kg.add((aqiri, _PREFIX['usgs']['hasAqId'], Literal(str(row.OBJECTID_1).zfill(4), datatype=XSD.string)))
-        kg.add((aqiri, _PREFIX['usgs']['hasRockName'], _PREFIX['usgs'][f'RockName.{get_rock_name(row.ROCK_NAME)}']))
+        kg.add((aqiri, _PREFIX['usgs']['hasLithology'], _PREFIX['usgs'][f'Lithology.{get_lithology(row.ROCK_NAME)}']))
         kg.add((aqiri, _PREFIX['usgs']['hasAqName'], Literal(row.AQ_NAME, datatype=XSD.string)))
 
         # Update the processing status to the terminal

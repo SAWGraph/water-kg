@@ -94,6 +94,33 @@ def build_iris(objectid, _PREFIX):
     return _PREFIX["usgs_data"][base_iri], _PREFIX["usgs_data"][base_iri + '.geometry']
 
 
+def get_lithology(lith):
+    if lith == 'Carbonate-rock aquifers':
+        return 'CarbonateRock'
+    elif lith == 'Crystalline':
+        return 'Crystalline'
+    elif lith == 'Igneous and metamorphic-rock aquifers':
+        return 'IgneousMetamorphic'
+    elif lith == 'Mixed':
+        return 'Mixed'
+    elif lith == 'Sandstone and carbonate-rock aquifers':
+        return 'SandstoneCarbonateRock'
+    elif lith == 'Sandstone aquifers':
+        return 'Sandstone'
+    elif lith == 'Sedimentary':
+        return 'Sedimentary'
+    elif lith == 'Semiconsolidated sand aquifers':
+        return 'SemiconsolidatedSand'
+    elif lith == 'Unconsolidated sand and gravel aquifers':
+        return 'UnconsolidatedSandGravel'
+    elif lith == 'Volcanic':
+        return 'Volcanic'
+    elif lith == None:
+        return 'Unspecified'
+    else:
+        raise ValueError("Unexpected PrimaryLith from secondary  hydrogeologic regions shape file")
+
+
 def process_shr_shp2ttl(infile, outfile):
     """Triplifies the secondary hydrologic region data in a .shp file and saves the result as a .ttl file
 
@@ -125,7 +152,7 @@ def process_shr_shp2ttl(infile, outfile):
         # Triplify current SHR attributes
         kg.add((shriri, _PREFIX['usgs']['hasSHRId'], Literal(str(row.SHR_ID), datatype=XSD.string)))
         kg.add((shriri, _PREFIX['usgs']['hasSHRName'], Literal(row.SHR, datatype=XSD.string)))
-        kg.add((shriri, _PREFIX['usgs']['hasPrimaryLithology'], _PREFIX['usgs'][f'PrimaryLith.{row.PrimaryLit}']))
+        kg.add((shriri, _PREFIX['usgs']['hasLithology'], _PREFIX['usgs'][f'Lithology.{row.PrimaryLit}']))
         kg.add((shriri, _PREFIX['usgs']['hasSHRType'], _PREFIX['usgs'][f'SHRType.{row.Type}']))
         kg.add((shriri, _PREFIX['usgs']['hasGeolProvince'], _PREFIX['usgs'][f'GeologicProvince.{row.GeologicPr.replace(' ','')}']))
         kg.add((shriri, _PREFIX['usgs']['hasGeolSubprovince'], _PREFIX['usgs'][f'GeologicSubprovince.{row.Subprovinc.replace(' ','')}']))
