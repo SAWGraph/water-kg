@@ -3,13 +3,13 @@
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
-| **Name of dataset:** | Secondary Hydrogeologic Regions of the Conterminous United States |
+| **Name of dataset:** | Hydrogeologic Settings of the Conterminous United States |
 | **Source agency:** | [United States Geological Survey](https://www.usgs.gov/) |
-| **Data source location:** | [Secondary Hydrogeologic Regions of the Conterminous United States](https://www.sciencebase.gov/catalog/item/5a5643b6e4b01e7be24449fc) |
-| **Metadata description**: | [Metadata](https://www.sciencebase.gov/catalog/file/get/5a5643b6e4b01e7be24449fc?f=__disk__0c%2F28%2F49%2F0c2849f573af3233fad59dd89b5fa8a69b033060&transform=1&allowOpen=true) |
+| **Data source location:** | [Data for depth of groundwater used for drinking-water supplies in the United States](https://www.sciencebase.gov/catalog/item/5e43efc3e4b0edb47be84c3d) |
+| **Metadata description**: | [Metadata](https://www.sciencebase.gov/catalog/file/get/5e43efc3e4b0edb47be84c3d?f=__disk__f6%2Fb5%2F6e%2Ff6b56ecf03139fd16996eebce6a7e5ef7e15266a&transform=1&allowOpen=true) |
 | **Other metadata** |  |
 | **Format of data**: | .shp files |
-| **Data Update Interval**: | Last updated June 29, 2022 |
+| **Data Update Interval**: | Last updated November 15, 2021 |
 | **Location of triples:** |  |
 
 ## Schema Diagram (TO ADD)
@@ -37,39 +37,40 @@
 
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID | Internal feature number | No |  |  |
-| SHR | Secondary Hydrogeologic Regions are ORRs of comparable age, lithology, and relationship to Principal Aquifers or glacial deposits. | Yes | `rdfs:label` |  |
-| KM2 | Size of the Secondary Hydrogeologic Unit, in square kilometers. | No |  |  |
-| PrimaryLith | Primary Lithology of the Secondary Hydrogeologic Region, derived from the "ROCKTYPE" attribute in Other_Aquifers feature class.  Named PrimaryLit in shapefile version. | Yes | TBD | Controlled vocabulary |
-| Type | Classification of Secondary Hydrogeologic Regions by type, where type indicates the relationship between an SHR and the presence or absence of underlying Principal Aquifers (PAs) or overlying glacial deposits. | Yes | TBD | See controlled vocabulary below |
-| GeologicProvince | Geologic province associated with each Secondary Hydrogeologic Regions, as identified by Reed and Bush, 2007.  Named GeologicPr in shapefile version. | Yes | TBD | Controlled vocabulary |
-| Subprovince | Subprovince of geologic provinces associated with each Secondary Hydrogeologic Regions. Named Subprovinc in shapefile version. | Yes | TBD | Controlled vocabulary |
-| Shape_Length | Length of feature in internal units (meters).  Named Shape_Leng in shapefile version. | No |  |  |
-| Shape_Area | Area of feature in internal units squared (meters). | No |  |  |
-| SHR_ID | The number following the leading "S" in SHR_ID corresponds to the numbering shown in Figure 1 of this data release and figure 3 in the associated larger work [](https://ngwa.onlinelibrary.wiley.com/doi/10.1111/gwat.12806). | Yes | TBD | Use as unique identifier |
-| SHR_CODE | SHR_Code is a combination of the SHR_ID and a shortened version of the SHR. | No |  |  |
+| PASHR_ID | An identifier for the principal aquifer or secondary hydrogeologic region (The first letter is P for principal aquifers, S for secondary hydrogeologic regions. The numbers match those used in Figure 1 of Lovelace and others (2020) for principal aquifers and Figure 3 of Belitz and others (2018) for secondary hydrogeologic regions) | Yes | `usgs:hasHGSettingId` | Not unique, so combined with Overlay attribute |
+| PASHR | Names of principal aquifer or secondary hydrogeologic region | Yes | `usgs:hasPAorSHRName` |  |
+| Overlay | Overlying sediment type if present | Yes | `usgs:hasHGSettingId` <br> `usgs:hasOverlay` | Not unique, so combined with PASHR_ID attribute <br> Controlled vocabulary |
+| HG_Setting | Hydrogeologic setting name (A combination of the name of the principal aquifer or secondary hydrogeologic region and overlying sediment type acronym) | Yes | `usgs:hasHGSettingName` |  |
+| Lithology | Hydrogeologic setting lithology | Yes | `usgs:hasLithology` | Controlled vocabulary |
+| DomMedTop | Median depth to the top of the open interval of domestic-supply wells by hydrogeologic setting | Yes | `usgs:hasDomesticMedianTopDepth` | units are feet |
+| DomMedBot | Median depth to the bottom of open interval of domestic-supply wells by hydrogeologic setting | Yes | `usgs:hasDomesticMedianBottomDepth` | units are feet |
+| DomMedOL | Median open interval length of domestic-supply wells by hydrogeologic setting | Yes | `usgs:hasDomesticMedianOpenIntervalLength` | units are feet |
+| PubMedTop | Median depth to the top of the open interval of public-supply wells by hydrogeologic setting | Yes | `usgs:hasPublicMedianTopDepth` | units are feet |
+| PubMedBot | Median depth to the bottom of the public-supply well groundwater-withdrawal zone by hydrogeologic setting | Yes | `usgs:hasPublicMedianBottomDepth` | units are feet |
+| PubMedOL | median open interval length of public-supply wells by hydrogeologic setting | Yes | `usgs:hasPublicMedianOpenIntervalLength` | units are feet |
+| HG_Setti_1 | An alternative hydrogeologic setting name (A combination of the name of the principal aquifer or secondary hydrogeologic region and overlying sediment type acronym, if present.  Differs from HG_Settting in that setting without overlying sediment do not have AA suffix) | No |  |  |
 
 **Notes on the data:**
 - 
 
 ## Controlled Vocabularies
-**List 1. PrimaryLith
+**List 1. Overlay
+* AA - no overlying sediment
+* AV - stream valley alluvium
+* G - glacial sediment that is not coarse stratified
+* GC - coarse-stratified glacial sediment
+
+**List 2. Lithology
+* Carbonate-rock aquifers
 * Crystalline
+* Igneous and metamorphic-rock aquifers
 * Mixed
+* Sandstone and carbonate-rock aquifers
+* Sandstone aquifers
 * Sedimentary
+* Semiconsolidated sand aquifers
+* Unconsolidated sand and gravel aquifers
 * Volcanic
-
-**List 2. Type
-* NN - Not underlain by Principal Aquifers and not overlain by glacial deposits
-* NY - Not underlain by Principal Aquifers and overlain by glacial deposits
-* YN - Underlain by Principal Aquifers and not overlain by glacial deposits
-* YY - Underlain by Principal Aquifers and overlain by glacial deposits
-
-**List 3. GeologicProvince - Subprovince
-* Appalachian - Appalachian, Ouachita
-* Central Interior - Glaciated, Unglaciated
-* Coastal Plain - Coastal Plain
-* Cordilleran - Intermountain, Rocky Mountains, Western
 
 ## Sample Data
 
