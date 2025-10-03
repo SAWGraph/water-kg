@@ -39,11 +39,23 @@ datasets/groundwater/me-mgs/logs/
 datasets/groundwater/me-mgs/OLD/
 datasets/groundwater/me-mgs/ttl_files/
 
-datasets/groundwater/us_principal_aquifers/*.ipynb
-datasets/groundwater/us_principal_aquifers/.ipynb_checkpoints/
-datasets/groundwater/us_principal_aquifers/logs/
-datasets/groundwater/us_principal_aquifers/OLD/
-datasets/groundwater/us_principal_aquifers/ttl_files/
+datasets/groundwater/us-usgs/usgs-hydrogeologic_settings/*.ipynb
+datasets/groundwater/us-usgs/usgs-hydrogeologic_settings/.ipynb_checkpoints/
+datasets/groundwater/us-usgs/usgs-hydrogeologic_settings/logs/
+datasets/groundwater/us-usgs/usgs-hydrogeologic_settings/OLD/
+datasets/groundwater/us-usgs/usgs-hydrogeologic_settings/ttl_files/
+
+datasets/groundwater/us-usgs/usgs-principal_aquifers/*.ipynb
+datasets/groundwater/us-usgs/usgs-principal_aquifers/.ipynb_checkpoints/
+datasets/groundwater/us-usgs/usgs-principal_aquifers/logs/
+datasets/groundwater/us-usgs/usgs-principal_aquifers/OLD/
+datasets/groundwater/us-usgs/usgs-principal_aquifers/ttl_files/
+
+datasets/groundwater/us-usgs/usgs-secondary_hydrogeologic_regions/*.ipynb
+datasets/groundwater/us-usgs/usgs-secondary_hydrogeologic_regions/.ipynb_checkpoints/
+datasets/groundwater/us-usgs/usgs-secondary_hydrogeologic_regions/logs/
+datasets/groundwater/us-usgs/usgs-secondary_hydrogeologic_regions/OLD/
+datasets/groundwater/us-usgs/usgs-secondary_hydrogeologic_regions/ttl_files/
 
 ################################
 # sdwis files & folders
@@ -104,9 +116,3 @@ datasets/wells/me-mgs/ttl_files/
 #data/mgs_wells/Maine_Well_Database_-_Unlocated_Wells.csv
 #data/mgs_wells/Maine_Well_Database_-_Well_Depth.csv
 #data/mgs_wells/Maine_Well_Database_-_Well_Depth_original.csv
-/datasets/groundwater/us_secondary_hydrogeologic_regions/logs
-/datasets/groundwater/us_secondary_hydrogeologic_regions/ttl_files
-/datasets/groundwater/us-usgs/usgs-principal_aquifers/logs
-/datasets/groundwater/us-usgs/usgs-principal_aquifers/ttl_files
-/datasets/groundwater/us-usgs/usgs-secondary_hydrogeologic_regions/logs
-/datasets/groundwater/us-usgs/usgs-secondary_hydrogeologic_regions/ttl_files
