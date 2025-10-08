@@ -24,10 +24,20 @@
 - [GDrive Output Directory]()
 
 ## IRIs
+
+Reuse IRIs from Geoconnex ?
+
+Define `@prefix gcx: <https://geoconnex.us/ref/`
+* Geoconnex does not include links to geometries in either their KG or their Reference Server
+
+Define `@prefix usgs: <https://usgs.spatialai.org/v1/usgs#>`
+
+Define `@prefix usgs_data: <https://usgs.spatialai.org/v1/usgs-data#>`
+
 | Instance Class | IRI Format |
 | --- | --- |
-<!-- | `me_mgs:MGS_Aquifer` | `me_mgs_data:d.MGS_Aquifer.<OBJECTID>` | -->
-<!-- | `geo:Geometry` | `me_mgs_data:d.MGS_Aquifer.geometry.<OBJECTID>` | -->
+| `gwml2s:GW_HydrogeoUnit` | `gcx:sec_hydrg_reg/<SHR_ID>` | -->
+| `geo:Geometry` | `usgs_data:d.USGS_Secondary_Hydrogeo_Region_<SHR_ID>.geometry` | -->
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
