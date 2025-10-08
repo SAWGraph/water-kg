@@ -25,7 +25,7 @@
 ## IRIs
 Reuse IRIs from Geoconnex
 
-Define `@prefix wbd_gcx: <https://geoconnex.us/ref/>`
+Define `@prefix gcx: <https://geoconnex.us/ref/>`
 * Geoconnex does not include 12-digit HUCs
 * Not all entities exist in the Geoconnex graph, but these IRIs dereference to the Geoconnex Reference Server
 * Geoconnex does not include links to geometries in either their KG or their Reference Server
