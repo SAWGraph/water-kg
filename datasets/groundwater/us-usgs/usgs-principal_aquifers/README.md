@@ -26,9 +26,18 @@
 - [GDrive Output Directory]()
 
 ### IRIs
+Reuse IRIs from Geoconnex
+
+Define `@prefix gcx: <https://geoconnex.us/ref/`
+* Geoconnex does not include links to geometries in either their KG or their Reference Server
+
+Define `@prefix usgs: <https://usgs.spatialai.org/v1/usgs#>`
+
+Define `@prefix usgs_data: <https://usgs.spatialai.org/v1/usgs-data#>`
+
 | Instance Class | IRI Format |
 | --- | --- |
-| `gwml2:GW_Aquifer` | `usgs_data:d.USGS_PrincipalAquifer_<OBJECTID_1>` |
+| `gwml2:GW_Aquifer` | `gcx:principal_aq/<OBJECTID_1>` |
 | `geo:Geometry` | `usgs_data:d.USGS_PrincipalAquifer_<OBJECTID_1>.geometry` |
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts
@@ -42,13 +51,13 @@ Examples of triples from data/metadata sources
 | OBJECTID_1 | Internal feature number | Yes | `usgs:hasAqId` | Use as unique identifier | 
 | ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasLithology` | Controlled vocabulary |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
-| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text (62 distinct values) |
+| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text (62 distinct values) <br/> This exists in the Geoconnex KG|
 | AQ_CODE | The code number relating to the aquifer unit name. | No |  | Controlled vocabulary ? |
 | Shape_Leng | The perimeter of the shape in file units.  In the distributed file, file units represent decimal degrees. | No |  |  |
 | Shape_Area | The size of the shape in file units.  In the distributed file, file units represent square decimal degrees. | No |  |  |
 
 ### Notes on the data
-- 
+* Geoconnex provides `ROCK_NAME` as text in their Reference Server
 
 ### Controlled Vocabularies
 List 1. ROCK_TYPE - ROCK_NAME (derived from both datasets)
