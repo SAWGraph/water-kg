@@ -26,15 +26,18 @@
 Reuse IRIs from Geoconnex
 
 Define `@prefix wbd_gcx: <https://geoconnex.us/ref/>`
+* Geoconnex does not include 12-digit HUCs
+* Not all entities exist in the Geoconnex graph, but these IRIs dereference to the Geoconnex Reference Server
+* Geoconnex does not include links to geometries in either their KG or their Reference Server
 
 Define `@prefix wbd: <https://wbd.spatialai.org/v1/wbd#>`
 
 Define `@prefix wbd_data: <https://wbd.spatialai.org/v1/wbd-data#>`
 
-| Instance Class | IRI Format | Notes |
-| --- | --- | --- |
-| `wbd:HU02` <br/> `wbd:HU04` <br/> `wbd:HU06` <br/> `wbd:HU08` <br/> `wbd:HU10` <br/> `wbd:HU12` | `wbd_gcx:hu02/<2-digit id>` <br/> `wbd_gcx:hu04/<4-digit id>` <br/> `wbd_gcx:hu06/<6-digit id>` <br/> `wbd_gcx:hu08/<8-digit id>` <br/> `wbd_gcx:hu10/<10-digit id>` <br/> `wbd_gcx:hu12/<12-digit id>` | Geoconnex does not include 12-digit HUCs |
-| `geo:Geometry` | `wbd_data:d.HUC2.<huc2>.geometry` <br/> `wbd_data:d.HUC4.<huc4>.geometry` <br/> `wbd_data:d.HUC6.<huc6>.geometry` <br/> `wbd_data:d.HUC8.<huc8>.geometry` <br/> `wbd_data:d.HUC10.<huc10>.geometry` <br/> `wbd_data:d.HUC12.<huc12>.geometry` | Geoconnex does not include a link to geometries |
+| Instance Class | IRI Format |
+| --- | --- |
+| `wbd:HU02` <br/> `wbd:HU04` <br/> `wbd:HU06` <br/> `wbd:HU08` <br/> `wbd:HU10` <br/> `wbd:HU12` | `wbd_gcx:hu02/<2-digit id>` <br/> `wbd_gcx:hu04/<4-digit id>` <br/> `wbd_gcx:hu06/<6-digit id>` <br/> `wbd_gcx:hu08/<8-digit id>` <br/> `wbd_gcx:hu10/<10-digit id>` <br/> `wbd_gcx:hu12/<12-digit id>` |
+| `geo:Geometry` | `wbd_data:d.HU02.<2-digit id>.geometry` <br/> `wbd_data:d.HU04.<4-digit id>.geometry` <br/> `wbd_data:d.HU06.<6-digit id>.geometry` <br/> `wbd_data:d.HU08.<8-digit id>.geometry` <br/> `wbd_data:d.HU10.<10-digit id>.geometry` <br/> `wbd_data:d.HU12.<12-digit id>.geometry` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 | Attribute | Description | Lift to graph | Ontology property | Comments |
@@ -51,10 +54,10 @@ Define `@prefix wbd_data: <https://wbd.spatialai.org/v1/wbd-data#>`
 | areasqkm | The area of each hydrologic unit including non-contributing areas stored in square kilometers. | No |  |  |
 | states | The States or outlying area attribute identifies the State(s) or outlying areas that the hydrologic unit falls within or touches. | Yes | `wbd:hucState` | Object property connecting to Administrative Region 1 instances |
 | huc<#> | The HUC# field is a unique #-digit hydrologic unit code <br> # is 2 (region), 4 (subregion), 6 (basin), 8 (subbasin), 10 (watershed), or 12 (subwatershed) | Yes | `wbd:hucCode` | Use as unique identifier |
-| name | Name refers to the GNIS name for the geographic area in which the hydrologic unit is located. | Yes | `schema:name` |  |
+| name | Name refers to the GNIS name for the geographic area in which the hydrologic unit is located. | Yes | `schema:name` | This exists in the Geoconnex KG |
 | shape_Length | Length of feature in internal units. | No |  |  |
 | shape_Area | Area of feature in internal units squared. | No |  |  |
-| hutype | The 12-digit hydrologic unit type attribute is the single-letter abbreviation for Watershed type from the list of official names provided in the WBD Standards. | Yes | `wbd:hucType` | HUC10+ only <br/> See controlled vocabulary below |
+| hutype | The 10-digit hydrologic unit type attribute is the single-letter abbreviation for Watershed type from the list of official names provided in the WBD Standards. | Yes | `wbd:hucType` | HUC10+ only <br/> See controlled vocabulary below |
 | humod | Two-character, uppercase abbreviation used to track either a modification to natural overland flow that alters the location of the hydrologic unit boundary or special conditions that are applied to a specific boundary line segment. The value identifies the type of modification, from the list provided, that has been applied to the boundary segment. If more than one abbreviation is used, the list is separated by commas without spaces and organized from most to least predominant. | No |  | HUC10+ only <br/> See controlled vocabulary below |
 | hutype_description |  | Yes | `wbd:hucTypeDescription` | HUC10+ only <br/> See controlled vocabulary below |
 | tohuc | The 12-digit hydrologic unit ToHUC code attribute is the code for the 12-digit hydrologic unit that is downstream from and naturally receives the majority of the flow from another 12-digit hydrologic unit. | Yes | `wbd:toHUC` | HUC12+ only |
