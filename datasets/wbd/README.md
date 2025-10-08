@@ -66,6 +66,7 @@ Define `@prefix wbd_data: <https://wbd.spatialai.org/v1/wbd-data#>`
 
 **Notes on the data:**
 * Need to add Canada and Mexico as Administrative Region 1 entity to fully capture `states` attribute
+* Geoconnex uses `hyf:containingCatchment` to capture the nesting of HUs; for example, every HU12 is within a HU10, HU08, HU06, HU04, and HU02. Geoconnex declares all of these explicitly but transitivity could be used as well to reduce the number of explicit triples.
 
 ## Controlled Vocabularies 
 List 1. humod
