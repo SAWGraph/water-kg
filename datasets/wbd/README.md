@@ -23,7 +23,7 @@
 * [GDrive Output Directory]()
 
 ## IRIs
-Reuse IRIs from Geoconnex
+Reuse IRIs from Geoconnex ?
 
 Define `@prefix gcx: <https://geoconnex.us/ref/>`
 * Geoconnex does not include 12-digit HUCs
