@@ -23,10 +23,18 @@
 * [GDrive Output Directory]()
 
 ## IRIs
-| Instance Class | IRI Format |
-| --- | --- |
-| `wbd:HUC2` <br/> `wbd:HUC4` <br/> `wbd:HUC6` <br/> `wbd:HUC8` <br/> `wbd:HUC10` <br/> `wbd:HUC12` | `wbd_data:d.HUC2.<huc2>` <br/> `wbd_data:d.HUC4.<huc4>` <br/> `wbd_data:d.HUC6.<huc6>` <br/> `wbd_data:d.HUC8.<huc8>` <br/> `wbd_data:d.HUC10.<huc10>` <br/> `wbd_data:d.HUC12.<huc12>` |
-| `geo:Geometry` | `wbd_data:d.HUC2.<huc2>.geometry` <br/> `wbd_data:d.HUC4.<huc4>.geometry` <br/> `wbd_data:d.HUC6.<huc6>.geometry` <br/> `wbd_data:d.HUC8.<huc8>.geometry` <br/> `wbd_data:d.HUC10.<huc10>.geometry` <br/> `wbd_data:d.HUC12.<huc12>.geometry` |
+Reuse IRIs from Geoconnex
+
+Define `@prefix wbd_gcx: <https://geoconnex.us/ref/>`
+
+Define `@prefix wbd: <https://wbd.spatialai.org/v1/wbd#>`
+
+Define `@prefix wbd_data: <https://wbd.spatialai.org/v1/wbd-data#>`
+
+| Instance Class | IRI Format | Notes |
+| --- | --- | --- |
+| `wbd:HU02` <br/> `wbd:HU04` <br/> `wbd:HU06` <br/> `wbd:HU08` <br/> `wbd:HU10` <br/> `wbd:HU12` | `wbd_gcx:hu02/<2-digit id>` <br/> `wbd_gcx:hu04/<4-digit id>` <br/> `wbd_gcx:hu06/<6-digit id>` <br/> `wbd_gcx:hu08/<8-digit id>` <br/> `wbd_gcx:hu10/<10-digit id>` <br/> `wbd_gcx:hu12/<12-digit id>` | Geoconnex does not include 12-digit HUCs |
+| `geo:Geometry` | `wbd_data:d.HUC2.<huc2>.geometry` <br/> `wbd_data:d.HUC4.<huc4>.geometry` <br/> `wbd_data:d.HUC6.<huc6>.geometry` <br/> `wbd_data:d.HUC8.<huc8>.geometry` <br/> `wbd_data:d.HUC10.<huc10>.geometry` <br/> `wbd_data:d.HUC12.<huc12>.geometry` | Geoconnex does not include a link to geometries |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 | Attribute | Description | Lift to graph | Ontology property | Comments |
