@@ -27,17 +27,17 @@
 
 Reuse IRIs from Geoconnex ?
 
-Define `@prefix gcx: <https://geoconnex.us/ref/`
+Define `@prefix gcx_shr: <https://geoconnex.us/ref/sec_hydrg_reg/`
 * Geoconnex does not include links to geometries in either their KG or their Reference Server
 
 Define `@prefix usgs: <https://usgs.spatialai.org/v1/usgs#>`
 
 Define `@prefix usgs_data: <https://usgs.spatialai.org/v1/usgs-data#>`
 
-| Instance Class | IRI Format |
-| --- | --- |
-| `gwml2s:GW_HydrogeoUnit` | `gcx:sec_hydrg_reg/<SHR_ID>` | -->
-| `geo:Geometry` | `usgs_data:d.USGS_Secondary_Hydrogeo_Region_<SHR_ID>.geometry` | -->
+| Instance Class | IRI Format | Notes |
+| --- | --- | --- |
+| `gwml2s:GW_HydrogeoUnit` | `gcx_shr:<SHR_ID>` | These are unique and 1-1 with our dataset |
+| `geo:Geometry` | `usgs_data:d.USGS_Secondary_Hydrogeo_Region_<SHR_ID>.geometry` | Geoconnex tends to use blank nodes for `geo:Geometry` instances |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
