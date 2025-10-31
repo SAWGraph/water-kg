@@ -28,7 +28,7 @@
 ### IRIs
 Reuse IRIs from Geoconnex ?
 
-Define `@prefix gcx: <https://geoconnex.us/ref/`
+Define `@prefix gcx_paq: <https://geoconnex.us/ref/principal_aq/`
 * Geoconnex does not include links to geometries in either their KG or their Reference Server
 
 Define `@prefix usgs: <https://usgs.spatialai.org/v1/usgs#>`
@@ -37,8 +37,8 @@ Define `@prefix usgs_data: <https://usgs.spatialai.org/v1/usgs-data#>`
 
 | Instance Class | IRI Format | Note |
 | --- | --- | --- |
-| `gwml2:GW_Aquifer` | `gcx:principal_aq/<AQ_CODE>` | Geometries for each code must be merged to align with Geoconnex |
-| `geo:Geometry` | `usgs_data:d.USGS_PrincipalAquifer_<AQ_CODE>.geometry` |  |
+| `gwml2:GW_Aquifer` | `gcx_paq:<AQ_CODE>` | Geometries for each code must be merged to align with Geoconnex </br> Possibly use our own IRI and then link to Geoconnex via `schema:sameAs`? |
+| `geo:Geometry` | `usgs_data:d.USGS_PrincipalAquifer_<AQ_CODE>.geometry` | Geoconnex `geo:Geometry` is a blank node |
 
 ### Raw Data Attribute List and Mapping with Ontology Concepts
 
@@ -51,7 +51,7 @@ Examples of triples from data/metadata sources
 | OBJECTID_1 | Internal feature number | ? | `usgs:hasAqId` | This is difficult to align with Geoconnex, which treats every feature with the same AQ_CODE as a single feature | 
 | ROCK_NAME | The name of the permeable geologic material that composes the aquifer. | Yes | `usgs:hasLithology` | Controlled vocabulary |
 | ROCK_TYPE | The code number relating to the rock_name. | No |  | Controlled vocabulary |
-| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text (62 distinct values) <br/> This exists in the Geoconnex KG|
+| AQ_NAME | The aquifer unit name. | Yes | `usgs:hasAqName` | capture as text (62 distinct values) <br/> This exists in the Geoconnex KG |
 | AQ_CODE | The code number relating to the aquifer unit name. | Yes |  | Part of Geoconnex IRI |
 | Shape_Leng | The perimeter of the shape in file units.  In the distributed file, file units represent decimal degrees. | No |  |  |
 | Shape_Area | The size of the shape in file units.  In the distributed file, file units represent square decimal degrees. | No |  |  |
