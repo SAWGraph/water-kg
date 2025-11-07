@@ -52,7 +52,7 @@ vpunum = '01'
 # Valid codes: 01 to 22
 
 ### INPUT File and GPKG names ###
-wbd_file = data_dir / f"HUC{vpunum}/WBD_{vpunum}_HU2_GPKG.zip"
+wbd_file = data_dir / f'WBD/WBD_{vpunum}_HU2_GPKG.zip'
 gpkg_name = f'WBD_{vpunum}_HU2_GPKG.gpkg'
 
 ### OUTPUT Filename ###
