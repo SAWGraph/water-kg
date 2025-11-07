@@ -192,8 +192,8 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
         if row.WellDepth is not None and not pd.isna(row.WellDepth):
             lengthiri = f'{welliri_base}.totalLength'
             qviri = f'{lengthiri}.QV'
-            graph.add((welliri, _PREFIX['gwml2']['gwWellTotalLength'], _PREFIX['usgwd'][lengthiri]))
-            graph.add((_PREFIX['usgwd'][lengthiri], RDF.type, _PREFIX['usgwd']['WellDepth']))
+            graph.add((welliri, _PREFIX['hyfo']['hasTotalDepth'], _PREFIX['usgwd'][lengthiri]))
+            graph.add((_PREFIX['usgwd'][lengthiri], RDF.type, _PREFIX['hyfo']['TotalDepth']))
             graph.add((_PREFIX['usgwd'][lengthiri], _PREFIX['qudt']['quantityValue'], _PREFIX['usgwd'][qviri]))
             graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['QuantityValue']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
@@ -201,8 +201,8 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
         if row.ScrDepth is not None and not pd.isna(row.ScrDepth):
             depthiri = f'{welliri_base}.constructedDepth'
             qviri = f'{depthiri}.QV'
-            graph.add((welliri, _PREFIX['gwml2']['gwWellConstructedDepth'], _PREFIX['usgwd'][depthiri]))
-            graph.add((_PREFIX['usgwd'][depthiri], RDF.type, _PREFIX['usgwd']['ScreenDepth']))
+            graph.add((welliri, _PREFIX['hyfo']['hasCasingDepth'], _PREFIX['usgwd'][depthiri]))
+            graph.add((_PREFIX['usgwd'][depthiri], RDF.type, _PREFIX['hyfo']['CasingDepth']))
             graph.add((_PREFIX['usgwd'][depthiri], _PREFIX['qudt']['quantityValue'], _PREFIX['usgwd'][qviri]))
             graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
@@ -210,8 +210,8 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
         if row.Capacity is not None and not pd.isna(row.Capacity):
             capiri = f'{welliri_base}.wellYield'
             qviri = f'{capiri}.QV'
-            graph.add((welliri, _PREFIX['gwml2']['gwWellYield'], _PREFIX['usgwd'][capiri]))
-            graph.add((_PREFIX['usgwd'][capiri], RDF.type, _PREFIX['usgwd']['Capacity']))
+            graph.add((welliri, _PREFIX['hyfo']['hasWellYield'], _PREFIX['usgwd'][capiri]))
+            graph.add((_PREFIX['usgwd'][capiri], RDF.type, _PREFIX['hyfo']['WellYield']))
             graph.add((_PREFIX['usgwd'][capiri], _PREFIX['qudt']['quantityValue'], _PREFIX['usgwd'][qviri]))
             graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['GAL_US-PER-MIN']))
