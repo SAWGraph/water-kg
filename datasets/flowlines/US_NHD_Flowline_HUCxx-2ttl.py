@@ -74,19 +74,17 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpu = 'MS_07'
-vpunum = vpu[3:]
-# Valid codes: NE_01, MA_02, SA_03N, SA_03S, SA_03W, GL_04, MS_05, MS_06, MS_07, MS_08, SR_09,
-#              MS_10U, MS_10L, MS_11, TX_12, RG_13, CO_14, CO_15, GB_16, PN_17, CA_18, HI_20
+vpunum = '01'
+# Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
-plusflow_file = data_dir / f"HUC{vpunum}/{vpu}_NHDPlusAttributes/PlusFlow.dbf"
-flowline_file = data_dir / f"HUC{vpunum}/{vpu}_NHDSnapshot/NHDFlowline.shp"
+plusflow_file = data_dir / f'NHDFlowline/HUC{vpunum}_PlusFlow.dbf'
+flowline_file = data_dir / f'NHDFlowline/HUC{vpunum}_NHDFlowline.shp'
 
 ### OUTPUT Filename ###
-main_ttl_file = ttl_dir / f"us_nhd_flowline_huc{vpunum}.ttl"
+main_ttl_file = ttl_dir / f'us_nhd_flowline_huc{vpunum}.ttl'
 
-logname = log_dir / f"log_US_NHD_Flowline_HUCxx-2ttl.txt"
+logname = log_dir / f'log_US_NHD_Flowline_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -99,7 +97,7 @@ logger.info('LOGGER INITIALIZED')
 
 
 def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
-    logger.info(f'Load {vpu} flowline shapefile from {filename}')
+    logger.info(f'Load HUC{vpunum} flowline shapefile from {filename}')
     gdf = gpd.read_file(filename)
     gdf.drop(['FDATE',
               'GNIS_ID',
@@ -117,7 +115,7 @@ def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
 
 
 def create_simple_flowline_dict(df: pd.DataFrame) -> dict:
-    logger.info(f'Create simple flowline dictionary for {vpu}')
+    logger.info(f'Create simple flowline dictionary for HUC{vpunum}')
     dct = {}
     for row in df.itertuples():
         dct[row.COMID] = (row.FCODE, row.FTYPE, row.GNIS_NAME, row.LENGTHKM, row.REACHCODE, row.geometry)
@@ -125,7 +123,7 @@ def create_simple_flowline_dict(df: pd.DataFrame) -> dict:
 
 
 def load_plusflow_file(filename: str) -> pd.DataFrame:
-    logger.info(f'Load {vpu} plusflow file from {filename}')
+    logger.info(f'Load HUC{vpunum} plusflow file from {filename}')
     dbf = Dbf5(filename)
     df = dbf.to_dataframe()
     df.drop(['FROMHYDSEQ',
@@ -146,7 +144,7 @@ def load_plusflow_file(filename: str) -> pd.DataFrame:
 
 
 def create_simple_plusflow_dict(df: pd.DataFrame) -> dict:
-    logger.info(f'Create simple plusflow dictionary for {vpu}')
+    logger.info(f'Create simple plusflow dictionary for HUC{vpunum}')
     dct = {}
     for row in df.itertuples():
         if row.FROMCOMID in dct.keys():
@@ -158,7 +156,7 @@ def create_simple_plusflow_dict(df: pd.DataFrame) -> dict:
 
 
 def create_digraph(flowline_dict: dict, plusflow_dict: dict) -> nx.DiGraph:
-    logger.info(f'Create and populate networkx DiGraph representing {vpu} flowline network')
+    logger.info(f'Create and populate networkx DiGraph representing HUC{vpunum} flowline network')
     dg = nx.DiGraph()
     for key in flowline_dict.keys():
         dg.add_node(key)
@@ -272,7 +270,7 @@ def build_iris(cid, _PREFIX):
 
 def triplify_huc_flowlines(dg):
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
-    logger.info(f'Triplify {vpu} flowlines')
+    logger.info(f'Triplify HUC{vpunum} flowlines')
     for node in dg.nodes(data=True):
         # Get IRIs for the current NHDFlowline, its geometry, its length object, and the length's qudt:QuantityValue
         fl_iri, fl_geo_iri, fl_len_iri, fl_qv_iri = build_iris(node[0], _PREFIX)
@@ -305,13 +303,13 @@ def triplify_huc_flowlines(dg):
         kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], fl_iri))
         for key in dg.successors(node[0]):
             kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx-cid'][key]))
-    logger.info(f'Write {vpu} flowline triples to {main_ttl_file}')
+    logger.info(f'Write HUC{vpunum} flowline triples to {main_ttl_file}')
     kg.serialize(main_ttl_file, format='turtle')  # Write the completed KG to a .ttl file
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    logger.info(f'Launching script: HUC/VPU = {vpu}')
+    logger.info(f'Launching script: HUC/VPU = {vpunum}')
     df_flowline = load_flowline_file(flowline_file)
     simple_flowline_dict = create_simple_flowline_dict(df_flowline)
     df_plusflow = load_plusflow_file(plusflow_file)
