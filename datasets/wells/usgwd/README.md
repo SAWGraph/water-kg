@@ -33,7 +33,7 @@
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | Well ID | Unique well identifier assigned within USGWD | Yes | `usgwd:hasUSGWDID` | also used in IRI | 
-| Well ID (State) | Unique well identifier given by the state | Yes | `usgwd:hasStateID` |  | 
+| Well ID (State) | Unique well identifier given by the state | Yes | `usgwd:hasStateID` | Some of these values are in scientific notation | 
 | Longitude | Longitude of well location in decimal degrees (NAD83) | Yes | `geo:hasGeometry/geo:asWKT` |  | 
 | Latitude | Latitude of well location in decimal degrees (NAD83) | Yes | `geo:hasGeometry/geo:asWKT` |  | 
 | County | County where well is located, as provided by state | No |  | Available via AR3 integration | 
@@ -67,7 +67,34 @@
 - 
 
 ## Controlled Vocabularies - See Descriptions above
-**List 1. 
+**List 1. Flag County
+| Code | Description | Vocabulary |
+| --- | --- | --- |
+| 0 | complete and consistent | `usgwd:FlagCounty.CompleteConsistent` |
+| 1 | inconsistent | `usgwd:FlagCounty.Inconsistent` |
+| 2 | incomparable due to missing coordinates or state-reported county | `usgwd:FlagCounty.IncomparableMissingInfo` |
+
+**List 2. Flag State
+| Code | Description | Vocabulary |
+| --- | --- | --- |
+| 0 | complete and consistent | `usgwd:FlagState.CompleteConsistent` |
+| 1 | inconsistent | `usgwd:FlagState.Inconsistent` |
+| 2 | incomparable due to missing coordinates | `usgwd:FlagState.IncomparableMissingInfo` |
+
+**List 3. Flag US
+| Code | Description | Vocabulary |
+| --- | --- | --- |
+| 0 | within the US border | `usgwd:FlagUS.WithinBorder` |
+| 1 | outside of the US border | `usgwd:FlagUS.OutsideBorder` |
+| 2 | unknown due to missing coordinate | `usgwd:FlagUS.UnknownMissingInfo` |
+
+**List 4. Flag Duplicate
+| Code | Description | Vocabulary |
+| --- | --- | --- |
+| 0 | unique | `usgwd:FlagDuplicate.Unique` |
+| 1 | incomparable due to missing state-assigned well id | `usgwd:FlagDuplicate.IncomparableMissingInfo` |
+| 2 | shares identical values with one or more other records | `usgwd:FlagDuplicate.SharesIdenticalValues` |
+| 3 | Well ID (State), Longitude, and Latitude are identical but differ in some other attributes | `usgwd:FlagDuplicate.SharesIdentifyingValues` |
 
 ## Sample Data
 
