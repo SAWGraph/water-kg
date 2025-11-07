@@ -47,10 +47,10 @@
 | Flag County | Well outside its state-agency reported county (0: complete and consistent; 1: inconsistent; 2: incomparable due to missing coordinates or state-reported county) | Yes | `usgwd:flagCounty` | controlled vocabulary | 
 | Flag State | Well outside its state-agency reported state (0: complete and consistent; 1: inconsistent; 2: incomparable due to missing coordinates) | Yes | `usgwd:flagState` | controlled vocabulary | 
 | Flag US | Well’s coordinate outside of the US border (0: within the US border; 1: outside of the US border; 2: unknown due to missing coordinate) | Yes | `usgwd:flagUS` | controlled vocabulary | 
-| Well Depth (Feet) | Total depth of well, measured in feet below land surface | Yes | `gwml2:gwWellTotalLength` |  | 
-| Screen Depth (Feet) | Distance from land surface to the top of the well screen, measured in feet | Yes | `gwml2:gwWellConstructedDepth` |  | 
+| Well Depth (Feet) | Total depth of well, measured in feet below land surface | Yes | `hyfo:hasTotalDepth` |  | 
+| Screen Depth (Feet) | Distance from land surface to the top of the well screen, measured in feet | Yes | `hyfo:hasCasingDepth` |  | 
 | Length of Screen (Feet) | Length of the well screen from the screen opening to the end of the screen, measured in feet | ? |  | Available via arithmetic | 
-| Well Capacity (GPM) | Estimated amount of water the well can withdrawal, measured in gallons per minute | Yes | `gwml2:gwWellYield` |  | 
+| Well Capacity (GPM) | Estimated amount of water the well can withdrawal, measured in gallons per minute | Yes | `hyfo:hasWellYield` |  | 
 | Lithological Data | Known existence of lithological records (Yes, No) | No |  | controlled vocabulary | 
 | Surface Elevation (Feet) | Elevation of the ground surface at the well head, in feet above sea level | No |  |  | 
 | Status | Status of the well (Active, Inactive, Unknown) | Yes | `gwml2:gwWellStatus` | controlled vocabulary | 
