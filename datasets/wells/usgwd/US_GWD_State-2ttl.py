@@ -16,6 +16,7 @@ Functions:
 
 import geopandas as gpd
 import pandas as pd
+import numpy as np
 from pathlib import Path
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, RDF, SDO, XSD
@@ -48,7 +49,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### State Abbrreviation ###
-state = 'al'
+state = 'ar'
 # Valid codes: 2-digit state abbreviations (case insensitive)
 
 ### Retrieve State Name ###
@@ -112,21 +113,17 @@ def initial_kg(_PREFIX):
     return graph
 
 
-def build_iris(wid, _PREFIX):
-    well_iri = f'd.USGWD_Well.{str(wid)}'
-    return _PREFIX['usgwd'][well_iri], _PREFIX['usgwd'][f'{well_iri}.geometry']
+def build_iris(base, _PREFIX):
+    return _PREFIX['usgwd'][base], _PREFIX['usgwd'][f'{base}.geometry']
 
 
 def add_county_flag(graph, flag, welliri, _PREFIX):
     if flag == 0:
-        graph.add((welliri, _PREFIX['usgwd']['flagCounty'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagCountyText'], Literal('complete and consistent', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagCounty'], _PREFIX['usgwd']['FlagCounty.CompleteConsistent']))
     elif flag == 1:
-        graph.add((welliri, _PREFIX['usgwd']['flagCounty'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagCountyText'], Literal('inconsistent', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagCounty'], _PREFIX['usgwd']['FlagCounty.Inconsistent']))
     elif flag == 2:
-        graph.add((welliri, _PREFIX['usgwd']['flagCounty'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagCountyText'], Literal('incomparable due to missing coordinates or state-reported county', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagCounty'], _PREFIX['usgwd']['FlagCounty.IncomparableMissingInfo']))
     else:
         raise ValueError('Unexpected county flag value')
     return graph
@@ -134,14 +131,11 @@ def add_county_flag(graph, flag, welliri, _PREFIX):
 
 def add_state_flag(graph, flag, welliri, _PREFIX):
     if flag == 0:
-        graph.add((welliri, _PREFIX['usgwd']['flagState'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagStateText'], Literal('complete and consistent', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagState'], _PREFIX['usgwd']['FlagState.CompleteConsistent']))
     elif flag == 1:
-        graph.add((welliri, _PREFIX['usgwd']['flagState'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagStateText'], Literal('inconsistent', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagState'], _PREFIX['usgwd']['FlagState.Inconsistent']))
     elif flag == 2:
-        graph.add((welliri, _PREFIX['usgwd']['flagState'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagStateText'], Literal('incomparable due to missing coordinates', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagState'], _PREFIX['usgwd']['FlagState.IncomparableMissingInfo']))
     else:
         raise ValueError('Unexpected state flag value')
     return graph
@@ -149,14 +143,11 @@ def add_state_flag(graph, flag, welliri, _PREFIX):
 
 def add_us_flag(graph, flag, welliri, _PREFIX):
     if flag == 0:
-        graph.add((welliri, _PREFIX['usgwd']['flagUS'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagUSText'], Literal('within the US border', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagUS'], _PREFIX['usgwd']['FlagUS.WithinBorder']))
     elif flag == 1:
-        graph.add((welliri, _PREFIX['usgwd']['flagUS'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagUSText'], Literal('outside of the US border', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagUS'], _PREFIX['usgwd']['FlagUS.OutsideBorder']))
     elif flag == 2:
-        graph.add((welliri, _PREFIX['usgwd']['flagUS'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagUSText'], Literal('unknown due to missing coordinate', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagUS'], _PREFIX['usgwd']['FlagUS.UnknownMissingInfo']))
     else:
         raise ValueError('Unexpected US flag value')
     return graph
@@ -164,18 +155,13 @@ def add_us_flag(graph, flag, welliri, _PREFIX):
 
 def add_dup_flag(graph, flag, welliri, _PREFIX):
     if flag == 0:
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicateText'], Literal('unique', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], _PREFIX['usgwd']['FlagDuplicate.Unique']))
     elif flag == 1:
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicateText'], Literal('incomparable due to missing state-assigned well id', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], _PREFIX['usgwd']['FlagDuplicate.IncomparableMissingInfo']))
     elif flag == 2:
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicateText'], Literal('shares identical values with one or more other records', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], _PREFIX['usgwd']['FlagDuplicate.SharesIdenticalValues']))
     elif flag == 3:
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], Literal(flag, datatype=XSD.integer)))
-        graph.add((welliri, _PREFIX['usgwd']['flagDuplicateText'],
-                   Literal('Well ID (State), Longitude, and Latitude are identical but differ in some other attributes', datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['usgwd']['flagDuplicate'], _PREFIX['usgwd']['FlagDuplicate.SharesIdentifyingValues']))
     else:
         raise ValueError('Unexpected US flag value')
     return graph
@@ -187,7 +173,8 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
     # print(gdf.columns)
     logger.info(f'Triplify {state_name} well data.')
     for row in gdf.itertuples():
-        welliri, geomiri = build_iris(row.WellID, _PREFIX)
+        welliri_base = f'd.USGWD_Well.{str(row.WellID)}'
+        welliri, geomiri = build_iris(welliri_base, _PREFIX)
         graph.add((welliri, RDF.type, _PREFIX['gwml2']['GW_Well']))
         graph.add((welliri, _PREFIX['usgwd']['hasUSGWDID'], Literal(str(row.WellID), datatype=XSD.string)))
         graph.add((welliri, _PREFIX['usgwd']['hasStateID'], Literal(str(row.IDState), datatype=XSD.string)))
@@ -195,23 +182,45 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
         graph.add((welliri, GEO.defaultGeometry, geomiri))
         graph.add((geomiri, RDF.type, GEO.Geometry))
         graph.add((geomiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
-        graph.add((welliri, _PREFIX['gwml2']['gwWellUnit'], Literal(row.AquiferSp, datatype=XSD.string)))
+        if 'unk' not in row.AquiferSp.lower():
+            graph.add((welliri, _PREFIX['gwml2']['gwWellUnit'], Literal(row.AquiferSp, datatype=XSD.string)))
         graph.add((welliri, _PREFIX['kwg-ont']['sfWithin'], _PREFIX['wbd'][f'd.HUC12.{row.HUC12}']))
         if row.xyVerified != 'Unknown':
             graph.add((welliri, _PREFIX['usgwd']['locationVerified'], Literal(row.xyVerified, datatype=XSD.string)))
         graph = add_county_flag(graph, row.F_County, welliri, _PREFIX)
         graph = add_state_flag(graph, row.F_State, welliri, _PREFIX)
         graph = add_us_flag(graph, row.F_US, welliri, _PREFIX)
-        if row.WellDepth is not None and row.WellDepth.isnumeric():
-            graph.add((welliri, _PREFIX['gwml2']['gwWellTotalLength'], Literal(row.WellDepth, datatype=XSD.decimal)))
-        if row.ScrDepth is not None and row.ScrDepth.isnumeric():
-            graph.add((welliri, _PREFIX['gwml2']['gwWellConstructedDepth'], Literal(row.ScrDepth, datatype=XSD.decimal)))
-        if row.Capacity is not None and row.Capacity.isnumeric():
-            graph.add((welliri, _PREFIX['gwml2']['gwWellYield'], Literal(row.Capacity, datatype=XSD.decimal)))
+        if row.WellDepth is not None:
+            lengthiri = f'{welliri_base}.totalLength'
+            qviri = f'{lengthiri}.QV'
+            graph.add((welliri, _PREFIX['gwml2']['gwWellTotalLength'], _PREFIX['usgwd'][lengthiri]))
+            graph.add((_PREFIX['usgwd'][lengthiri], RDF.type, _PREFIX['usgwd']['WellDepth']))
+            graph.add((_PREFIX['usgwd'][lengthiri], _PREFIX['qudt']['quantityValue'], _PREFIX['usgwd'][qviri]))
+            graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
+            graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
+            graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['numericValue'], Literal(row.WellDepth, datatype=XSD.decimal)))
+        if row.ScrDepth is not None:
+            depthiri = f'{welliri_base}.constructedDepth'
+            qviri = f'{depthiri}.QV'
+            graph.add((welliri, _PREFIX['gwml2']['gwWellConstructedDepth'], _PREFIX['usgwd'][depthiri]))
+            graph.add((_PREFIX['usgwd'][depthiri], RDF.type, _PREFIX['usgwd']['ScreenDepth']))
+            graph.add((_PREFIX['usgwd'][depthiri], _PREFIX['qudt']['quantityValue'], _PREFIX['usgwd'][qviri]))
+            graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
+            graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
+            graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['numericValue'], Literal(row.ScrDepth, datatype=XSD.decimal)))
+        if row.Capacity is not None:
+            capiri = f'{welliri_base}.wellYield'
+            qviri = f'{capiri}.QV'
+            graph.add((welliri, _PREFIX['gwml2']['gwWellYield'], _PREFIX['usgwd'][capiri]))
+            graph.add((_PREFIX['usgwd'][capiri], RDF.type, _PREFIX['usgwd']['Capacity']))
+            graph.add((_PREFIX['usgwd'][capiri], _PREFIX['qudt']['quantityValue'], _PREFIX['usgwd'][qviri]))
+            graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
+            graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['GAL_US-PER-MIN']))
+            graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['numericValue'], Literal(row.Capacity, datatype=XSD.decimal)))
         graph.add((welliri, _PREFIX['gwml2']['gwWellStatus'], Literal(row.Status, datatype=XSD.string)))
-        if 'unk' in row.YrConstr.lower():
+        if 'unk' not in row.YrConstr.lower():
             graph.add((welliri, _PREFIX['usgwd']['constructedDuring'], Literal(row.YrConstr, datatype=XSD.string)))
-        if 'unk' in row.YrReport.lower():
+        if 'unk' not in row.YrReport.lower():
             graph.add((welliri, _PREFIX['usgwd']['reportedDuring'], Literal(row.YrReport, datatype=XSD.string)))
         graph.add((welliri, _PREFIX['usgwd']['hasUSGSWaterUse'], Literal(f'{row.USGSCateg}', datatype=XSD.string)))
         if 'irr' in row.USGSCateg.lower():
