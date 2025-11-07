@@ -16,7 +16,6 @@ Functions:
 
 import geopandas as gpd
 import pandas as pd
-import numpy as np
 from pathlib import Path
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, RDF, SDO, XSD
@@ -49,7 +48,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### State Abbrreviation ###
-state = 'ar'
+state = 'me'
 # Valid codes: 2-digit state abbreviations (case insensitive)
 
 ### Retrieve State Name ###
@@ -190,16 +189,16 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
         graph = add_county_flag(graph, row.F_County, welliri, _PREFIX)
         graph = add_state_flag(graph, row.F_State, welliri, _PREFIX)
         graph = add_us_flag(graph, row.F_US, welliri, _PREFIX)
-        if row.WellDepth is not None:
+        if row.WellDepth is not None and not pd.isna(row.WellDepth):
             lengthiri = f'{welliri_base}.totalLength'
             qviri = f'{lengthiri}.QV'
             graph.add((welliri, _PREFIX['gwml2']['gwWellTotalLength'], _PREFIX['usgwd'][lengthiri]))
             graph.add((_PREFIX['usgwd'][lengthiri], RDF.type, _PREFIX['usgwd']['WellDepth']))
             graph.add((_PREFIX['usgwd'][lengthiri], _PREFIX['qudt']['quantityValue'], _PREFIX['usgwd'][qviri]))
-            graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
+            graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['QuantityValue']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['numericValue'], Literal(row.WellDepth, datatype=XSD.decimal)))
-        if row.ScrDepth is not None:
+        if row.ScrDepth is not None and not pd.isna(row.ScrDepth):
             depthiri = f'{welliri_base}.constructedDepth'
             qviri = f'{depthiri}.QV'
             graph.add((welliri, _PREFIX['gwml2']['gwWellConstructedDepth'], _PREFIX['usgwd'][depthiri]))
@@ -208,7 +207,7 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
             graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['numericValue'], Literal(row.ScrDepth, datatype=XSD.decimal)))
-        if row.Capacity is not None:
+        if row.Capacity is not None and not pd.isna(row.Capacity):
             capiri = f'{welliri_base}.wellYield'
             qviri = f'{capiri}.QV'
             graph.add((welliri, _PREFIX['gwml2']['gwWellYield'], _PREFIX['usgwd'][capiri]))
