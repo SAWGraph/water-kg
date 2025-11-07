@@ -48,7 +48,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### State Abbrreviation ###
-state = 'me'
+state = 'ar'
 # Valid codes: 2-digit state abbreviations (case insensitive)
 
 ### Retrieve State Name ###
@@ -182,7 +182,7 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
         graph.add((geomiri, RDF.type, GEO.Geometry))
         graph.add((geomiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
         if 'unk' not in row.AquiferSp.lower():
-            graph.add((welliri, _PREFIX['gwml2']['gwWellUnit'], Literal(row.AquiferSp, datatype=XSD.string)))
+            graph.add((welliri, _PREFIX['hyfo']['tapsAquifer'], Literal(row.AquiferSp, datatype=XSD.string)))
         graph.add((welliri, _PREFIX['kwg-ont']['sfWithin'], _PREFIX['wbd'][f'd.HUC12.{row.HUC12}']))
         if row.xyVerified != 'Unknown':
             graph.add((welliri, _PREFIX['usgwd']['locationVerified'], Literal(row.xyVerified, datatype=XSD.string)))
