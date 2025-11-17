@@ -48,7 +48,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### State Abbrreviation ###
-state = 'ar'
+state = 'me'
 # Valid codes: 2-digit state abbreviations (case insensitive)
 
 ### Retrieve State Name ###
@@ -174,9 +174,9 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
     for row in gdf.itertuples():
         welliri_base = f'd.USGWD_Well.{str(row.WellID)}'
         welliri, geomiri = build_iris(welliri_base, _PREFIX)
-        graph.add((welliri, RDF.type, _PREFIX['gwml2']['GW_Well']))
-        graph.add((welliri, _PREFIX['usgwd']['hasUSGWDID'], Literal(str(row.WellID), datatype=XSD.string)))
-        graph.add((welliri, _PREFIX['usgwd']['hasStateID'], Literal(str(row.IDState), datatype=XSD.string)))
+        graph.add((welliri, RDF.type, _PREFIX['hyfo']['WaterWell']))
+        graph.add((welliri, _PREFIX['hyfo']['hasPrimaryWellId'], Literal(str(row.WellID), datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['hyfo']['hasSecondaryWellId'], Literal(str(row.IDState), datatype=XSD.string)))
         graph.add((welliri, GEO.hasGeometry, geomiri))
         graph.add((welliri, GEO.defaultGeometry, geomiri))
         graph.add((geomiri, RDF.type, GEO.Geometry))
@@ -184,7 +184,7 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
         if 'unk' not in row.AquiferSp.lower():
             graph.add((welliri, _PREFIX['hyfo']['tapsAquifer'], Literal(row.AquiferSp, datatype=XSD.string)))
         graph.add((welliri, _PREFIX['kwg-ont']['sfWithin'], _PREFIX['wbd'][f'd.HUC12.{row.HUC12}']))
-        if row.xyVerified != 'Unknown':
+        if 'unk' not in row.xyVerified.lower():
             graph.add((welliri, _PREFIX['usgwd']['locationVerified'], Literal(row.xyVerified, datatype=XSD.string)))
         graph = add_county_flag(graph, row.F_County, welliri, _PREFIX)
         graph = add_state_flag(graph, row.F_State, welliri, _PREFIX)
@@ -216,7 +216,7 @@ def process_state(state, state_name, shp_file, graph, _PREFIX):
             graph.add((_PREFIX['usgwd'][qviri], RDF.type, _PREFIX['qudt']['qudt:QuantityValue']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['GAL_US-PER-MIN']))
             graph.add((_PREFIX['usgwd'][qviri], _PREFIX['qudt']['numericValue'], Literal(row.Capacity, datatype=XSD.decimal)))
-        graph.add((welliri, _PREFIX['gwml2']['gwWellStatus'], Literal(row.Status, datatype=XSD.string)))
+        graph.add((welliri, _PREFIX['hyfo']['hasWellStatus'], Literal(row.Status, datatype=XSD.string)))
         if 'unk' not in row.YrConstr.lower():
             graph.add((welliri, _PREFIX['usgwd']['constructedDuring'], Literal(row.YrConstr, datatype=XSD.string)))
         if 'unk' not in row.YrReport.lower():
