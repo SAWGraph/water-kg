@@ -73,11 +73,12 @@ vpunum = '01'
 
 ### INPUT Filenames ###
 flowline_file = data_dir / f'Hydrofabric/reference_flowline.gpkg'
+mainstem_lookup_url = 'https://github.com/internetofwater/ref_rivers/releases/download/v2.1/mainstem_lookup.csv'
 
 ### OUTPUT Filename ###
-main_ttl_file = ttl_dir / f'us_nhd_flowline_huc{vpunum}.ttl'
+main_ttl_file = ttl_dir / f'hydrofabric_flowline_huc{vpunum}.ttl'
 
-logname = log_dir / f'log_US_NHD_Flowline_HUCxx-2ttl.txt'
+logname = log_dir / f'log_Hydrofabric_Flowline_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -91,17 +92,19 @@ logger.info('LOGGER INITIALIZED')
 
 def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
     logger.info(f'Load HUC{vpunum} flowlines from {filename}')
-    gdf = gpd.read_file(filename)
-    gdf.drop([ 'StreamCalc', 'DnMinorHyd', 'FromMeas', 'ToMeas', 'AreaSqKM', 'ArbolateSu', 'Hydroseq',
-               'DnLevelPat', 'DnHydroseq', 'TotDASqKM', 'TerminalFl', 'streamleve', 'StreamOrde', 'vpuin',
-               'vpuout', 'wbareatype', 'slope', 'slopelenkm', 'WBAREACOMI', 'hwnodesqkm', 'roughness' ],
-             axis=1, inplace=True)
+    flowline_columns = [ 'COMID', 'Divergence', 'toCOMID', 'FCODE', 'LENGTHKM', 'REACHCODE', 'LevelPathI', 'FTYPE', 'gnis_name', 'gnis_id', 'VPUID']
+    gdf = gpd.read_file(filename, columns=flowline_columns, use_arrow=True)
     gdf = gdf[gdf.VPUID == vpunum]
     gdf = gdf[gdf.FTYPE != 'Coastline']
-    gdf[['COMID', 'toCOMID']] = gdf[['COMID', 'toCOMID']].astype(int).astype(str)
+    gdf[['COMID', 'toCOMID', 'LevelPathI']] = gdf[['COMID', 'toCOMID', 'LevelPathI']].astype(int).astype(str)
     for row in gdf.itertuples():
         gdf._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
     return gdf
+
+
+def get_mainstem_lookup_table(url: str) -> pd.DataFrame:
+    logger.info(f'Get mainstem lookup table from {url}')
+    return gpd.read_file(url)
 
 
 def create_digraph(df: pd.DataFrame) -> nx.DiGraph:
@@ -109,67 +112,25 @@ def create_digraph(df: pd.DataFrame) -> nx.DiGraph:
     dg = nx.DiGraph()
     for row in df.itertuples():
         dg.add_node(row.COMID)
+        if row.Divergence > 0:
+            if row.Divergence == 1:
+                dg.nodes[row.COMID]['divergence'] = 'minor-path'
+            elif row.Divergence == 2:
+                dg.nodes[row.COMID]['divergence'] = 'main-path'
+            else:
+                dg.nodes[row.COMID]['divergence'] = 'unexpected-value-at-import'
+        if row.toCOMID != '0':
+            dg.add_edge(row.COMID, row.toCOMID)
         dg.nodes[row.COMID]['fcode'] = row.FCODE
         dg.nodes[row.COMID]['lengthkm'] = row.LENGTHKM
         dg.nodes[row.COMID]['reachcode'] = row.REACHCODE
         dg.nodes[row.COMID]['levelpathi'] = row.LevelPathI
         dg.nodes[row.COMID]['ftype'] = row.FTYPE
         dg.nodes[row.COMID]['gnis_name'] = row.gnis_name
-        dg.nodes[row.COMID]['VPUID'] = row.VPUID
+        dg.nodes[row.COMID]['gnis_id'] = row.gnis_id
+        dg.nodes[row.COMID]['vpuid'] = row.VPUID
         dg.nodes[row.COMID]['geometry'] = row.geometry
-    if row.toCOMID != '0':
-        dg.add_edge(row.COMID, row.TOCOMID)
     return dg
-
-
-def count_by_degree(deg_list: list) -> dict:
-    deg_counts = {}
-    for node in deg_list:
-        if node[1] not in deg_counts.keys():
-            deg_counts[node[1]] = 1
-        else:
-            deg_counts[node[1]] += 1
-    return dict(sorted(deg_counts.items()))
-
-
-def print_digraph_stats(dg: nx.DiGraph):
-    print()
-    print(f'The digraph has {dg.number_of_nodes()} nodes.')
-    print(f'The digraph has {dg.number_of_edges()} edges')
-    print()
-    print(f'Nodes by degree (degree, number of nodes): {count_by_degree(dg.degree)}')
-    print(f'Nodes by in-degree (degree, number of nodes): {count_by_degree(dg.in_degree)}')
-    print(f'Nodes by out-degree (degree, number of nodes): {count_by_degree(dg.out_degree)}')
-    print()
-
-
-def print_root_and_leaf_counts(dg: nx.DiGraph):
-    roots = (v for v, d in dg.in_degree() if d == 0)
-    leaves = (v for v, d in dg.out_degree() if d == 0)
-    print(f'The digraph has {len(list(roots))} roots.')
-    print(f'The digraph has {len(list(leaves))} leaves.')
-    print()
-
-
-def analyze_paths_from_source_to_outlet(dg: nx.DiGraph, src: str, out: str):
-    paths_list = []
-    haspath = nx.has_path(dg, source=src, target=out)
-    if haspath:
-        num_paths = 0
-        for path in nx.all_simple_paths(dg, source=src, target=out):
-            paths_list.append(path)
-            num_paths += 1
-        if num_paths > 1:
-            print(f'There are {num_paths} paths from {src} to {out}')
-        else:
-            print(f'There is {num_paths} path from {src} to {out}')
-    else:
-        print(f'There is no path from {src} to {out}')
-    path_count = 1
-    for path in paths_list:
-        print(f'   Path {path_count}: {len(path)} flowlines')
-        path_count += 1
-    print()
 
 
 def initial_kg(_PREFIX):
@@ -201,6 +162,7 @@ def build_iris(cid, _PREFIX):
 
 def triplify_huc_flowlines(dg: nx.DiGraph):
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
+    mainstem_csv = get_mainstem_lookup_table(mainstem_lookup_url)
     logger.info(f'Triplify HUC{vpunum} flowlines')
     for node in dg.nodes(data=True):
         # Get IRIs for the current NHDFlowline, its geometry, its length object, and the length's qudt:QuantityValue
@@ -216,13 +178,21 @@ def triplify_huc_flowlines(dg: nx.DiGraph):
         kg.add((fl_geo_iri, GEO.asWKT, Literal(node[1]['geometry'], datatype=GEO.wktLiteral)))
 
         # Triplify current NHDFlowline attributes
-        if not pd.isnull(node[1]['gnis_name']):
-            kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
+        if 'divergence' in dg.nodes[node[0]]:
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasLevelPathI'], Literal(node[1]['levelpathi'], datatype=XSD.string)))
+        if str(node[1]['levelpathi']) in mainstem_csv['lp_mainstem'].values:
+            msid = mainstem_csv.loc[mainstem_csv["lp_mainstem"] == str(node[1]['levelpathi'])]["ref_mainstem_id"].iloc[0]
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstemId'], Literal(msid, datatype=XSD.string)))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstem'], _PREFIX['gcx-ms'][msid]))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
+        if not pd.isnull(node[1]['gnis_name']) and node[1]['gnis_name'] != '':
+            kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['inVPU'], Literal(str(node[1]['vpuid']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFlowPathLength'], fl_len_iri))
         kg.add((fl_len_iri, RDF.type, _PREFIX['nhdplusv2']['FlowPathLength']))
         kg.add((fl_len_iri, _PREFIX['qudt']['quantityValue'], fl_qv_iri))
