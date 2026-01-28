@@ -3,13 +3,11 @@
 Under ### HUCxx VPU ###, enter
     the VPU code for the current HUC2 region (valid codes listed below)
 Under ### INPUT Filenames ###, modify (if necessary)
-    the name (and path) of the input .shp file (NHDFlowline)
-    the name (and path) of the input .dbf file (PlusFlow)
+    the name (and path) of the input .gpkg file (reference_flowline.gpkg)
 Under ### OUTPUT Filename ###, modify (if necessary)
     the name (and path) of the main output .ttl file
 
 Required:
-    * simpledbf (DBf5)
     * geopandas
     * pandas
     * rdflib (Graph and Literal)
@@ -22,9 +20,6 @@ Functions:
     * load_flowline_file - loads a .shp file of NHDPlus v2 flowlines as a GeoPandas geodataframe
     * create_simple_flowline_dict - takes a Pandas dataframe of NHDPlus v2 flowline data and creates a dictionary where
                                     a flowline COMID is a key and values are a triple of flowline attributes
-    * load_plusflow_file - loads a .dbf file of NHDPlus v2 PlusFlow attributes as a Pandas dataframe
-    * create_simple_plusflow_dict - takes a Pandas dataframe of NHDPlus v2 PlusFlow data and creates a dictionary where
-                                    a flowline COMID is a key and values are a list of connected downstream flowlines
     * create_digraph - takes a flowline dictionary and a PlusFlow dictionary and returns a directed graph
     * initial_kg - takes a dictionary of prefixes and returns an empty RDFLib knowledge graph
     * build_iris - takes an id value and a dictionary of prefixes and returns IRIs for a flowline and its geometry
@@ -37,7 +32,6 @@ Functions:
                                             connecting the nodes and the length of each such path
 """
 
-from simpledbf import Dbf5
 import geopandas as gpd
 import shapely
 import pandas as pd
@@ -74,17 +68,17 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunum = '11'
+vpunum = '01'
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
-plusflow_file = data_dir / f'NHDFlowline/HUC{vpunum}_PlusFlow.dbf'
-flowline_file = data_dir / f'NHDFlowline/HUC{vpunum}_NHDFlowline.shp'
+flowline_file = data_dir / f'Hydrofabric/reference_flowline.gpkg'
+mainstem_lookup_url = 'https://github.com/internetofwater/ref_rivers/releases/download/v2.1/mainstem_lookup.csv'
 
 ### OUTPUT Filename ###
-main_ttl_file = ttl_dir / f'us_nhd_flowline_huc{vpunum}.ttl'
+main_ttl_file = ttl_dir / f'hydrofabric_flowline_huc{vpunum}.ttl'
 
-logname = log_dir / f'log_US_NHD_Flowline_HUCxx-2ttl.txt'
+logname = log_dir / f'log_Hydrofabric_Flowline_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -97,148 +91,46 @@ logger.info('LOGGER INITIALIZED')
 
 
 def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
-    logger.info(f'Load HUC{vpunum} flowline shapefile from {filename}')
-    gdf = gpd.read_file(filename)
-    gdf.drop(['FDATE',
-              'GNIS_ID',
-              'WBAREACOMI',
-              'SHAPE_LENG',
-              'ENABLED',
-              'GNIS_NBR'],
-             axis=1,
-             inplace=True)
+    logger.info(f'Load HUC{vpunum} flowlines from {filename}')
+    flowline_columns = [ 'COMID', 'Divergence', 'toCOMID', 'FCODE', 'LENGTHKM', 'REACHCODE', 'LevelPathI', 'FTYPE', 'gnis_name', 'gnis_id', 'VPUID']
+    gdf = gpd.read_file(filename, columns=flowline_columns, use_arrow=True)
+    gdf = gdf[gdf.VPUID == vpunum]
     gdf = gdf[gdf.FTYPE != 'Coastline']
-    gdf[['COMID', 'REACHCODE']] = gdf[['COMID', 'REACHCODE']].astype(str)
+    gdf[['COMID', 'toCOMID', 'LevelPathI']] = gdf[['COMID', 'toCOMID', 'LevelPathI']].astype(int).astype(str)
     for row in gdf.itertuples():
         gdf._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
     return gdf
 
 
-def create_simple_flowline_dict(df: pd.DataFrame) -> dict:
-    logger.info(f'Create simple flowline dictionary for HUC{vpunum}')
-    dct = {}
-    for row in df.itertuples():
-        dct[row.COMID] = (row.FCODE, row.FTYPE, row.GNIS_NAME, row.LENGTHKM, row.REACHCODE, row.geometry)
-    return dct
+def get_mainstem_lookup_table(url: str) -> pd.DataFrame:
+    logger.info(f'Get mainstem lookup table from {url}')
+    return gpd.read_file(url)
 
 
-def load_plusflow_file(filename: str) -> pd.DataFrame:
-    logger.info(f'Load HUC{vpunum} plusflow file from {filename}')
-    dbf = Dbf5(filename)
-    df = dbf.to_dataframe()
-    df.drop(['FROMHYDSEQ',
-             'FROMLVLPAT',
-             'TOHYDSEQ',
-             'TOLVLPAT',
-             'NODENUMBER',
-             'DELTALEVEL',
-             'DIRECTION',
-             'GAPDISTKM',
-             'HasGeo',
-             'TotDASqKM',
-             'DivDASqKM'],
-            axis=1,
-            inplace=True)
-    df[['FROMCOMID', 'TOCOMID']] = df[['FROMCOMID', 'TOCOMID']].astype(str)
-    return df
-
-
-def create_simple_plusflow_dict(df: pd.DataFrame) -> dict:
-    logger.info(f'Create simple plusflow dictionary for HUC{vpunum}')
-    dct = {}
-    for row in df.itertuples():
-        if row.FROMCOMID in dct.keys():
-            dct[row.FROMCOMID].append(row.TOCOMID)
-        else:
-            dct[row.FROMCOMID] = [row.TOCOMID]
-    dct.pop('0')
-    return dct
-
-
-def create_digraph(flowline_dict: dict, plusflow_dict: dict) -> nx.DiGraph:
+def create_digraph(df: pd.DataFrame) -> nx.DiGraph:
     logger.info(f'Create and populate networkx DiGraph representing HUC{vpunum} flowline network')
     dg = nx.DiGraph()
-    for key in flowline_dict.keys():
-        dg.add_node(key)
-        dg.nodes[key]['fcode'] = flowline_dict[key][0]
-        dg.nodes[key]['ftype'] = flowline_dict[key][1]
-        dg.nodes[key]['gnis_name'] = flowline_dict[key][2]
-        dg.nodes[key]['lengthkm'] = flowline_dict[key][3]
-        dg.nodes[key]['reachcode'] = flowline_dict[key][4]
-        dg.nodes[key]['geometry'] = flowline_dict[key][5]
-    for key in plusflow_dict.keys():
-        for val in plusflow_dict[key]:
-            if key in flowline_dict.keys() and val in flowline_dict.keys() and val != '0':
-                dg.add_edge(key, val)
+    for row in df.itertuples():
+        dg.add_node(row.COMID)
+        if row.Divergence > 0:
+            if row.Divergence == 1:
+                dg.nodes[row.COMID]['divergence'] = 'minor-path'
+            elif row.Divergence == 2:
+                dg.nodes[row.COMID]['divergence'] = 'main-path'
+            else:
+                dg.nodes[row.COMID]['divergence'] = 'unexpected-value-at-import'
+        if row.toCOMID != '0':
+            dg.add_edge(row.COMID, row.toCOMID)
+        dg.nodes[row.COMID]['fcode'] = row.FCODE
+        dg.nodes[row.COMID]['lengthkm'] = row.LENGTHKM
+        dg.nodes[row.COMID]['reachcode'] = row.REACHCODE
+        dg.nodes[row.COMID]['levelpathi'] = row.LevelPathI
+        dg.nodes[row.COMID]['ftype'] = row.FTYPE
+        dg.nodes[row.COMID]['gnis_name'] = row.gnis_name
+        dg.nodes[row.COMID]['gnis_id'] = row.gnis_id
+        dg.nodes[row.COMID]['vpuid'] = row.VPUID
+        dg.nodes[row.COMID]['geometry'] = row.geometry
     return dg
-
-
-def count_by_degree(deg_list: list) -> dict:
-    deg_counts = {}
-    for node in deg_list:
-        if node[1] not in deg_counts.keys():
-            deg_counts[node[1]] = 1
-        else:
-            deg_counts[node[1]] += 1
-    return dict(sorted(deg_counts.items()))
-
-
-def print_digraph_stats(dg: nx.DiGraph):
-    print()
-    print(f'The digraph has {dg.number_of_nodes()} nodes.')
-    print(f'The digraph has {dg.number_of_edges()} edges')
-    print()
-    print(f'Nodes by degree (degree, number of nodes): {count_by_degree(dg.degree)}')
-    print(f'Nodes by in-degree (degree, number of nodes): {count_by_degree(dg.in_degree)}')
-    print(f'Nodes by out-degree (degree, number of nodes): {count_by_degree(dg.out_degree)}')
-    print()
-
-
-def print_dictionary_stats(plusflow_dict: dict):
-    counts = [0, 0, 0]
-    for key in plusflow_dict.keys():
-        if len(plusflow_dict[key]) == 1:
-            counts[0] += 1
-        elif len(plusflow_dict[key]) == 2:
-            counts[1] += 1
-        elif len(plusflow_dict[key]) == 3:
-            counts[2] += 1
-        else:
-            print('COMID found with more than 3 downstream flowlines')
-    print(f'The plusflow dictionary has {counts[0]} COMIDs with 1 downstream flowline')
-    print(f'The plusflow dictionary has {counts[1]} COMIDs with 2 downstream flowlines')
-    print(f'The plusflow dictionary has {counts[2]} COMIDs with 3 downstream flowlines')
-    print(f'The plusflow dictionary has {counts[0] + counts[1] + counts[2]} COMIDs total')
-    print()
-
-
-def print_root_and_leaf_counts(dg: nx.DiGraph):
-    roots = (v for v, d in dg.in_degree() if d == 0)
-    leaves = (v for v, d in dg.out_degree() if d == 0)
-    print(f'The digraph has {len(list(roots))} roots.')
-    print(f'The digraph has {len(list(leaves))} leaves.')
-    print()
-
-
-def analyze_paths_from_source_to_outlet(dg: nx.DiGraph, src: str, out: str):
-    paths_list = []
-    haspath = nx.has_path(dg, source=src, target=out)
-    if haspath:
-        num_paths = 0
-        for path in nx.all_simple_paths(dg, source=src, target=out):
-            paths_list.append(path)
-            num_paths += 1
-        if num_paths > 1:
-            print(f'There are {num_paths} paths from {src} to {out}')
-        else:
-            print(f'There is {num_paths} path from {src} to {out}')
-    else:
-        print(f'There is no path from {src} to {out}')
-    path_count = 1
-    for path in paths_list:
-        print(f'   Path {path_count}: {len(path)} flowlines')
-        path_count += 1
-    print()
 
 
 def initial_kg(_PREFIX):
@@ -268,8 +160,9 @@ def build_iris(cid, _PREFIX):
     return flowline_iri, flowline_geo_iri, flowline_length_iri, flowline_quantval_iri
 
 
-def triplify_huc_flowlines(dg):
+def triplify_huc_flowlines(dg: nx.DiGraph):
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
+    mainstem_csv = get_mainstem_lookup_table(mainstem_lookup_url)
     logger.info(f'Triplify HUC{vpunum} flowlines')
     for node in dg.nodes(data=True):
         # Get IRIs for the current NHDFlowline, its geometry, its length object, and the length's qudt:QuantityValue
@@ -285,13 +178,21 @@ def triplify_huc_flowlines(dg):
         kg.add((fl_geo_iri, GEO.asWKT, Literal(node[1]['geometry'], datatype=GEO.wktLiteral)))
 
         # Triplify current NHDFlowline attributes
-        if not pd.isnull(node[1]['gnis_name']):
-            kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
+        if 'divergence' in dg.nodes[node[0]]:
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasLevelPathId'], Literal(node[1]['levelpathi'], datatype=XSD.string)))
+        if str(node[1]['levelpathi']) in mainstem_csv['lp_mainstem'].values:
+            msid = mainstem_csv.loc[mainstem_csv["lp_mainstem"] == str(node[1]['levelpathi'])]["ref_mainstem_id"].iloc[0]
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstemId'], Literal(msid, datatype=XSD.string)))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstem'], _PREFIX['gcx-ms'][msid]))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
+        if not pd.isnull(node[1]['gnis_name']) and node[1]['gnis_name'] != '':
+            kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['inVPU'], Literal(str(node[1]['vpuid']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFlowPathLength'], fl_len_iri))
         kg.add((fl_len_iri, RDF.type, _PREFIX['nhdplusv2']['FlowPathLength']))
         kg.add((fl_len_iri, _PREFIX['qudt']['quantityValue'], fl_qv_iri))
@@ -311,10 +212,7 @@ if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script: HUC/VPU = {vpunum}')
     df_flowline = load_flowline_file(flowline_file)
-    simple_flowline_dict = create_simple_flowline_dict(df_flowline)
-    df_plusflow = load_plusflow_file(plusflow_file)
-    simple_plusflow_dict = create_simple_plusflow_dict(df_plusflow)
-    G = create_digraph(simple_flowline_dict, simple_plusflow_dict)
+    G = create_digraph(df_flowline)
     # print_digraph_stats(G)
     # print_dictionary_stats(simple_plusflow_dict)
     # print_root_and_leaf_counts(G)
