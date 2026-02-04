@@ -57,18 +57,23 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunum = '11'
+vpunums = [ '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
 # Sometimes there are bad geometries in the NHDWaterbody.shp file
 # The path looks for a "fixed" version first but defaults to the original version if a "fixed" version does not exist
-waterbody_file = data_dir / f'NHDWaterbody/HUC{vpunum}_NHDWaterbody-fixed.shp'
-if not os.path.isfile(waterbody_file):
-    waterbody_file = data_dir / f'NHDWaterbody/HUC{vpunum}_NHDWaterbody.shp'
+shp_files = [ ]
+for vpunum in vpunums:
+    file = data_dir / f'NHDWaterbody/HUC{vpunum}_NHDWaterbody-fixed.shp'
+    if not os.path.isfile(file):
+        file = data_dir / f'NHDWaterbody/HUC{vpunum}_NHDWaterbody.shp'
+    shp_files.append(file)
 
 ### OUTPUT Filename ###
-ttl_file = ttl_dir / f"us_nhd_waterbody_huc{vpunum}.ttl"
+ttl_files = [ ]
+for vpunum in vpunums:
+    ttl_files.append(ttl_dir / f"us_nhd_waterbody_huc{vpunum}.ttl")
 
 logname = log_dir / f"log_US_NHD_Waterbody_HUCxx-2ttl.txt"
 logging.basicConfig(filename=logname,
@@ -81,7 +86,15 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
 
-def initial_kg(_PREFIX):
+
+def load_waterbodies(vpunum: str, filename: Path) -> gpd.GeoDataFrame:
+    logger.info(f'Load VPU {vpunum} water bodies from {filename} to GeoDataFrame')
+    gdf = gpd.read_file(filename, use_arrow=True)
+    gdf.columns = gdf.columns.str.upper()
+    return gdf
+
+
+def initial_kg(_PREFIX: dict) -> Graph:
     """Create an empty knowledge graph with project namespaces
 
     :param _PREFIX: a dictionary of project namespaces
@@ -93,7 +106,7 @@ def initial_kg(_PREFIX):
     return graph
 
 
-def build_iris(cid, _PREFIX):
+def build_iris(cid: int | str, _PREFIX: dict) -> tuple:
     """Create IRIs for a water body and its geometry
 
     This varies from Geoconnex notation which currently contains no water bodies beyond mainstems
@@ -107,29 +120,25 @@ def build_iris(cid, _PREFIX):
     return _PREFIX["gcx-cid"][str(cid)], _PREFIX["gcx-cid"][str(cid) + '.geometry']
 
 
-def process_waterbodies_shp2ttl(infile, outfile):
+def process_waterbodies_shp2ttl(vpunum, infile, outfile):
     """Triplifies the water body data in a .shp file and saves the result as a .ttl file
 
     :param infile: a .shp file with NHD water body data
     :param outfile: the path and name for the .ttl file
     :return:
     """
-    logger.info(f'Load HUC{vpunum} water body shapefile from {infile}')
-
     # Read NHDWaterbody to a GeoDataframe
-    gdf_waterbody = gpd.read_file(infile)
+    gdf_waterbody = load_waterbodies(vpunum, infile)
 
     # KWG script doesn't like 3D polygons so this forces them all to 2D
     #   The Z value is set to 0 in NHDWaterbody so nothing is lost from this process
     logger.info('Force geometries to 2D')
     for row in gdf_waterbody.itertuples():
         gdf_waterbody._set_value(row.Index, 'geometry',
-                                 shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
+                                 shapely.wkb.loads(shapely.wkb.dumps(row.GEOMETRY, output_dimension=2)))
 
     logger.info('Intialize RDFLib Graph')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
-    count = 1  # For processing updates printed to terminal
-    n = len(gdf_waterbody.index)  # For processing updates printed to terminal
     logger.info(f'Triplify HUC{vpunum} water bodies')
     for row in gdf_waterbody.itertuples():
         # Get IRIs for the current NHDWaterbody and its geometry
@@ -146,7 +155,7 @@ def process_waterbodies_shp2ttl(infile, outfile):
         # Triplify the geometry for the current NHDWaterbody
         kg.add((bodyiri, GEO.hasGeometry, geomiri))
         kg.add((bodyiri, GEO.defaultGeometry, geomiri))
-        kg.add((geomiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
+        kg.add((geomiri, GEO.asWKT, Literal(row.GEOMETRY, datatype=GEO.wktLiteral)))
         kg.add((geomiri, RDF.type, GEO.Geometry))
 
         # Triplify current NHDWaterbody attributes
@@ -159,16 +168,15 @@ def process_waterbodies_shp2ttl(infile, outfile):
         if row.REACHCODE is not None:
             kg.add((bodyiri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(row.REACHCODE)[:8]]))
 
-        # Update the processing status to the terminal
-        print(f'Processing row {count:5} of {n} : COMID {str(row.COMID):9}', end='\r', flush=True)
-        count += 1
     logger.info(f'Write HUC{vpunum} water body triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
 
 if __name__ == '__main__':
-    start_time = time.time()
-    logger.info(f'Launching script: HUC/VPU = HUC{vpunum}')
-    process_waterbodies_shp2ttl(waterbody_file, ttl_file)
-    logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
-    print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
+    logger.info(f'Launching script: HUC/VPU set = {vpunums}')
+    for vpunum, infile, outfile in zip(vpunums, shp_files, ttl_files):
+        start_time = time.time()
+        logger.info('')
+        logger.info(f'Processing HUC/VPU {vpunum}')
+        process_waterbodies_shp2ttl(vpunum, infile, outfile)
+        logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
