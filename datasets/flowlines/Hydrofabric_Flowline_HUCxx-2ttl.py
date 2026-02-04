@@ -70,9 +70,9 @@ flowline_file = data_dir / f'Hydrofabric/reference_flowline.gpkg'
 mainstem_lookup_url = 'https://github.com/internetofwater/ref_rivers/releases/download/v2.1/mainstem_lookup.csv'
 
 ### OUTPUT Filenames ###
-main_ttl_files = [ ]
+ttl_files = [ ]
 for vpunum in vpunums:
-    main_ttl_files.append(ttl_dir / f'hydrofabric_flowline_huc{vpunum}.ttl')
+    ttl_files.append(ttl_dir / f'hydrofabric_flowline_huc{vpunum}.ttl')
 
 logname = log_dir / f'log_Hydrofabric_Flowline_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
@@ -231,7 +231,7 @@ if __name__ == '__main__':
     logger.info(f'Launching script: HUC/VPU set = {vpunums}')
     df_flowlines = load_flowline_file(flowline_file)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
-    for vpunum, outfile in zip(vpunums, main_ttl_files):
+    for vpunum, outfile in zip(vpunums, ttl_files):
         start_time = time.time()
         logger.info('')
         logger.info(f'Processing HUC/VPU {vpunum}')
