@@ -25,6 +25,8 @@ import geopandas as gpd
 SAWGRAPH_NAMESPACE = "http://sawgraph.spatialai.org/v1/"
 
 _PREFIX = {
+    "co_cgs": Namespace(f'http://sawgraph.spatialai.org/v1/co-cgs#'),
+    "co_cgs_data": Namespace(f'http://sawgraph.spatialai.org/v1/co-cgs-data#'),
     "coso": Namespace(f'http://w3id.org/coso/v1/contaminoso#'),
     "dc": DC,
     "dcgeoid": Namespace(f'https://datacommons.org/browser/geoId/'),
