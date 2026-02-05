@@ -28,6 +28,9 @@ datasets/flowlines/ttl_files/
 
 datasets/groundwater/Aquifer_Attributes.xlsx
 
+datasets/groundwater/co-cgs/logs/
+datasets/groundwater/co-cgs/ttl_files/
+
 datasets/groundwater/il-isgs/logs/
 datasets/groundwater/il-isgs/ttl_files/
 
