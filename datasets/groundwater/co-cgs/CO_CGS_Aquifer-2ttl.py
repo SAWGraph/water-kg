@@ -43,11 +43,11 @@ ns_dir = cwd.parent.parent.parent.parent
 data_dir = cwd.parent.parent / "data"
 ttl_dir = cwd / "ttl_files"
 log_dir = cwd / "logs"
-print(f"Current working directory:      {cwd}")
-print(f"Github repos and namespaces.py: {ns_dir}")
-print(f"Data (input) directory:         {data_dir}")
-print(f"Turtle (output) directory:      {ttl_dir}")
-print(f"Logging directory:              {log_dir}")
+# print(f"Current working directory:      {cwd}")
+# print(f"Github repos and namespaces.py: {ns_dir}")
+# print(f"Data (input) directory:         {data_dir}")
+# print(f"Turtle (output) directory:      {ttl_dir}")
+# print(f"Logging directory:              {log_dir}")
 
 # Modify the system path to find namespaces.py
 sys.path.insert(0, str(ns_dir))
@@ -93,7 +93,7 @@ def read_gdb_2_gdf(path: Path, layer: str) -> gpd.GeoDataFrame:
     # print(gdf.columns)
     features = yield_features_gdb(path, layer)
     gdf = gpd.GeoDataFrame.from_features(features)
-    print(gdf.columns)
+    # print(gdf.columns)
     return gdf
 
 
@@ -127,7 +127,7 @@ def build_cgs_iris(cgsid: int, _PREFIX: dict, max_id_length = 3) -> tuple:
             _PREFIX["co_cgs_data"]['d.CGS-AlluvialAquifer.Geometry.' + str(cgsid).zfill(max_id_length)])
 
 
-def process_aquifers_shp2ttl(infile: Path, layer: str, outfile:Path) -> None:
+def process_aquifers_shp2ttl(infile: Path, layer: str, outfile:Path, max_id_length = 3) -> None:
     """Triplifies the aquifer data in a .shp file and saves the result as a .ttl file
 
     :param infile: a zipped file containing a .gdb folder
@@ -143,7 +143,7 @@ def process_aquifers_shp2ttl(infile: Path, layer: str, outfile:Path) -> None:
     for row in gdf_aq.itertuples():
         aqiri, geoiri = build_cgs_iris(row.OBJECTID, _PREFIX)
         kg_aq.add((aqiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
-        kg_aq.add((aqiri, _PREFIX['co_cgs']['alluvialAquiferId'], Literal(str(row.OBJECTID), datatype=XSD.string)))
+        kg_aq.add((aqiri, _PREFIX['co_cgs']['alluvialAquiferId'], Literal(str(row.OBJECTID).zfill(max_id_length), datatype=XSD.string)))
         kg_aq.add((aqiri, _PREFIX['co_cgs']['riverBasin'], Literal(row.River_Basin, datatype=XSD.string)))
         kg_aq.add((aqiri, GEO.hasGeometry, geoiri))
         kg_aq.add((aqiri, GEO.defaultGeometry, geoiri))
