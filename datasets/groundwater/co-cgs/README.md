@@ -26,29 +26,22 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `ks_kgs:KGS_Aquifer` | `ks_kgs_data:d.KGS_Aquifer.<AquiferName>` |
-| `geo:Geometry` | `ks_kgs_data:d.KGS_Aquifer.geometry.<AquiferName>` |
-
-where `<Aquifername>` is 'Ozark', 'Osage', 'HighPlains', 'GlacialDrive', 'FlintHills', 'Dakota', or 'Alluvial' 
+| `co_cgs:CGS_Aquifer` | `co_cgs_data:d.CGS_AlluvialAquifer.<OBJECTID>` |
+| `geo:Geometry` | `c0_cgs_data:d.CGS_AlluvialAquifer.geometry.<OBJECTID>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
-`ks_kgs:hasSawgraphAqId rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId`
+`co_cgs:alluvialAquiferId rdfs:subPropertyOf hyfo:hasPrimarySawgraphAqId`
 
 **Examples of triples from data/metadata sources**
-* `ks_kgs:GW_Aquifer hyfo:hasAltName` "Ogalla, Great Bend Prairie, Equus Bed"
-* `ks_kgs:GW_Aquifer hyfo:hasNotes` "northern portion not potable"
-* `ks_kgs:GW_Aquifer hyfo:hasAquiferTypeDetail` "Cambro-Ordovician"
-* `ks_kgs:GW_Aquifer hyfo:hasAquiferMaterial` "dolomite"
+
 
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| OBJECTID |  | No |  | Osage & Flint Hills Aquifers only | 
-| AREA__SQ_M |  | No |  | Osage & Flint Hills Aquifers only | 
-| Shape_Leng |  | No |  | Osage & Flint Hills Aquifers only | 
-| NAME |  | Yes | `hyfo:hasName` |  | 
-| Shape__Area |  | No |  |  |
-| Shape__Length |  | No |  |  |
+| OBJECTID |  | Yes | `co_cgs:alluvialAquiferId` | No other unique identifier present | 
+| River_Basi |  | Yes | `co_cgs:riverBasin` |  |
+| SHAPE_Leng |  | No |  |  | 
+| SHAPE_Area |  | No |  |  | 
 
 **Notes on the data:**
 * 
