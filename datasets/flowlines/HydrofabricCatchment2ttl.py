@@ -62,7 +62,7 @@ vpunums = [ '01' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
-flowline_file = data_dir / f'Hydrofabric/reference_catchments.gpkg'
+catchment_file = data_dir / f'Hydrofabric/reference_catchments.gpkg'
 
 ### OUTPUT Filenames ###
 ttl_files = [ ]
@@ -82,21 +82,16 @@ logger.info('LOGGER INITIALIZED')
 
 
 def load_catchments_file(filename: Path) -> gpd.GeoDataFrame:
-    logger.info(f'Load flowlines from {filename} to GeoDataFrame')
-    flowline_columns = [ 'COMID', 'REACHCODE', 'LevelPathI', 'toCOMID', 'TerminalFl', 'Divergence', 'FCODE', 'FTYPE',
-                         'LENGTHKM', 'slope', 'gnis_name', 'gnis_id', 'VPUID', 'wbareatype', 'WBAREACOMI' ]
-    gdf = gpd.read_file(filename, columns=flowline_columns, use_arrow=True)
-    gdf = gdf[gdf.FTYPE != 'Coastline']
-    gdf[['COMID', 'LevelPathI', 'toCOMID', 'WBAREACOMI']] = gdf[['COMID', 'LevelPathI', 'toCOMID', 'WBAREACOMI']].astype(int).astype(str)
-    # print(gdf.columns)
-    # for row in gdf.itertuples():
-    #     gdf._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
+    logger.info(f'Load catchments from {filename} to GeoDataFrame')
+    gdf = gpd.read_file(filename, use_arrow=True)
+    print(gdf.columns)
+    gdf[['fid', 'featureid']] = gdf[['fid', 'featureid']].astype(int).astype(str)
     return gdf
 
 
 def get_vpu_catchments(vpunum: str, df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    logger.info(f'Get HUC{vpunum} flowlines')
-    gdf = df[df.VPUID == vpunum]
+    logger.info(f'Get HUC{vpunum} catchments')
+    gdf = df[df.vpuid == vpunum]
     return gdf
 
 
@@ -113,89 +108,49 @@ def initial_kg(_PREFIX):
     return graph
 
 
-def build_iris(cid, _PREFIX):
+def build_iris(cid, _PREFIX, max_id_length):
     """
 
     :param cid:
     :param _PREFIX:
     :return:
     """
-    flowline_iri = _PREFIX['gcx-cid'][cid]
-    flowline_geo_iri = _PREFIX['gcx-cid'][cid + '.geometry']
-    flowline_length_iri = _PREFIX['gcx-cid'][cid + '.flowPathLength']
-    flowline_quantval_iri = _PREFIX['gcx-cid'][cid + '.flowPathLength.quantityValue']
-    return flowline_iri, flowline_geo_iri, flowline_length_iri, flowline_quantval_iri
+    return _PREFIX['hyfab'][f'd.Catchment.{cid}'], _PREFIX['hyfab'][f'd.Catchment.{cid}.geometry']
 
 
-def triplify_catchments(vpunum: str, dg: nx.DiGraph, outfile: str):
+def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_length = 7):
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
-    mainstem_csv = get_mainstem_lookup_table(mainstem_lookup_url)
-    logger.info(f'Triplify HUC{vpunum} flowlines')
-    for node in dg.nodes(data=True):
-        if 'geometry' not in dg.nodes[node[0]]:
-            logger.info(f'COMID {node[0]} in HUC{vpunum} has no geometry')
-            continue
-        # Get IRIs for the current NHDFlowline, its geometry, its length object, and the length's qudt:QuantityValue
-        fl_iri, fl_geo_iri, fl_len_iri, fl_qv_iri = build_iris(node[0], _PREFIX)
+    logger.info(f'Triplify HUC{vpunum} catchments')
+    for row in df.itertuples():
+        # Get IRIs for the current Hydrofabric catchment and its geometry
+        fl_iri, fl_geo_iri = build_iris(row.fid.zfill(max_id_length), _PREFIX, max_id_length)
 
         # Instantiate the current NHDFlowline
-        kg.add((fl_iri, RDF.type, _PREFIX['nhdplusv2']['FlowLine']))
+        kg.add((fl_iri, RDF.type, _PREFIX['hyf']['HY_DendriticCatchment']))
 
         # Triplify the geometry for the current NHDFlowline
         kg.add((fl_geo_iri, RDF.type, GEO.Geometry))
         kg.add((fl_iri, GEO.defaultGeometry, fl_geo_iri))
         kg.add((fl_iri, GEO.hasGeometry, fl_geo_iri))
-        kg.add((fl_geo_iri, GEO.asWKT, Literal(node[1]['geometry'], datatype=GEO.wktLiteral)))
+        kg.add((fl_geo_iri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
 
-        # Triplify current NHDFlowline attributes
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasLevelPathId'], Literal(node[1]['levelpathi'], datatype=XSD.string)))
-        if str(node[1]['levelpathi']) in mainstem_csv['lp_mainstem'].values:
-            msid = mainstem_csv.loc[mainstem_csv["lp_mainstem"] == str(node[1]['levelpathi'])]["ref_mainstem_id"].iloc[0]
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstemId'], Literal(msid, datatype=XSD.string)))
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstem'], _PREFIX['gcx-ms'][msid]))
-        if 'divergence' in dg.nodes[node[0]]:
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFlowPathLength'], fl_len_iri))
-        if node[1]['slope'] > -9998:
-            slope_str = f'{node[1]['slope']:.20f}'.rstrip('0').rstrip('.')
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasSlope'], Literal(slope_str, datatype=XSD.decimal)))
-        if not pd.isnull(node[1]['gnis_name']) and node[1]['gnis_name'] != '':
-            kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['inVPU'], Literal(str(node[1]['vpuid']), datatype=XSD.string)))
-        if int(node[1]['wbareacomi']) > 0:
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['wbAreaHasCOMID'], Literal(node[1]['wbareacomi'], datatype=XSD.string)))
-        if len(node[1]['wbareatype']) > 0:
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['wbAreaHasType'], Literal(node[1]['wbareatype'], datatype=XSD.string)))
-
-        kg.add((fl_len_iri, RDF.type, _PREFIX['nhdplusv2']['FlowPathLength']))
-        kg.add((fl_len_iri, _PREFIX['qudt']['quantityValue'], fl_qv_iri))
-        kg.add((fl_qv_iri, RDF.type, _PREFIX['qudt']['QuantityValue']))
-        kg.add((fl_qv_iri, _PREFIX['qudt']['numericValue'], Literal(node[1]['lengthkm'], datatype=XSD.decimal)))
-        kg.add((fl_qv_iri, _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['KiloM']))
-
-        # Triplify the downstream connectivity, including a reflexive statement for the current NHDFlowline
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], fl_iri))
-        for key in dg.successors(node[0]):
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx-cid'][key]))
-    logger.info(f'Write HUC{vpunum} flowline triples to {outfile}')
+        # Triplify current catchment attributes
+        kg.add((fl_iri, _PREFIX['hyfab']['hasID'], Literal(row.fid.zfill(max_id_length), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['hyfab']['hasFlowline'], Literal(row.featureid, datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['hyfab']['inVPU'], Literal(row.vpuid, datatype=XSD.string)))
+    logger.info(f'Write HUC{vpunum} catchment triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
 
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script: HUC/VPU set = {vpunums}')
-    df_flowlines = load_catchments_file(flowline_file)
+    df_catchments = load_catchments_file(catchment_file)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     for vpunum, outfile in zip(vpunums, ttl_files):
         start_time = time.time()
         logger.info('')
         logger.info(f'Processing HUC/VPU {vpunum}')
-        df_vpu = get_vpu_catchments(vpunum, df_flowlines)
-        G = create_digraph(df_vpu)
-        triplify_catchments(vpunum, G, outfile)
+        df_vpu = get_vpu_catchments(vpunum, df_catchments)
+        triplify_catchments(vpunum, df_vpu, outfile)
         logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
