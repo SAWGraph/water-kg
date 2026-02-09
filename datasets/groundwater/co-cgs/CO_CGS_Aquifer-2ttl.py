@@ -24,8 +24,6 @@ Functions:
 """
 
 import geopandas as gpd
-import fiona
-import pandas as pd
 from pathlib import Path
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, XSD
@@ -57,15 +55,10 @@ from namespaces import _PREFIX, find_s2_intersects_poly
 os.chdir(cwd)
 
 ### INPUT Filename ###
-# mgs_aquifer_shp_path: This is a fixed version of the file from the Maine Geological Survey (MGS)
-# s2_file: Level 13 S2 cells that overlap/are within Maine
-aquifer_zip_path = data_dir / 'CO_Groundwater/AlluvialAquifers.zip'
-aquifer_gdb_folder = 'ON_010_02_Colorado_Statewide_Alluvial_Aquifer.gdb'
-aquifer_layer = 'Colorado_Alluvial_Aquifer'
-aquifer_gdb_path = data_dir / 'CO_Groundwater/ON_010_02_Colorado_Statewide_Alluvial_Aquifer.gdb'
+# aquifer_shp_path: QGIS was used to export the aquifer layer to .shp from a .gdb found online
+aquifer_shp_path = data_dir / 'CO_Groundwater/Colorado_Alluvial_Aquifer.shp'
 
 ### OUTPUT Filenames ###
-# mgs_aqs_shp_outfile: the final saved output from the .shp processing steps; also the input to triplification
 # aq_ttl_file: the resulting (output) .ttl file
 aq_ttl_file = ttl_dir / 'co_08_cgs_alluvial_aquifers.ttl'
 
@@ -79,29 +72,6 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
-
-
-def read_gdb_2_gdf(path: Path, layer: str) -> gpd.GeoDataFrame:
-    """Reads a .shp file and converts it to a GeoDataFrame
-
-    :param path: a path to a zipped .gdb folder
-    :param folder: name of .gdb folder
-    :return: a GeoDataFrame
-    """
-    # columns = [ 'OBJECTID', 'River_Basin', 'SHAPE_Length', 'SHAPE_Area']
-    # gdf = gpd.read_file(f'zip://{path}!{folder}', layer=layer, columns=columns)
-    # print(gdf.columns)
-    features = yield_features_gdb(path, layer)
-    gdf = gpd.GeoDataFrame.from_features(features)
-    # print(gdf.columns)
-    return gdf
-
-
-def yield_features_gdb(path, layer_name):
-    with fiona.open(path, 'r', layer=layer_name) as f:
-        for feature in f:
-            feature['properties']['OBJECTID'] = feature['id']
-            yield feature
 
 
 def initial_kg(_PREFIX: dict) -> Graph:
@@ -127,7 +97,7 @@ def build_cgs_iris(cgsid: int, _PREFIX: dict, max_id_length = 3) -> tuple:
             _PREFIX["co_cgs_data"]['d.CGS-AlluvialAquifer.Geometry.' + str(cgsid).zfill(max_id_length)])
 
 
-def process_aquifers_shp2ttl(infile: Path, layer: str, outfile:Path, max_id_length = 3) -> None:
+def process_aquifers_shp2ttl(infile: Path, outfile: Path, max_id_length = 3) -> None:
     """Triplifies the aquifer data in a .shp file and saves the result as a .ttl file
 
     :param infile: a zipped file containing a .gdb folder
@@ -136,7 +106,8 @@ def process_aquifers_shp2ttl(infile: Path, layer: str, outfile:Path, max_id_leng
     :return:
     """
     logger.info('Loading the alluvial aquifer data')
-    gdf_aq = read_gdb_2_gdf(infile, layer)
+    gdf_aq = gpd.read_file(infile)
+    gdf_aq[['OBJECTID']] = gdf_aq[['OBJECTID']].astype(int).astype(str)
     logger.info('Intialize the knowledge graph')
     kg_aq = initial_kg(_PREFIX)
     logger.info('Triplify the aquifers')
@@ -144,7 +115,7 @@ def process_aquifers_shp2ttl(infile: Path, layer: str, outfile:Path, max_id_leng
         aqiri, geoiri = build_cgs_iris(row.OBJECTID, _PREFIX)
         kg_aq.add((aqiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
         kg_aq.add((aqiri, _PREFIX['co_cgs']['alluvialAquiferId'], Literal(str(row.OBJECTID).zfill(max_id_length), datatype=XSD.string)))
-        kg_aq.add((aqiri, _PREFIX['co_cgs']['riverBasin'], Literal(row.River_Basin, datatype=XSD.string)))
+        kg_aq.add((aqiri, _PREFIX['co_cgs']['riverBasin'], Literal(row.River_Basi, datatype=XSD.string)))
         kg_aq.add((aqiri, GEO.hasGeometry, geoiri))
         kg_aq.add((aqiri, GEO.defaultGeometry, geoiri))
         kg_aq.add((geoiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
@@ -156,5 +127,5 @@ def process_aquifers_shp2ttl(infile: Path, layer: str, outfile:Path, max_id_leng
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script: Colorado Alluvial Aquifers')
-    process_aquifers_shp2ttl(aquifer_gdb_path, aquifer_layer, aq_ttl_file)
+    process_aquifers_shp2ttl(aquifer_shp_path, aq_ttl_file)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
