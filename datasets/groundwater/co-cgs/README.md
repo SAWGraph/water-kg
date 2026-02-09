@@ -5,7 +5,7 @@
 | --- | --- |
 | **Name of dataset:** | Colorado Alluvial Aquifers |
 | **Source agency:** | [Colorado Geological Survey](https://coloradogeologicalsurvey.org/) |
-| **Data source location:** | [Groundwater | Statewide Alluvial Aquifers](https://cdss.colorado.gov/gis-data/gis-data-by-category) |
+| **Data source location:** | [Groundwater \| Statewide Alluvial Aquifers](https://cdss.colorado.gov/gis-data/gis-data-by-category) |
 | **Metadata description**: | [Major Alluvial Aquifers](https://cgsarcimage.mines.edu/arcgis/rest/services/Water/ON_010_Colorado_Groundwater_Atlas/MapServer/49) <br/> Select River Basin then select the Alluvium sublayer for that River Basin |
 | **Other metadata** |  |
 | **Format of data**: | GeoDatabase (layer exported as a shapefile using QGIS for triplification) |
