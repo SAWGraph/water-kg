@@ -84,7 +84,7 @@ logger.info('LOGGER INITIALIZED')
 def load_catchments_file(filename: Path) -> gpd.GeoDataFrame:
     logger.info(f'Load catchments from {filename} to GeoDataFrame')
     gdf = gpd.read_file(filename, use_arrow=True)
-    print(gdf.columns)
+    gdf['fid'] = gdf.index
     gdf[['fid', 'featureid']] = gdf[['fid', 'featureid']].astype(int).astype(str)
     return gdf
 
@@ -115,7 +115,7 @@ def build_iris(cid, _PREFIX, max_id_length):
     :param _PREFIX:
     :return:
     """
-    return _PREFIX['hyfab'][f'd.Catchment.{cid}'], _PREFIX['hyfab'][f'd.Catchment.{cid}.geometry']
+    return _PREFIX['nhdplusv2'][f'd.Catchment.{cid}'], _PREFIX['nhdplusv2'][f'd.Catchment.{cid}.geometry']
 
 
 def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_length = 7):
@@ -135,9 +135,9 @@ def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_
         kg.add((fl_geo_iri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
 
         # Triplify current catchment attributes
-        kg.add((fl_iri, _PREFIX['hyfab']['hasID'], Literal(row.fid.zfill(max_id_length), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['hyfab']['hasFlowline'], Literal(row.featureid, datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['hyfab']['inVPU'], Literal(row.vpuid, datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCatchmentId'], Literal(row.fid.zfill(max_id_length), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['containsFlowline'], Literal(row.featureid, datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['inVPU'], Literal(row.vpuid, datatype=XSD.string)))
     logger.info(f'Write HUC{vpunum} catchment triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
