@@ -56,6 +56,8 @@ os.chdir(cwd)
 
 ### INPUT Filenames ###
 aquifers_file = data_dir / f"US_Aquifers/Secondary_Hydrogeologic_Regions.shp"
+crs_in = 'ESRI:102039'
+crs_out = 4326
 
 ### OUTPUT Filename ###
 ttl_file = ttl_dir / f"us_usgs-secondary-hydrogeologic-regions.ttl"
@@ -71,7 +73,7 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
 
-def initial_kg(_PREFIX):
+def initial_kg(_PREFIX: dict) -> Graph:
     """Create an empty knowledge graph with project namespaces
 
     :param _PREFIX: a dictionary of project namespaces
@@ -83,7 +85,7 @@ def initial_kg(_PREFIX):
     return graph
 
 
-def build_iris(objectid, _PREFIX):
+def build_iris(objectid: int | str, _PREFIX: dict) -> tuple:
     """Create IRIs for an aquifer and its geometry
 
     :param objectid: The unique id value for an aquifer
@@ -94,7 +96,7 @@ def build_iris(objectid, _PREFIX):
     return _PREFIX["usgs_data"][base_iri], _PREFIX["usgs_data"][base_iri + '.geometry']
 
 
-def get_lithology(lith):
+def get_lithology(lith: str) -> str:
     if lith == 'Carbonate-rock aquifers':
         return 'CarbonateRock'
     elif lith == 'Crystalline':
@@ -121,23 +123,23 @@ def get_lithology(lith):
         raise ValueError("Unexpected PrimaryLith from secondary  hydrogeologic regions shape file")
 
 
-def process_shr_shp2ttl(infile, outfile):
+def process_shr_shp2ttl(infile: Path, outfile: Path, crs_in: int, crs_out: int) -> None:
     """Triplifies the secondary hydrologic region data in a .shp file and saves the result as a .ttl file
 
     :param infile: a .shp file with NHD water body data
     :param outfile: the path and name for the .ttl file
     :return:
     """
-    logger.info(f'Load secondary hydrologic region shapefile from {infile}')
-
     # Read shapefile to a GeoDataframe
+    logger.info(f'Load secondary hydrologic region shapefile from {infile}')
     gdf_shr = gpd.read_file(infile)
+    logger.info(f'Convert CRS from EPSG:{crs_in} to EPSG:{crs_out}')
+    gdf_shr.set_crs(crs=crs_in, inplace=True)
+    gdf_shr.to_crs(epsg=crs_out, inplace=True)
 
     logger.info('Intialize RDFLib Graph')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
-    count = 1  # For processing updates printed to terminal
-    n = len(gdf_shr.index)  # For processing updates printed to terminal
-    logger.info(f'Triplify principal aquifers')
+    logger.info(f'Triplify secondary hydrologic regions')
     for row in gdf_shr.itertuples():
         # Get IRIs for the current shr and its geometry
         shriri, geomiri = build_iris(row.SHR_ID, _PREFIX)
@@ -157,9 +159,6 @@ def process_shr_shp2ttl(infile, outfile):
         kg.add((shriri, _PREFIX['usgs']['hasGeolProvince'], _PREFIX['usgs'][f'GeologicProvince.{row.GeologicPr.replace(' ','')}']))
         kg.add((shriri, _PREFIX['usgs']['hasGeolSubprovince'], _PREFIX['usgs'][f'GeologicSubprovince.{row.Subprovinc.replace(' ','')}']))
 
-        # Update the processing status to the terminal
-        print(f'Processing row {count:4} of {n} : SHR_ID {str(row.SHR_ID):4}', end='\r', flush=True)
-        count += 1
     logger.info(f'Write secondary hydrogeologic region triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
@@ -167,5 +166,5 @@ def process_shr_shp2ttl(infile, outfile):
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script')
-    process_shr_shp2ttl(aquifers_file, ttl_file)
+    process_shr_shp2ttl(aquifers_file, ttl_file, crs_in, crs_out)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
