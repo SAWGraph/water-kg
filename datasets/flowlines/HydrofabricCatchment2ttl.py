@@ -83,7 +83,7 @@ logger.info('')
 logger.info('LOGGER INITIALIZED')
 
 
-def load_catchments_file(filename: Path) -> gpd.GeoDataFrame:
+def load_catchments_file(filename: Path, crs_in: int, crs_out: int) -> gpd.GeoDataFrame:
     logger.info(f'Load catchments from {filename} to GeoDataFrame')
     gdf = gpd.read_file(filename, use_arrow=True, engine='pyogrio', fid_as_index=True)
     gdf['fid'] = gdf.index
@@ -150,7 +150,7 @@ def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script: HUC/VPU set = {vpunums}')
-    df_catchments = load_catchments_file(catchment_file)
+    df_catchments = load_catchments_file(catchment_file, crs_in, crs_out)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     for vpunum, outfile in zip(vpunums, ttl_files):
         start_time = time.time()
