@@ -22,6 +22,93 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
+| `nhdplusv2:FlowLine` | `gcx_cid:<COMID>` |
+| `geo:Geometry` | `gcx_cid:<COMID>.geometry` |
+| `nhdplusv2:FlowPathLength` | `gcx_cid:<COMID>.flowPathLength` |
+| `qudt:QuantityValue` | `gcx_cid:<COMID>.flowPathLength.quantityValue` |
+
+## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
+| NHDFLowline | Description | Lift to graph | Ontology property |
+| --- | --- | --- |--- |
+| COMID | Common identifier | Yes | nhdplusv2:hasCOMID |
+| FDATE | Feature currency date | No |  |
+| RESOLUTION | high, medium, local | No |  |
+| GNIS_ID | GNIS ID for GNIS_NAME | No |  |
+| GNIS_NAME | Name from GNIS | Yes | schema:name |
+| LENGTHKM | Length | Yes | nhdplusv2:hasFlowPathLength |
+| REACHCODE | Reach code | Yes | nhdplusv2:hasReachCode |
+| FLOWDIR | with digitized, uninitialized | No |  |
+| WBAREACOMI | ComID of the NHD polygonal water feature through which an "artificial path" flows | No |  |
+| FTYPE | [NHD feature type](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFTYPE |
+| FCODE | [NHD feature type code](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFCODE |
+| SHAPE_LENG | length in decimal degrees | No |  |
+| ENABLED | Always "True" | No |  |
+| GNIS_NBR | ?? | No |  |
+| geometry | LineString | Yes | geo:hasGeometry/geo:asWKT |
+
+| PlusFlow | Description | Lift to graph | Ontology property |
+| --- | --- | --- | --- |
+| FROMCOMID | Common identifier for upstream flowline | Yes | hyf:downstreamWaterBody |
+| FROMHYDSEQ | HydroSeq of FromComID | No |  |
+| FROM LVLPAT | LevelPathID of FromComID | No |  |
+| TOCOMID | Common identifier for downstream flowline | Yes | hyf:downstreamWaterBody |
+| TOHYDSEQ | HydroSeq of ToComID | No |  |
+| TOLVLPAT | LevelPathID of ToComID | No |  |
+| NODENUMBER | at the bottom of FromComID and top of ToComID | No |  |
+| DELTALEVEL | Numerical difference between StreamLevel of FromComID and ToComID | No |  |
+| DIRECTION | flowing connection, network start, network end, coastal connection | No |  |
+| GAPDISTKM | Distance between downstream end of FromComID and upstream end of ToComID | No |  |
+| HasGeo | Yes if GapDistKm is 0 else No | No |  |
+| TotDASqKM | Total upstream cumulative drainage area | No |  |
+| DivDASqKM | Divergence-routed cumulative drainage area | No |  |
+
+**Notes on the data:**
+- 
+
+## Schema Diagram (TO ADD)
+![Schema Diagram]()
+
+**Legend description:** (TO ADD)
+- 
+
+## Controlled Vocabularies
+- 
+
+## Sample Data
+- 
+
+## Competency Questions
+- 
+
+## Contributors
+- [David Kedrowski](https://github.com/dkedrowski)
+
+---
+
+# Reference Flowlines from the National Hydrologic Geospatial Fabric Reference Hydrofabric
+
+## Dataset Overview
+| Dataset Attribute | Description |
+| --- | --- |
+| **Name of dataset:** | National Hydrologic Geospatial Fabric Reference Hydrofabric |
+| **Source Agency:** | [United States Geological Survey](https://www.usgs.gov/) |
+| **Data source location:** | [1. National Hydrologic Geospatial Fabric Reference Hydrofabric](https://www.sciencebase.gov/catalog/item/61295190d34e40dd9c06bcd7) |
+| **Metadata description:** | [reference_CONUS.xml](https://www.sciencebase.gov/catalog/file/get/61295190d34e40dd9c06bcd7?f=__disk__85%2Fe8%2Fc0%2F85e8c0d053c499da6e1fec6e9ade3134d9eb20b6&transform=1&allowOpen=true) |
+| **Other metadata:** |  |
+| **Format of data:** | .gpkg |
+| **Data update interval:** |  |
+| **General comments**: |  |
+
+## Schema Diagram (TO ADD)
+- [**Link to schema diagram on lucid chart**]()
+
+## Code (TO ADD)
+- [Code Directory]()
+- [GDrive Output Directory]()
+
+## IRIs
+| Instance Class | IRI Format |
+| --- | --- |
 | `hyf:HY_ElementaryFlowPath` | `gcx-cid:<COMID>` |
 | `geo:Geometry` | `gcx-cid:<COMID>.geometry` |
 | `nhdplusv2:FlowPathLength` | `gcx-cid:<COMID>.flowPathLength` |
