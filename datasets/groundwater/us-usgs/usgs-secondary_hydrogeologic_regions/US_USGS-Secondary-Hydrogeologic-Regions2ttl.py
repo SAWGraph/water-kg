@@ -57,7 +57,7 @@ os.chdir(cwd)
 ### INPUT Filenames ###
 aquifers_file = data_dir / f"US_Aquifers/Secondary_Hydrogeologic_Regions.shp"
 crs_in = 'ESRI:102039'
-crs_out = 4326
+epsg_out = 4326
 
 ### OUTPUT Filename ###
 ttl_file = ttl_dir / f"us_usgs-secondary-hydrogeologic-regions.ttl"
@@ -123,7 +123,7 @@ def get_lithology(lith: str) -> str:
         raise ValueError("Unexpected PrimaryLith from secondary  hydrogeologic regions shape file")
 
 
-def process_shr_shp2ttl(infile: Path, outfile: Path, crs_in: int, crs_out: int) -> None:
+def process_shr_shp2ttl(infile: Path, outfile: Path, crs_in: str, epsg_out: int) -> None:
     """Triplifies the secondary hydrologic region data in a .shp file and saves the result as a .ttl file
 
     :param infile: a .shp file with NHD water body data
@@ -133,9 +133,9 @@ def process_shr_shp2ttl(infile: Path, outfile: Path, crs_in: int, crs_out: int) 
     # Read shapefile to a GeoDataframe
     logger.info(f'Load secondary hydrologic region shapefile from {infile}')
     gdf_shr = gpd.read_file(infile)
-    logger.info(f'Convert CRS from EPSG:{crs_in} to EPSG:{crs_out}')
+    logger.info(f'Convert CRS from {crs_in} to EPSG:{epsg_out}')
     gdf_shr.set_crs(crs=crs_in, inplace=True)
-    gdf_shr.to_crs(epsg=crs_out, inplace=True)
+    gdf_shr.to_crs(epsg=epsg_out, inplace=True)
 
     logger.info('Intialize RDFLib Graph')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
@@ -166,5 +166,5 @@ def process_shr_shp2ttl(infile: Path, outfile: Path, crs_in: int, crs_out: int) 
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script')
-    process_shr_shp2ttl(aquifers_file, ttl_file, crs_in, crs_out)
+    process_shr_shp2ttl(aquifers_file, ttl_file, crs_in, epsg_out)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
