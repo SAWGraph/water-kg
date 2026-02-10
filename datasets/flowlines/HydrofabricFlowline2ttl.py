@@ -18,7 +18,7 @@ Required:
 
 Functions:
     * load_flowline_file - loads a .shp file of NHDPlus v2 flowlines as a GeoPandas geodataframe
-    * get_mainstem_lookup_table - loads crosswalk from LevelPathIDs to Mainstem IDs
+    * get_mainstem_lookup_table - loads crosswalk from LevelPathIDs to MainStem IDs
     * create_digraph - takes a flowline dictionary and a PlusFlow dictionary and returns a directed graph
     * initial_kg - takes a dictionary of prefixes and returns an empty RDFLib knowledge graph
     * build_iris - takes an id value and a dictionary of prefixes and returns IRIs for a flowline and its geometry
@@ -194,8 +194,8 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasLevelPathId'], Literal(node[1]['levelpathi'], datatype=XSD.string)))
         if str(node[1]['levelpathi']) in mainstem_csv['lp_mainstem'].values:
             msid = mainstem_csv.loc[mainstem_csv["lp_mainstem"] == str(node[1]['levelpathi'])]["ref_mainstem_id"].iloc[0]
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstemId'], Literal(msid, datatype=XSD.string)))
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstem'], _PREFIX['gcx_ms'][msid]))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainStemId'], Literal(msid, datatype=XSD.string)))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainStem'], _PREFIX['gcx_ms'][msid]))
         if 'divergence' in dg.nodes[node[0]]:
             kg.add((fl_iri, _PREFIX['nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
