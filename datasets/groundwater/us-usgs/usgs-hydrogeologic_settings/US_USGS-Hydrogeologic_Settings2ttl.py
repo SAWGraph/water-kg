@@ -56,6 +56,8 @@ os.chdir(cwd)
 
 ### INPUT Filenames ###
 hgsettings_file = data_dir / f"USGS_Depth_of_Groundwater_Data/HG_Settings.shp"
+epsg_in = 5070
+epsg_out = 4326
 
 ### OUTPUT Filename ###
 ttl_file = ttl_dir / f"us_usgs-hydrogeologic-settings.ttl"
@@ -71,7 +73,7 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
 
-def initial_kg(_PREFIX):
+def initial_kg(_PREFIX: dict) -> Graph:
     """Create an empty knowledge graph with project namespaces
 
     :param _PREFIX: a dictionary of project namespaces
@@ -83,7 +85,7 @@ def initial_kg(_PREFIX):
     return graph
 
 
-def build_iris(objectid, _PREFIX):
+def build_iris(objectid: int | str, _PREFIX: dict) -> tuple:
     """Create IRIs for an aquifer and its geometry
 
     :param objectid: The unique id value for an aquifer
@@ -94,7 +96,7 @@ def build_iris(objectid, _PREFIX):
     return _PREFIX["usgs_data"][base_iri], _PREFIX["usgs_data"][base_iri + '.geometry']
 
 
-def get_lithology(lith):
+def get_lithology(lith: str) -> str:
     if lith == 'Carbonate-rock aquifers':
         return 'CarbonateRock'
     elif lith == 'Crystalline':
@@ -121,7 +123,7 @@ def get_lithology(lith):
         raise ValueError("Unexpected Lithology from hydrogeologic settings shape file")
 
 
-def process_hgsetting_shp2ttl(infile, outfile):
+def process_hgsetting_shp2ttl(infile: Path, outfile: Path, epsg_in: int, epsg_out: int):
     """Triplifies the hydrogeologic setting data in a .shp file and saves the result as a .ttl file
 
     :param infile: a .shp file with NHD water body data
@@ -129,9 +131,10 @@ def process_hgsetting_shp2ttl(infile, outfile):
     :return:
     """
     logger.info(f'Load hydrogeologic setting shapefile from {infile}')
-
-    # Read shapefile to a GeoDataframe
     gdf_hgsettings = gpd.read_file(infile)
+    logger.info(f'Convert CRS from EPSG:{epsg_in} to EPSG:{epsg_out}')
+    gdf_hgsettings.set_crs(epsg=epsg_in, inplace=True)
+    gdf_hgsettings.to_crs(epsg=epsg_out, inplace=True)
 
     logger.info('Intialize RDFLib Graph')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
@@ -175,5 +178,5 @@ def process_hgsetting_shp2ttl(infile, outfile):
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script')
-    process_hgsetting_shp2ttl(hgsettings_file, ttl_file)
+    process_hgsetting_shp2ttl(hgsettings_file, ttl_file, epsg_in, epsg_out)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
