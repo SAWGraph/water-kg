@@ -117,7 +117,7 @@ def build_iris(cid: int | str, _PREFIX: dict) -> tuple:
     :param _PREFIX:
     :return: a tuple with the two IRIs
     """
-    return _PREFIX["gcx-cid"][str(cid)], _PREFIX["gcx-cid"][str(cid) + '.geometry']
+    return _PREFIX["gcx_cid"][str(cid)], _PREFIX["gcx_cid"][str(cid) + '.geometry']
 
 
 def process_waterbodies_shp2ttl(vpunum, infile, outfile):
