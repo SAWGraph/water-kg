@@ -63,6 +63,8 @@ vpunums = [ '01' ]
 
 ### INPUT Filenames ###
 catchment_file = data_dir / f'Hydrofabric/reference_catchments.gpkg'
+crs_in = 5070
+crs_out = 4326
 
 ### OUTPUT Filenames ###
 ttl_files = [ ]
@@ -83,9 +85,12 @@ logger.info('LOGGER INITIALIZED')
 
 def load_catchments_file(filename: Path) -> gpd.GeoDataFrame:
     logger.info(f'Load catchments from {filename} to GeoDataFrame')
-    gdf = gpd.read_file(filename, use_arrow=True)
+    gdf = gpd.read_file(filename, use_arrow=True, engine='pyogrio', fid_as_index=True)
     gdf['fid'] = gdf.index
     gdf[['fid', 'featureid']] = gdf[['fid', 'featureid']].astype(int).astype(str)
+    logger.info(f'Convert CRS from EPSG:{crs_in} to EPSG:{crs_out}')
+    gdf.set_crs(epsg=crs_in, inplace=True)
+    gdf.to_crs(epsg=crs_out, inplace=True)
     return gdf
 
 
