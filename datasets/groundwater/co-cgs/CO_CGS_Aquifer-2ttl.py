@@ -57,6 +57,8 @@ os.chdir(cwd)
 ### INPUT Filename ###
 # aquifer_shp_path: QGIS was used to export the aquifer layer to .shp from a .gdb found online
 aquifer_shp_path = data_dir / 'CO_Groundwater/Colorado_Alluvial_Aquifer.shp'
+crs_in = 26913
+crs_out = 4326
 
 ### OUTPUT Filenames ###
 # aq_ttl_file: the resulting (output) .ttl file
@@ -72,6 +74,16 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
+
+
+def load_aquifers_file(filename: Path, crs_in: int, crs_out: int) -> gpd.GeoDataFrame:
+    logger.info(f'Load aquifers from {filename} to GeoDataFrame')
+    gdf = gpd.read_file(filename)
+    gdf[['OBJECTID']] = gdf[['OBJECTID']].astype(int).astype(str)
+    logger.info(f'Convert CRS from EPSG:{crs_in} to EPSG:{crs_out}')
+    gdf.set_crs(epsg=crs_in, inplace=True)
+    gdf.to_crs(epsg=crs_out, inplace=True)
+    return gdf
 
 
 def initial_kg(_PREFIX: dict) -> Graph:
@@ -97,7 +109,7 @@ def build_cgs_iris(cgsid: int, _PREFIX: dict, max_id_length = 3) -> tuple:
             _PREFIX["co_cgs_data"]['d.CGS-AlluvialAquifer.Geometry.' + str(cgsid).zfill(max_id_length)])
 
 
-def process_aquifers_shp2ttl(infile: Path, outfile: Path, max_id_length = 3) -> None:
+def process_aquifers_shp2ttl(infile: Path, outfile: Path, crs_in: int, crs_out: int, max_id_length = 3) -> None:
     """Triplifies the aquifer data in a .shp file and saves the result as a .ttl file
 
     :param infile: a zipped file containing a .gdb folder
@@ -105,9 +117,7 @@ def process_aquifers_shp2ttl(infile: Path, outfile: Path, max_id_length = 3) -> 
     :param outfile: the path and name for the aquifer .ttl file
     :return:
     """
-    logger.info('Loading the alluvial aquifer data')
-    gdf_aq = gpd.read_file(infile)
-    gdf_aq[['OBJECTID']] = gdf_aq[['OBJECTID']].astype(int).astype(str)
+    gdf_aq = load_aquifers_file(infile, crs_in, crs_out)
     logger.info('Intialize the knowledge graph')
     kg_aq = initial_kg(_PREFIX)
     logger.info('Triplify the aquifers')
@@ -127,5 +137,5 @@ def process_aquifers_shp2ttl(infile: Path, outfile: Path, max_id_length = 3) -> 
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script: Colorado Alluvial Aquifers')
-    process_aquifers_shp2ttl(aquifer_shp_path, aq_ttl_file)
+    process_aquifers_shp2ttl(aquifer_shp_path, aq_ttl_file, crs_in, crs_out)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
