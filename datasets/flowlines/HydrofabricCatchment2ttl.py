@@ -141,7 +141,7 @@ def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_
 
         # Triplify current catchment attributes
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCatchmentId'], Literal(row.fid.zfill(max_id_length), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['containsFlowline'], Literal(row.featureid, datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['containsFlowLine'], Literal(row.featureid, datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['inVPU'], Literal(row.vpuid, datatype=XSD.string)))
     logger.info(f'Write HUC{vpunum} catchment triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
