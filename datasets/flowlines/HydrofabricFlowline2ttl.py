@@ -61,8 +61,8 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '01' ]
-# vpunums = [ '10L', '11', '13', '14' ]
+# vpunums = [ '01' ]
+vpunums = [ '01', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
@@ -160,10 +160,10 @@ def build_iris(cid, _PREFIX):
     :param _PREFIX:
     :return:
     """
-    flowline_iri = _PREFIX['gcx-cid'][cid]
-    flowline_geo_iri = _PREFIX['gcx-cid'][cid + '.geometry']
-    flowline_length_iri = _PREFIX['gcx-cid'][cid + '.flowPathLength']
-    flowline_quantval_iri = _PREFIX['gcx-cid'][cid + '.flowPathLength.quantityValue']
+    flowline_iri = _PREFIX['gcx_cid'][cid]
+    flowline_geo_iri = _PREFIX['gcx_cid'][cid + '.geometry']
+    flowline_length_iri = _PREFIX['gcx_cid'][cid + '.flowPathLength']
+    flowline_quantval_iri = _PREFIX['gcx_cid'][cid + '.flowPathLength.quantityValue']
     return flowline_iri, flowline_geo_iri, flowline_length_iri, flowline_quantval_iri
 
 
@@ -195,7 +195,7 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
         if str(node[1]['levelpathi']) in mainstem_csv['lp_mainstem'].values:
             msid = mainstem_csv.loc[mainstem_csv["lp_mainstem"] == str(node[1]['levelpathi'])]["ref_mainstem_id"].iloc[0]
             kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstemId'], Literal(msid, datatype=XSD.string)))
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstem'], _PREFIX['gcx-ms'][msid]))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainstem'], _PREFIX['gcx_ms'][msid]))
         if 'divergence' in dg.nodes[node[0]]:
             kg.add((fl_iri, _PREFIX['nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
@@ -221,7 +221,7 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
         # Triplify the downstream connectivity, including a reflexive statement for the current NHDFlowline
         kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], fl_iri))
         for key in dg.successors(node[0]):
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx-cid'][key]))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx_cid'][key]))
     logger.info(f'Write HUC{vpunum} flowline triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
