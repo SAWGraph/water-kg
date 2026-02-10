@@ -116,7 +116,7 @@
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | reference_flowline | Description | Lift to graph | Ontology property | Notes |
-| --- | --- | --- |--- |
+| --- | --- | --- | --- | --- |
 | fid | Internal feature identifier | No |  |  |
 | COMID | NHDPlus version 2 comid (NHDPlusV2) or permanent identifier (NHDPlus HR) common identifier | Yes |  |  |
 | FromNode | Unique node identifier (number) of flowline's fromnode (inlet) | No |  |  |
