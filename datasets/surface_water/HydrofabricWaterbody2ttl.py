@@ -65,8 +65,8 @@ vpunums = [ '10L', '11', '13', '14' ]
 # The path looks for a "fixed" version first but defaults to the original version if a "fixed" version does not exist
 waterbody_file = data_dir / f'Hydrofabric/reference_CONUS.gpkg'
 waterbody_layer = 'reference_waterbody'
-crs_in = 5070
-crs_out = 4326
+epsg_in = 5070
+epsg_out = 4326
 
 ### OUTPUT Filename ###
 ttl_files = [ ]
@@ -84,12 +84,12 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
 
-def load_waterbody_layer(filename: Path, layer: str, crs_in: int, crs_out: int) -> gpd.GeoDataFrame:
+def load_waterbody_layer(filename: Path, layer: str, epsg_in: int, epsg_out: int) -> gpd.GeoDataFrame:
     logger.info(f'Load water bodies from {layer} layer of {filename} to GeoDataFrame')
     gdf = gpd.read_file(filename, layer=layer, use_arrow=True)
-    logger.info(f'Convert CRS from EPSG:{crs_in} to EPSG:{crs_out}')
-    gdf.set_crs(epsg=crs_in, inplace=True)
-    gdf.to_crs(epsg=crs_out, inplace=True)
+    logger.info(f'Convert CRS from EPSG:{epsg_in} to EPSG:{epsg_out}')
+    gdf.set_crs(epsg=epsg_in, inplace=True)
+    gdf.to_crs(epsg=epsg_out, inplace=True)
     return gdf
 
 
@@ -172,7 +172,7 @@ def process_waterbodies_2ttl(vpunum: str, df: gpd.GeoDataFrame, outfile: Path) -
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script: HUC/VPU set = {vpunums}')
-    gdf = load_waterbody_layer(waterbody_file, waterbody_layer, crs_in, crs_out)
+    gdf = load_waterbody_layer(waterbody_file, waterbody_layer, epsg_in, epsg_out)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     for vpunum, outfile in zip(vpunums, ttl_files):
         start_time = time.time()
