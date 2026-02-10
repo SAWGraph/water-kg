@@ -261,10 +261,10 @@ def build_iris(cid, _PREFIX):
     :param _PREFIX:
     :return:
     """
-    flowline_iri = _PREFIX['gcx-cid'][cid]
-    flowline_geo_iri = _PREFIX['gcx-cid'][cid + '.geometry']
-    flowline_length_iri = _PREFIX['gcx-cid'][cid + '.flowPathLength']
-    flowline_quantval_iri = _PREFIX['gcx-cid'][cid + '.flowPathLength.quantityValue']
+    flowline_iri = _PREFIX['gcx_cid'][cid]
+    flowline_geo_iri = _PREFIX['gcx_cid'][cid + '.geometry']
+    flowline_length_iri = _PREFIX['gcx_cid'][cid + '.flowPathLength']
+    flowline_quantval_iri = _PREFIX['gcx_cid'][cid + '.flowPathLength.quantityValue']
     return flowline_iri, flowline_geo_iri, flowline_length_iri, flowline_quantval_iri
 
 
@@ -302,7 +302,7 @@ def triplify_huc_flowlines(dg):
         # Triplify the downstream connectivity, including a reflexive statement for the current NHDFlowline
         kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], fl_iri))
         for key in dg.successors(node[0]):
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx-cid'][key]))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx_cid'][key]))
     logger.info(f'Write HUC{vpunum} flowline triples to {main_ttl_file}')
     kg.serialize(main_ttl_file, format='turtle')  # Write the completed KG to a .ttl file
 
