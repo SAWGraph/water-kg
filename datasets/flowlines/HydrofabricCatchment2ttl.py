@@ -63,8 +63,8 @@ vpunums = [ '01' ]
 
 ### INPUT Filenames ###
 catchment_file = data_dir / f'Hydrofabric/reference_catchments.gpkg'
-crs_in = 5070
-crs_out = 4326
+epsg_in = 5070
+epsg_out = 4326
 
 ### OUTPUT Filenames ###
 ttl_files = [ ]
@@ -83,14 +83,14 @@ logger.info('')
 logger.info('LOGGER INITIALIZED')
 
 
-def load_catchments_file(filename: Path, crs_in: int, crs_out: int) -> gpd.GeoDataFrame:
+def load_catchments_file(filename: Path, epsg_in: int, epsg_out: int) -> gpd.GeoDataFrame:
     logger.info(f'Load catchments from {filename} to GeoDataFrame')
     gdf = gpd.read_file(filename, use_arrow=True, engine='pyogrio', fid_as_index=True)
     gdf['fid'] = gdf.index
     gdf[['fid', 'featureid']] = gdf[['fid', 'featureid']].astype(int).astype(str)
-    logger.info(f'Convert CRS from EPSG:{crs_in} to EPSG:{crs_out}')
-    gdf.set_crs(epsg=crs_in, inplace=True)
-    gdf.to_crs(epsg=crs_out, inplace=True)
+    logger.info(f'Convert CRS from EPSG:{epsg_in} to EPSG:{epsg_out}')
+    gdf.set_crs(epsg=epsg_in, inplace=True)
+    gdf.to_crs(epsg=epsg_out, inplace=True)
     return gdf
 
 
@@ -150,7 +150,7 @@ def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_
 if __name__ == '__main__':
     start_time = time.time()
     logger.info(f'Launching script: HUC/VPU set = {vpunums}')
-    df_catchments = load_catchments_file(catchment_file, crs_in, crs_out)
+    df_catchments = load_catchments_file(catchment_file, epsg_in, epsg_out)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     for vpunum, outfile in zip(vpunums, ttl_files):
         start_time = time.time()
