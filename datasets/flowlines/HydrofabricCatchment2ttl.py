@@ -57,8 +57,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '01' ]
-# vpunums = [ '10L', '11', '13', '14' ]
+vpunums = [ '01', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
@@ -141,8 +140,8 @@ def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_
 
         # Triplify current catchment attributes
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCatchmentId'], Literal(row.fid.zfill(max_id_length), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['containsFlowLine'], Literal(row.featureid, datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['inVPU'], Literal(row.vpuid, datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['nhdplusv2']['containsFlowLine'], _PREFIX['gcx_cid'][row.featureid]))
+        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data'][f'd.HUC2.{row.vpuid}']))
     logger.info(f'Write HUC{vpunum} catchment triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
