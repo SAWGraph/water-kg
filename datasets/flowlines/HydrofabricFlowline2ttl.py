@@ -61,7 +61,6 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-# vpunums = [ '01' ]
 vpunums = [ '01', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
@@ -125,9 +124,9 @@ def create_digraph(df: gpd.GeoDataFrame) -> nx.DiGraph:
         dg.nodes[row.COMID]['terminalfl'] = row.TerminalFl
         if row.Divergence > 0:
             if row.Divergence == 1:
-                dg.nodes[row.COMID]['divergence'] = 'minor-path'
-            elif row.Divergence == 2:
                 dg.nodes[row.COMID]['divergence'] = 'main-path'
+            elif row.Divergence == 2:
+                dg.nodes[row.COMID]['divergence'] = 'minor-path'
             else:
                 dg.nodes[row.COMID]['divergence'] = 'unexpected-value-at-import'
         dg.nodes[row.COMID]['fcode'] = row.FCODE
@@ -193,12 +192,12 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
         # Triplify current NHDFlowline attributes
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
+        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data'][f'd.HUC8.{str(node[1]['reachcode'][:8])}']))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasLevelPathId'], Literal(node[1]['levelpathi'], datatype=XSD.string)))
         if str(node[1]['levelpathi']) in mainstem_csv['lp_mainstem'].values:
             msid = mainstem_csv.loc[mainstem_csv["lp_mainstem"] == str(node[1]['levelpathi'])]["ref_mainstem_id"].iloc[0]
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainStemId'], Literal(msid, datatype=XSD.string)))
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainStem'], _PREFIX['gcx_ms'][msid]))
+            # kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainStemId'], Literal(msid, datatype=XSD.string)))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['partOfMainStem'], _PREFIX['gcx_ms'][msid]))
         if 'divergence' in dg.nodes[node[0]]:
             kg.add((fl_iri, _PREFIX['nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
         kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
@@ -209,11 +208,11 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
             kg.add((fl_iri, _PREFIX['nhdplusv2']['hasSlope'], Literal(slope_str, datatype=XSD.decimal)))
         if not pd.isnull(node[1]['gnis_name']) and node[1]['gnis_name'] != '':
             kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['inVPU'], Literal(str(node[1]['vpuid']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data'][f'd.HUC2.{str(node[1]['vpuid'])}']))
         if int(node[1]['wbareacomi']) > 0:
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['wbAreaHasCOMID'], Literal(node[1]['wbareacomi'], datatype=XSD.string)))
-        if len(node[1]['wbareatype']) > 0:
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['wbAreaHasType'], Literal(node[1]['wbareatype'], datatype=XSD.string)))
+            kg.add((fl_iri, _PREFIX['nhdplusv2']['partOfWaterBody'], _PREFIX['gcx_cid'][str(node[1]['wbareacomi'])]))
+        # if len(node[1]['wbareatype']) > 0:
+        #     kg.add((fl_iri, _PREFIX['nhdplusv2']['partOfWaterBodyType'], Literal(node[1]['wbareatype'], datatype=XSD.string)))
 
         kg.add((fl_len_iri, RDF.type, _PREFIX['nhdplusv2']['FlowPathLength']))
         kg.add((fl_len_iri, _PREFIX['qudt']['quantityValue'], fl_qv_iri))
