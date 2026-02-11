@@ -90,6 +90,9 @@ def load_flowline_file(filename: Path) -> gpd.GeoDataFrame:
     logger.info(f'Load flowlines from {filename} to GeoDataFrame')
     flowline_columns = [ 'COMID', 'REACHCODE', 'LevelPathI', 'toCOMID', 'TerminalFl', 'Divergence', 'FCODE', 'FTYPE',
                          'LENGTHKM', 'slope', 'gnis_name', 'gnis_id', 'VPUID', 'wbareatype', 'WBAREACOMI' ]
+    # NOTES:
+    #    TerminalFl is used for processing only - edges are added as long as a flowline is not terminal
+    #    gnis_id is imported but not used or triplified
     gdf = gpd.read_file(filename, columns=flowline_columns, use_arrow=True)
     gdf = gdf[gdf.FTYPE != 'Coastline']
     gdf[['COMID', 'LevelPathI', 'toCOMID', 'WBAREACOMI']] = gdf[['COMID', 'LevelPathI', 'toCOMID', 'WBAREACOMI']].astype(int).astype(str)
