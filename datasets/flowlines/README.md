@@ -136,27 +136,28 @@ StreamCalc stands for stream calculator and is computed along with StreamOrder. 
 | ArbolateSu | Kilometers of stream upstream of the bottom of the flowline feature | No |  | arbolate sum |
 | TerminalPa | Hydrologic sequence number of terminal flowline feature | No |  |  |
 | Hydroseq | Hydrologic sequence number; places flowlines in hydrologic order; processing flowline features in ascending order, encounters the features from downstream to upstream; processing the flowline features in descending order, encounters the features from upstream to downstream | No |  |  |
-| LevelPathI |  |  |  |  |
-| Pathlength |  |  |  |  |
-| DnLevelPat |  |  |  |  |
-| DnHydroseq |  |  |  |  |
-| TotDASqKM |  |  |  |  |
-| TerminalFl |  |  |  |  |
-| streamleve |  |  |  |  |
-| StreamOrde |  |  |  |  |
-| vpuin |  |  |  |  |
-| vpuout |  |  |  |  |
-| wbareatype |  |  |  |  |
-| slope |  |  |  |  |
-| slopelenkm |  |  |  |  |
-| FTYPE |  |  |  |  |
-| gnis_name |  |  |  |  |
-| gnis_id |  |  |  |  |
-| WBAREACOMI |  |  |  |  |
-| hwnodesqkm |  |  |  |  |
-| RPUID |  |  |  |  |
-| VPUID |  |  |  |  |
-| roughness |  |  |  |  |
+| LevelPathI | Hydrologic sequence number of most downstream flowline feature in the level path | Yes |  |  |
+| Pathlength | Distance to the terminal flowline feature downstream along the mainpath | No |  |  |
+| DnLevelPat | Downstream mainstem level path identifier | No |  |  |
+| DnHydroseq | Downstream mainstem hydrologic sequence number | No |  |  |
+| TotDASqKM | Total upstream area in square kilometer for each flowline catchment | No |  |  |
+| TerminalFl | Flag denoting if flowline is a terminal reach. For example, flowline ends at the ocean or international boundary or of if tocomid is 0 | No |  | 0 = not terminal <br> 1 = terminal |
+| streamleve | StreamLevel is a numeric code that traces main paths of water flow upstream through the drainage network. StreamLevel is assigned starting at the terminus of a drainage
+network. If the terminus stopped at a coastline flowline feature (i.e. at the Atlantic Ocean, the Pacific Ocean, the Gulf of Mexico, or one of the Great Lakes), a stream level of 1 is assigned to the terminus and all the flowline features in the main path upstream to the headwater of the stream. If the terminus drains into the ground or stops at the Canadian or Mexican border, a stream level of 4 is assigned to the terminus and all the flowline features in the main path upstream to the headwater of the stream. After the initial stream level of 1 or 4 is assigned to the terminus and its upstream path, all tributaries to that path are assigned a stream level incremented by 1. Then the tributaries to those stream paths are assigned a stream level incremented by 1. This continues until the entire stream network has been assigned stream levels | No |  |  |
+| StreamOrde | A modified version of stream order as defined by Strahler. The Strahler stream order algorithm does not account for flow splits in the network. The algorithm for stream order here does take flow splits into consideration. | No |  |  |
+| vpuin | Integer 0 or 1 indicates if flowline is an inflow to a Vector Processing Unit  (vpu), as defined in vpuid | No |  | 0 = not an inflow to a VPU <br> 1 = inflow to a VPU |
+| vpuout | Integer 0 or 1 indicates if flowline is an outflow to a Vector Processing Unit  (vpu), as defined in vpuid | No |  | 0 = not an outflow to a VPU <br> 1 = outflow to a VPU |
+| wbareatype | Character field that indicates the type of the waterbody a flowline is related to. Flowlines not related to a waterbody are NA | Yes |  | controlled vocabulary |
+| slope | Numeric average slope of flowline | Yes |  |  |
+| slopelenkm | Numeric length of flowline  used for slope calculation | No |  |  |
+| FTYPE | Type of feature each flowline is designated as | Yes |  | controlled vocabulary |
+| gnis_name | Feature Name from the Geographic Names Information System | Yes |  |  |
+| gnis_id | Geographic Names Information System ID for the value in GNIS_Name | No |  |  |
+| WBAREACOMI | comid of water body the flowline associates to | Yes |  |  |
+| hwnodesqkm | Drainage area at the upstream node of a first order flowline | No |  |  |
+| RPUID | Character identifier for raster processing unit flowline belongs to. nulls are null in source data | No |  |  |
+| VPUID | Character identifier for vector processing unit flowline belongs to | No |  |  |
+| roughness | Manning's N estimate for flowline | No |  |  |
 
 
 **Notes on the data:**
@@ -169,7 +170,18 @@ StreamCalc stands for stream calculator and is computed along with StreamOrder. 
 - 
 
 ## Controlled Vocabularies
-- 
+- wbareatype
+  - <<empty cell>>: not a waterbody
+  - LakePond: Lake or pond
+  - StreamRiver: Stream or river
+  - Reservoir: Reservoir
+
+- ftype
+  - StreamRiver: stream or river
+  - Connector: Connector
+  - ArtificialPath: artificial path
+  - CanalDitch: canal or ditch
+  - LakePond: lake or pond
 
 ## Sample Data
 - 
