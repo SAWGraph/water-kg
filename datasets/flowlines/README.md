@@ -123,7 +123,7 @@
 | ToNode | Unique node identifier (number) of flowline's tonode (outlet) | No |  |  |
 | StartFlag | Flag denoting a flowline is a headwater | No |  | 0 = not a headwater <br> 1 = is a headwater |
 | StreamCalc | Stream in NHDPlus is a modified version of stream order as defined by Strahler. The Strahler stream order algorithm does not account for flow splits in the  network. The NHDPlus algorithm for stream order does take flow splits into consideration. StreamCalc stands for stream calculator and is computed along with StreamOrder. | No |  |  |
-| Divergence | Divergence field, routes a fraction of 1 to the main path (i.e. Divergence = 1) and a fraction of 0 to all other paths (i.e. Divergence = 2) | Yes | `nhdplusv2:divergence` | 0 = not part of a divergence <br> 1 = main path of a divergence <br> 2 = minor path of a divergence |
+| Divergence | Divergence field, routes a fraction of 1 to the main path (i.e. Divergence = 1) and a fraction of 0 to all other paths (i.e. Divergence = 2) | Yes | `nhdplusv2:divergence` | "main-path" if 1 <br> "minor-path" if 2 <br> no triple otherwise
 | DnMinorHyd | Downstream minor hydrologic sequence number | No |  |  |
 | toCOMID | Common identifier for the downstream flowline feature | Yes | `nhdplusv2:dowstreamFlowPath` |  |
 | FCODE | Numeric codes for various feature attributes. Definitions correspond to the attribute 'ftype' in the flowline table | Yes | `nhdplusv2:hasFCODE` |  |
