@@ -135,7 +135,7 @@
 | ArbolateSu | Kilometers of stream upstream of the bottom of the flowline feature | No |  | arbolate sum |
 | TerminalPa | Hydrologic sequence number of terminal flowline feature | No |  |  |
 | Hydroseq | Hydrologic sequence number; places flowlines in hydrologic order; processing flowline features in ascending order, encounters the features from downstream to upstream; processing the flowline features in descending order, encounters the features from upstream to downstream | No |  |  |
-| LevelPathI | Hydrologic sequence number of most downstream flowline feature in the level path | Yes | `nhdplusv2:hasLevelPathId` | This is used with a lookup table to connect the flowline to its main stem (`nhdplusv2:hasMainStem`) |
+| LevelPathI | Hydrologic sequence number of most downstream flowline feature in the level path | Yes | `nhdplusv2:hasLevelPathId` | This is used with a lookup table to connect the flowline to its main stem (`nhdplusv2:partOfMainStem`) |
 | Pathlength | Distance to the terminal flowline feature downstream along the mainpath | No |  |  |
 | DnLevelPat | Downstream mainstem level path identifier | No |  |  |
 | DnHydroseq | Downstream mainstem hydrologic sequence number | No |  |  |
@@ -145,16 +145,16 @@
 | StreamOrde | A modified version of stream order as defined by Strahler. The Strahler stream order algorithm does not account for flow splits in the network. The algorithm for stream order here does take flow splits into consideration. | No |  |  |
 | vpuin | Integer 0 or 1 indicates if flowline is an inflow to a Vector Processing Unit  (vpu), as defined in vpuid | No |  | 0 = not an inflow to a VPU <br> 1 = inflow to a VPU |
 | vpuout | Integer 0 or 1 indicates if flowline is an outflow to a Vector Processing Unit  (vpu), as defined in vpuid | No |  | 0 = not an outflow to a VPU <br> 1 = outflow to a VPU |
-| wbareatype | Character field that indicates the type of the waterbody a flowline is related to. Flowlines not related to a waterbody are NA | Yes | `nhdplusv2:wbAreaHasType` | controlled vocabulary |
+| wbareatype | Character field that indicates the type of the waterbody a flowline is related to. Flowlines not related to a waterbody are NA | No |  | controlled vocabulary |
 | slope | Numeric average slope of flowline | Yes | `nhdplusv2:hasSlope` |  |
 | slopelenkm | Numeric length of flowline  used for slope calculation | No |  |  |
 | FTYPE | Type of feature each flowline is designated as | Yes | `nhdplusv2:hasFTYPE` | controlled vocabulary |
 | gnis_name | Feature Name from the Geographic Names Information System | Yes | `schema:name` |  |
 | gnis_id | Geographic Names Information System ID for the value in GNIS_Name | No |  |  |
-| WBAREACOMI | comid of water body the flowline associates to | Yes | `nhdplusv2:wbAreaHasCOMID` | change from data property to `nhdplusv2:inWaterBody` object property? |
+| WBAREACOMI | comid of water body the flowline associates to | Yes | `nhdplusv2:partOfWaterBody` |  |
 | hwnodesqkm | Drainage area at the upstream node of a first order flowline | No |  |  |
 | RPUID | Character identifier for raster processing unit flowline belongs to. nulls are null in source data | No |  |  |
-| VPUID | Character identifier for vector processing unit flowline belongs to | Yes | `nhdplusv2:inVPU` | Curently a data property, but could be an object property connecting to `wbd:HUC2` instances |
+| VPUID | Character identifier for vector processing unit flowline belongs to | Yes | `wbd:containingHUC` |  |
 | roughness | Manning's N estimate for flowline | No |  |  |
 
 
