@@ -48,15 +48,20 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunum = '01'
+vpunums = [ '10', '11', '13', '14']
 # Valid codes: 01 to 22
 
 ### INPUT File and GPKG names ###
-wbd_file = data_dir / f'WBD/WBD_{vpunum}_HU2_GPKG.zip'
-gpkg_name = f'WBD_{vpunum}_HU2_GPKG.gpkg'
+wbd_files = []
+gpkg_names = []
+for vpunum in vpunums:
+    wbd_files.append(data_dir / f'WBD/WBD_{vpunum}_HU2_GPKG.zip')
+    gpkg_names.append(f'WBD_{vpunum}_HU2_GPKG.gpkg')
 
 ### OUTPUT Filename ###
-main_ttl_file = ttl_dir / f"us_wbd_huc{vpunum}.ttl"
+out_files = []
+for vpunum in vpunums:
+    out_files.append(ttl_dir / f"us_wbd_huc{vpunum}.ttl")
 
 logname = log_dir / f"log_US_WBD_HUCxx-2ttl.txt"
 logging.basicConfig(filename=logname,
@@ -97,10 +102,10 @@ def build_iris(hid, level, _PREFIX):
 
 
 def process_huc(gpkg, level, graph, _PREFIX):
-    logger.info(f'Load HUC{level} boundary file from {gpkg}.')
+    logger.info(f'    Load HUC{level} boundary file from {gpkg}.')
     gdf = load_huc_layer(gpkg, level)
     gdf.rename(columns={f'huc{level}': 'huc_num'}, inplace=True)
-    logger.info(f'Triplify HUC{level} boundary data.')
+    logger.info(f'    Triplify HUC{level} boundary data.')
     for row in gdf.itertuples():
         huciri, geomiri = build_iris(row.huc_num, level, _PREFIX)
         if ' ' not in huciri:
@@ -127,17 +132,20 @@ def process_huc(gpkg, level, graph, _PREFIX):
 
 
 def write_graph_to_ttl(graph, outfile):
-    logger.info(f'Serialize the triples to {outfile}')
+    logger.info(f'    Serialize the triples to {outfile}')
     graph.serialize(outfile, format='ttl')
 
 
 if __name__ == '__main__':
-    start_time = time.time()
-    logger.info(f'Launching script: VPU = {vpunum}')
-    gpkg_handle = f'/vsizip/{wbd_file}/{gpkg_name}'
-    kg = initial_kg(_PREFIX)
-    for huclevel in [2, 4, 6, 8, 10, 12]: # Only triplify up to level 12 as it is the last conterminous level
-        kg = process_huc(gpkg_handle, huclevel, kg, _PREFIX)
-    write_graph_to_ttl(kg, main_ttl_file)
-    logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
-    print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
+    script_start_time = time.time()
+    logger.info(f'Launching script')
+    for vpunum, wbd, gpkg, outfile in zip(vpunums, wbd_files, gpkg_names, out_files):
+        vpu_start_time = time.time()
+        logger.info(f'Processing VPU {vpunum}')
+        gpkg_handle = f'/vsizip/{wbd}/{gpkg}'
+        kg = initial_kg(_PREFIX)
+        for huclevel in [2, 4, 6, 8, 10, 12]: # Only triplify up to level 12 as it is the last conterminous level
+            kg = process_huc(gpkg_handle, huclevel, kg, _PREFIX)
+        write_graph_to_ttl(kg, outfile)
+        logger.info(f'VPU {vpunum} processing completed in {str(datetime.timedelta(seconds=time.time() - vpu_start_time))} HMS')
+    logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - script_start_time))} HMS')
