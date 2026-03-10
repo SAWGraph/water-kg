@@ -57,7 +57,7 @@ from namespaces import _PREFIX
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '10L', '11', '13', '14' ]
+vpunums = [ '04', '05', '07', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
@@ -134,9 +134,8 @@ def process_waterbodies_shp2ttl(vpunum, infile, outfile):
     #   The Z value is set to 0 in NHDWaterbody so nothing is lost from this process
     logger.info('Force geometries to 2D')
     for row in gdf_waterbody.itertuples():
-        gdf_waterbody._set_value(row.Index, 'geometry',
+        gdf_waterbody._set_value(row.Index, 'GEOMETRY',
                                  shapely.wkb.loads(shapely.wkb.dumps(row.GEOMETRY, output_dimension=2)))
-
     logger.info('Intialize RDFLib Graph')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
     logger.info(f'Triplify HUC{vpunum} water bodies')
