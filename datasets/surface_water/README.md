@@ -28,16 +28,16 @@
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | NHDWaterbody | Description | Lift to graph | Ontology property |
 | --- | --- | --- |--- |
-| COMID | Common identifier | Yes | nhdplusv2:hasCOMID |
+| COMID | Common identifier | Yes | us_nhdplusv2:hasCOMID |
 | FDATE | Feature currency date | No |  |
 | RESOLUTION | high, medium, local | No |  |
 | GNIS_ID | GNIS ID for GNIS_NAME | No |  |
 | GNIS_NAME | Name from GNIS | Yes | schema:name |
 | AREASQKM | Area in square kilometers | No |  |
 | ELEVATION | Elevation in ft | No |  |
-| REACHCODE | Reach code | Yes | nhdplusv2:hasReachCode |
-| FTYPE | [NHD feature type](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFTYPE |
-| FCODE | [NHD feature type code](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFCODE |
+| REACHCODE | Reach code | Yes | us_nhdplusv2:hasReachCode |
+| FTYPE | [NHD feature type](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | us_nhdplusv2:hasFTYPE |
+| FCODE | [NHD feature type code](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | us_nhdplusv2:hasFCODE |
 | SHAPE_LENG | length in decimal degrees | No |  |
 | SHAPE_AREA | area in square decimal degrees | No |  |
 | geometry | Polygon | Yes | geo:hasGeometry/geo:asWKT |

@@ -22,25 +22,25 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `nhdplusv2:FlowLine` | `gcx_cid:<COMID>` |
+| `us_nhdplusv2:FlowLine` | `gcx_cid:<COMID>` |
 | `geo:Geometry` | `gcx_cid:<COMID>.geometry` |
-| `nhdplusv2:FlowPathLength` | `gcx_cid:<COMID>.flowPathLength` |
+| `us_nhdplusv2:FlowPathLength` | `gcx_cid:<COMID>.flowPathLength` |
 | `qudt:QuantityValue` | `gcx_cid:<COMID>.flowPathLength.quantityValue` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | NHDFLowline | Description | Lift to graph | Ontology property |
 | --- | --- | --- |--- |
-| COMID | Common identifier | Yes | nhdplusv2:hasCOMID |
+| COMID | Common identifier | Yes | us_nhdplusv2:hasCOMID |
 | FDATE | Feature currency date | No |  |
 | RESOLUTION | high, medium, local | No |  |
 | GNIS_ID | GNIS ID for GNIS_NAME | No |  |
 | GNIS_NAME | Name from GNIS | Yes | schema:name |
-| LENGTHKM | Length | Yes | nhdplusv2:hasFlowPathLength |
-| REACHCODE | Reach code | Yes | nhdplusv2:hasReachCode |
+| LENGTHKM | Length | Yes | us_nhdplusv2:hasFlowPathLength |
+| REACHCODE | Reach code | Yes | us_nhdplusv2:hasReachCode |
 | FLOWDIR | with digitized, uninitialized | No |  |
 | WBAREACOMI | ComID of the NHD polygonal water feature through which an "artificial path" flows | No |  |
-| FTYPE | [NHD feature type](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFTYPE |
-| FCODE | [NHD feature type code](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | nhdplusv2:hasFCODE |
+| FTYPE | [NHD feature type](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | us_nhdplusv2:hasFTYPE |
+| FCODE | [NHD feature type code](https://files.hawaii.gov/dbedt/op/gis/data/NHD%20Complete%20FCode%20Attribute%20Value%20List.pdf) | Yes | us_nhdplusv2:hasFCODE |
 | SHAPE_LENG | length in decimal degrees | No |  |
 | ENABLED | Always "True" | No |  |
 | GNIS_NBR | ?? | No |  |
@@ -109,33 +109,33 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `nhdplusv2:FlowLine` | `gcx_cid:<COMID>` |
+| `us_nhdplusv2:FlowLine` | `gcx_cid:<COMID>` |
 | `geo:Geometry` | `gcx_cid:<COMID>.geometry` |
-| `nhdplusv2:FlowPathLength` | `gcx_cid:<COMID>.flowPathLength` |
+| `us_nhdplusv2:FlowPathLength` | `gcx_cid:<COMID>.flowPathLength` |
 | `qudt:QuantityValue` | `gcx_cid:<COMID>.flowPathLength.quantityValue` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (TO ADD)
 | reference_flowline | Description | Lift to graph | Ontology property | Notes |
 | --- | --- | --- | --- | --- |
 | fid | Internal feature identifier | No |  |  |
-| COMID | NHDPlus version 2 comid (NHDPlusV2) or permanent identifier (NHDPlus HR) common identifier | Yes | `nhdplusv2:hasCOMID` |  |
+| COMID | NHDPlus version 2 comid (NHDPlusV2) or permanent identifier (NHDPlus HR) common identifier | Yes | `us_nhdplusv2:hasCOMID` |  |
 | FromNode | Unique node identifier (number) of flowline's fromnode (inlet) | No |  |  |
 | ToNode | Unique node identifier (number) of flowline's tonode (outlet) | No |  |  |
 | StartFlag | Flag denoting a flowline is a headwater | No |  | 0 = not a headwater <br> 1 = is a headwater |
 | StreamCalc | Stream in NHDPlus is a modified version of stream order as defined by Strahler. The Strahler stream order algorithm does not account for flow splits in the  network. The NHDPlus algorithm for stream order does take flow splits into consideration. StreamCalc stands for stream calculator and is computed along with StreamOrder. | No |  |  |
-| Divergence | Divergence field, routes a fraction of 1 to the main path (i.e. Divergence = 1) and a fraction of 0 to all other paths (i.e. Divergence = 2) | Yes | `nhdplusv2:divergence` | "main-path" if 1 <br> "minor-path" if 2 <br> no triple otherwise
+| Divergence | Divergence field, routes a fraction of 1 to the main path (i.e. Divergence = 1) and a fraction of 0 to all other paths (i.e. Divergence = 2) | Yes | `us_nhdplusv2:divergence` | "main-path" if 1 <br> "minor-path" if 2 <br> no triple otherwise
 | DnMinorHyd | Downstream minor hydrologic sequence number | No |  |  |
-| toCOMID | Common identifier for the downstream flowline feature | Yes | `nhdplusv2:dowstreamFlowPath` |  |
-| FCODE | Numeric codes for various feature attributes. Definitions correspond to the attribute 'ftype' in the flowline table | Yes | `nhdplusv2:hasFCODE` |  |
-| LENGTHKM | Length of flowline in kilometers | Yes | `nhdplusv2:hasFlowPathLength` |  |
-| REACHCODE | Unique reach identifier from the source hydrographic dataset | Yes | `nhdplusv2:hasReachCode` |  |
+| toCOMID | Common identifier for the downstream flowline feature | Yes | `us_nhdplusv2:dowstreamFlowPath` |  |
+| FCODE | Numeric codes for various feature attributes. Definitions correspond to the attribute 'ftype' in the flowline table | Yes | `us_nhdplusv2:hasFCODE` |  |
+| LENGTHKM | Length of flowline in kilometers | Yes | `us_nhdplusv2:hasFlowPathLength` |  |
+| REACHCODE | Unique reach identifier from the source hydrographic dataset | Yes | `us_nhdplusv2:hasReachCode` |  |
 | FromMeas | ReachCode route measure (m-value) at bottom of flowline feature derived from NHDPlusV2 | No |  |  |
 | ToMeas | ReachCode route measure (m-value) at top of flowline feature derived from NHDPlusV2 | No |  |  |
 | AreaSqKM | Feature area in square kilometers | No |  |  |
 | ArbolateSu | Kilometers of stream upstream of the bottom of the flowline feature | No |  | arbolate sum |
 | TerminalPa | Hydrologic sequence number of terminal flowline feature | No |  |  |
 | Hydroseq | Hydrologic sequence number; places flowlines in hydrologic order; processing flowline features in ascending order, encounters the features from downstream to upstream; processing the flowline features in descending order, encounters the features from upstream to downstream | No |  |  |
-| LevelPathI | Hydrologic sequence number of most downstream flowline feature in the level path | Yes | `nhdplusv2:hasLevelPathId` | This is used with a lookup table to connect the flowline to its main stem (`nhdplusv2:partOfMainStem`) |
+| LevelPathI | Hydrologic sequence number of most downstream flowline feature in the level path | Yes | `us_nhdplusv2:hasLevelPathId` | This is used with a lookup table to connect the flowline to its main stem (`us_nhdplusv2:partOfMainStem`) |
 | Pathlength | Distance to the terminal flowline feature downstream along the mainpath | No |  |  |
 | DnLevelPat | Downstream mainstem level path identifier | No |  |  |
 | DnHydroseq | Downstream mainstem hydrologic sequence number | No |  |  |
@@ -146,15 +146,15 @@
 | vpuin | Integer 0 or 1 indicates if flowline is an inflow to a Vector Processing Unit  (vpu), as defined in vpuid | No |  | 0 = not an inflow to a VPU <br> 1 = inflow to a VPU |
 | vpuout | Integer 0 or 1 indicates if flowline is an outflow to a Vector Processing Unit  (vpu), as defined in vpuid | No |  | 0 = not an outflow to a VPU <br> 1 = outflow to a VPU |
 | wbareatype | Character field that indicates the type of the waterbody a flowline is related to. Flowlines not related to a waterbody are NA | No |  | controlled vocabulary |
-| slope | Numeric average slope of flowline | Yes | `nhdplusv2:hasSlope` |  |
+| slope | Numeric average slope of flowline | Yes | `us_nhdplusv2:hasSlope` |  |
 | slopelenkm | Numeric length of flowline  used for slope calculation | No |  |  |
-| FTYPE | Type of feature each flowline is designated as | Yes | `nhdplusv2:hasFTYPE` | controlled vocabulary |
+| FTYPE | Type of feature each flowline is designated as | Yes | `us_nhdplusv2:hasFTYPE` | controlled vocabulary |
 | gnis_name | Feature Name from the Geographic Names Information System | Yes | `schema:name` |  |
 | gnis_id | Geographic Names Information System ID for the value in GNIS_Name | No |  |  |
-| WBAREACOMI | comid of water body the flowline associates to | Yes | `nhdplusv2:partOfWaterBody` |  |
+| WBAREACOMI | comid of water body the flowline associates to | Yes | `us_nhdplusv2:partOfWaterBody` |  |
 | hwnodesqkm | Drainage area at the upstream node of a first order flowline | No |  |  |
 | RPUID | Character identifier for raster processing unit flowline belongs to. nulls are null in source data | No |  |  |
-| VPUID | Character identifier for vector processing unit flowline belongs to | Yes | `wbd:containingHUC` |  |
+| VPUID | Character identifier for vector processing unit flowline belongs to | Yes | `us_wbd:containingHUC` |  |
 | roughness | Manning's N estimate for flowline | No |  |  |
 
 
