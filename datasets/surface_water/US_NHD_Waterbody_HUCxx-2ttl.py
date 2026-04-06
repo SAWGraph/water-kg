@@ -160,12 +160,12 @@ def process_waterbodies_shp2ttl(vpunum, infile, outfile):
         # Triplify current NHDWaterbody attributes
         if not pd.isnull(row.GNIS_NAME):
             kg.add((bodyiri, SDO.name, Literal(row.GNIS_NAME, datatype=XSD.string)))
-        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(row.COMID), datatype=XSD.string)))
-        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(row.FTYPE), datatype=XSD.string)))
-        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(row.FCODE), datatype=XSD.string)))
-        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(row.REACHCODE), datatype=XSD.string)))
+        kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasCOMID'], Literal(str(row.COMID), datatype=XSD.string)))
+        kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasFTYPE'], Literal(str(row.FTYPE), datatype=XSD.string)))
+        kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasFCODE'], Literal(str(row.FCODE), datatype=XSD.string)))
+        kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasReachCode'], Literal(str(row.REACHCODE), datatype=XSD.string)))
         if row.REACHCODE is not None:
-            kg.add((bodyiri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(row.REACHCODE)[:8]]))
+            kg.add((bodyiri, _PREFIX['us_wbd']['containingHUC'], _PREFIX['us_wbd_data']['d.HUC8.' + str(row.REACHCODE)[:8]]))
 
     logger.info(f'Write HUC{vpunum} water body triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file

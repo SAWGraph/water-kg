@@ -33,11 +33,11 @@ ns_dir = cwd.parent.parent.parent
 data_dir = cwd.parent / "data"
 ttl_dir = cwd / "ttl_files"
 log_dir = cwd / "logs"
-# print(f"Current working directory:      {cwd}")
-# print(f"Github repos and namespaces.py: {ns_dir}")
-# print(f"Data (input) directory:         {data_dir}")
-# print(f"Turtle (output) directory:      {ttl_dir}")
-# print(f"Logging directory:              {log_dir}")
+# print(f'Current working directory:      {cwd}')
+# print(f'Github repos and namespaces.py: {ns_dir}')
+# print(f'Data (input) directory:         {data_dir}')
+# print(f'Turtle (output) directory:      {ttl_dir}')
+# print(f'Logging directory:              {log_dir}')
 
 # Modify the system path to find namespaces.py
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
@@ -61,9 +61,9 @@ for vpunum in vpunums:
 ### OUTPUT Filename ###
 out_files = []
 for vpunum in vpunums:
-    out_files.append(ttl_dir / f"us_wbd_huc{vpunum}.ttl")
+    out_files.append(ttl_dir / f'us_wbd_huc{vpunum}.ttl')
 
-logname = log_dir / f"log_US_WBD_HUCxx-2ttl.txt"
+logname = log_dir / f'log_US_WBD_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -98,7 +98,7 @@ def initial_kg(_PREFIX):
 
 def build_iris(hid, level, _PREFIX):
     huc_iri = f'd.HUC{level}.' + str(hid)
-    return _PREFIX["wbd_data"][huc_iri], _PREFIX["wbd_data"][huc_iri + '.geometry']
+    return _PREFIX['us_wbd_data'][huc_iri], _PREFIX['us_wbd_data'][huc_iri + '.geometry']
 
 
 def process_huc(gpkg, level, graph, _PREFIX):
@@ -109,25 +109,25 @@ def process_huc(gpkg, level, graph, _PREFIX):
     for row in gdf.itertuples():
         huciri, geomiri = build_iris(row.huc_num, level, _PREFIX)
         if ' ' not in huciri:
-            graph.add((huciri, RDF.type, _PREFIX["wbd"][f'HUC{level}']))
-            graph.add((huciri, _PREFIX["wbd"]['hucCode'], Literal(row.huc_num, datatype=XSD.string)))
+            graph.add((huciri, RDF.type, _PREFIX['us_wbd'][f'HUC{level}']))
+            graph.add((huciri, _PREFIX['us_wbd']['hucCode'], Literal(row.huc_num, datatype=XSD.string)))
             graph.add((huciri, SDO.name, Literal(row.name, datatype=XSD.string)))
             graph.add((huciri, GEO.hasGeometry, geomiri))
             graph.add((huciri, GEO.defaultGeometry, geomiri))
             graph.add((geomiri, RDF.type, GEO.Geometry))
             graph.add((geomiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
             for state in [ st.strip() for st in row.states.split(',') ]:
-                graph.add((huciri, _PREFIX["wbd"]['hucState'], Literal(state, datatype=XSD.string)))
+                graph.add((huciri, _PREFIX['us_wbd']['hucState'], Literal(state, datatype=XSD.string)))
                 # This could also be done as an object property linking to AR1 instances from the Spatial repo
             if level > 8:  # That is, HUCs 10 or 12 only
-                graph.add((huciri, _PREFIX["wbd"]['hucType'], Literal(row.hutype, datatype=XSD.string)))
-                graph.add((huciri, _PREFIX["wbd"]['hucTypeDescription'], Literal(row.hutype_description, datatype=XSD.string)))
+                graph.add((huciri, _PREFIX['us_wbd']['hucType'], Literal(row.hutype, datatype=XSD.string)))
+                graph.add((huciri, _PREFIX['us_wbd']['hucTypeDescription'], Literal(row.hutype_description, datatype=XSD.string)))
             if level > 10 and row.tohuc.lower() != 'closed basin':  # That is, HUC 12 only
                     tohuciri, tohucgeomiri = build_iris(row.tohuc, level, _PREFIX)
-                    graph.add((huciri, _PREFIX["wbd"]['toHUC'], tohuciri))
+                    graph.add((huciri, _PREFIX['us_wbd']['toHUC'], tohuciri))
             if level > 2:
                 containing_huciri, containing_hucgeomiri = build_iris(row.huc_num[:-2], level - 2, _PREFIX)
-                graph.add((huciri, _PREFIX["wbd"]['containingHUC'], containing_huciri))
+                graph.add((huciri, _PREFIX['us_wbd']['containingHUC'], containing_huciri))
     return graph
 
 

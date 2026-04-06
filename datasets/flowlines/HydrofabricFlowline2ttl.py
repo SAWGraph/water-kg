@@ -181,7 +181,7 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
         fl_iri, fl_geo_iri, fl_len_iri, fl_qv_iri = build_iris(node[0], _PREFIX)
 
         # Instantiate the current NHDFlowline
-        kg.add((fl_iri, RDF.type, _PREFIX['nhdplusv2']['FlowLine']))
+        kg.add((fl_iri, RDF.type, _PREFIX['us_nhdplusv2']['FlowLine']))
 
         # Triplify the geometry for the current NHDFlowline
         kg.add((fl_geo_iri, RDF.type, GEO.Geometry))
@@ -190,40 +190,40 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
         kg.add((fl_geo_iri, GEO.asWKT, Literal(node[1]['geometry'], datatype=GEO.wktLiteral)))
 
         # Triplify current NHDFlowline attributes
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data'][f'd.HUC8.{str(node[1]['reachcode'][:8])}']))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasLevelPathId'], Literal(node[1]['levelpathi'], datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_wbd']['containingHUC'], _PREFIX['us_wbd_data'][f'd.HUC8.{str(node[1]['reachcode'][:8])}']))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasLevelPathId'], Literal(node[1]['levelpathi'], datatype=XSD.string)))
         if str(node[1]['levelpathi']) in mainstem_csv['lp_mainstem'].values:
             msid = mainstem_csv.loc[mainstem_csv["lp_mainstem"] == str(node[1]['levelpathi'])]["ref_mainstem_id"].iloc[0]
-            # kg.add((fl_iri, _PREFIX['nhdplusv2']['hasMainStemId'], Literal(msid, datatype=XSD.string)))
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['partOfMainStem'], _PREFIX['gcx_ms'][msid]))
+            # kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasMainStemId'], Literal(msid, datatype=XSD.string)))
+            kg.add((fl_iri, _PREFIX['us_nhdplusv2']['partOfMainStem'], _PREFIX['gcx_ms'][msid]))
         if 'divergence' in dg.nodes[node[0]]:
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFlowPathLength'], fl_len_iri))
+            kg.add((fl_iri, _PREFIX['us_nhdplusv2']['divergence'], Literal(node[1]['divergence'], datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasFlowPathLength'], fl_len_iri))
         if node[1]['slope'] > -9998:
             slope_str = f'{node[1]['slope']:.20f}'.rstrip('0').rstrip('.')
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['hasSlope'], Literal(slope_str, datatype=XSD.decimal)))
+            kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasSlope'], Literal(slope_str, datatype=XSD.decimal)))
         if not pd.isnull(node[1]['gnis_name']) and node[1]['gnis_name'] != '':
             kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data'][f'd.HUC2.{str(node[1]['vpuid'])}']))
+        kg.add((fl_iri, _PREFIX['us_wbd']['containingHUC'], _PREFIX['us_wbd_data'][f'd.HUC2.{str(node[1]['vpuid'])}']))
         if int(node[1]['wbareacomi']) > 0:
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['partOfWaterBody'], _PREFIX['gcx_cid'][str(node[1]['wbareacomi'])]))
+            kg.add((fl_iri, _PREFIX['us_nhdplusv2']['partOfWaterBody'], _PREFIX['gcx_cid'][str(node[1]['wbareacomi'])]))
         # if len(node[1]['wbareatype']) > 0:
-        #     kg.add((fl_iri, _PREFIX['nhdplusv2']['partOfWaterBodyType'], Literal(node[1]['wbareatype'], datatype=XSD.string)))
+        #     kg.add((fl_iri, _PREFIX['us_nhdplusv2']['partOfWaterBodyType'], Literal(node[1]['wbareatype'], datatype=XSD.string)))
 
-        kg.add((fl_len_iri, RDF.type, _PREFIX['nhdplusv2']['FlowPathLength']))
+        kg.add((fl_len_iri, RDF.type, _PREFIX['us_nhdplusv2']['FlowPathLength']))
         kg.add((fl_len_iri, _PREFIX['qudt']['quantityValue'], fl_qv_iri))
         kg.add((fl_qv_iri, RDF.type, _PREFIX['qudt']['QuantityValue']))
         kg.add((fl_qv_iri, _PREFIX['qudt']['numericValue'], Literal(node[1]['lengthkm'], datatype=XSD.decimal)))
         kg.add((fl_qv_iri, _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['KiloM']))
 
         # Triplify the downstream connectivity, including a reflexive statement for the current NHDFlowline
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], fl_iri))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['downstreamFlowPath'], fl_iri))
         for key in dg.successors(node[0]):
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx_cid'][key]))
+            kg.add((fl_iri, _PREFIX['us_nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx_cid'][key]))
     logger.info(f'Write HUC{vpunum} flowline triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 

@@ -119,7 +119,7 @@ def build_iris(cid, _PREFIX, max_id_length):
     :param _PREFIX:
     :return:
     """
-    return _PREFIX['nhdplusv2'][f'd.Catchment.{cid}'], _PREFIX['nhdplusv2'][f'd.Catchment.{cid}.geometry']
+    return _PREFIX['us_nhdplusv2'][f'd.Catchment.{cid}'], _PREFIX['us_nhdplusv2'][f'd.Catchment.{cid}.geometry']
 
 
 def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_length = 7):
@@ -139,9 +139,9 @@ def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_
         kg.add((fl_geo_iri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
 
         # Triplify current catchment attributes
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCatchmentId'], Literal(row.fid.zfill(max_id_length), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['containsFlowLine'], _PREFIX['gcx_cid'][row.featureid]))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data'][f'd.HUC2.{row.vpuid}']))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasCatchmentId'], Literal(row.fid.zfill(max_id_length), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['containsFlowLine'], _PREFIX['gcx_cid'][row.featureid]))
+        kg.add((fl_iri, _PREFIX['us_wbd']['containingHUC'], _PREFIX['us_wbd_data'][f'd.HUC2.{row.vpuid}']))
     logger.info(f'Write HUC{vpunum} catchment triples to {outfile}')
     kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
