@@ -47,7 +47,7 @@ us_sdwis:primarySourceType rdf:type owl:ObjectProperty ;
                            rdfs:range us_sdwis:PWS-SourceWaterType ;
                            rdfs:label "primarySourceType" .
 
-us_sdwis:serviceAreaType rdf:type owl:objectProperty ;
+us_sdwis:serviceAreaType rdf:type owl:ObjectProperty ;
                          rdfs:domain us_sdwis:PWS-ServiceArea ;
                          rdfs:range us_sdwis:PWS-ServiceAreaType ;
                          rdfs:label "serviceAreaType" .
@@ -61,41 +61,41 @@ us_sdwis:hasPermanentSource rdf:type owl:ObjectProperty ;
 #    Datatype properties
 #################################################################
 
-us_sdwis:hasPWSID rdf:type owl:DataProperty ;
+us_sdwis:hasPWSID rdf:type owl:DatatypeProperty ;
                   rdfs:domain us_sdwis:PublicWaterSystem ;
                   rdfs:label "hasPWSID" . 
 
-us_sdwis:pwsName rdf:type owl:DataProperty ;
+us_sdwis:pwsName rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf rdfs:label ;
                  rdfs:domain us_sdwis:PublicWaterSystem ;
                  rdfs:label "pwsName" .
 
-us_sdwis:populationServed rdf:type owl:DataProperty ;
+us_sdwis:populationServed rdf:type owl:DatatypeProperty ;
                           rdfs:domain us_sdwis:PublicWaterSystem ;
                           rdfs:label "populationServed" .
 
-us_sdwis:sizeCategory rdf:type owl:DataProperty ;
+us_sdwis:sizeCategory rdf:type owl:DatatypeProperty ;
                       rdfs:domain us_sdwis:PublicWaterSystem ;
                       rdfs:label "sizeCategory" .
 
-us_sdwis:deactivationDate rdf:type owl:DataProperty ;
+us_sdwis:deactivationDate rdf:type owl:DatatypeProperty ;
                           rdfs:domain us_sdwis:PublicWaterSystem ;
                           rdfs:label "deactivationDate" .
 
-us_sdwis:hasMethod rdf:type owl:DataProperty ;
+us_sdwis:hasMethod rdf:type owl:DatatypeProperty ;
                    rdfs:domain us_sdwis:PWS-ServiceArea ;
                    rdfs:label "hasMethod" .
 
-us_sdwis:hasOwnership rdf:type owl:DataProperty ;
+us_sdwis:hasOwnership rdf:type owl:DatatypeProperty ;
                       rdfs:label "hasOwnership" .
 
-us_sdwis:primarySource rdf:type owl:DataProperty ;
+us_sdwis:primarySource rdf:type owl:DatatypeProperty ;
                        rdfs:label "primarySource" . 
 
-us_sdwis:firstReport rdf:type owl:DataProperty ;
+us_sdwis:firstReport rdf:type owl:DatatypeProperty ;
                      rdfs:label "firstReport" .
 
-us_sdwis:lastReport rdf:type owl:DataProperty ;
+us_sdwis:lastReport rdf:type owl:DatatypeProperty ;
                     rdfs:label "lastReport" . 
 
 
@@ -133,11 +133,11 @@ us_sdwis:PublicWaterSystem-TNCWS rdf:type owl:Class ;
 
 us_sdwis:PublicWaterSystem-GW rdf:type owl:Class ;
                               rdfs:subClassOf us_sdwis:PublicWaterSystem ;
-                              rdfs: "" .
+                              rdfs: "PWS Groundwater" .
 
 us_sdwis:PublicWaterSystem-SW rdf:type owl:Class ;
                               rdfs:subClassOf us_sdwis:PublicWaterSystem ;
-                              rdfs:label "" .
+                              rdfs:label "PWS Surface water" .
 
 us_sdwis:CombinedDistributionSystem rdf:type owl:Class ;
                                     rdfs:subClassOf geo:FeatureCollection ;
