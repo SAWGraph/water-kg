@@ -149,7 +149,7 @@ us_sdwis:PublicWaterSystem-GW rdf:type owl:Class ;
 
 us_sdwis:PublicWaterSystem-SW rdf:type owl:Class ;
                               rdfs:subClassOf us_sdwis:PublicWaterSystem ;
-                              rdfs:label "PWS Surface water" .
+                              rdfs:label "PWS Surface Water" .
 
 us_sdwis:CombinedDistributionSystem rdf:type owl:Class ;
                                     rdfs:subClassOf geo:FeatureCollection ;
@@ -159,14 +159,17 @@ us_sdwis:PWS-ServiceArea rdf:type owl:Class ;
                          rdfs:subClassOf geo:Feature ;
                          rdfs:label "PWS Service Area" .
 
-us_sdwis:PWS-SubFeatureType rdf:type owl:Class ;
-                            rdfs:label "PWS SubFeature Type" .
+us_sdwis:PWS-ServiceAreaType rdf:type owl:Class ;
+                             rdfs:label "PWS Service Area Type" .
 
 us_sdwis:PWS-SubFeature rdf:type owl:Class ;
                         rdfs:label "PWS SubFeature" .
 
-us_sdwis:PWS-ServiceAreaType rdf:type owl:Class ;
-                             rdfs:label "PWS Service Area Type" .
+us_sdwis:PWS-SubFeatureType rdf:type owl:Class ;
+                            rdfs:label "PWS SubFeature Type" .
+
+us_sdwis:PWS-SubFeatureActivity rdf:type owl:Class ;
+                                rdfs:label "PWS SubFeature Activity" .
 
 us_sdwis:PWS-SourceWaterType rdf:type owl:Class ;
                              rdfs:label "PWS Source Water Type" .
