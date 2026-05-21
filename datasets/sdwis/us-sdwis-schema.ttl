@@ -115,7 +115,7 @@ us_sdwis:PublicWaterSystem rdf:type owl:Class ;
 
 us_sdwis:PublicWaterSystem-CWS rdf:type owl:Class ;
                                rdfs:subClassOf us_sdwis:PublicWaterSystem ;
-                               rdf:label "Community Water System".
+                               rdfs:label "Community Water System" .
 
 us_sdwis:PublicWaterSystem-NCWS rdf:type owl:Class ;
                                 rdfs:subClassOf us_sdwis:PublicWaterSystem ;
@@ -133,7 +133,7 @@ us_sdwis:PublicWaterSystem-TNCWS rdf:type owl:Class ;
 
 us_sdwis:PublicWaterSystem-GW rdf:type owl:Class ;
                               rdfs:subClassOf us_sdwis:PublicWaterSystem ;
-                              rdfs: "PWS Groundwater" .
+                              rdfs:label "PWS Groundwater" .
 
 us_sdwis:PublicWaterSystem-SW rdf:type owl:Class ;
                               rdfs:subClassOf us_sdwis:PublicWaterSystem ;
