@@ -50,7 +50,7 @@ us_sdwis:primarySourceType rdf:type owl:ObjectProperty ;
 us_sdwis:serviceAreaType rdf:type owl:objectProperty ;
                          rdfs:domain us_sdwis:PWS-ServiceArea ;
                          rdfs:range us_sdwis:PWS-ServiceAreaType ;
-                         rdsf:label "serviceAreaType" .
+                         rdfs:label "serviceAreaType" .
 
 us_sdwis:hasPermanentSource rdf:type owl:ObjectProperty ;
                             rdfs:subPropertyOf us_sdwis:hasSource ;
