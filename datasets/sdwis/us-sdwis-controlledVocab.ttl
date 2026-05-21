@@ -2,183 +2,223 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#> .
 
-
-#################################################################
-#    PWS Service Area Types
-#################################################################
-
-us_sdwis:PWS-ServiceArea-DC a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-DC a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Daycare Center" .
 
-us_sdwis:PWS-ServiceArea-DI a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-DI a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Dispenser" .
 
-us_sdwis:PWS-ServiceArea-HA a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-HA a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Homeowners Association" .
 
-us_sdwis:PWS-ServiceArea-HM a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-HM a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Hotel/Motel" .
 
-us_sdwis:PWS-ServiceArea-HR a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-HR a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Highway Rest Area" .
 
-us_sdwis:PWS-ServiceArea-IA a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-IA a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Industrial/Agricultural" .
 
-us_sdwis:PWS-ServiceArea-IC a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-IC a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Interstate Carrier" .
 
-us_sdwis:PWS-ServiceArea-IN a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-IN a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Institution" .
 
-us_sdwis:PWS-ServiceArea-MF a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-MF a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Medical Facility" .
 
-us_sdwis:PWS-ServiceArea-MH a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-MH a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Mobile Home Park" .
 
-us_sdwis:PWS-ServiceArea-MP a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-MP a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Mobile Home Park - Principal Residence" .
 
-us_sdwis:PWS-ServiceArea-MU a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-MU a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Municipality" .
 
-us_sdwis:PWS-ServiceArea-OA a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-OA a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Other Area" .
 
-us_sdwis:PWS-ServiceArea-ON a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-ON a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Other Non-transient Area" .
 
-us_sdwis:PWS-ServiceArea-OR a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-OR a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Other Residential" .
 
-us_sdwis:PWS-ServiceArea-OT a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-OT a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Other Transient Area" .
 
-us_sdwis:PWS-ServiceArea-PA a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-PA a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Recreation Area" .
 
-us_sdwis:PWS-ServiceArea-RA a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-RA a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Residential Area" .
 
-us_sdwis:PWS-ServiceArea-RE a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-RE a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Retail Employees" .
 
-us_sdwis:PWS-ServiceArea-RS a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-RS a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Restaurant" .
 
-us_sdwis:PWS-ServiceArea-SC a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-SC a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "School" .
 
-us_sdwis:PWS-ServiceArea-SI a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-SI a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Sanitary Improvement District" .
 
-us_sdwis:PWS-ServiceArea-SK a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-SK a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Summer Camp" .
 
-us_sdwis:PWS-ServiceArea-SR a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-SR a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Secondary Residences" .
 
-us_sdwis:PWS-ServiceArea-SS a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-SS a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Service Station" .
 
-us_sdwis:PWS-ServiceArea-SU a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-SU a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Subdivision" .
 
-us_sdwis:PWS-ServiceArea-WB a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-WB a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Water Bottler" .
 
-us_sdwis:PWS-ServiceArea-WH a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
+us_sdwis:PWS-ServiceArea-WH a us_sdwis:PWS-ServiceAreaType,
+        owl:NamedIndividual ;
     rdfs:label "Wholesaler of Water" .
 
-
-#################################################################
-#    PWS SubFeature Activities
-#################################################################
-
-us_sdwis:PWS-SubFeatureActivity.A a us_sdwis:PWS-SubFeatureActivity , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureActivity.A a us_sdwis:PWS-SubFeatureActivity,
+        owl:NamedIndividual ;
     rdfs:label "Active" .
 
-us_sdwis:PWS-SubFeatureActivity.I a us_sdwis:PWS-SubFeatureActivity , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureActivity.I a us_sdwis:PWS-SubFeatureActivity,
+        owl:NamedIndividual ;
     rdfs:label "Inactive" .
 
-us_sdwis:PWS-SubFeatureActivity.M a us_sdwis:PWS-SubFeatureActivity , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureActivity.M a us_sdwis:PWS-SubFeatureActivity,
+        owl:NamedIndividual ;
     rdfs:label "Merged with another system" .
 
-us_sdwis:PWS-SubFeatureActivity.N a us_sdwis:PWS-SubFeatureActivity , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureActivity.N a us_sdwis:PWS-SubFeatureActivity,
+        owl:NamedIndividual ;
     rdfs:label "Changed from public to non-public" .
 
-us_sdwis:PWS-SubFeatureActivity.P a us_sdwis:PWS-SubFeatureActivity , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureActivity.P a us_sdwis:PWS-SubFeatureActivity,
+        owl:NamedIndividual ;
     rdfs:label "Potential future system to be regulated" .
 
-
-#################################################################
-#    PWS SubFeatures Types
-#################################################################
-
-us_sdwis:PWS-SubFeatureType.CC a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.CC a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Consecutive Connection" .
 
-us_sdwis:PWS-SubFeatureType.CH a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.CH a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Common Headers" .
 
-us_sdwis:PWS-SubFeatureType.CS a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.CS a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Cistern" .
 
-us_sdwis:PWS-SubFeatureType.CW a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.CW a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Clear Well" .
 
-us_sdwis:PWS-SubFeatureType.DS a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.DS a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Distribution System/Zone" .
 
-us_sdwis:PWS-SubFeatureType.IG a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.IG a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Infiltration Gallery" .
 
-us_sdwis:PWS-SubFeatureType.IN a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.IN a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Intake" .
 
-us_sdwis:PWS-SubFeatureType.NN a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.NN a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Non-piped, Non-purchased" .
 
-us_sdwis:PWS-SubFeatureType.NP a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.NP a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Non-piped" .
 
-us_sdwis:PWS-SubFeatureType.OT a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.OT a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Other" .
 
-us_sdwis:PWS-SubFeatureType.PC a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.PC a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Pressure Control" .
 
-us_sdwis:PWS-SubFeatureType.PF a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.PF a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Pump Facility" .
 
-us_sdwis:PWS-SubFeatureType.RC a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.RC a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Roof Catchment" .
 
-us_sdwis:PWS-SubFeatureType.RS a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.RS a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Reservoir" .
 
-us_sdwis:PWS-SubFeatureType.SI a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.SI a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Surface Impoundment" .
 
-us_sdwis:PWS-SubFeatureType.SP a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.SP a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Spring" .
 
-us_sdwis:PWS-SubFeatureType.SS a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.SS a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Sampling Station" .
 
-us_sdwis:PWS-SubFeatureType.ST a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.ST a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Storage" .
 
-us_sdwis:PWS-SubFeatureType.TM a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.TM a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Transmission Main (Manifold)" .
 
-us_sdwis:PWS-SubFeatureType.TP a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.TP a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Treatment Plant" .
 
-us_sdwis:PWS-SubFeatureType.WH a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.WH a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Wellhead" .
 
-us_sdwis:PWS-SubFeatureType.WL a us_sdwis:PWS-SubFeatureType , owl:NamedIndividual ;
+us_sdwis:PWS-SubFeatureType.WL a us_sdwis:PWS-SubFeatureType,
+        owl:NamedIndividual ;
     rdfs:label "Well " .
 
