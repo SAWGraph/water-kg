@@ -4,7 +4,7 @@
 
 
 #################################################################
-#    PWS Service Areas
+#    PWS Service Area Types
 #################################################################
 
 us_sdwis:PWS-ServiceArea-DC a us_sdwis:PWS-ServiceAreaType , owl:NamedIndividual ;
