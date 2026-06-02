@@ -4,221 +4,276 @@
 
 us_sdwis:PWS-ServiceArea-DC a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Daycare Center" .
+    rdfs:label "Daycare Center" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-DI a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Dispenser" .
+    rdfs:label "Dispenser" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-HA a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Homeowners Association" .
+    rdfs:label "Homeowners Association" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-HM a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Hotel/Motel" .
+    rdfs:label "Hotel/Motel" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-HR a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Highway Rest Area" .
+    rdfs:label "Highway Rest Area" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-IA a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Industrial/Agricultural" .
+    rdfs:label "Industrial/Agricultural" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-IC a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Interstate Carrier" .
+    rdfs:label "Interstate Carrier" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-IN a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Institution" .
+    rdfs:label "Institution" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-MF a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Medical Facility" .
+    rdfs:label "Medical Facility" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-MH a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Mobile Home Park" .
+    rdfs:label "Mobile Home Park" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-MP a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Mobile Home Park - Principal Residence" .
+    rdfs:label "Mobile Home Park - Principal Residence" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-MU a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Municipality" .
+    rdfs:label "Municipality" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-OA a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Other Area" .
+    rdfs:label "Other Area" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-ON a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Other Non-transient Area" .
+    rdfs:label "Other Non-transient Area" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-OR a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Other Residential" .
+    rdfs:label "Other Residential" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-OT a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Other Transient Area" .
+    rdfs:label "Other Transient Area" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-PA a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Recreation Area" .
+    rdfs:label "Recreation Area" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-RA a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Residential Area" .
+    rdfs:label "Residential Area" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-RE a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Retail Employees" .
+    rdfs:label "Retail Employees" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-RS a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Restaurant" .
+    rdfs:label "Restaurant" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-SC a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "School" .
+    rdfs:label "School" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-SI a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Sanitary Improvement District" .
+    rdfs:label "Sanitary Improvement District" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-SK a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Summer Camp" .
+    rdfs:label "Summer Camp" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-SR a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Secondary Residences" .
+    rdfs:label "Secondary Residences" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-SS a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Service Station" .
+    rdfs:label "Service Station" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-SU a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Subdivision" .
+    rdfs:label "Subdivision" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-WB a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Water Bottler" .
+    rdfs:label "Water Bottler" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-ServiceArea-WH a us_sdwis:PWS-ServiceAreaType,
         owl:NamedIndividual ;
-    rdfs:label "Wholesaler of Water" .
+    rdfs:label "Wholesaler of Water" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureActivity.A a us_sdwis:PWS-SubFeatureActivity,
         owl:NamedIndividual ;
-    rdfs:label "Active" .
+    rdfs:label "Active" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureActivity.I a us_sdwis:PWS-SubFeatureActivity,
         owl:NamedIndividual ;
-    rdfs:label "Inactive" .
+    rdfs:label "Inactive" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureActivity.M a us_sdwis:PWS-SubFeatureActivity,
         owl:NamedIndividual ;
-    rdfs:label "Merged with another system" .
+    rdfs:label "Merged with another system" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureActivity.N a us_sdwis:PWS-SubFeatureActivity,
         owl:NamedIndividual ;
-    rdfs:label "Changed from public to non-public" .
+    rdfs:label "Changed from public to non-public" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureActivity.P a us_sdwis:PWS-SubFeatureActivity,
         owl:NamedIndividual ;
-    rdfs:label "Potential future system to be regulated" .
+    rdfs:label "Potential future system to be regulated" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.CC a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Consecutive Connection" .
+    rdfs:label "Consecutive Connection" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.CH a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Common Headers" .
+    rdfs:label "Common Headers" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.CS a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Cistern" .
+    rdfs:label "Cistern" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.CW a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Clear Well" .
+    rdfs:label "Clear Well" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.DS a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Distribution System/Zone" .
+    rdfs:label "Distribution System/Zone" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.IG a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Infiltration Gallery" .
+    rdfs:label "Infiltration Gallery" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.IN a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Intake" .
+    rdfs:label "Intake" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.NN a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Non-piped, Non-purchased" .
+    rdfs:label "Non-piped, Non-purchased" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.NP a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Non-piped" .
+    rdfs:label "Non-piped" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.OT a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Other" .
+    rdfs:label "Other" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.PC a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Pressure Control" .
+    rdfs:label "Pressure Control" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.PF a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Pump Facility" .
+    rdfs:label "Pump Facility" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.RC a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Roof Catchment" .
+    rdfs:label "Roof Catchment" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.RS a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Reservoir" .
+    rdfs:label "Reservoir" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.SI a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Surface Impoundment" .
+    rdfs:label "Surface Impoundment" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.SP a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Spring" .
+    rdfs:label "Spring" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.SS a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Sampling Station" .
+    rdfs:label "Sampling Station" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.ST a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Storage" .
+    rdfs:label "Storage" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.TM a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Transmission Main (Manifold)" .
+    rdfs:label "Transmission Main (Manifold)" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.TP a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Treatment Plant" .
+    rdfs:label "Treatment Plant" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.WH a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Wellhead" .
+    rdfs:label "Wellhead" ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
 us_sdwis:PWS-SubFeatureType.WL a us_sdwis:PWS-SubFeatureType,
         owl:NamedIndividual ;
-    rdfs:label "Well " .
+    rdfs:label "Well " ;
+    rdfs:isDefinedBy <http://sawgraph.spatialai.org/v1/us-sdwis> .
 
