@@ -40,7 +40,7 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 
 #### Table: SDWA_PUB_WATER_SYSTEMS
 
-> **code**: *sdwa_pws.py*
+<!-- > **code**: *sdwa_pws.py* -->
 
 | Attribute | Description | Lift to Graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
