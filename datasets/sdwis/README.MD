@@ -23,10 +23,16 @@
 * [GDrive Output Directory]()
 
 ## IRIs
+Geoconnex does not include links to geometries in either their KG or their Reference Server
+
+Define `@prefix us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#>`
+
+Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>`
+
 | Instance Class | IRI Format |
 | --- | --- |
-|  |  |
-|  |  |
+| `us_sdwis:PublicWaterSupply` | `http://geoconnex.us/ref/pws/<PWSID>` |
+| `geo:Geometry` | `us_sdwis_data:d.PWS-ServiceArea.<PWSID>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
@@ -34,26 +40,26 @@
 
 #### Table: SDWA_PUB_WATER_SYSTEMS
 
-**code**: sdwa_pws.py
+**code**: *sdwa_pws.py*
 
 | Attribute | Description | Lift to Graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | SUBMISSIONYEARQUARTER |  | ? |  |  |
 | PWSID | Unique identifying code for a public water system in SDWIS. The PWSID consists of a two-letter state or region code, followed by seven digits. | Yes | `us_sdwis:pwsId` | Also in IRI |
-| PWS_NAME |  | Yes | `us_sdwis:pwsName` |  |
+| PWS_NAME |  | Yes | `us_sdwis:pwsName` | Also `rdfs:label` |
 | PRIMACY_AGENCY_CODE | Primacy agency code is the two-character state code or EPA Region number. |  |  |  |
 | EPA_REGION |  |  |  |  |
 | SEASON_BEGIN_DATE | Opening month and day of the period of time when the water system serves water for those systems that operate seasonally (DD-MONTH format). | ? |  |  |
 | SEASON_END_DATE | Ending month and day of the period of time when the water system serves water for those systems that operate seasonally (DD-MONTH format). | ? |  |  |
 | PWS_ACTIVITY_CODE | A single-character code identifying the current activity status of the public water system. A - Active, I- inactive, N- changed from public to non-public, M - merged with another system, P- potential future system to be regulated | YES | `us_sdwis:hasActivity` | Capture as `xsd:string` |
 | PWS_DEACTIVATION_DATE | Date on which the water system was reported as being closed/deactivated (MM/DD/YYYY format). | Yes | `us_sdwis:deactivationDate` | Capture as `xsd:date` |
-| PWS_TYPE_CODE | Indicates the type of public water system (PWS). CWS- community water system, TNCWS - transient community water system, NTNCWS - nontransient non-community water system (see metadata for defintions) | Yes | `us_sdwis:PWS-` |  |
+| PWS_TYPE_CODE | Indicates the type of public water system (PWS). CWS- community water system, TNCWS - transient community water system, NTNCWS - nontransient non-community water system (see metadata for defintions) | Yes | `us_sdwis:PublicWaterSystem-<PWS_TYPE_CODE>` | Class |
 | DBPR_SCHEDULE_CAT_CODE | Stage 2 Disinfectant Byproducts Rule schedule category code. |  |  |  |
 | CDS_ID | Combined distribution system identifier. | Yes |  `us_sdwis:CombinedDistributionSystem` | Capture in IRI |
-| GW_SW_CODE | Identifies whether a system’s water source is groundwater (GW) or surface water (SW) under SDWA. An empty cell indicates the system relied on another water source. | Yes |  |  |
+| GW_SW_CODE | Identifies whether a system’s water source is groundwater (GW) or surface water (SW) under SDWA. An empty cell indicates the system relied on another water source. | Yes | `us_sdwis:PublicWaterSystem-<GW_SW_CODE>` | Class |
 | LT2_SCHEDULE_CAT_CODE| Single-digit code to identify the category for Long Term 2 Enhanced Surface Water Treatment (LT2) schedule. |  |  |  |
-| OWNER_TYPE_CODE | F – Federal government, L- Local government, M- Public/Private, N – Native American, P - Private, S – State government | Yes |  |  |
-| POPULATION_SERVED_COUNT | Estimated average daily population served by a system. | Yes |  |  |
+| OWNER_TYPE_CODE | F – Federal government, L- Local government, M- Public/Private, N – Native American, P - Private, S – State government | Yes | `us_sdwis:hasOwnership` | Capture as `xsd:string` |
+| POPULATION_SERVED_COUNT | Estimated average daily population served by a system. | Yes | `us_sdwis:populationServed` | Capture as `xsd:int` |
 | POP_CAT_2_CODE |  |  |  |  |
 | POP_CAT_3_CODE |  |  |  |  |
 | POP_CAT_4_CODE |  |  |  |  |
