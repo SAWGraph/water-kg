@@ -1,23 +1,21 @@
-#
+# Safe Drinking Water Information System (SDWIS)
 
-## Overview of the raw dataset
-
-* **Name of dataset:** Safe Drinking Water Information System SDWIS
-* **Source Agency:** EPA
-* **Data source location:**
-  * [Drinking Water State | EPA Pfas analytic tools downloads](https://echo.epa.gov/trends/pfas-tools#data)
-  * [SDWA Dataset | ECHO data downloads](https://echo.epa.gov/tools/data-downloads)
-  * [Water System Boundaries](https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Water_System_Boundaries/FeatureServer)
-* **Additional data sources:**
-  * [SDWIS Federal Reports Search](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/sdwis_fed_reports_public/200)
-
-* **Metadata description:**
-  * [Envirofacts model](https://enviro.epa.gov/envirofacts/metadata/model/sdwis)
-  * [SDWA download summary](https://echo.epa.gov/tools/data-downloads/sdwa-download-summary#sdwis)
-
-  * [Community Water System Service Area Boundaries](https://www.epa.gov/ground-water-and-drinking-water/community-water-system-service-area-boundaries?tab=map) , [Water System Boundaries](https://epa.maps.arcgis.com/home/item.html?id=80c6912ef14f46e480f5afd807767b4b), [ORB_SAB_Model Github](https://github.com/USEPA/ORD_SAB_Model)
-* **Format of data returned:** XLSX, CSV, (API available with json but has less tables), esri rest service (CWS boundaries)
-* **General Comments:** SDWIS features are contained in the hydrology repo (and share geoconnex uris when available). Sampling reports from SDWIS regarding pfas are contained in the PFAS-KG repo. 
+## Dataset Overview
+| Dataset Attribute | Description |
+| --- | --- |
+| **Name of dataset:** | Safe Drinking Water Information System (SDWIS) |
+| **Source Agency:** | [EPA](https://www.epa.gov/) |
+| **Data source location:** | [Drinking Water State | EPA Pfas analytic tools downloads](https://echo.epa.gov/trends/pfas-tools#data) <br/>
+                              [SDWA Dataset | ECHO data downloads](https://echo.epa.gov/tools/data-downloads) <br/>
+                              [Water System Boundaries](https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Water_System_Boundaries/FeatureServer) |
+| **Additional data sources:** | [SDWIS Federal Reports Search](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/sdwis_fed_reports_public/200)
+| **Metadata description:** | [Envirofacts model](https://enviro.epa.gov/envirofacts/metadata/model/sdwis) <br/>
+                              [SDWA download summary](https://echo.epa.gov/tools/data-downloads/sdwa-download-summary#sdwis) <br/>
+                              [Community Water System Service Area Boundaries](https://www.epa.gov/ground-water-and-drinking-water/community-water-system-service-area-boundaries?tab=map) <br/>
+                              [Water System Boundaries](https://epa.maps.arcgis.com/home/item.html?id=80c6912ef14f46e480f5afd807767b4b) <br/>
+                              [ORB_SAB_Model Github](https://github.com/USEPA/ORD_SAB_Model)
+| **Format of data returned:** | XLSX, CSV, (API available with json but has less tables), esri rest service (CWS boundaries) |
+| **General Comments:** | SDWIS features are contained in the hydrology repo (and share geoconnex uris when available). Sampling reports from SDWIS regarding pfas are contained in the PFAS-KG repo. |
 
 ## Schema Diagram
 
