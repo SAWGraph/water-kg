@@ -13,7 +13,7 @@
                               [SDWA download summary](https://echo.epa.gov/tools/data-downloads/sdwa-download-summary#sdwis) <br/>
                               [Community Water System Service Area Boundaries](https://www.epa.gov/ground-water-and-drinking-water/community-water-system-service-area-boundaries?tab=map) <br/>
                               [Water System Boundaries](https://epa.maps.arcgis.com/home/item.html?id=80c6912ef14f46e480f5afd807767b4b) <br/>
-                              [ORB_SAB_Model Github](https://github.com/USEPA/ORD_SAB_Model)
+                              [ORB_SAB_Model Github](https://github.com/USEPA/ORD_SAB_Model) |
 | **Format of data returned:** | XLSX, CSV, (API available with json but has less tables), esri rest service (CWS boundaries) |
 | **General Comments:** | SDWIS features are contained in the hydrology repo (and share geoconnex uris when available). Sampling reports from SDWIS regarding pfas are contained in the PFAS-KG repo. |
 
