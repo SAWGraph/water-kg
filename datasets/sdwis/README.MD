@@ -51,7 +51,7 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 | EPA_REGION |  |  |  |  |
 | SEASON_BEGIN_DATE | Opening month and day of the period of time when the water system serves water for those systems that operate seasonally (DD-MONTH format). | ? |  |  |
 | SEASON_END_DATE | Ending month and day of the period of time when the water system serves water for those systems that operate seasonally (DD-MONTH format). | ? |  |  |
-| PWS_ACTIVITY_CODE | A single-character code identifying the current activity status of the public water system. A - Active, I- inactive, N- changed from public to non-public, M - merged with another system, P- potential future system to be regulated | YES | `us_sdwis:hasActivity` | Capture as `xsd:string` |
+| PWS_ACTIVITY_CODE | A single-character code identifying the current activity status of the public water system. A - Active, I- inactive, N- changed from public to non-public, M - merged with another system, P- potential future system to be regulated | Yes | `us_sdwis:hasActivity` | Capture as `xsd:string` |
 | PWS_DEACTIVATION_DATE | Date on which the water system was reported as being closed/deactivated (MM/DD/YYYY format). | Yes | `us_sdwis:deactivationDate` | Capture as `xsd:date` |
 | PWS_TYPE_CODE | Indicates the type of public water system (PWS). CWS- community water system, TNCWS - transient community water system, NTNCWS - nontransient non-community water system (see metadata for defintions) | Yes | `us_sdwis:PublicWaterSystem-<PWS_TYPE_CODE>` | Class |
 | DBPR_SCHEDULE_CAT_CODE | Stage 2 Disinfectant Byproducts Rule schedule category code. |  |  |  |
@@ -98,36 +98,35 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 
 #### Table: geographic_area  (one to many with PWSID)
 
-code:sdwa_geographicArea.py
+> **code**: *sdwa_geographicArea.py*
 
-| Attribute | Description | Lift to Graph | Ontology | Property |
-|---------------------|-------------|---------------|----------|----------|
-| ansi_entity_code    | American National Standards Institute (ANSI) code for the county, city, or legal statistical area. Taken with the ANSI state code, uniquely identifies a county (or other area) within the country. See the U.S. Census Bureau webpage for more information about ANSI codes.  |     |||
-| area_type_code      | Indicates the area type, which is TR (Tribal), CN (County), ZC (Zip Code), CT (City), or IR (Indian Reservation)  |     |||
-| city_served         |   |     |||
-| county_served       |   |     |||
-| epa_region|   |     |||
-| geo_id    |   |     |||
-| primacy_agency_code |   |     |||
-| pws_activity_code   |   |     |||
-| pws_type_code       | A system-generated coded value which classifies the water system according to federal requirements. It includes Community Water Systems (CWS), Non-Transient Non-Community Water Systems (NTNCWS), and Transient Non-Community Water Systems (TNCWS).  |     |||
-| pwsid     |   |     |||
-| state_served        |   |     |||
-| tribal_code         |   |     |||
-| zip_code_served     |   |     |||
+| Attribute | Description | Lift to Graph | Ontology Property | Comments |
+| --- | --- | --- | --- | --- |
+| ansi_entity_code | American National Standards Institute (ANSI) code for the county, city, or legal statistical area. Taken with the ANSI state code, uniquely identifies a county (or other area) within the country. See the U.S. Census Bureau webpage for more information about ANSI codes. |  |  |  |
+| area_type_code | Indicates the area type, which is TR (Tribal), CN (County), ZC (Zip Code), CT (City), or IR (Indian Reservation) |  |  |  |
+| city_served |  |  |  |  |
+| county_served |  |  |  |  |
+| epa_region |  |  |  |  |
+| geo_id |  |  |  |  |
+| primacy_agency_code |  |  |  |  |
+| pws_activity_code |  |  |  |  |
+| pws_type_code | A system-generated coded value which classifies the water system according to federal requirements. It includes Community Water Systems (CWS), Non-Transient Non-Community Water Systems (NTNCWS), and Transient Non-Community Water Systems (TNCWS). |  |  |  |  |
+| pwsid |  |  |  |  |
+| state_served |  |  |  |  |
+| tribal_code |  |  |  |  |
+| zip_code_served |  |  |  |  |
 
 #### Table: service_area (one to many with PWSID)
 
-| Attribute| Description   | Lift to Graph | Ontology | Property |
-|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|----------|----------|
-| epa_region         |     |     |||
-| is_primary_service_area_code | Code indicating the type of primary service area served by the water system.        |     |||
-| primacy_agency_code| Two character postal code for the state or territory having regulatory oversight for the water system. If the water system is regulated directly by EPA, this code will consist of the two-digit EPA Region number (01â€¦10). The Navajo Nation has primacy over its water systems, so NN is used in this case. |     |||
-| pws_activity_code  | Code that indicates the activity status of the public water system.       |     |||
-| pws_type_code      | A system-generated coded value which classifies the water system according to federal requirements. It includes Community Water Systems (CWS), Non-Transient Non-Community Water Systems (NTNCWS), and Transient Non-Community Water Systems (TNCWS).         |     |||
-| pwsid    |     |     |||
-| service_area_type_code       | Service area type code. (Dispenser, Hotel/Motel, School, Residential Area, etc.)    |     |||
-||     |     |||
+| Attribute | Description | Lift to Graph | Ontology Property | Comments |
+| --- | --- | --- | --- | --- |
+| epa_region |  |  |  |  |
+| is_primary_service_area_code | Code indicating the type of primary service area served by the water system. |  |  |  |  |
+| primacy_agency_code| Two character postal code for the state or territory having regulatory oversight for the water system. If the water system is regulated directly by EPA, this code will consist of the two-digit EPA Region number (01â€¦10). The Navajo Nation has primacy over its water systems, so NN is used in this case. |  |  |  |  |
+| pws_activity_code | Code that indicates the activity status of the public water system. |  |  |  |  |
+| pws_type_code | A system-generated coded value which classifies the water system according to federal requirements. It includes Community Water Systems (CWS), Non-Transient Non-Community Water Systems (NTNCWS), and Transient Non-Community Water Systems (TNCWS). |  |  |  |  |
+| pwsid |  |  |  |  |
+| service_area_type_code | Service area type code. (Dispenser, Hotel/Motel, School, Residential Area, etc.) |  |  |  |  |
 
 #### Table: sdwa_facilities.csv
 
