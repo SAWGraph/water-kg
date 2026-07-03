@@ -5,7 +5,7 @@
 | --- | --- |
 | **Name of dataset:** | Safe Drinking Water Information System (SDWIS) |
 | **Source Agency:** | [EPA](https://www.epa.gov/) |
-| **Data source location:** | [Drinking Water State \| EPA Pfas analytic tools downloads](https://echo.epa.gov/trends/pfas-tools#data) <br/>
+| **Data source location:** | [Drinking Water State `\|` EPA Pfas analytic tools downloads](https://echo.epa.gov/trends/pfas-tools#data) <br/>
                               [SDWA Dataset | ECHO data downloads](https://echo.epa.gov/tools/data-downloads) <br/>
                               [Water System Boundaries](https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Water_System_Boundaries/FeatureServer) |
 | **Additional data sources:** | [SDWIS Federal Reports Search](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/sdwis_fed_reports_public/200)
