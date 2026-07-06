@@ -128,7 +128,7 @@ def main() -> None:
         kg = process_cws_geo_data(kg, df_cwsgeom, state)
         kg = process_ncws_geo_data(kg, df_ncwsgeom, state)
         output_turtle_file = ttl_dir / f'us-sdwis_pws-serviceareas-{state.strip()}.ttl'
-        # kg.serialize(output_turtle_file, format='turtle')
+        kg.serialize(output_turtle_file, format='turtle')
         logger.info(f'Finished triplifying PWS and SA for {state} in {str(timedelta(seconds=time.time() - start_time))} HMS')
 
 
