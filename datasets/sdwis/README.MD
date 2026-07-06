@@ -37,6 +37,8 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 | `us_sdwis:PWS-ServiceArea` | `us_sdwis_data:d.PWS-ServiceArea.<PWSID>` |
 | `geo:Geometry` | `us_sdwis_data:d.PWS-ServiceArea.<PWSID>` |
 
+Note: `http://geoconnex.us/ref/pws/<PWSID> us_sdwis:serviceArea us_sdwis_data:d.PWS-ServiceArea.<PWSID>`
+
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
 ### SDWIS download tables
@@ -69,7 +71,7 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 | POP_CAT_5_CODE |  |  |  |  |
 | POP_CAT_11_CODE |  |  |  |  |
 | PRIMACY_TYPE | Indicates whether the water system is regulated by a state, tribal, or territorial primacy program. Note that EPA direct implementation programs, except for Wyoming, are tribal primacy programs. | ? |  |  |
-| PRIMARY_SOURCE_CODE | Primary water source code. GW - Ground water ,GWP - Ground water purchased, SW - Surface water, SWP - Surface water purchased, GU - Groundwater under influence of surface water, GUP – Purchased ground water under influence of surface water source | Yes | `us_sdwis:primarySource` | Capture as x`sd:string` |
+| PRIMARY_SOURCE_CODE | Primary water source code. GW - Ground water ,GWP - Ground water purchased, SW - Surface water, SWP - Surface water purchased, GU - Groundwater under influence of surface water, GUP – Purchased ground water under influence of surface water source | Yes | `us_sdwis:primarySourceType` | `us_sdwis:PWS-WaterSourceType.<PRIMARY_SOURCE_CODE>` |
 | IS_GRANT_ELIGIBLE_IND | Indicates whether the primacy agency has reported the minimum necessary data elements for this water system to include it in grant calculations. |  |  |  |
 | IS_WHOLESALER_IND | Indicates whether the system is a wholesaler of water. | ? |  |  |
 | IS_SCHOOL_OR_DAYCARE_IND | Indicates if the water system’s primary service area is a school or daycare, as defined by EPA/OGWDW. | ? |  |  |
@@ -105,7 +107,7 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 | --- | --- | --- | --- | --- |
 | SUBMISSIONYEARQUARTER	|	Fiscal year and quarter of the quarterly snapshot of SDWIS. |  |  |  |
 | PWSID	|	Unique identifying code for a public water system in SDWIS. The PWSID consists of a two-letter state or region code, followed by seven digits. |  |  |  |
-| SERVICE_AREA_TYPE_CODE |	Service area type code. For a full list of visit codes and their descriptions see SDWA_REF_CODE_VALUES.csv under VALUE_TYPE=SERVICE_AREA_CODE. | Yes | `us_sdwis:serviceAreaType` |  |
+| SERVICE_AREA_TYPE_CODE |	Service area type code. For a full list of visit codes and their descriptions see SDWA_REF_CODE_VALUES.csv under VALUE_TYPE=SERVICE_AREA_CODE. | Yes | `us_sdwis:serviceAreaType` | Controlled vocabulary |
 | IS_PRIMARY_SERVICE_AREA_CODE | Indicates whether the area is the primary service area served by the water system. |  |  |  |
 | FIRST_REPORTED_DATE	| First reported date of the service area (format MM/DD/YYYY). |  |  |  |
 | LAST_REPORTED_DATE | Last reported date of the service area (format MM/DD/YYYY). |  |  |  |
@@ -115,8 +117,8 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 | Attribute | Description | Lift to Graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | VALUE_TYPE | Column name associated with the value code as found in the other files. |  |  |  |
-| VALUE_CODE | Value associated with the column named in VALUE_TYPE. | Yes | `us_sdwis:PWS-ServiceArea-<VALUE_CODE>` | Look up based on `Service_Area_Type` in CWS layer or `SERVICE_AREA_TYPE` in T_NTNC layer of Geopackage (see below) |
-| VALUE_DESCRIPTION | Description of the value in VALUE_CODE. |  |  |  |
+| VALUE_CODE | Value associated with the column named in VALUE_TYPE. | Yes | `us_sdwis:PWS-ServiceArea-<VALUE_CODE>` | Look up `SERVICE_AREA_TYPE_CODE` based on 'VALUE_DESCRIPTION` (see below) |
+| VALUE_DESCRIPTION | Description of the value in VALUE_CODE. |  |  | `Service_Area_Type` in CWS layer or `SERVICE_AREA_TYPE` in T_NTNC layer of Geopackage |
 
 <!--
 #### Table: GEOGRAPHIC_AREA  (one to many with PWSID)
@@ -181,6 +183,8 @@ Y - Reported and accepted, U - Unreported, R - Reported, but rejected |  |  |  |
 
 #### Layer: CWS ([metadata](https://epa.maps.arcgis.com/sharing/rest/content/items/e29a5059ab8f400ab9802026aee1b761/data))
 
+Subclass of `us_sdwis:PublicWaterSystem`: `us_sdwis:PublicWaterSystem-CWS`
+
 | Attribute | Description | Lift to Graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | fid |  |  |  |  |
@@ -194,7 +198,7 @@ Y - Reported and accepted, U - Unreported, R - Reported, but rejected |  |  |  |
 | Population_Served_Count | Estimated average daily population served by a system. |  |  |  |
 | Service_Connections_Count | Number of service connections to the water system. |  |  |  |
 | Model_Method | The modeling method used for EPA modeled service areas | Yes | `us_sdwis:hasMethod` |  |
-| Service_Area_Type | Indicates the type of primary service area served by the water system. Data element reported to the Safe Drinking Water Information System (SDWIS). | Yes | `us_sdwis:serviceAreaType` |  |
+| Service_Area_Type | Indicates the type of primary service area served by the water system. Data element reported to the Safe Drinking Water Information System (SDWIS). | Yes | `us_sdwis:serviceAreaType` | Controlled vocabulary |
 | Symbology_Field | Field used to symbolize the service areas in the web map |  |  |  |
 | Modification_Method | The method used to create the service areas. This is typically the method employed by the EPA to transform system sourced data that is not a service area into a service area. Examples include using water main data and buffering it by 150 meters or buffering lead service line inventories or georeferencing a service area map and drawing the boundary |  |  |  |
 | Feature_Type | The original type of data that was used to use or create a service area. Many of the feature types are simply a polygon feature of a service area. Other feature types could be water mains, lead service line inventories, PDF map of a service area |  |  |  |
@@ -209,11 +213,13 @@ Y - Reported and accepted, U - Unreported, R - Reported, but rejected |  |  |  |
 
 #### Layer: T_NTNC ([metadata](https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Transient_and_Non_Transient_Non_Community_Water_System_Service_Areas/FeatureServer/layers))
 
+Subclass of `us_sdwis:PublicWaterSystem`: `us_sdwis:PublicWaterSystem-TNCWS` or `us_sdwis:PublicWaterSystem-NTNCWS`
+
 | Attribute | Description | Lift to Graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | fid | OBJECTID |  |  |  |
 | PWSID | PWSID |  |  |  |
-| PWS_Name | PWS Name |  |  |  |
+| PWS_Name | PWS Name | Yes | `us_sdwis:pwsName` |  |
 | LOCATION_CONFIDENCE | Location Confidence |  |  |  |
 | PRIMACY_AGENCY_CODE | Primacy Agency Code |  |  |  |
 | PWS_TYPE_CODE | PWS Type Code |  |  |  |
@@ -224,7 +230,7 @@ Y - Reported and accepted, U - Unreported, R - Reported, but rejected |  |  |  |
 | SERVICE_CONNECTIONS_COUNT | Service Connections Count |  |  |  |
 | parcelnumb | Parcel Number |  |  |  |
 | AREAKM | Service Area (km<sup>2</sup>) |  |  |  |
-| Service_Area_Type | Service Area Type |  |  |  |
+| Service_Area_Type | Service Area Type | Yes | `us_sdwis:serviceAreaType` | Controlled vocabulary |
 | Detailed_Facility_Report | Detailed Facility Report |  |  |  |
 | Date_Source | Data Source |  |  |  |
 
@@ -266,6 +272,40 @@ Y - Reported and accepted, U - Unreported, R - Reported, but rejected |  |  |  |
 -->
 
 ### Controlled Vocabulary -
+
+Service_Area_Type_Code
+
+| Service Area Type | Code | IRI |
+| --- | --- | --- |
+| Daycare Center | DC | `us_sdwis:PWS-ServiceArea-DC` |
+| Dispenser | DI | `us_sdwis:PWS-ServiceArea-DI` |
+| Homeowners Association | HA | `us_sdwis:PWS-ServiceArea-HA` |
+| Hotel/Motel | HM | `us_sdwis:PWS-ServiceArea-HM` |
+| Highway Rest Area | HR | `us_sdwis:PWS-ServiceArea-HR` |
+| Industrial/Agricultural | IA | `us_sdwis:PWS-ServiceArea-IA` |
+| Interstate Carrier | IC | `us_sdwis:PWS-ServiceArea-IC` |
+| Institution | IN | `us_sdwis:PWS-ServiceArea-IN` |
+| Medical Facility | MF | `us_sdwis:PWS-ServiceArea-MF` |
+| Mobile Home Park | MH | `us_sdwis:PWS-ServiceArea-MH` |
+| Mobile Home Park - Principal Residence | MP | `us_sdwis:PWS-ServiceArea-MP` |
+| Municipality | MU | `us_sdwis:PWS-ServiceArea-MU` |
+| Other Area | OA | `us_sdwis:PWS-ServiceArea-OA` |
+| Other Non-transient Area | ON | `us_sdwis:PWS-ServiceArea-ON` |
+| Other Residential | OR | `us_sdwis:PWS-ServiceArea-OR` |
+| Other Transient Area | OT | `us_sdwis:PWS-ServiceArea-OT` |
+| Recreation Area | PA | `us_sdwis:PWS-ServiceArea-PA` |
+| Residential Area | RA | `us_sdwis:PWS-ServiceArea-RA` |
+| Retail Employees | RE | `us_sdwis:PWS-ServiceArea-RE` |
+| Restaurant | RS | `us_sdwis:PWS-ServiceArea-RS` |
+| School | SC | `us_sdwis:PWS-ServiceArea-SC` |
+| Sanitary Improvement District | SI | `us_sdwis:PWS-ServiceArea-SI` |
+| Summer Camp | SK | `us_sdwis:PWS-ServiceArea-SK` |
+| Secondary Residences | SR | `us_sdwis:PWS-ServiceArea-SR` |
+| Service Station | SS | `us_sdwis:PWS-ServiceArea-SS` |
+| Subdivision | SU | `us_sdwis:PWS-ServiceArea-SU` |
+| Water Bottler | WB | `us_sdwis:PWS-ServiceArea-WB` |
+| Wholesaler of Water | WH | `us_sdwis:PWS-ServiceArea-WH` |
+
 
 Facility_Type_Code
 
