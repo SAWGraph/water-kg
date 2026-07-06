@@ -20,8 +20,8 @@
 
 ## Code and Triples (TO ADD)
 * [Code Directory](https://github.com/SAWGraph/water-kg/tree/main/datasets/sdwis)
-  * `pws_serviceAreas_cws-ncws.py`
-  * `sdwa_controlledVocab.py`
+  * pws_serviceAreas_cws-ncws.py
+  * sdwa_controlledVocab.py
 * [GDrive Output Directory]()
 
 ## IRIs
@@ -37,7 +37,7 @@ Define `@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#>
 | `us_sdwis:PWS-ServiceArea` | `us_sdwis_data:d.PWS-ServiceArea.<PWSID>` |
 | `geo:Geometry` | `us_sdwis_data:d.PWS-ServiceArea.<PWSID>` |
 
-Note: `http://geoconnex.us/ref/pws/<PWSID> us_sdwis:serviceArea us_sdwis_data:d.PWS-ServiceArea.<PWSID>`
+Note: Instances of the first two types are related by `http://geoconnex.us/ref/pws/<PWSID> us_sdwis:serviceArea us_sdwis_data:d.PWS-ServiceArea.<PWSID>`
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 
@@ -60,7 +60,7 @@ Note: `http://geoconnex.us/ref/pws/<PWSID> us_sdwis:serviceArea us_sdwis_data:d.
 | PWS_DEACTIVATION_DATE | Date on which the water system was reported as being closed/deactivated (MM/DD/YYYY format). | Yes | `us_sdwis:deactivationDate` | Capture as `xsd:date` |
 | PWS_TYPE_CODE | Indicates the type of public water system (PWS). CWS- community water system, TNCWS - transient community water system, NTNCWS - nontransient non-community water system (see [metadata](https://echo.epa.gov/tools/data-downloads/sdwa-download-summary) for defintions) | Yes | `us_sdwis:PublicWaterSystem-<PWS_TYPE_CODE>` | Class |
 | DBPR_SCHEDULE_CAT_CODE | Stage 2 Disinfectant Byproducts Rule schedule category code. |  |  |  |
-| CDS_ID | Combined distribution system identifier. | Yes |  `us_sdwis:CombinedDistributionSystem` | Capture in IRI |
+| CDS_ID | Combined distribution system identifier. | ? |  `us_sdwis:CombinedDistributionSystem` | Capture in IRI |
 | GW_SW_CODE | Identifies whether a system’s water source is groundwater (GW) or surface water (SW) under SDWA. An empty cell indicates the system relied on another water source. | Yes | `us_sdwis:PublicWaterSystem-<GW_SW_CODE>` | Class |
 | LT2_SCHEDULE_CAT_CODE| Single-digit code to identify the category for Long Term 2 Enhanced Surface Water Treatment (LT2) schedule. |  |  |  |
 | OWNER_TYPE_CODE | F – Federal government, L - Local government, M- Public/Private, N – Native American, P - Private, S – State government | Yes | `us_sdwis:hasOwnership` | Capture as `xsd:string` |
@@ -183,7 +183,7 @@ Y - Reported and accepted, U - Unreported, R - Reported, but rejected |  |  |  |
 
 #### Layer: CWS ([metadata](https://epa.maps.arcgis.com/sharing/rest/content/items/e29a5059ab8f400ab9802026aee1b761/data))
 
-Subclass of `us_sdwis:PublicWaterSystem`: `us_sdwis:PublicWaterSystem-CWS`
+`us_sdwis:PublicWaterSystem-CWS` subclass of `us_sdwis:PublicWaterSystem`
 
 | Attribute | Description | Lift to Graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
@@ -191,9 +191,9 @@ Subclass of `us_sdwis:PublicWaterSystem`: `us_sdwis:PublicWaterSystem-CWS`
 | Original_Data_Provider | The name of the entity responsible for creating the boundary or the original provider of the boundary. Typical values include: the water system itself; the specific state agency/department/division that provided the data; federal agency/department; or other organization. |  |  |  |
 | Data_Provider_Type | The type of entity responsible for creating the boundary or the original source of the boundary (such as, water system itself, state agency, federal agency). |  |  |  |
 | Data_Source | Link or URL to the data source for this boundary |  |  |  |
-| PWSID | The identifier for individual drinking water system recognized by and used in the Safe Drinking Water Information System (SDWIS). The first two characters of the PWSID typically consist of a two-letter state or EPA region code, followed by seven numeric digits. | Yes | `us_sdwis:pwsName` | Also in IRI |
+| PWSID | The identifier for individual drinking water system recognized by and used in the Safe Drinking Water Information System (SDWIS). The first two characters of the PWSID typically consist of a two-letter state or EPA region code, followed by seven numeric digits. | Yes | `us_sdwis:pwsId` | Also in IRI |
 | PWS_Name | The name of the Public Water System (PWS). | Yes | `us_sdwis:pwsName` |  |
-| Primacy_Agency | Primacy agency code is the two-character state code or EPA Region number. | Yes |  |  |
+| Primacy_Agency | Primacy agency code is the two-character state code or EPA Region number. | Yes |  | First two characters (state) captured to aid processing |
 | Pop_Cat_5 | Values identifying the population size category |  |  |  |
 | Population_Served_Count | Estimated average daily population served by a system. |  |  |  |
 | Service_Connections_Count | Number of service connections to the water system. |  |  |  |
@@ -213,7 +213,7 @@ Subclass of `us_sdwis:PublicWaterSystem`: `us_sdwis:PublicWaterSystem-CWS`
 
 #### Layer: T_NTNC ([metadata](https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Transient_and_Non_Transient_Non_Community_Water_System_Service_Areas/FeatureServer/layers))
 
-Subclass of `us_sdwis:PublicWaterSystem`: `us_sdwis:PublicWaterSystem-TNCWS` or `us_sdwis:PublicWaterSystem-NTNCWS`
+`us_sdwis:PublicWaterSystem-TNCWS` or `us_sdwis:PublicWaterSystem-NTNCWS` subclass of `us_sdwis:PublicWaterSystem`:
 
 | Attribute | Description | Lift to Graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
