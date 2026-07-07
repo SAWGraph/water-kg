@@ -25,24 +25,24 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `co_dwr:CDWR_Well` | `co_dwr_data:d.CWDR_Well.<>` |
-| `geo:Geometry` | `co_cdwr_data:d.CDWR_Well.geometry.<>` |
+| `co_dwr:CDWR_Well` | `co_dwr_data:d.CWDR_Well.<Receipt>` |
+| `geo:Geometry` | `co_cdwr_data:d.CDWR_Well.<Receipt>.geometry` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 | CDWR Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| MoreInfo | Hyperlink to more information about the Well Application/Permit |  |  |  |
-| Receipt | Permit application receipt number |  |  |  |
+| MoreInfo | Hyperlink to more information about the Well Application/Permit | Yes | `co_dwr:moreInfo` | Possibly use as IRI? |
+| Receipt | Permit application receipt number | Yes | `rdfs:label` | Used in well IRI |
 | Permit | Concatenation of permit number, suffix code, and replacement code |  |  |  |
 | WDID | DWR unique structure identifier |  |  | Non-zero for 80366 of 658270 rows |
-| CurrStatus | Indicates the current application or physical status of the application/well permit based on entered information |  |  |  |
+| CurrStatus | Indicates the current application or physical status of the application/well permit based on entered information | Yes | `co_dwr:hasStatus` | Controlled vocabulary |
 | WellName |  |  |  | 0 for every row |
 | CaseNo | Water court case number(s) associated with water right |  |  |  |
-| Div | DWR Water Division |  |  |  |
-| WD | DWR Water District |  |  |  |
-| County | County where the Well is located |  |  |  |
-| MgmtDist | Thirteen local districts, within the Designated Basins, with additional administrative authority |  |  |  |
-| DesigBasin | Designated basin where Well is located |  |  |  |
+| Div | DWR Water Division | ? |  |  |
+| WD | DWR Water District | ? |  |  |
+| County | County where the Well is located | ? |  |  |
+| MgmtDist | Thirteen local districts, within the Designated Basins, with additional administrative authority | ? |  |  |
+| DesigBasin | Designated basin where Well is located | ? |  |  |
 | SubdivName |  |  |  |  |
 | Filing |  |  |  |  |
 | Lot |  |  |  |  |
@@ -62,30 +62,30 @@
 | CoordsNSdi | Direction of measurement from North/South section line |  |  |  |
 | UTMX | The x (Easting) component of the Universal Transverse Mercator system. (Zone 12, NAD83 datum) |  |  |  |
 | UTMY | The y (Northing) component of the Universal Transverse Mercator system. (Zone 12, NAD83 datum) |  |  |  |
-| LocAccurac | Accuracy of location coordinates |  |  |  |
+| LocAccurac | Accuracy of location coordinates | Yes | `co_dwr:locAccuracy` | Controlled vocabulary |
 | LatDecDeg | Latitude (decimal degrees) |  |  |  |
 | LongDecDeg | Longitude (decimal degrees) |  |  |  |
-| Use1 | Decreed use associated with the Well |  |  |  |
-| Use2 | Decreed use associated with the Well |  |  |  |
-| SpecialUse |  |  |  |  |
-| Aquifer1 | Aquifer associated with the Well |  |  |  |
-| Aquifer2 | Aquifer associated with the Well |  |  |  |
+| Use1 | Decreed use associated with the Well | Yes | `co_dwr:hasWaterUse` | Controlled vocabulary |
+| Use2 | Decreed use associated with the Well | ? |  |  |
+| SpecialUse |  | ? |  |  |
+| Aquifer1 | Aquifer associated with the Well | Yes | `co_dwr:drawsFromAquifer` | Controlled vocabulary |
+| Aquifer2 | Aquifer associated with the Well | ? |  |  |
 | PermitArea |  |  |  |  |
 | PermitUnit |  |  |  |  |
 | AnnAppropr |  |  |  |  |
-| PermIssued | Date Well permit was issued |  |  |  |
-| PermExpire | Date the Well permit will expire if not constructed |  |  |  |
-| WellConstr | Date the Well was constructed or DWR was notified of the construction |  |  |  |
-| FirstBenef | Date of first beneficial use or DWR was notified of first beneficial use |  |  |  |
-| PumpInstal | Date the pump was installed or DWR was notified of the installation |  |  |  |
-| WellPlugge | Date the Well was plugged and abandoned or DWR was notified |  |  |  |
+| PermIssued | Date Well permit was issued | ? |  |  |
+| PermExpire | Date the Well permit will expire if not constructed | ? |  |  |
+| WellConstr | Date the Well was constructed or DWR was notified of the construction | ? |  |  |
+| FirstBenef | Date of first beneficial use or DWR was notified of first beneficial use | ? |  |  |
+| PumpInstal | Date the pump was installed or DWR was notified of the installation | ? |  |  |
+| WellPlugge | Date the Well was plugged and abandoned or DWR was notified | ? |  |  |
 | Comment |  |  |  |  |
-| Elev | Surface elevation at the location of the Well (feet above mean sea level) |  |  |  |
-| WellDepth | Completed depth of Well (ft) |  |  |  |
-| TopPerfCas | Depth from surface to top of perforated casing (feet) |  |  |  |
-| BotPerfCas | Depth from surface to bottom of perforated casing (feet) |  |  |  |
-| Yield | Yield in gallons per minute |  |  |  |
-| StaticWL | Static Water Level |  |  |  |
+| Elev | Surface elevation at the location of the Well (feet above mean sea level) | ? |  |  |
+| WellDepth | Completed depth of Well (ft) | Yes | `co_dwr:hasDepth` |  |
+| TopPerfCas | Depth from surface to top of perforated casing (feet) | ? |  |  |
+| BotPerfCas | Depth from surface to bottom of perforated casing (feet) | ? |  |  |
+| Yield | Yield in gallons per minute | Yes | `co_dwr:hasYield` |  |
+| StaticWL | Static Water Level | ? |  |  |
 | ApplicantN |  |  |  |  |
 | CompleteWe |  |  |  |  |
 | OGCC_API |  |  |  |  |
