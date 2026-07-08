@@ -96,7 +96,7 @@
 ## Controlled Vocabularies
 **List 1. CurrStatus (Current Status)**
 | CurrStatus | Count | Class |
-| --- | --- | --- |
+| --- | ---: | --- |
 | Additional Fee Required | 4 | `co_dwr:CODWR-WellStatus.AdditionalFeeRequired` |
 | Application Denied | 14688 | `co_dwr:CODWR-WellStatus.ApplicationDenied` |
 | Application Hold | 88 | `co_dwr:CODWR-WellStatus.ApplicationHold` |
@@ -130,7 +130,7 @@
 
 **List 2. LocAccurac (Location Accuracy)**
 | LocAccurac | Count | Class |
-| --- | --- | --- |
+| --- | ---: | --- |
 | Digitized | 544 | `co_dwr:CODWR-LocAccuracy.Digitized` |
 | GPS | 15545 | `co_dwr:CODWR-LocAccuracy.GPS` |
 | Per Decree | 15 | `co_dwr:CODWR-LocAccuracy.PerDecree` |
