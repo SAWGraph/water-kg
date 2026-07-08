@@ -92,3 +92,51 @@
 | OGJobBatch |  |  |  |  |
 | DispUTMX |  |  |  |  |
 | DispUTMY |  |  |  |  |
+
+## Controlled Vocabularies
+**List 1. CurrStatus (Current Status)**
+| CurrStatus | Count | Class |
+| --- | --- | --- |
+| Additional Fee Required | 4 | `co_dwr:CODWR-WellStatus.AdditionalFeeRequired` |
+| Application Denied | 14688 | `co_dwr:CODWR-WellStatus.ApplicationDenied` |
+| Application Hold | 88 | `co_dwr:CODWR-WellStatus.ApplicationHold` |
+| Application Information Requested | 13901 | `co_dwr:CODWR-WellStatus.ApplicationInformationRequested` |
+| Application Received | 4832 | `co_dwr:CODWR-WellStatus.ApplicationReceived` |
+| Application Withdrawn | 3418 | `co_dwr:CODWR-WellStatus.ApplicationWithdrawn` |
+| Dry Hole Abandoned | 25 | `co_dwr:CODWR-WellStatus.DryHoleAbandoned` |
+| Dry Hole Constructed | 2 | `co_dwr:CODWR-WellStatus.DryHoleConstructed` |
+| Final Permit | 6278 | `co_dwr:CODWR-WellStatus.FinalPermit` |
+| Final Permit - Replacement Permit Issued | 124 |`co_dwr:CODWR-WellStatus.FinalPermit.ReplacementPermitIssued`  |
+| Final Permit - Well Deepened | 18 | `co_dwr:CODWR-WellStatus.FinalPermit.WellDeepened` |
+| Final Permit - Well Replaced | 319 | `co_dwr:CODWR-WellStatus.FinalPermit.WellReplaced` |
+| Final Permit - Well Replaced, Abandonment Required | 355 | `co_dwr:CODWR-WellStatus.FinalPermit.WellReplacedAbandonmentRequired` |
+| Final Permit Canceled | 221 | `co_dwr:CODWR-WellStatus.FinalPermitCanceled` |
+| Hydrogeology Review Requested | 11 | `co_dwr:CODWR-WellStatus.HydrologyReviewRequiested` |
+| NA | 9564 | `co_dwr:CODWR-WellStatus.NA` |
+| Permit Canceled | 23471 | `co_dwr:CODWR-WellStatus.PermitCanceled` |
+| Permit Expired | 100479 | `co_dwr:CODWR-WellStatus.PermitExpired` |
+| Permit Expired (Pump Installed) | 2024 | `co_dwr:CODWR-WellStatus.PermitExpiredPumpInstalled` |
+| Permit Extended | 1027 | `co_dwr:CODWR-WellStatus.PermitExtended` |
+| Permit Issued | 25877 | `co_dwr:CODWR-WellStatus.PermitIssued` |
+| Post Construction Review Requested | 23 | `co_dwr:CODWR-WellStatus.PostConstructionReviewRequested` |
+| Pump Installed in Well Without a Permit | 1128 | `co_dwr:CODWR-WellStatus.PumpInstalledWithoutPermit` |
+| Pump Installed, No Construction Info Received | 2281 | `co_dwr:CODWR-WellStatus.PumpInstalledNoConstructionInfo` |
+| See Associated Receipts | 520 | `co_dwr:CODWR-WellStatus.SeeAssociatedReceipts` |
+| Well Abandoned | 43841 | `co_dwr:CODWR-WellStatus.WellAbandoned` |
+| Well Constructed | 373139 | `co_dwr:CODWR-WellStatus.WellConstructed` |
+| Well Constructed - Replacement Permit Issued | 975 | `co_dwr:CODWR-WellStatus.WellConstructed.ReplacementPermitIssued` |
+| Well Replaced - Abandonment Required | 17007 | `co_dwr:CODWR-WellStatus.WellReplaced.AbandonementRequired` |
+| `<NULL>` | 2460 |  |
+
+**List 2. LocAccurac (Location Accuracy)**
+| LocAccurac | Count | Class |
+| --- | --- | --- |
+| Digitized | 544 | `co_dwr:CODWR-LocAccuracy.Digitized` |
+| GPS | 15545 | `co_dwr:CODWR-LocAccuracy.GPS` |
+| Per Decree | 15 | `co_dwr:CODWR-LocAccuracy.PerDecree` |
+| Spotted from quarters | 131584 | `co_dwr:CODWR-LocAccuracy.SpottedFromQuarters` |
+| Spotted from section lines | 361288 | `co_dwr:CODWR-LocAccuracy.SpottedFromSectionLines` |
+| Surveyed | 2 | `co_dwr:CODWR-LocAccuracy.Surveyed` |
+| Unable to spot | 766 | `co_dwr:CODWR-LocAccuracy.UnableToSpot` |
+| User Supplied | 140235 | `co_dwr:CODWR-LocAccuracy.UserSupplied` |
+| `<NULL>` | 8291 |  |
