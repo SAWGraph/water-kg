@@ -35,7 +35,7 @@
 | Receipt | Permit application receipt number | Yes | `rdfs:label` | Used in well IRI |
 | Permit | Concatenation of permit number, suffix code, and replacement code |  |  |  |
 | WDID | DWR unique structure identifier |  |  | Non-zero for 80366 of 658270 rows |
-| CurrStatus | Indicates the current application or physical status of the application/well permit based on entered information | Yes | `co_dwr:hasStatus` | Controlled vocabulary |
+| CurrStatus | Indicates the current application or physical status of the application/well permit based on entered information | Yes | `hyfo:hasWellStatus` | Controlled vocabulary |
 | WellName |  |  |  | 0 for every row |
 | CaseNo | Water court case number(s) associated with water right |  |  |  |
 | Div | DWR Water Division | ? |  |  |
