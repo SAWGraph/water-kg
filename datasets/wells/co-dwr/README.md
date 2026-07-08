@@ -85,7 +85,7 @@
 | TopPerfCas | Depth from surface to top of perforated casing (feet) | ? |  |  |
 | BotPerfCas | Depth from surface to bottom of perforated casing (feet) | ? |  |  |
 | Yield | Yield in gallons per minute | Yes | `hyfo:hasYield` |  |
-| StaticWL | Static Water Level | ? |  |  |
+| StaticWL | Static Water Level | Yes | `hyfo:hasStaticWaterDepth` |  |
 | ApplicantN |  |  |  |  |
 | CompleteWe |  |  |  |  |
 | OGCC_API |  |  |  |  |
