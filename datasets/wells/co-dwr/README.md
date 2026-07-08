@@ -31,7 +31,7 @@
 ## Raw Data Attribute List and Mapping with Ontology Concepts
 | CDWR Well | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
-| MoreInfo | Hyperlink to more information about the Well Application/Permit | Yes | `co_dwr:moreInfo` | Possibly use as IRI? |
+| MoreInfo | Hyperlink to more information about the Well Application/Permit | Yes | `rdfs:seeAlso` | Possibly use as IRI? |
 | Receipt | Permit application receipt number | Yes | `rdfs:label` | Used in well IRI |
 | Permit | Concatenation of permit number, suffix code, and replacement code |  |  |  |
 | WDID | DWR unique structure identifier |  |  | Non-zero for 80366 of 658270 rows |
