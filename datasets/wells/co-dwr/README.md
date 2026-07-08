@@ -65,10 +65,10 @@
 | LocAccurac | Accuracy of location coordinates | Yes | `co_dwr:locAccuracy` | Controlled vocabulary |
 | LatDecDeg | Latitude (decimal degrees) |  |  |  |
 | LongDecDeg | Longitude (decimal degrees) |  |  |  |
-| Use1 | Decreed use associated with the Well | Yes | `co_dwr:hasWaterUse` | Controlled vocabulary |
+| Use1 | Decreed use associated with the Well | Yes | `hyfo:hasWaterUse` | Controlled vocabulary |
 | Use2 | Decreed use associated with the Well | ? |  |  |
 | SpecialUse |  | ? |  |  |
-| Aquifer1 | Aquifer associated with the Well | Yes | `co_dwr:drawsFromAquifer` | Controlled vocabulary |
+| Aquifer1 | Aquifer associated with the Well | Yes | `co_dwr:hasAquifer` | Controlled vocabulary |
 | Aquifer2 | Aquifer associated with the Well | ? |  |  |
 | PermitArea |  |  |  |  |
 | PermitUnit |  |  |  |  |
@@ -81,10 +81,10 @@
 | WellPlugge | Date the Well was plugged and abandoned or DWR was notified | ? |  |  |
 | Comment |  |  |  |  |
 | Elev | Surface elevation at the location of the Well (feet above mean sea level) | ? |  |  |
-| WellDepth | Completed depth of Well (ft) | Yes | `co_dwr:hasDepth` |  |
+| WellDepth | Completed depth of Well (ft) | Yes | `hyfo:hasTotalDepth` |  |
 | TopPerfCas | Depth from surface to top of perforated casing (feet) | ? |  |  |
 | BotPerfCas | Depth from surface to bottom of perforated casing (feet) | ? |  |  |
-| Yield | Yield in gallons per minute | Yes | `co_dwr:hasYield` |  |
+| Yield | Yield in gallons per minute | Yes | `hyfo:hasYield` |  |
 | StaticWL | Static Water Level | ? |  |  |
 | ApplicantN |  |  |  |  |
 | CompleteWe |  |  |  |  |
