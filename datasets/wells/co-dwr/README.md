@@ -8,7 +8,7 @@
 | **Data Source Location:** | [GIS Data By Category](https://cdss.colorado.gov/gis-data/gis-data-by-category)  (see *Well Applications* under *HydroBase Point Data*) <br/> see also [DWR Well Application Permit](https://data.colorado.gov/Water/DWR-Well-Application-Permit/wumm-7awb/data_preview) |
 | **Metadata description:** | [DWR Well Application Permit](https://data.colorado.gov/Water/DWR-Well-Application-Permit/wumm-7awb/about_data) |
 | **Format:** | ShapeFile |
-| **Data update interval** | last updated on July 7, 2026 |
+| **Data update interval** | updated daily (?) |
 | **Location of triples:** |  |
 
 ## Schema Diagram (TO ADD)
