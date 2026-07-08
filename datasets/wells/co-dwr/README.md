@@ -111,7 +111,7 @@
 | Final Permit - Well Replaced | 319 | `co_dwr:CODWR-WellStatus.FinalPermit.WellReplaced` |
 | Final Permit - Well Replaced, Abandonment Required | 355 | `co_dwr:CODWR-WellStatus.FinalPermit.WellReplacedAbandonmentRequired` |
 | Final Permit Canceled | 221 | `co_dwr:CODWR-WellStatus.FinalPermitCanceled` |
-| Hydrogeology Review Requested | 11 | `co_dwr:CODWR-WellStatus.HydrologyReviewRequiested` |
+| Hydrogeology Review Requested | 11 | `co_dwr:CODWR-WellStatus.HydrologyReviewRequested` |
 | NA | 9564 | `co_dwr:CODWR-WellStatus.NA` |
 | Permit Canceled | 23471 | `co_dwr:CODWR-WellStatus.PermitCanceled` |
 | Permit Expired | 100479 | `co_dwr:CODWR-WellStatus.PermitExpired` |
@@ -125,7 +125,7 @@
 | Well Abandoned | 43841 | `co_dwr:CODWR-WellStatus.WellAbandoned` |
 | Well Constructed | 373139 | `co_dwr:CODWR-WellStatus.WellConstructed` |
 | Well Constructed - Replacement Permit Issued | 975 | `co_dwr:CODWR-WellStatus.WellConstructed.ReplacementPermitIssued` |
-| Well Replaced - Abandonment Required | 17007 | `co_dwr:CODWR-WellStatus.WellReplaced.AbandonementRequired` |
+| Well Replaced - Abandonment Required | 17007 | `co_dwr:CODWR-WellStatus.WellReplaced.AbandonmentRequired` |
 | `<NULL>` | 2460 |  |
 
 **List 2. LocAccurac (Location Accuracy)**
