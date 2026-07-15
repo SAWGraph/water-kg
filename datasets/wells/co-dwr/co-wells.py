@@ -5,11 +5,12 @@ import pandas as pd
 from pathlib import Path
 from rdflib.namespace import OWL, RDF, RDFS, XSD
 from rdflib import Graph, Literal, URIRef
+from sodapy import Socrata
 import sys
 import time
 
 ## Variables
-inputtype = 'csv'
+inputtype = 'api' # api, csv, or shp - preferred in that order (note: shp does not offer a unique key)
 ttl_issued_date = '2026-07-08'
 ttl_modified_date = '2026-07-08'
 ttl_version = '0.1'
@@ -30,6 +31,8 @@ ontologyIRI = URIRef('http://sawgraph.spatialai.org/v1/co-dwr-data')
 ## INPUT Filename ###
 wells_file_shp = data_dir / 'WellPermitPublic.zip'
 wells_file_csv = data_dir / 'DWR_Well_Application_Permit_20260708.csv' # Preferred due to unique IDKey field
+api_domain = 'data.colorado.gov'
+api_dataset = 'wumm-7awb'
 epsg_shp = 26913
 epsg_csv = 4326
 epsg_out = 4326
@@ -37,6 +40,7 @@ epsg_out = 4326
 ### OUTPUT Filename ###
 output_file_shp = ttl_dir / 'co-dwr_wells_from-shp.ttl'
 output_file_csv = ttl_dir / 'co-dwr_wells_from-csv.ttl'
+output_file_api = ttl_dir / 'co-dwr_wells_from-api.ttl'
 
 logname = log_dir / f'log_co-wells.txt'
 logging.basicConfig(filename=logname,
@@ -61,16 +65,66 @@ def load_wells_shp(filename: Path, epsg_shp: int, epsg_out: int) -> gpd.GeoDataF
 
 def load_wells_csv(filename: Path, epsg_csv: int, epsg_out: int) -> gpd.GeoDataFrame:
     logger.info(f'Load select csv columns to DataFrame')
-    select_columns = ['Receipt', 'Current Status', 'Latitude', 'Longitude', 'Location Accuracy', 'Associated Aquifers',
-                      'Associated Uses', 'Well Depth', 'Yield', 'Static Water Level', 'More Information', 'IDKey']
-    new_columns = {'Current Status': 'CurrStatus', 'Location Accuracy': 'LocAccurac', 'Associated Aquifers': 'Aquifer1',
-                   'Associated Uses': 'Use1', 'Well Depth': 'WellDepth', 'Static Water Level': 'StaticWL',
-                   'More Information': 'MoreInfo'}
-    df = pd.read_csv(filename, usecols=select_columns)
-    logger.info(f'Convert DataFrame to GeoDataFrame, rename columns, and convert CRS to {epsg_out} if necessary')
-    gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude), crs=f'EPSG:{str(epsg_csv)}')
+    df = pd.read_csv(filename)
+    return df_from_csv_to_gdf(df, epsg_csv, epsg_out)
+
+
+def load_wells_api(domain: str, dataset: str, epsg_in: int, epsg_out: int) -> gpd.GeoDataFrame:
+    logger.info(f'Download wells from API endpoint to DataFrame')
+    client = Socrata(domain, None)
+    limit = 1000 # API default limit
+    offset = 0
+    logging_interval = 50000
+    all_data = []
+    while True:
+        if offset % logging_interval == 0:
+            logger.info(f'    Pulling rows {offset+1:,} to {offset + logging_interval:,} from API')
+        results = client.get(dataset, limit=limit, offset=offset)
+        if len(results) == 0:
+            logger.info(f'{offset - limit + all_data[-1].shape[0]:,} rows pulled from API')
+            break
+        temp_df = pd.DataFrame(results)
+        all_data.append(temp_df)
+        offset += limit
+    df = pd.concat(all_data, ignore_index=True)
+    return df_from_csv_to_gdf(df, epsg_in, epsg_out)
+
+
+def df_from_csv_to_gdf(df: pd.DataFrame, epsg_in: int, epsg_out: int) -> gpd.GeoDataFrame:
+    logger.info(f'Convert DataFrame to GeoDataFrame (EPSG:{epsg_out})')
+    select_columns = ['receipt',
+                      'current_status',
+                      'latitude',
+                      'longitude',
+                      'location_accuracy',
+                      'associated_aquifers',
+                      'associated_uses',
+                      'well_depth',
+                      'yield',
+                      'static_water_level',
+                      'more_information',
+                      'idkey']
+    new_columns = {'receipt': 'Receipt',
+                   'current_status': 'CurrStatus',
+                   'latitude': 'Latitude',
+                   'longitude': 'Longitude',
+                   'location_accuracy': 'LocAccurac',
+                   'associated_aquifers': 'Aquifer1',
+                   'associated_uses': 'Use1',
+                   'well_depth': 'WellDepth',
+                   'yield': 'Yield',
+                   'static_water_level': 'StaticWL',
+                   'more_information': 'MoreInfo',
+                   'idkey': 'IDKey'}
+    df = df[select_columns]
+    df = df.rename(columns=new_columns)
+    df['WellDepth'] = pd.to_numeric(df['WellDepth'], errors='coerce')
+    df['Yield'] = pd.to_numeric(df['Yield'], errors='coerce')
+    df['StaticWL'] = pd.to_numeric(df['StaticWL'], errors='coerce')
+    df['MoreInfo'] = df['MoreInfo'].apply(lambda x: x['url'])
+    gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude), crs=f'EPSG:{str(epsg_in)}')
     gdf = gdf.rename(columns=new_columns)
-    if epsg_csv != epsg_out:
+    if epsg_in != epsg_out:
         gdf.to_crs(epsg=epsg_out, inplace=True)
     return gdf
 
@@ -191,9 +245,12 @@ def triplify_well_data(gdf: gpd.GeoDataFrame, _PREFIX: dict, inputtype: str) -> 
     if inputtype.lower() == 'shp':
         logger.info(f'Write triples to {output_file_shp}')
         kg.serialize(output_file_shp, format='turtle')
-    else:
+    elif inputtype.lower() == 'csv':
         logger.info(f'Write triples to {output_file_csv}')
         kg.serialize(output_file_csv, format='turtle')
+    else:
+        logger.info(f'Write triples to {output_file_api}')
+        kg.serialize(output_file_api, format='turtle')
 
 
 if __name__ == "__main__":
@@ -202,8 +259,14 @@ if __name__ == "__main__":
         logger.info(f'Process Colorado wells shapefile')
         gdf = load_wells_shp(wells_file_shp, epsg_shp, epsg_out)
         triplify_well_data(gdf, _PREFIX, inputtype.lower())
-    else:
+    elif inputtype.lower() == 'csv':
         logger.info(f'Process Colorado wells csv file')
         gdf = load_wells_csv(wells_file_csv, epsg_csv, epsg_out)
         triplify_well_data(gdf, _PREFIX, inputtype.lower())
+    elif inputtype.lower() == 'api':
+        logger.info(f'Process Colorado wells via API')
+        gdf = load_wells_api(api_domain, api_dataset, epsg_csv, epsg_out)
+        triplify_well_data(gdf, _PREFIX, inputtype.lower())
+    else:
+        logger.warning(f'Invalid input type - not in ["shp", "csv", "api"]')
     logger.info(f'Processing complete in {str(timedelta(seconds=time.time() - start_time))} HMS')
