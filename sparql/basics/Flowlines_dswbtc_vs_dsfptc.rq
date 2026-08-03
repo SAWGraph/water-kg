@@ -1,3 +1,6 @@
+# This was used to troubleshoot if/when both don't appear in a repo
+# They both should, as dsFPTC is a subproperty of dsWBTC
+
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 
 SELECT * WHERE {
