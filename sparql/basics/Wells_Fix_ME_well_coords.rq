@@ -1,0 +1,41 @@
+PREFIX me-mgs-data: <http://sawgraph.spatialai.org/v1/me-mgs-data#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+prefix me-mgs: <http://sawgraph.spatialai.org/v1/me-mgs#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+#DELETE DATA {
+#    GRAPH <http://sawgraph.spatialai.org/v1/me-mgs-data#> {
+#        me-mgs-data:d.MGS-Well-Geometry.142761 geo:asWKT "POINT (291.5259 44.1318)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+#    }
+#} ;
+#
+#INSERT DATA {
+#    GRAPH <http://sawgraph.spatialai.org/v1/me-mgs-data#> {
+#        me-mgs-data:d.MGS-Well-Geometry.142761 geo:asWKT "POINT (-68.4741 44.1318)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+#    }
+#} ;
+#
+#DELETE DATA {
+#    GRAPH <http://sawgraph.spatialai.org/v1/me-mgs-data#> {
+#        me-mgs-data:d.MGS-Well-Geometry.144208 geo:asWKT "POINT (289.4131841 43.3015748)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+#    }
+#} ;
+#
+INSERT DATA {
+    GRAPH <http://sawgraph.spatialai.org/v1/me-mgs-data#> {
+        me-mgs-data:d.MGS-Well-Geometry.144208 geo:asWKT "POINT (-70.5868159 43.3015748)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+    }
+} ;
+
+DELETE DATA {
+    GRAPH <http://sawgraph.spatialai.org/v1/me-mgs-data#> {
+        me-mgs-data:d.MGS-Well-Geometry.142761 geo:asWKT "POINT (-68.4741 44.1318)"^^<http://www.opengis.net/geosparql#wktLiteral>
+    }
+} ;
+
+DELETE DATA {
+    GRAPH <http://sawgraph.spatialai.org/v1/me-mgs-data#> {
+        me-mgs-data:d.MGS-Well-Geometry.144208 geo:asWKT "POINT (-70.5868159 43.3015748)"^^<http://www.opengis.net/geosparql#wktLiteral>
+    }
+} ;

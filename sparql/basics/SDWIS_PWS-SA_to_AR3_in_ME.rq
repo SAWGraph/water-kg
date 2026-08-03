@@ -1,0 +1,18 @@
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
+PREFIX us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#>
+PREFIX me_mgs: <http://sawgraph.spatialai.org/v1/me_mgs#>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX nhdplusv2: <http://nhdplusv2.spatialai.org/v1/nhdplusv2#>
+PREFIX coso: <http://w3id.org/coso/v1/contaminoso#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT *
+WHERE {
+    ?s rdf:type us_sdwis:PWS-ServiceArea ;
+       spatial:connectedTo ?region .
+    SERVICE <repository:Spatial> {
+        ?region kwg-ont:administrativePartOf+ kwgr:administrativeRegion.USA.23 .
+    }
+} ORDER BY ?s

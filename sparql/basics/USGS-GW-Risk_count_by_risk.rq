@@ -1,0 +1,30 @@
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX usgs_gwrisk: <http://w3id.org/sawgraph/v1/usgs-gwrisk#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
+PREFIX us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+select ?name (COUNT(?name) AS ?count) where {
+    SERVICE <repository:Hydrology> {
+        ?sa rdf:type us_sdwis:PWS-ServiceArea ;
+#            spatial:connectedTo ?ar3 ;
+            spatial:connectedTo ?s2 .
+        ?pws rdf:type us_sdwis:PublicWaterSystem ;
+             us_sdwis:serviceArea ?sa ;
+             us_sdwis:pwsName ?name .
+#        ?ar3 rdf:type kwg-ont:AdministrativeRegion_3 .
+        ?s2 rdf:type kwg-ont:S2Cell_Level13 .
+    }
+#    SERVICE <repository:Spatial> {
+#        ?ar3 kwg-ont:administrativePartOf+ kwgr:administrativeRegion.USA.23 .
+#    }
+    SERVICE <repository:USGSGroundwaterRisk> {
+        ?gwr rdf:type usgs_gwrisk:GroundwaterRiskS2Observation ;
+             sosa:hasFeatureOfInterest ?s2 ;
+             sosa:hasSimpleResult ?risk .
+    }
+    FILTER(?risk > 0.5)
+} GROUP BY ?name ORDER BY DESC(?count)

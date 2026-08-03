@@ -1,0 +1,9 @@
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT * WHERE {
+    ?s rdf:type us_sdwis:PublicWaterSystem ;
+       us_sdwis:serviceArea ?sa .
+    ?sa geo:hasGeometry/geo:asWKT ?sawkt .
+}

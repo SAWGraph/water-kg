@@ -1,0 +1,5 @@
+PREFIX us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#>
+
+SELECT * WHERE {
+    ?s us_sdwis:partOf ?o .
+}

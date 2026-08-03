@@ -1,0 +1,8 @@
+PREFIX me-mgs-data: <http://sawgraph.spatialai.org/v1/me-mgs-data#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+ASK WHERE {
+    GRAPH <http://sawgraph.spatialai.org/v1/me-mgs-data#> {
+        me-mgs-data:d.MGS-Well-Geometry.142761 geo:asWKT "POINT (291.5259 44.1318)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+    }
+}

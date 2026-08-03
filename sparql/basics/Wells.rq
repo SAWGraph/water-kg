@@ -1,0 +1,7 @@
+PREFIX il-isgs: <http://sawgraph.spatialai.org/v1/il-isgs#>
+PREFIX me-mgs: <http://sawgraph.spatialai.org/v1/me-mgs#>
+select * where {
+#    ?s a me-mgs:MGS-Well .
+    ?s a il-isgs:ISGS-Well .
+#    FILTER(CONTAINS(str(?s), "1209300684"))
+} limit 100

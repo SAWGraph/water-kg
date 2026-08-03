@@ -1,0 +1,6 @@
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+
+SELECT * WHERE {
+  ?s hyf:downstreamWaterBodyTC ?o .
+#  ?s hyf:downstreamFlowPathTC ?o .
+} LIMIT 10
