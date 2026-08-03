@@ -1,3 +1,6 @@
+# Many public water services (PWS) do not have service area polygons
+# This query finds the ones that do
+
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
