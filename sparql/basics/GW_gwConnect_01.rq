@@ -1,3 +1,6 @@
+# Used in conjunction with a custom rule (hyfo:groundwaterConnected)
+# for testing purposes in the gwconnectedTest repo in GraphDB 7201
+
 PREFIX hyfo: <http://hyfo.spatialai.org/v1/hyfo#>
 PREFIX me_mgs: <http://sawgraph.spatialai.org/v1/me-mgs#>
 PREFIX me_egad_data: <http://w3id.org/sawgraph/v1/me-egad-data#>
