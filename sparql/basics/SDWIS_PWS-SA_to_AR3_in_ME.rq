@@ -1,3 +1,6 @@
+# Find public water services with regions that are wholly or 
+# partially within the state of Maine
+
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
