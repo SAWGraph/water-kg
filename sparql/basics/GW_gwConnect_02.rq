@@ -1,3 +1,6 @@
+# Used in conjunction with a custom rule (hyfo:groundwaterConnected)
+# for testing purposes in the gwconnectedTest repo in GraphDB 7201
+
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX hyfo: <http://hyfo.spatialai.org/v1/hyfo#>
 PREFIX me_mgs: <http://sawgraph.spatialai.org/v1/me-mgs#>
