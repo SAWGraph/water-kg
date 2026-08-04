@@ -1,3 +1,7 @@
+# Count the number of public water systems that have a groundwater
+# PFAS risk greater than 0.5 (50%) based on the USGS Groundwater PFAS
+# risk work.
+
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX usgs_gwrisk: <http://w3id.org/sawgraph/v1/usgs-gwrisk#>
