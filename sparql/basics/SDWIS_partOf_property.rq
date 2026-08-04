@@ -1,3 +1,5 @@
+# Retrieve all us_sdwis:partOf relations
+
 PREFIX us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#>
 
 SELECT * WHERE {
