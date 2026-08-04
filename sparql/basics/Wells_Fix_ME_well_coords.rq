@@ -1,3 +1,6 @@
+# Query that was used to fix coordinates of a couple of Maine wells
+# that had their lat/lon reversed
+
 PREFIX me-mgs-data: <http://sawgraph.spatialai.org/v1/me-mgs-data#>
 prefix geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
