@@ -1,7 +1,11 @@
+# Retrieve all Maine or Illinois wells
+# or possibly a specific well from either state
+
 PREFIX il-isgs: <http://sawgraph.spatialai.org/v1/il-isgs#>
 PREFIX me-mgs: <http://sawgraph.spatialai.org/v1/me-mgs#>
-select * where {
+
+SELECT * WHERE {
 #    ?s a me-mgs:MGS-Well .
     ?s a il-isgs:ISGS-Well .
 #    FILTER(CONTAINS(str(?s), "1209300684"))
-} limit 100
+} LIMIT 100
