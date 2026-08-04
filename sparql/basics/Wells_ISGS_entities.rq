@@ -1,7 +1,7 @@
-PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-select DISTINCT ?p where {
+# Query to retrieve all properties containing "isgs" in their IRI
+
+SELECT DISTINCT ?p
+WHERE {
     ?s ?p ?o .
-    FILTER(CONTAINS(str(?p), "isgs"))
-} limit 100
+    FILTER(CONTAINS(LCASE(STR(?p)), "isgs"))
+}
