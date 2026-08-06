@@ -1,0 +1,20 @@
+# Query for lakes in Illinois
+# NOTE: This does not currently work as lakes have not been integrated with AR3 (as of 2026-08-06)
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <https://schema.org/>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
+
+SELECT *
+WHERE {
+  ?s rdf:type hyf:HY_Lake ;
+     geo:hasGeometry/geo:asWKT ?g ;
+     spatial:connectedTo ?cs .
+  ?cs rdf:type kwg-ont:AdministrativeRegion_3 ;
+      kwg-ont:administrativePartOf+ kwgr:AdministrativeRegion.USA.17 .
+  OPTIONAL {?s schema:name ?name}
+}

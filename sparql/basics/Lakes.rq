@@ -1,0 +1,14 @@
+# Query for lakes (with names where available)
+# There is no geographic boundary, so LIMIT is used to manage the response size
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <https://schema.org/>
+
+SELECT ?s ?name ?g
+WHERE {
+  ?s rdf:type hyf:HY_Lake ;
+     geo:hasGeometry/geo:asWKT ?g .
+  OPTIONAL {?s schema:name ?name}
+} LIMIT 1000
