@@ -238,10 +238,11 @@ def triplify_well_data(gdf: gpd.GeoDataFrame, _PREFIX: dict, inputtype: str) -> 
             kg.add((iris['swl_qv'], RDF.type, _PREFIX['qudt']['QuantityValue']))
             kg.add((iris['swl_qv'], _PREFIX['qudt']['numericValue'], Literal(row.StaticWL, datatype=XSD.integer)))
             kg.add((iris['swl_qv'], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
-        kg.add((iris['well'], _PREFIX['geo']['hasGeometry'], iris['geom']))
-        kg.add((iris['well'], _PREFIX['geo']['defaultGeometry'], iris['geom']))
-        kg.add((iris['geom'], _PREFIX["geo"]["asWKT"], Literal(row.geometry, datatype=_PREFIX['geo']['wktLiteral'])))
-        kg.add((iris['geom'], RDF.type, _PREFIX['geo']['Geometry']))
+        if 'NaN' not in str(row.geometry):
+            kg.add((iris['well'], _PREFIX['geo']['hasGeometry'], iris['geom']))
+            kg.add((iris['well'], _PREFIX['geo']['defaultGeometry'], iris['geom']))
+            kg.add((iris['geom'], _PREFIX["geo"]["asWKT"], Literal(row.geometry, datatype=_PREFIX['geo']['wktLiteral'])))
+            kg.add((iris['geom'], RDF.type, _PREFIX['geo']['Geometry']))
     if inputtype.lower() == 'shp':
         logger.info(f'Write triples to {output_file_shp}')
         kg.serialize(output_file_shp, format='turtle')
