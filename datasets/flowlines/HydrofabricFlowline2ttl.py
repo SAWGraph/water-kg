@@ -26,11 +26,10 @@ Functions:
 """
 
 import geopandas as gpd
-import shapely
 import pandas as pd
 import networkx as nx
 from pathlib import Path
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 
 import logging
@@ -56,12 +55,14 @@ log_dir = cwd / "logs"
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
+ontologyStem = 'http://hydrofabric.spatialai.org/v1/hyfab-fl-data'
+ontologyIRI = URIRef(ontologyStem)
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '01', '10L', '11', '13', '14' ]
+vpunums = [ '01', '05', '07', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
@@ -142,7 +143,7 @@ def create_digraph(df: gpd.GeoDataFrame) -> nx.DiGraph:
     return dg
 
 
-def initial_kg(_PREFIX):
+def initial_kg(_PREFIX: dict, huc: str):
     """Create an empty knowledge graph with project namespaces
 
     :param _PREFIX: a dictionary of project namespaces
@@ -152,6 +153,8 @@ def initial_kg(_PREFIX):
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
+    localOntologyIRI = URIRef(f'{ontologyStem}/HUC{huc}')
+    graph.add((localOntologyIRI, RDF.type, OWL.Ontology))
     return graph
 
 
@@ -170,7 +173,7 @@ def build_iris(cid, _PREFIX):
 
 
 def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
-    kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
+    kg = initial_kg(_PREFIX, vpunum)  # Create an empty Graph() with SAWGraph namespaces
     mainstem_csv = get_mainstem_lookup_table(mainstem_lookup_url)
     logger.info(f'Triplify HUC{vpunum} flowlines')
     for node in dg.nodes(data=True):
@@ -182,6 +185,7 @@ def triplify_huc_flowlines(vpunum: str, dg: nx.DiGraph, outfile: str):
 
         # Instantiate the current NHDFlowline
         kg.add((fl_iri, RDF.type, _PREFIX['us_nhdplusv2']['FlowLine']))
+        kg.add((fl_iri, RDFS.isDefinedBy, ontologyIRI))
 
         # Triplify the geometry for the current NHDFlowline
         kg.add((fl_geo_iri, RDF.type, GEO.Geometry))

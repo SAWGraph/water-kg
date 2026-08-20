@@ -24,9 +24,8 @@ Functions:
 """
 
 import geopandas as gpd
-import pandas as pd
 from pathlib import Path
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 
 import logging
@@ -52,12 +51,14 @@ log_dir = cwd / "logs"
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
+ontologyStem = 'http://hydrofabric.spatialai.org/v1/hyfab-ca-data'
+ontologyIRI = URIRef(ontologyStem)
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '01', '10L', '11', '13', '14' ]
+vpunums = [ '01', '05', '07', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
@@ -99,8 +100,8 @@ def get_vpu_catchments(vpunum: str, df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return gdf
 
 
-def initial_kg(_PREFIX):
-    """Create an empty knowledge graph with project namespaces
+def initial_kg(_PREFIX: dict, huc: str):
+    """Create a knowledge graph with project namespaces and an ontology declaration
 
     :param _PREFIX: a dictionary of project namespaces
     :return: an RDFLib graph
@@ -109,6 +110,8 @@ def initial_kg(_PREFIX):
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
+    localOntologyIRI = URIRef(f'{ontologyStem}/HUC{huc}')
+    graph.add((localOntologyIRI, RDF.type, OWL.Ontology))
     return graph
 
 
@@ -123,7 +126,7 @@ def build_iris(cid, _PREFIX, max_id_length):
 
 
 def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_length = 7):
-    kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
+    kg = initial_kg(_PREFIX, vpunum)  # Create an empty Graph() with SAWGraph namespaces
     logger.info(f'Triplify HUC{vpunum} catchments')
     for row in df.itertuples():
         # Get IRIs for the current Hydrofabric catchment and its geometry
@@ -131,6 +134,7 @@ def triplify_catchments(vpunum: str, df: gpd.GeoDataFrame, outfile: str, max_id_
 
         # Instantiate the current NHDFlowline
         kg.add((fl_iri, RDF.type, _PREFIX['hyf']['HY_DendriticCatchment']))
+        kg.add((fl_iri, RDFS.isDefinedBy, ontologyIRI))
 
         # Triplify the geometry for the current NHDFlowline
         kg.add((fl_geo_iri, RDF.type, GEO.Geometry))
