@@ -28,7 +28,7 @@ Required:
 Functions:
     * main - controls the script execution, looping through the states of interest and creating the output .ttl files
     * load_files - loads each full US dataset; sets geometries to EPSG 4326 and converts them to wkt
-    * initialize_kg - creates an empty Graph with namespaces from the prefixes dictionary
+    * initialize_kg - creates an empty Graph with namespaces from the _PREFIX dictionary
     * get_iris - creates iris for public water systems, their service areas, the service area geometries, and where
                  relevant, service area types (controlled vocabulary)
     * process_pws_data - controls the processing of public water system data for a state
@@ -63,7 +63,7 @@ import geopandas as gpd
 import logging
 import pandas as pd
 from pathlib import Path
-from rdflib.namespace import RDF, RDFS, XSD
+from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 from rdflib import Graph, Literal, Namespace, URIRef
 from shapely import is_valid, is_valid_reason, wkt
 import sys
@@ -79,22 +79,18 @@ data_dir = cwd.parent / 'data/SDWIS'
 ttl_dir = cwd / 'ttl_files'
 log_dir = cwd / 'logs'
 
+# Modify the system path to find namespaces.py
+sys.path.insert(0, str(ns_dir))
+from namespaces import _PREFIX
+ontologyStem = 'http://sawgraph.spatialai.org/v1/us-sdwis-data'
+ontologyIRI = URIRef(ontologyStem)
+
 ## file paths
 pws_data_file = data_dir / 'SDWA_PUB_WATER_SYSTEMS.csv'
 service_area_data_file = data_dir / 'SDWA_SERVICE_AREAS.csv'
 cws_data_file_layer = (data_dir / 'PWS_Boundaries_3.0/Service_Areas_V_3_0.gpkg', 'CWS')
 ncws_data_file_layer = (data_dir / 'PWS_Boundaries_3.0/Service_Areas_V_3_0.gpkg', 'T_NTNC')
 sdwa_ref_code_values_file = data_dir / 'SDWA_REF_CODE_VALUES.csv'
-
-## namespaces
-ontologyIRI = URIRef('http://sawgraph.spatialai.org/v1/us-sdwis-data')
-prefixes = {'coso': Namespace(f'http://w3id.org/coso/v1/contaminoso#'),
-            'geo': Namespace(f'http://www.opengis.net/ont/geosparql#'),
-            'gcx': Namespace(f'http://geoconnex.us/'),
-            'qudt': Namespace(f'http://qudt.org/schema/qudt/'),
-            'sosa': Namespace(f'http://www.w3.org/ns/sosa/'),
-            'us_sdwis': Namespace(f'http://sawgraph.spatialai.org/v1/us-sdwis#'),
-            'us_sdwis_data': Namespace(f'http://sawgraph.spatialai.org/v1/us-sdwis-data#')}
 
 ## initiate log file
 logname = log_dir / 'log_pws_serviceAreas_cws-ncws.txt'
@@ -122,7 +118,7 @@ def main() -> None:
     for state in states:
         start_time = time.time()
         logger.info(f'Processing PWS and SA for {state}')
-        kg = initialize_kg()
+        kg = initialize_kg(state)
         kg = process_pws_data(kg, df_pws, state)
         kg = process_service_area_data(kg, df_pwssa, state)
         kg = process_cws_geo_data(kg, df_cwsgeom, state)
@@ -161,18 +157,21 @@ def load_files() -> tuple:
     return df_pws, df_pwssa, df_cwsgeom, df_ncwsgeom
 
 
-def initialize_kg() -> Graph:
+def initialize_kg(state: str) -> Graph:
     """
         Creates an empty Graph,
-        binds namespaces defined under ## namespaces, and
+        binds namespaces defined under ## namespaces,
+        adds an ontology declaration, and
         returns the resulting Graph
 
-        :return: empty Graph with bound namespaces
+        :return: Graph with bound namespaces and ontology declaration
     """
     logger.info('   Initializing kg')
     kg = Graph()
-    for prefix in prefixes:
-        kg.bind(prefix, prefixes[prefix])
+    for prefix in _PREFIX:
+        kg.bind(prefix, _PREFIX[prefix])
+    localOntologyIRI = URIRef(f'{ontologyStem}/{state}')
+    kg.add((localOntologyIRI, RDF.type, OWL.Ontology))
     return kg
 
 
@@ -187,12 +186,12 @@ def get_iris(attributes: dict, ref_codes: pd.DataFrame = None) -> dict:
         :param ref_codes: a dataframe that serves as a lookup table to find standard reference codes based on attribute values
         :return: dictionary of IRIs
     """
-    iris = {'pws': prefixes['gcx']['ref/pws/' + attributes['pwsid']],
-            'sa': prefixes['us_sdwis_data']['d.PWS-ServiceArea.' + attributes['pwsid']],
-            'sageom': prefixes['us_sdwis_data']['d.PWS-ServiceArea.geometry.' + attributes['pwsid']]}
+    iris = {'pws': _PREFIX['gcx_pws'][attributes['pwsid']],
+            'sa': _PREFIX['us_sdwis_data']['d.PWS-ServiceArea.' + attributes['pwsid']],
+            'sageom': _PREFIX['us_sdwis_data']['d.PWS-ServiceArea.geometry.' + attributes['pwsid']]}
     if 'satype' in attributes:
         satypecode = ref_codes.loc[ref_codes['VALUE_DESCRIPTION'] == attributes['satype'], 'VALUE_CODE'].values[0]
-        iris['satype'] = prefixes['us_sdwis']['PWS-ServiceArea-' + satypecode]
+        iris['satype'] = _PREFIX['us_sdwis']['PWS-ServiceArea-' + satypecode]
     return iris
 
 
@@ -244,35 +243,35 @@ def triplify_pws_data(kg: Graph, df: pd.DataFrame) -> Graph:
     for row in df.itertuples():
         attributes = get_pws_attributes(row)
         iris = get_iris(attributes)
-        kg.add((iris['pws'], RDF.type, prefixes['us_sdwis'][f'PublicWaterSystem-{attributes['pwstype']}']))
+        kg.add((iris['pws'], RDF.type, _PREFIX['us_sdwis'][f'PublicWaterSystem-{attributes['pwstype']}']))
         kg.add((iris['pws'], RDFS.isDefinedBy, ontologyIRI))
-        # kg.add((iris['pws'], prefixes['us_sdwis']['pwsId'], Literal(attributes['pwsid'], datatype=XSD.string)))
-        kg.add((iris['pws'], prefixes['us_sdwis']['hasActivity'], Literal(attributes['activity'], datatype=XSD.string)))
-        kg.add((iris['pws'], prefixes['us_sdwis']['populationServed'], Literal(attributes['popserved'], datatype=XSD.integer)))
+        # kg.add((iris['pws'], _PREFIX['us_sdwis']['pwsId'], Literal(attributes['pwsid'], datatype=XSD.string)))
+        kg.add((iris['pws'], _PREFIX['us_sdwis']['hasActivity'], Literal(attributes['activity'], datatype=XSD.string)))
+        kg.add((iris['pws'], _PREFIX['us_sdwis']['populationServed'], Literal(attributes['popserved'], datatype=XSD.integer)))
         if 'name' in attributes:
-            kg.add((iris['pws'], prefixes['us_sdwis']['pwsName'], Literal(attributes['name'], datatype=XSD.string)))
+            kg.add((iris['pws'], _PREFIX['us_sdwis']['pwsName'], Literal(attributes['name'], datatype=XSD.string)))
             kg.add((iris['pws'], RDFS.label, Literal(attributes['name'], datatype=XSD.string)))
         else:
             kg.add((iris['pws'], RDFS.label, Literal(attributes['pwsid'], datatype=XSD.string)))
         if 'deactive_date' in attributes:
-            kg.add((iris['pws'], prefixes['us_sdwis']['deactivationDate'], Literal(attributes['deactive_date'], datatype=XSD.date)))
+            kg.add((iris['pws'], _PREFIX['us_sdwis']['deactivationDate'], Literal(attributes['deactive_date'], datatype=XSD.date)))
         if 'gwsw' in attributes:
-            kg.add((iris['pws'], RDF.type, prefixes['us_sdwis'][f'PublicWaterSystem-{attributes['gwsw']}']))
+            kg.add((iris['pws'], RDF.type, _PREFIX['us_sdwis'][f'PublicWaterSystem-{attributes['gwsw']}']))
         if 'ownertype' in attributes:
-            kg.add((iris['pws'], prefixes['us_sdwis']['hasOwnership'], Literal(attributes['ownertype'], datatype=XSD.string)))
+            kg.add((iris['pws'], _PREFIX['us_sdwis']['hasOwnership'], Literal(attributes['ownertype'], datatype=XSD.string)))
         if 'source' in attributes:
-            kg.add((iris['pws'], prefixes['us_sdwis']['primarySourceType'], prefixes['us_sdwis'][f'PWS-WaterSourceType.{row.PRIMARY_SOURCE_CODE}']))
-        #     kg.add((iris['pws'], prefixes['us_sdwis']['primarySource'], Literal(attributes['source'], datatype=XSD.string)))
+            kg.add((iris['pws'], _PREFIX['us_sdwis']['primarySourceType'], _PREFIX['us_sdwis'][f'PWS-WaterSourceType.{row.PRIMARY_SOURCE_CODE}']))
+        #     kg.add((iris['pws'], _PREFIX['us_sdwis']['primarySource'], Literal(attributes['source'], datatype=XSD.string)))
         if 'connections' in attributes:
-            kg.add((iris['pws'], prefixes['us_sdwis']['serviceConnections'], Literal(attributes['connections'], datatype=XSD.integer)))
+            kg.add((iris['pws'], _PREFIX['us_sdwis']['serviceConnections'], Literal(attributes['connections'], datatype=XSD.integer)))
         if 'firstreport' in attributes:
-            kg.add((iris['pws'], prefixes['us_sdwis']['firstReport'], Literal(attributes['firstreport'], datatype=XSD.date)))
+            kg.add((iris['pws'], _PREFIX['us_sdwis']['firstReport'], Literal(attributes['firstreport'], datatype=XSD.date)))
         if 'lastreport' in attributes:
-            kg.add((iris['pws'], prefixes['us_sdwis']['lastReport'], Literal(attributes['lastreport'], datatype=XSD.date)))
+            kg.add((iris['pws'], _PREFIX['us_sdwis']['lastReport'], Literal(attributes['lastreport'], datatype=XSD.date)))
         # if 'sourceprotection' in attributes:
-        #     kg.add((iris['pws'], prefixes['us_sdwis']['sourceProtection'], Literal(attributes['sourceprotection'], datatype=XSD.date)))
+        #     kg.add((iris['pws'], _PREFIX['us_sdwis']['sourceProtection'], Literal(attributes['sourceprotection'], datatype=XSD.date)))
         # if 'cdsid' in attributes:
-        #     kg.add((iris['pws'], prefixes['us_sdwis']['cdsId'], Literal(attributes['cdsid'], datatype=XSD.date)))
+        #     kg.add((iris['pws'], _PREFIX['us_sdwis']['cdsId'], Literal(attributes['cdsid'], datatype=XSD.date)))
     logger.info(f'      PWS data triplified')
     return kg
 
@@ -441,12 +440,12 @@ def triplify_service_area_data(kg: Graph, df: pd.DataFrame) -> Graph:
     for row in df.itertuples():
         attributes = get_service_area_attributes(row)
         iris = get_iris(attributes, ref_codes)
-        kg.add((iris['pws'], RDF.type, prefixes['us_sdwis']['PublicWaterSystem']))
+        kg.add((iris['pws'], RDF.type, _PREFIX['us_sdwis']['PublicWaterSystem']))
         kg.add((iris['pws'], RDFS.isDefinedBy, ontologyIRI))
-        kg.add((iris['pws'], prefixes['us_sdwis']['serviceArea'], iris['sa']))
-        kg.add((iris['sa'], RDF.type, prefixes['us_sdwis']['PWS-ServiceArea']))
+        kg.add((iris['pws'], _PREFIX['us_sdwis']['serviceArea'], iris['sa']))
+        kg.add((iris['sa'], RDF.type, _PREFIX['us_sdwis']['PWS-ServiceArea']))
         if 'satype' in attributes:
-            kg.add((iris['sa'], prefixes['us_sdwis']['serviceAreaType'], iris['satype']))
+            kg.add((iris['sa'], _PREFIX['us_sdwis']['serviceAreaType'], iris['satype']))
     logger.info(f'      PWS service area data triplified')
     return kg
 
@@ -527,21 +526,21 @@ def triplify_cws_geo_data(kg: Graph, gdf: gpd.GeoDataFrame) -> Graph:
     for row in gdf.itertuples():
         attributes = get_cws_attributes(row)
         iris = get_iris(attributes, ref_codes)
-        kg.add((iris['pws'], RDF.type, prefixes['us_sdwis']['PublicWaterSystem-CWS']))
+        kg.add((iris['pws'], RDF.type, _PREFIX['us_sdwis']['PublicWaterSystem-CWS']))
         kg.add((iris['pws'], RDFS.isDefinedBy, ontologyIRI))
-        kg.add((iris['pws'], prefixes['us_sdwis']['serviceArea'], iris['sa']))
-        kg.add((iris['pws'], prefixes['us_sdwis']['pwsName'], Literal(attributes['name'], datatype=XSD.string)))
-        kg.add((iris['sa'], RDF.type, prefixes['us_sdwis']['PWS-ServiceArea']))
+        kg.add((iris['pws'], _PREFIX['us_sdwis']['serviceArea'], iris['sa']))
+        kg.add((iris['pws'], _PREFIX['us_sdwis']['pwsName'], Literal(attributes['name'], datatype=XSD.string)))
+        kg.add((iris['sa'], RDF.type, _PREFIX['us_sdwis']['PWS-ServiceArea']))
         if 'satype' in attributes:
-            kg.add((iris['sa'], prefixes['us_sdwis']['serviceAreaType'], iris['satype']))
+            kg.add((iris['sa'], _PREFIX['us_sdwis']['serviceAreaType'], iris['satype']))
         if 'method' in attributes:
-            kg.add((iris['sa'], prefixes['us_sdwis']['hasMethod'], Literal(attributes['method'], datatype=XSD.string)))
+            kg.add((iris['sa'], _PREFIX['us_sdwis']['hasMethod'], Literal(attributes['method'], datatype=XSD.string)))
             # Note: A service area with a method but no geometry implies a bad geometry
         if is_valid(wkt.loads(str(attributes['geometry']))):
-            kg.add((iris['sa'], prefixes['geo']['hasGeometry'], iris['sageom']))
-            kg.add((iris['sa'], prefixes['geo']['defaultGeometry'], iris['sageom']))
-            kg.add((iris['sageom'], RDF.type, prefixes['geo']['Geometry']))
-            kg.add((iris['sageom'], prefixes['geo']['asWKT'], Literal(attributes['geometry'], datatype=prefixes['geo']['wktLiteral'])))
+            kg.add((iris['sa'], _PREFIX['geo']['hasGeometry'], iris['sageom']))
+            kg.add((iris['sa'], _PREFIX['geo']['defaultGeometry'], iris['sageom']))
+            kg.add((iris['sageom'], RDF.type, _PREFIX['geo']['Geometry']))
+            kg.add((iris['sageom'], _PREFIX['geo']['asWKT'], Literal(attributes['geometry'], datatype=_PREFIX['geo']['wktLiteral'])))
         else:
             logger.info(f'      {iris['sa']} has invalid geometry ({is_valid_reason(wkt.loads(str(attributes['geometry'])))}).')
     logger.info(f'      CWS service area geometry data triplified')
@@ -618,18 +617,18 @@ def triplify_ncws_geo_data(kg: Graph, gdf: gpd.GeoDataFrame) -> Graph:
     for row in gdf.itertuples():
         attributes = get_ncws_attributes(row)
         iris = get_iris(attributes, ref_codes)
-        kg.add((iris['pws'], RDF.type, prefixes['us_sdwis'][f'PublicWaterSystem-{attributes['pwstype']}']))
+        kg.add((iris['pws'], RDF.type, _PREFIX['us_sdwis'][f'PublicWaterSystem-{attributes['pwstype']}']))
         kg.add((iris['pws'], RDFS.isDefinedBy, ontologyIRI))
-        kg.add((iris['pws'], prefixes['us_sdwis']['serviceArea'], iris['sa']))
-        kg.add((iris['pws'], prefixes['us_sdwis']['pwsName'], Literal(attributes['name'], datatype=XSD.string)))
-        kg.add((iris['sa'], RDF.type, prefixes['us_sdwis']['PWS-ServiceArea']))
+        kg.add((iris['pws'], _PREFIX['us_sdwis']['serviceArea'], iris['sa']))
+        kg.add((iris['pws'], _PREFIX['us_sdwis']['pwsName'], Literal(attributes['name'], datatype=XSD.string)))
+        kg.add((iris['sa'], RDF.type, _PREFIX['us_sdwis']['PWS-ServiceArea']))
         if 'satype' in attributes:
-            kg.add((iris['sa'], prefixes['us_sdwis']['serviceAreaType'], iris['satype']))
+            kg.add((iris['sa'], _PREFIX['us_sdwis']['serviceAreaType'], iris['satype']))
         if is_valid(wkt.loads(str(attributes['geometry']))):
-            kg.add((iris['sa'], prefixes['geo']['hasGeometry'], iris['sageom']))
-            kg.add((iris['sa'], prefixes['geo']['defaultGeometry'], iris['sageom']))
-            kg.add((iris['sageom'], RDF.type, prefixes['geo']['Geometry']))
-            kg.add((iris['sageom'], prefixes['geo']['asWKT'], Literal(attributes['geometry'], datatype=prefixes['geo']['wktLiteral'])))
+            kg.add((iris['sa'], _PREFIX['geo']['hasGeometry'], iris['sageom']))
+            kg.add((iris['sa'], _PREFIX['geo']['defaultGeometry'], iris['sageom']))
+            kg.add((iris['sageom'], RDF.type, _PREFIX['geo']['Geometry']))
+            kg.add((iris['sageom'], _PREFIX['geo']['asWKT'], Literal(attributes['geometry'], datatype=_PREFIX['geo']['wktLiteral'])))
         else:
             logger.info(f'      {iris['sa']} has invalid geometry ({is_valid_reason(wkt.loads(str(attributes['geometry'])))}).')
     logger.info(f'      NCWS service area geometry data triplified')
