@@ -144,9 +144,10 @@ def create_digraph(df: gpd.GeoDataFrame) -> nx.DiGraph:
 
 
 def initial_kg(_PREFIX: dict, huc: str):
-    """Create an empty knowledge graph with project namespaces
+    """Create an empty knowledge graph with project namespaces and declare ontology
 
     :param _PREFIX: a dictionary of project namespaces
+    :param huc: hydrologic unit code (number + optional letter)
     :return: an RDFLib graph
     """
     logger.info('Initialize RDFLib Graph')

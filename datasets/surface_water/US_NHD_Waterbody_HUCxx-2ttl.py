@@ -26,7 +26,7 @@ import geopandas as gpd
 import pandas as pd
 import shapely
 from pathlib import Path
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 
 import logging
@@ -52,12 +52,14 @@ log_dir = cwd / "logs"
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
+ontologyStem = 'http://nhdplusv2.spatialai.org/v1/nhdplusv2-wb-data'
+ontologyIRI = URIRef(ontologyStem)
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '04', '05', '07', '10L', '11', '13', '14' ]
+vpunums = [ '01', '05', '07', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
@@ -94,15 +96,18 @@ def load_waterbodies(vpunum: str, filename: Path) -> gpd.GeoDataFrame:
     return gdf
 
 
-def initial_kg(_PREFIX: dict) -> Graph:
-    """Create an empty knowledge graph with project namespaces
+def initial_kg(_PREFIX: dict, huc: str) -> Graph:
+    """Create an empty knowledge graph with project namespaces and declare ontology
 
     :param _PREFIX: a dictionary of project namespaces
+    :param huc: hydrologic unit code (number + optional letter)
     :return: an RDFLib graph
     """
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
+    localOntologyIRI = URIRef(f'{ontologyStem}/HUC{huc}')
+    graph.add((localOntologyIRI, RDF.type, OWL.Ontology))
     return graph
 
 
@@ -137,7 +142,7 @@ def process_waterbodies_shp2ttl(vpunum, infile, outfile):
         gdf_waterbody._set_value(row.Index, 'GEOMETRY',
                                  shapely.wkb.loads(shapely.wkb.dumps(row.GEOMETRY, output_dimension=2)))
     logger.info('Intialize RDFLib Graph')
-    kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
+    kg = initial_kg(_PREFIX, vpunum)  # Create an empty Graph() with SAWGraph namespaces
     logger.info(f'Triplify HUC{vpunum} water bodies')
     for row in gdf_waterbody.itertuples():
         # Get IRIs for the current NHDWaterbody and its geometry
@@ -150,6 +155,7 @@ def process_waterbodies_shp2ttl(vpunum, infile, outfile):
             kg.add((bodyiri, RDF.type, _PREFIX['hyf']['HY_Impoundment']))
         else:
             kg.add((bodyiri, RDF.type, _PREFIX['hyf']['HY_WaterBody']))
+        kg.add((bodyiri, RDFS.isDefinedBy, ontologyIRI))
 
         # Triplify the geometry for the current NHDWaterbody
         kg.add((bodyiri, GEO.hasGeometry, geomiri))
