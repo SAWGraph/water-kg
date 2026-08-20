@@ -25,7 +25,7 @@ Functions:
 
 import geopandas as gpd
 from pathlib import Path
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import GEO, DCTERMS, OWL, PROV, RDF, RDFS, SDO, XSD
 
 import logging
@@ -34,6 +34,12 @@ import datetime
 
 import sys
 import os
+
+## Variables
+ttl_issued_date = '2026-02-10'
+ttl_modified_date = '2026-08-20'
+ttl_version = '0.1'
+data_issued_date = '2020-06-25'
 
 # Set working path variables and output for verification
 cwd = Path(__file__).resolve().parent
@@ -49,7 +55,8 @@ log_dir = cwd / "logs"
 
 # Modify the system path to find namespaces.py
 sys.path.insert(0, str(ns_dir))
-from namespaces import _PREFIX, find_s2_intersects_poly
+from namespaces import _PREFIX
+ontologyIRI = URIRef('http://sawgraph.spatialai.org/v1/co-cgs-data')
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
@@ -98,6 +105,21 @@ def initial_kg(_PREFIX: dict) -> Graph:
     return graph
 
 
+def add_provenance(kg: Graph) -> Graph:
+    kg.add((ontologyIRI, RDF.type, OWL.Ontology))
+    kg.add((ontologyIRI, _PREFIX['dcterms']['issued'], Literal(ttl_issued_date, datatype=XSD.date)))
+    kg.add((ontologyIRI, _PREFIX['dcterms']['modified'], Literal(ttl_modified_date, datatype=XSD.date)))
+    kg.add((ontologyIRI, _PREFIX['prov']['wasDerivedFrom'], _PREFIX['co_cgs_data']['sourceDataset']))
+    kg.add((ontologyIRI, OWL.versionInfo, Literal(ttl_version, datatype=XSD.string)))
+    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], RDF.type, _PREFIX['stad']['Dataset']))
+    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], RDFS.label, Literal('Colorado Statewide Alluvial Aquifers', datatype=XSD.string)))
+    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], _PREFIX['dcterms']['issued'], Literal(data_issued_date, datatype=XSD.date)))
+    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], _PREFIX['dcterms']['source'], URIRef('https://cdss.colorado.gov/gis-data/gis-data-by-category')))
+    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], RDFS.comment, Literal('Statewide Alluvial Aquifers (zipped shapefile) under Groundwater', datatype=XSD.string)))
+    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.08']))
+    return kg
+
+
 def build_cgs_iris(cgsid: int, _PREFIX: dict, max_id_length = 3) -> tuple:
     """Create IRIs for an aquifer and its geometry
 
@@ -120,6 +142,7 @@ def process_aquifers_shp2ttl(infile: Path, outfile: Path, epsg_in: int, epsg_out
     gdf_aq = load_aquifers_file(infile, epsg_in, epsg_out)
     logger.info('Intialize the knowledge graph')
     kg_aq = initial_kg(_PREFIX)
+    kg_aq = add_provenance(kg_aq)
     logger.info('Triplify the aquifers')
     for row in gdf_aq.itertuples():
         aqiri, geoiri = build_cgs_iris(row.OBJECTID, _PREFIX)
