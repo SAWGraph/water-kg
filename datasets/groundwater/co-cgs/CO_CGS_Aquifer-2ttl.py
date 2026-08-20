@@ -147,6 +147,7 @@ def process_aquifers_shp2ttl(infile: Path, outfile: Path, epsg_in: int, epsg_out
     for row in gdf_aq.itertuples():
         aqiri, geoiri = build_cgs_iris(row.OBJECTID, _PREFIX)
         kg_aq.add((aqiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
+        kg_aq.add((aqiri, RDFS.isDefinedBy, ontologyIRI))
         kg_aq.add((aqiri, _PREFIX['co_cgs']['alluvialAquiferId'], Literal(str(row.OBJECTID).zfill(max_id_length), datatype=XSD.string)))
         kg_aq.add((aqiri, _PREFIX['co_cgs']['riverBasin'], Literal(row.River_Basi, datatype=XSD.string)))
         kg_aq.add((aqiri, GEO.hasGeometry, geoiri))
