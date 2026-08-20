@@ -24,9 +24,9 @@ Functions:
 
 import geopandas as gpd
 import pandas as pd
-# import shapely
+import shapely
 from pathlib import Path
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 
 import logging
@@ -52,12 +52,14 @@ log_dir = cwd / "logs"
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
+ontologyStem = 'http://hydrofabric.spatialai.org/v1/hyfab-wb-data'
+ontologyIRI = URIRef(ontologyStem)
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '10L', '11', '13', '14' ]
+vpunums = [ '01', '05', '07', '10L', '11', '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
@@ -99,8 +101,8 @@ def get_vpu_waterbodies(vpunum: str, df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return df
 
 
-def initial_kg(_PREFIX: dict) -> Graph:
-    """Create an empty knowledge graph with project namespaces
+def initial_kg(_PREFIX: dict, huc: str) -> Graph:
+    """Create a knowledge graph with project namespaces and an ontology declaration
 
     :param _PREFIX: a dictionary of project namespaces
     :return: an RDFLib graph
@@ -109,6 +111,8 @@ def initial_kg(_PREFIX: dict) -> Graph:
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
+    localOntologyIRI = URIRef(f'{ontologyStem}/HUC{huc}')
+    graph.add((localOntologyIRI, RDF.type, OWL.Ontology))
     return graph
 
 
@@ -134,13 +138,20 @@ def process_waterbodies_2ttl(vpunum: str, df: gpd.GeoDataFrame, outfile: Path) -
     :param outfile: A path to a .ttl file
     :return:
     """
-    kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
+
+    # KWG script doesn't like 3D polygons so this forces them all to 2D
+    #   The Z value is set to 0 in NHDWaterbody so nothing is lost from this process
+    logger.info('Force geometries to 2D')
+    for row in df.itertuples():
+        df._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
+    kg = initial_kg(_PREFIX, vpunum)  # Create an empty Graph() with SAWGraph namespaces
     logger.info(f'Triplify HUC{vpunum} water bodies')
     for row in df.itertuples():
         if '{' in row.comid:
             continue
         # Get IRIs for the current NHDWaterbody and its geometry
         bodyiri, geomiri = build_iris(row.comid, _PREFIX)
+        kg.add((bodyiri, RDFS.isDefinedBy, ontologyIRI))
         if 'estuary' in row.ftype.lower():
             kg.add((bodyiri, RDF.type, _PREFIX['hyf']['HY_Estuary']))
         elif 'lake' in row.ftype.lower():
@@ -159,10 +170,10 @@ def process_waterbodies_2ttl(vpunum: str, df: gpd.GeoDataFrame, outfile: Path) -
         # Triplify current NHDWaterbody attributes
         if not pd.isnull(row.gnis_name):
             kg.add((bodyiri, SDO.name, Literal(row.gnis_name, datatype=XSD.string)))
-        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(row.comid), datatype=XSD.string)))
-        kg.add((bodyiri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(row.ftype), datatype=XSD.string)))
-        # kg.add((bodyiri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(row.fcode), datatype=XSD.string)))
-        # kg.add((bodyiri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(row.reachcode), datatype=XSD.string)))
+        kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasCOMID'], Literal(str(row.comid), datatype=XSD.string)))
+        kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasFTYPE'], Literal(str(row.ftype), datatype=XSD.string)))
+        # kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasFCODE'], Literal(str(row.fcode), datatype=XSD.string)))
+        # kg.add((bodyiri, _PREFIX['us_nhdplusv2']['hasReachCode'], Literal(str(row.reachcode), datatype=XSD.string)))
         # if row.reachcode is not None:
         #     kg.add((bodyiri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(row.reachcode)[:8]]))
     logger.info(f'Write HUC{vpunum} water body triples to {outfile}')
