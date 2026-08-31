@@ -39,11 +39,12 @@ Functions:
 
 from simpledbf import Dbf5
 import geopandas as gpd
+import warnings
 import shapely
 import pandas as pd
 import networkx as nx
 from pathlib import Path
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
 
 import logging
@@ -69,20 +70,27 @@ log_dir = cwd / "logs"
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
+ontologyStem = 'http://nhdplusv2.spatialai.org/v1/nhdplusv2-fl-data'
+ontologyIRI = URIRef(ontologyStem)
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunum = '11'
+vpunums = [ '13', '14' ]
 # Valid codes: 01, 02, 03N, 03S, 03W, 04, 05, 06, 07, 08, 09, 10U, 10L, 11, 12, 13, 14, 15, 16, 17, 18, 20
 
 ### INPUT Filenames ###
-plusflow_file = data_dir / f'NHDFlowline/HUC{vpunum}_PlusFlow.dbf'
-flowline_file = data_dir / f'NHDFlowline/HUC{vpunum}_NHDFlowline.shp'
+shp_files = [ ]
+for vpunum in vpunums:
+    flowline_file = data_dir / f'NHDFlowline/HUC{vpunum}_NHDFlowline.shp'
+    plusflow_file = data_dir / f'NHDFlowline/HUC{vpunum}_PlusFlow.dbf'
+    shp_files.append([flowline_file, plusflow_file])
 
 ### OUTPUT Filename ###
-main_ttl_file = ttl_dir / f'us_nhd_flowline_huc{vpunum}.ttl'
+ttl_files = [ ]
+for vpunum in vpunums:
+    ttl_files.append(ttl_dir / f'us_nhd_flowline_huc{vpunum}.ttl')
 
 logname = log_dir / f'log_US_NHD_Flowline_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
@@ -95,20 +103,18 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
 logger.info('LOGGER INITIALIZED')
 
+warnings.filterwarnings("ignore", message=".*Measured \\(M\\) geometry types are not supported.*")
+
 
 def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
     logger.info(f'Load HUC{vpunum} flowline shapefile from {filename}')
     gdf = gpd.read_file(filename)
-    gdf.drop(['FDATE',
-              'GNIS_ID',
-              'WBAREACOMI',
-              'SHAPE_LENG',
-              'ENABLED',
-              'GNIS_NBR'],
-             axis=1,
-             inplace=True)
+    gdf = gdf.rename(columns=lambda x: x.upper() if x != 'geometry' else x)  # Most HUCs, but not all, start this way
+    drop_cols = ['FDATE', 'GNIS_ID', 'WBAREACOMI', 'SHAPE_LENG', 'ENABLED', 'GNIS_NBR']
+    gdf.drop(columns=drop_cols, inplace=True, errors='ignore')
     gdf = gdf[gdf.FTYPE != 'Coastline']
-    gdf[['COMID', 'REACHCODE']] = gdf[['COMID', 'REACHCODE']].astype(str)
+    str_cols = ['COMID', 'REACHCODE']
+    gdf[str_cols] = gdf[str_cols].astype(str)
     for row in gdf.itertuples():
         gdf._set_value(row.Index, 'geometry', shapely.wkb.loads(shapely.wkb.dumps(row.geometry, output_dimension=2)))
     return gdf
@@ -116,6 +122,7 @@ def load_flowline_file(filename: str) -> gpd.GeoDataFrame:
 
 def create_simple_flowline_dict(df: pd.DataFrame) -> dict:
     logger.info(f'Create simple flowline dictionary for HUC{vpunum}')
+    df
     dct = {}
     for row in df.itertuples():
         dct[row.COMID] = (row.FCODE, row.FTYPE, row.GNIS_NAME, row.LENGTHKM, row.REACHCODE, row.geometry)
@@ -241,16 +248,19 @@ def analyze_paths_from_source_to_outlet(dg: nx.DiGraph, src: str, out: str):
     print()
 
 
-def initial_kg(_PREFIX):
-    """Create an empty knowledge graph with project namespaces
+def initial_kg(_PREFIX: dict, huc: str):
+    """Create an empty knowledge graph with project namespaces and declare ontology
 
     :param _PREFIX: a dictionary of project namespaces
+    :param huc: hydrologic unit code (number + optional letter)
     :return: an RDFLib graph
     """
     logger.info('Initialize RDFLib Graph')
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
+    localOntologyIRI = URIRef(f'{ontologyStem}/HUC{huc}')
+    graph.add((localOntologyIRI, RDF.type, OWL.Ontology))
     return graph
 
 
@@ -268,15 +278,16 @@ def build_iris(cid, _PREFIX):
     return flowline_iri, flowline_geo_iri, flowline_length_iri, flowline_quantval_iri
 
 
-def triplify_huc_flowlines(dg):
-    kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
+def triplify_huc_flowlines(dg: nx.DiGraph, vpunum: str, outfile: str):
+    kg = initial_kg(_PREFIX, vpunum)  # Create an empty Graph() with SAWGraph namespaces
     logger.info(f'Triplify HUC{vpunum} flowlines')
     for node in dg.nodes(data=True):
         # Get IRIs for the current NHDFlowline, its geometry, its length object, and the length's qudt:QuantityValue
         fl_iri, fl_geo_iri, fl_len_iri, fl_qv_iri = build_iris(node[0], _PREFIX)
 
         # Instantiate the current NHDFlowline
-        kg.add((fl_iri, RDF.type, _PREFIX['nhdplusv2']['FlowLine']))
+        kg.add((fl_iri, RDF.type, _PREFIX['us_nhdplusv2']['FlowLine']))
+        kg.add((fl_iri, RDFS.isDefinedBy, ontologyIRI))
 
         # Triplify the geometry for the current NHDFlowline
         kg.add((fl_geo_iri, RDF.type, GEO.Geometry))
@@ -287,38 +298,40 @@ def triplify_huc_flowlines(dg):
         # Triplify current NHDFlowline attributes
         if not pd.isnull(node[1]['gnis_name']):
             kg.add((fl_iri, SDO.name, Literal(node[1]['gnis_name'], datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['wbd']['containingHUC'], _PREFIX['wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['hasFlowPathLength'], fl_len_iri))
-        kg.add((fl_len_iri, RDF.type, _PREFIX['nhdplusv2']['FlowPathLength']))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasCOMID'], Literal(str(node[0]), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasReachCode'], Literal(str(node[1]['reachcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_wbd']['containingHUC'], _PREFIX['us_wbd_data']['d.HUC8.' + str(node[1]['reachcode'][:8])]))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasFTYPE'], Literal(str(node[1]['ftype']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasFCODE'], Literal(str(node[1]['fcode']), datatype=XSD.string)))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['hasFlowPathLength'], fl_len_iri))
+        kg.add((fl_len_iri, RDF.type, _PREFIX['us_nhdplusv2']['FlowPathLength']))
         kg.add((fl_len_iri, _PREFIX['qudt']['quantityValue'], fl_qv_iri))
         kg.add((fl_qv_iri, RDF.type, _PREFIX['qudt']['QuantityValue']))
         kg.add((fl_qv_iri, _PREFIX['qudt']['numericValue'], Literal(node[1]['lengthkm'], datatype=XSD.decimal)))
         kg.add((fl_qv_iri, _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['KiloM']))
 
         # Triplify the downstream connectivity, including a reflexive statement for the current NHDFlowline
-        kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], fl_iri))
+        kg.add((fl_iri, _PREFIX['us_nhdplusv2']['downstreamFlowPath'], fl_iri))
         for key in dg.successors(node[0]):
-            kg.add((fl_iri, _PREFIX['nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx_cid'][key]))
-    logger.info(f'Write HUC{vpunum} flowline triples to {main_ttl_file}')
-    kg.serialize(main_ttl_file, format='turtle')  # Write the completed KG to a .ttl file
+            kg.add((fl_iri, _PREFIX['us_nhdplusv2']['downstreamFlowPath'], _PREFIX['gcx_cid'][key]))
+    logger.info(f'Write HUC{vpunum} flowline triples to {outfile}')
+    kg.serialize(outfile, format='turtle')  # Write the completed KG to a .ttl file
 
 
 if __name__ == '__main__':
-    start_time = time.time()
-    logger.info(f'Launching script: HUC/VPU = {vpunum}')
-    df_flowline = load_flowline_file(flowline_file)
-    simple_flowline_dict = create_simple_flowline_dict(df_flowline)
-    df_plusflow = load_plusflow_file(plusflow_file)
-    simple_plusflow_dict = create_simple_plusflow_dict(df_plusflow)
-    G = create_digraph(simple_flowline_dict, simple_plusflow_dict)
-    # print_digraph_stats(G)
-    # print_dictionary_stats(simple_plusflow_dict)
-    # print_root_and_leaf_counts(G)
-    # analyze_paths_from_source_to_outlet(G, source_comid, outlet_comid)
-    triplify_huc_flowlines(G)
-    logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
-    print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
+    logger.info(f'Launching script: HUC/VPU set = {vpunums}')
+    for vpunum, infiles, outfile in zip(vpunums, shp_files, ttl_files):
+        start_time = time.time()
+        logger.info('')
+        logger.info(f'Processing HUC/VPU {vpunum}')
+        df_flowline = load_flowline_file(infiles[0])
+        simple_flowline_dict = create_simple_flowline_dict(df_flowline)
+        df_plusflow = load_plusflow_file(infiles[1])
+        simple_plusflow_dict = create_simple_plusflow_dict(df_plusflow)
+        digraph = create_digraph(simple_flowline_dict, simple_plusflow_dict)
+        # print_digraph_stats(digraph)
+        # print_dictionary_stats(simple_plusflow_dict)
+        # print_root_and_leaf_counts(digraph)
+        # analyze_paths_from_source_to_outlet(digraph, source_comid, outlet_comid)
+        triplify_huc_flowlines(digraph, vpunum, outfile)
+        logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
