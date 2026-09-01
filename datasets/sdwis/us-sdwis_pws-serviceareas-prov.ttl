@@ -1,0 +1,38 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix stad: <http://purl.org/spatialai/stad/v2/core#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix us_sdwis: <http://sawgraph.spatialai.org/v1/us-sdwis#> .
+@prefix us_sdwis_data: <http://sawgraph.spatialai.org/v1/us-sdwis-data#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://sawgraph.spatialai.org/v1/us-sdwis-data> rdf:type owl:Ontology ;
+                                                 dcterms:issued "2026-05-26"^^xsd:date ;
+												 dcterms:modified "2026-05-26"^^xsd:date ;
+												 prov:wasDerivedFrom us_sdwis_data:sourceDataset_01 ;
+												 prov:wasDerivedFrom us_sdwis_data:sourceDataset_02 ;
+												 owl:versionInfo "0.2"^^xsd:string ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/CO> ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/IL> ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/IN> ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/KS> ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/MA> ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/ME> ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/MN> ;
+												 owl:imports <http://sawgraph.spatialai.org/v1/us-sdwis-data/NH> .
+
+us_sdwis_data:sourceDataset_01 rdf:type stad:Dataset ;
+                               rdfs:label "Safe Drinking Water Act (SDWA) Dataset" ;
+							   dcterms:issued "2026-04-08"^^xsd:date ;
+							   dcterms:source <https://echo.epa.gov/tools/data-downloads#drinkingwater> ;
+							   stad:hasSpatialCoverage kwgr:administrativeRegion.USA .
+
+us_sdwis_data:sourceDataset_02 rdf:type stad:Dataset ;
+                               rdfs:label "Public Water System Service Areas (Version 3)" ;
+							   dcterms:issued "2026-03-17"^^xsd:date ;
+							   dcterms:source <https://www.epa.gov/ground-water-and-drinking-water/public-water-system-service-areas?tab=map> ;
+							   stad:hasSpatialCoverage kwgr:administrativeRegion.USA .
