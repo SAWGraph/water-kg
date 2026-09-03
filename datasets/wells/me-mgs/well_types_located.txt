@@ -1,0 +1,8 @@
+Bedrock
+Overburden
+Gravel
+GravelPacked
+Dug
+Spring
+Other
+Observation

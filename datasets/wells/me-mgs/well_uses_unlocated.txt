@@ -1,0 +1,13 @@
+Domestic
+Test
+Industrial
+Other
+FarmDomestic
+Commercial
+Farm
+Municipal
+Institutional
+Monitoring
+Observation
+Irrigation
+Geothermal
