@@ -77,6 +77,7 @@ ttl_files = [ ]
 for vpunum in vpunums:
     ttl_files.append(ttl_dir / f"us_nhd_waterbody_huc{vpunum}.ttl")
 
+## Setup and initiate logging
 logname = log_dir / f"log_US_NHD_Waterbody_HUCxx-2ttl.txt"
 logging.basicConfig(filename=logname,
                     filemode='a',
