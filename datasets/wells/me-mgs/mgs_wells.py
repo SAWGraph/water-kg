@@ -1,222 +1,242 @@
-import os
-from rdflib.namespace import OWL, XMLNS, XSD, RDF, RDFS
-from rdflib import Namespace
-from rdflib import Graph
-from rdflib import URIRef, BNode, Literal
+import geopandas as gpd
 import pandas as pd
-import shapely
-import encodings
-import logging
-import csv
-from datetime import datetime
-import sys
-import math
-import json
-import numpy as np
-from datetime import date
-from pyutil import *
 from pathlib import Path
+from rdflib import Namespace, Graph, Literal, URIRef
+from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
+from shapely.affinity import translate
+# import math
+# import json
 
+import logging
+import time
+import datetime
+# from datetime import date
 
+import sys
+import os
 
-## importing utility/variable file
-code_dir = Path(__file__).resolve().parent.parent.parent.parent
-# print(code_dir)
-sys.path.insert(0, str(code_dir))
-# from datasets.wells.me-mgs.variable import NAME_SPACE, _PREFIX
-from variable import NAME_SPACE, _PREFIX
-# from datasets import utilities
+## Variables
+ttl_issued_date = '2025-07-07'
+ttl_modified_date = '2026-09-03'
+ttl_version = '0.1'
+unlocated_data_issued_date = '2026-01-26'
+located_data_issued_date = '2026-01-26'
 
+# Set working path variables and output for verification
+cwd = Path(__file__).resolve().parent
+ns_dir = cwd.parent.parent.parent.parent
+data_dir = cwd.parent.parent / 'data'
+ttl_dir = cwd / 'ttl_files'
+log_dir = cwd / 'logs'
+# print(f'Current working directory:      {cwd}')
+# print(f'Github repos and namespaces.py: {ns_dir}')
+# print(f'Data (input) directory:         {data_dir}')
+# print(f'Turtle (output) directory:      {ttl_dir}')
+# print(f'Logging directory:              {log_dir}')
 
-## declare variables
-logname = "log"
+# Modify the system path to find namespaces.py
+sys.path.insert(0, str(ns_dir))
+from namespaces import _PREFIX
+ontologyStem = 'http://sawgraph.spatialai.org/v1/me-mgs-data'
+ontologyIRI = URIRef(ontologyStem)
 
-## data path
-root_folder = Path(__file__).resolve().parent.parent.parent
-data_dir = root_folder / "data/mgs_wells/"
-metadata_dir = root_folder / "data/mgs_wells/metadata/"
-output_dir = root_folder / "wells/me-mgs/ttl_files/"
+# Set the current directory to this file's directory
+os.chdir(cwd)
 
-me_mgs = Namespace(f"http://sawgraph.spatialai.org/v1/me-mgs#")
-me_mgs_data = Namespace(f"http://sawgraph.spatialai.org/v1/me-mgs-data#")
+### INPUT Filenames ###
+unlocated_infile = data_dir / 'mgs_wells/MGS_Wells_Database_-Unlocated.csv'
+located_infile = data_dir / 'mgs_wells/MGS_Wells_Database_-Located.csv'
 
+### OUTPUT Filenames ###
+unlocated_outfile = ttl_dir / 'mgs_wells_unlocated.ttl'
+unlocated_towns_outfile = ttl_dir / 'mgs_wells_unlocated_towns.ttl'
+located_outfile = ttl_dir / 'mgs_wells_located.ttl'
+located_towns_outfile = ttl_dir / 'mgs_wells_located_towns.ttl'
 
-## data dictionaries -- for controlled vocabularies
-
-# with open(metadata_dir + 'analysis_lab.csv', mode='r') as infile:
-#     reader = csv.reader(infile)
-#     lab_dict = {rows[1]: rows[0] for rows in reader}
-
-
-## initiate log file
+## Setup and initiate logging
+logname = log_dir / f'log_US_NHD_Waterbody_HUCxx-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S',
+                    level=logging.INFO)
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.info('')
-logger.info("Running triplification for MGS Wells")
-
-def main():
-    #unlocated wells
-    mgs_wells_unlocated_df = pd.read_csv(data_dir / 'Maine_Well_Database_-_Unlocated_Wells.csv', header=0, low_memory=False)
-    logger.info('MGS unlocated wells data loaded to dataframe.')
-
-    kg, towns = triplify_well_data(mgs_wells_unlocated_df, _PREFIX)
-    kg_turtle_file = output_dir / "mgs_wells_unlocated_output.ttl"
-    kg.serialize(kg_turtle_file, format='turtle')
-    towns.serialize(output_dir / 'towns_unlocated.ttl', format='turtle')
-    logger.info('Finished triplifying MGS unlocated well data.')
-
-    #located wells
-    mgs_wells_located_df = pd.read_csv(data_dir / 'Maine_Well_Database_-_Well_Depth.csv', header=0,
-                                         encoding='ISO-8859-1')
-    logger.info('MGS located wells data loaded to dataframe.')
-
-    kg2, towns2 = triplify_well_data(mgs_wells_located_df, _PREFIX)
-    kg_turtle_file = output_dir / "mgs_wells_located_output.ttl"
-    kg2.serialize(kg_turtle_file, format='turtle')
-    towns2.serialize(output_dir / 'towns_located.ttl', format='turtle')
-    logger.info('Finished triplifying MGS located well data.')
+logger.info('LOGGER INITIALIZED')
 
 
-def Initial_KG(_PREFIX):
-    prefixes: Dict[str, str] = _PREFIX
+def process_unlocated_wells():
+    logger.info('Load MGS unlocated wells to dataframe')
+    unlocated_df = pd.read_csv(unlocated_infile, low_memory=False)
+    logger.info('Triplify MGS unlocated wells')
+    kg, towns = triplify_well_data(unlocated_df, _PREFIX, 'unlocated')
+    logger.info(f'Write MGS unlocated wells triples to {unlocated_outfile}')
+    kg.serialize(unlocated_outfile, format='turtle')
+    # logger.info(f'Write MGS unlocated wells town triples to {unlocated_towns_outfile}')
+    # towns.serialize(unlocated_towns_outfile, format='turtle')
+
+
+def process_located_wells():
+    logger.info('Load MGS located wells to geodataframe')
+    located_df = pd.read_csv(located_infile, encoding='ISO-8859-1', low_memory=False)
+    columns = {'Well Number': 'WELLNO',
+               'Well Use': 'WELL_USE',
+               'Well Type': 'WELL_TYPE',
+               'Well Depth (ft)': 'WELL_DEPTH_FT',
+               'Overburden Thickness (ft)': 'OVERBURDEN_THICKNESS_FT',
+               'Town': 'WELL_LOCATION_TOWN'}
+    located_df = located_df.rename(columns=columns)
+    located_gdf = gpd.GeoDataFrame(located_df, geometry=gpd.points_from_xy(located_df.Longitude, located_df.Latitude))
+    located_gdf = fix_longitude(located_gdf)
+    logger.info('Triplify MGS located wells')
+    kg, towns = triplify_well_data(located_gdf, _PREFIX, 'located')
+    logger.info(f'Write MGS located wells triples to {located_outfile}')
+    kg.serialize(located_outfile, format='turtle')
+    # logger.info(f'Write MGS located wells town triples to {located_towns_outfile}')
+    # towns.serialize(located_towns_outfile, format='turtle')
+
+
+def fix_longitude(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    # A couple of entries in the MGS located database have
+    # longitudes given in 0 to 360 E format
+    # instead of -180 to 180 W/E format
+    mask = gdf.geometry.x > 180
+    gdf.loc[mask, 'geometry'] = gdf.loc[mask, 'geometry'].apply(lambda geom: translate(geom, xoff=-360))
+    return gdf
+
+
+def initial_kg(_PREFIX: dict) -> Graph:
     kg = Graph()
-    for prefix in prefixes:
-        kg.bind(prefix, prefixes[prefix])
-    kg.bind('me_mgs', me_mgs)
-    kg.bind('me_mgs_data', me_mgs_data)
+    for prefix in _PREFIX:
+        kg.bind(prefix, _PREFIX[prefix])
     return kg
 
-def get_attributes(row):
-    #this attribute schema works for MGS well data
-    well_no = row['WELLNO']  # well number
-    well_use = str(row['WELL_USE']).lower().title().replace(', ', '')  # well use
-    well_type = str(row['WELL_TYPE']).lower().title().replace(' ', '')  # well type
-    well_depth = row['WELL_DEPTH_FT']
-    well_overburden = row['OVERBURDEN_THICKNESS_FT']
-    well_iri = me_mgs_data.term(f"d.MGS-Well.{well_no}")
-    #print('well_iri: ', well_iri)
+
+def add_provenance(kg: Graph, dataset: str) -> Graph:
+    ontologyIRI = URIRef(f'{ontologyStem}/{dataset}')
+    kg.add((ontologyIRI, RDF.type, OWL.Ontology))
+    kg.add((ontologyIRI, _PREFIX['dcterms']['issued'], Literal(ttl_issued_date, datatype=XSD.date)))
+    kg.add((ontologyIRI, _PREFIX['dcterms']['modified'], Literal(ttl_modified_date, datatype=XSD.date)))
+    kg.add((ontologyIRI, OWL.versionInfo, Literal(ttl_version, datatype=XSD.string)))
+    kg.add((ontologyIRI, _PREFIX['prov']['wasDerivedFrom'], _PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}']))
+    kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], RDF.type, _PREFIX['stad']['Dataset']))
+    kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.23']))
+    if dataset == 'unlocated':
+        kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], RDFS.label, Literal('Maine Well Database - Unlocated Wells', datatype=XSD.string)))
+        kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], _PREFIX['dcterms']['issued'], Literal(unlocated_data_issued_date, datatype=XSD.date)))
+        kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], _PREFIX['dcterms']['source'], URIRef('https://mgs-maine.opendata.arcgis.com/datasets/maine-well-database-unlocated-wells')))
+    else:
+        kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], RDFS.label, Literal('Maine Well Database - Well Depth', datatype=XSD.string)))
+        kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], _PREFIX['dcterms']['issued'], Literal(located_data_issued_date, datatype=XSD.date)))
+        kg.add((_PREFIX['me_mgs_data'][f'sourceDataset{dataset.capitalize()}'], _PREFIX['dcterms']['source'], URIRef('https://mgs-maine.opendata.arcgis.com/datasets/maine-well-database-well-depth')))
+    return kg
+
+
+def get_attributes(row: tuple, _PREFIX: dict) -> dict:
+    # this attribute schema works for MGS well data
+    att_dict = {}
+    att_dict['well_no'] = row.WELLNO  # well number
+    att_dict['well_use'] = str(row.WELL_USE).lower().title().replace(', ', '')  # well use
+    att_dict['well_type'] = str(row.WELL_TYPE).lower().title().replace(' ', '')  # well type
+    att_dict['well_depth'] = row.WELL_DEPTH_FT
+    att_dict['well_overburden'] = row.OVERBURDEN_THICKNESS_FT
+    att_dict['well_iri'] = _PREFIX['me_mgs_data'][f'd.MGS-Well.{att_dict['well_no']}']
+
     # town
-    town_name_formatted = str(row['WELL_LOCATION_TOWN'])
+    att_dict['town_name_formatted'] = str(row.WELL_LOCATION_TOWN)
 
-    #town_iri = _PREFIX["aik-pfas"][f"{'town'}.{town_name_formatted}"]
-    try:
-        well_point = shapely.Point((row['LONGITUDE'], row['LATITUDE']))
-        geom = well_point.wkt
-        # print(f'Shapely point: {well_point}; WKT point: {geom}')
-    except:
-        geom = None
-
-    return well_no, well_use, well_type, well_depth, well_overburden, well_iri, town_name_formatted, geom
+    return att_dict
 
 
 ## triplify the abox
-def triplify_well_data(df, _PREFIX):
-    kg = Initial_KG(_PREFIX)
-    kg2 = Initial_KG(_PREFIX)
-    get_towns = False
-    ## materialize each well record
-    # df.info()
+def triplify_well_data(df: pd.DataFrame, _PREFIX: dict, dataset: str) -> tuple:
+    kg = initial_kg(_PREFIX)
+    kg = add_provenance(kg, dataset)
+    kg2 = initial_kg(_PREFIX)
 
-# <<<<<<< HEAD
-#     if get_towns:
-# =======
-    if get_towns:
-# >>>>>>> 6768acf (Add maine and illinois well scripts,  readmes, and schemas)
-        #get dcids for each unique town
-        towns = df.WELL_LOCATION_TOWN.unique()
-        town_dcid = {}
-        for town in towns:
-            town_name_formatted = str(town)+" town, MAINE"
-            resp = utilities.resolvePlaceName(town_name_formatted)
-            #print(town_name_formatted, resp.text)
-            try:
-                dcids = resp.json()['entities'][0]['resolvedIds']
-            except:
-                dcids = []
-            town_dcid[town] = dcids
-        with open('towns.txt', 'w') as town_dictionary:
-            town_dictionary.write(json.dumps(town_dcid))
-    else:
-        with open('towns.txt', 'r') as town_file:
-            town_dcid = json.load(town_file)
-            # print(town_dcid)
-    for town in town_dcid.keys():
-        # print(town, town_dcid[town])
-        if town_dcid[town] != []:
-            for place in town_dcid[town]:
-                kg2.add((_PREFIX['dc'][place], RDF.type, _PREFIX['kwg-ont']["AdministrativeRegion_3"]))
+    # get_towns = False
+    # if get_towns:
+    #     # get dcids for each unique town
+    #     towns = df.WELL_LOCATION_TOWN.unique()
+    #     town_dcid = {}
+    #     for town in towns:
+    #         town_name_formatted = str(town)+' town, MAINE'
+    #         resp = utilities.resolvePlaceName(town_name_formatted)
+    #         #print(town_name_formatted, resp.text)
+    #         try:
+    #             dcids = resp.json()['entities'][0]['resolvedIds']
+    #         except:
+    #             dcids = []
+    #         town_dcid[town] = dcids
+    #     with open('towns.txt', 'w') as town_dictionary:
+    #         town_dictionary.write(json.dumps(town_dcid))
+    # else:
+    #     with open('towns.txt', 'r') as town_file:
+    #         town_dcid = json.load(town_file)
+    #         # print(town_dcid)
+    # for town in town_dcid.keys():
+    #     # print(town, town_dcid[town])
+    #     if town_dcid[town] != []:
+    #         for place in town_dcid[town]:
+    #             kg2.add((_PREFIX['dc'][place], RDF.type, _PREFIX['kwg-ont']['AdministrativeRegion_3']))
 
-    for idx, row in df.iterrows():
-
-        well_no, well_use, well_type, well_depth, well_overburden, well_iri, town_name_formatted, geom = get_attributes(row)
+    for row in df.itertuples():
+        attribute_dict = get_attributes(row, _PREFIX)
+        well_iri = attribute_dict['well_iri']
 
         # well instance
-        kg.add((well_iri, RDF.type, me_mgs["MGS-Well"]))
-        kg.add((well_iri, RDFS['label'], Literal('MGS well ' + str(well_no))))
-
-        # well type
-        if well_type != 'Nan':
-            kg.add((well_iri, me_mgs["ofWellType"], me_mgs_data['d.wellType.' + well_type]))
-        # well use
-        if well_use != 'Nan':
-            kg.add((well_iri, me_mgs["hasUse"], me_mgs_data['d.wellUse.' + well_use]))
-        # well depth
-        kg.add((well_iri, me_mgs['wellDepth'],
-                me_mgs_data["d.WellDepthInFt." + 'MGS-Well.' + str(well_no)]))
-        kg.add((me_mgs_data["d."+"WellDepthInFt." +'MGS-Well.' + str(well_no)], _PREFIX["qudt"]["numericValue"],
-               Literal(float(well_depth), datatype=XSD.float)))
-        #print(well_overburden, type(well_overburden))
-        if pd.isna(well_overburden)==False:
-            kg.add((well_iri, me_mgs['wellOverburden'], me_mgs_data["d.WellOverburdenInFt." + 'MGS-Well.' + str(well_no)]))
-            kg.add(( me_mgs_data["d.WellOverburdenInFt." + 'MGS-Well.' + str(well_no)], _PREFIX["qudt"]["numericValue"], Literal(float(well_overburden), datatype=XSD.float)))
-        # well depth unit will be added through OWL restriction
-        # kg.add((_PREFIX["aik-pfas-ont"]["WellDepthInFt."+well_iri], _PREFIX["qudt"]["unit"], _PREFIX["qudt"]["FT"]))
+        kg.add((well_iri, RDF.type, _PREFIX['me_mgs']['MGS-Well']))
+        kg.add((well_iri, RDFS.isDefinedBy, ontologyIRI))
+        kg.add((well_iri, RDFS.label, Literal(f'MGS well {str(attribute_dict['well_no'])}')))
+        if attribute_dict['well_type'] != 'Nan':
+            kg.add((well_iri, _PREFIX['me_mgs']['ofWellType'], _PREFIX['me_mgs_data'][f'd.wellType.{attribute_dict['well_type']}']))
+        if attribute_dict['well_use'] != 'Nan':
+            kg.add((well_iri, _PREFIX['me_mgs']['hasUse'], _PREFIX['me_mgs_data'][f'd.wellUse.{attribute_dict['well_use']}']))
+        kg.add((well_iri, _PREFIX['me_mgs']['wellDepth'], _PREFIX['me_mgs_data'][f'd.WellDepthInFt.MGS-Well.{str(attribute_dict['well_no'])}']))
+        kg.add((_PREFIX['me_mgs_data'][f'd.WellDepthInFt.MGS-Well.{str(attribute_dict['well_no'])}'], _PREFIX['qudt']['numericValue'], Literal(float(attribute_dict['well_depth']), datatype=XSD.float)))
+        kg.add((_PREFIX['me_mgs_data'][f'd.WellDepthInFt.MGS-Well.{str(attribute_dict['well_no'])}'], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
+        if pd.isna(attribute_dict['well_overburden']) == False:
+            kg.add((well_iri, _PREFIX['me_mgs']['wellOverburden'], _PREFIX['me_mgs_data'][f'd.WellOverburdenInFt.MGS-Well.{str(attribute_dict['well_no'])}']))
+            kg.add((_PREFIX['me_mgs_data'][f'd.WellOverburdenInFt.MGS-Well.{str(attribute_dict['well_no'])}'], _PREFIX['qudt']['numericValue'], Literal(float(attribute_dict['well_overburden']), datatype=XSD.float)))
+            kg.add((_PREFIX['me_mgs_data'][f'd.WellOverburdenInFt.MGS-Well.{str(attribute_dict['well_no'])}'], _PREFIX['qudt']['hasUnit'], _PREFIX['unit']['FT']))
 
         # well geometry
-        if geom is not None:
-            # extract the geometry
-            well_geometry_iri = me_mgs_data[f"d.MGS-Well-Geometry.{well_no}"]
-            kg.add((well_iri, _PREFIX['geo']['hasGeometry'], well_geometry_iri))
-            kg.add((well_iri, _PREFIX['geo']['defaultGeometry'], well_geometry_iri))
-            kg.add((well_geometry_iri, _PREFIX["geo"]["asWKT"], Literal(geom, datatype=_PREFIX["geo"]["wktLiteral"])))
-            kg.add((well_geometry_iri, RDF.type, _PREFIX['geo']['Geometry']))
+        if hasattr(row, 'geometry') and -71.1 <= row.geometry.x <= -66.9 and 42.9 <= row.geometry.y <= 47.5:
+            # A few entries in the MGS located database have coordinates placing them considerably outside of Maine
+            # The well attributes are triplified, but the geometries are not
+            well_geometry_iri = _PREFIX['me_mgs_data'][f'd.MGS-Well-Geometry.{attribute_dict['well_no']}']
+            kg.add((well_iri, GEO.hasGeometry, well_geometry_iri))
+            kg.add((well_iri, GEO.defaultGeometry, well_geometry_iri))
+            kg.add((well_geometry_iri, _PREFIX['geo']['asWKT'], Literal(row.geometry, datatype=GEO.wktLiteral)))
+            kg.add((well_geometry_iri, RDF.type, GEO.Geometry))
 
-        
         # todo lookup FIPS code for town
-        #kg.add((well_iri, _PREFIX["aik-pfas"]['locatedIn'], town_iri))
-        if town_name_formatted in town_dcid.keys():
-            for place in town_dcid[town_name_formatted]:
-                    kg.add((well_iri, _PREFIX['kwg-ont']['sfWithin'], _PREFIX['dc'][place]))
+        #kg.add((well_iri, _PREFIX['aik-pfas']['locatedIn'], town_iri))
+        # if town_name_formatted in town_dcid.keys():
+        #     for place in town_dcid[town_name_formatted]:
+        #             kg.add((well_iri, _PREFIX['kwg-ont']['sfWithin'], _PREFIX['dc'][place]))
 
         #if idx == 5:
             #break
 
-
     # T-box lists
-    f_type=open("well_types.txt", "w")
-    f_use=open("well_uses.txt", "w")
-
-    well_types = df.WELL_TYPE.unique().flatten()
-    # print('well types: ', well_types)
+    f_type = open(f'well_types_{dataset}.txt', 'w')
+    logger.info(f'Write well types to {f_type}')
+    well_types = df.WELL_TYPE.unique().tolist()
     for t in well_types:
         wt = str(t).lower().title().replace(' ', '')
         if wt != 'Nan':
-            #kg.add((_PREFIX["aik-pfas"]["d.wellType." + wt], RDF.type, _PREFIX["aik-pfas-ont"]['MGS-WellType']))
-            f_type.write(wt)
+            f_type.write(f'{wt}\n')
     f_type.close()
 
-    well_use = df.WELL_USE.unique().flatten()
-    # print('well use: ', well_use)
-    for t in well_use:
-        wu = str(t).lower().title().replace(', ', '')
+    f_use = open(f'well_uses_{dataset}.txt', 'w')
+    logger.info(f'Write well uses to {f_use}')
+    well_use = df.WELL_USE.unique().tolist()
+    for u in well_use:
+        wu = str(u).lower().title().replace(', ', '')
         if wu != 'Nan':
-            #kg.add((_PREFIX["aik-pfas"]["d.wellUse." + wt], RDF.type, _PREFIX["aik-pfas-ont"]['MGS-WellUse']))
-            f_use.write(wu)
+            f_use.write(f'{wu}\n')
     f_use.close()
 
     return kg, kg2
@@ -224,17 +244,20 @@ def triplify_well_data(df, _PREFIX):
 
 ## utility functions
 
-def is_valid(value):
-    if math.isnan(float(value)):
-        return False
-    else:
-        return True
+# def is_valid(value):
+#     if math.isnan(float(value)):
+#         return False
+#     else:
+#         return True
+#
+#
+# def rem_time(d):
+#     s = date(d.year, d.month, d.day)
+#     return s
 
 
-def rem_time(d):
-    s = date(d.year, d.month, d.day)
-    return s
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    start_time = time.time()
+    process_unlocated_wells()
+    process_located_wells()
+    logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
