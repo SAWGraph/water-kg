@@ -17,8 +17,8 @@ Functions:
 
 import geopandas as gpd
 from pathlib import Path
-from rdflib import Graph, Literal
-from rdflib.namespace import GEO, RDF, SDO, XSD
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import GEO, OWL, RDF, RDFS, SDO, XSD
 
 import logging
 import time
@@ -43,12 +43,14 @@ log_dir = cwd / "logs"
 # sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
+ontologyStem = 'http://wbd.spatialai.org/v1/wbd-data'
+ontologyIRI = URIRef(ontologyStem)
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
 
 ### HUCxx VPU ###
-vpunums = [ '10', '11', '13', '14']
+vpunums = [ '01', '05', '07', '10', '11', '13', '14']
 # Valid codes: 01 to 22
 
 ### INPUT File and GPKG names ###
@@ -84,15 +86,18 @@ def load_huc_layer(gpkg_uri: str, level: int):
         print(f'Error loading layer: {e}')
 
 
-def initial_kg(_PREFIX):
+def initial_kg(_PREFIX: dict, huc: str) -> Graph:
     """Create an empty knowledge graph with project namespaces
 
     :param _PREFIX: a dictionary of project namespaces
+    :param huc: a valid 2-digit HUC number
     :return: an RDFLib graph
     """
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
+    localOntologyIRI = URIRef(f'{ontologyStem}/HUC{huc}')
+    graph.add((localOntologyIRI, RDF.type, OWL.Ontology))
     return graph
 
 
@@ -110,6 +115,7 @@ def process_huc(gpkg, level, graph, _PREFIX):
         huciri, geomiri = build_iris(row.huc_num, level, _PREFIX)
         if ' ' not in huciri:
             graph.add((huciri, RDF.type, _PREFIX['us_wbd'][f'HUC{level}']))
+            graph.add((huciri, RDFS.isDefinedBy, ontologyIRI))
             graph.add((huciri, _PREFIX['us_wbd']['hucCode'], Literal(row.huc_num, datatype=XSD.string)))
             graph.add((huciri, SDO.name, Literal(row.name, datatype=XSD.string)))
             graph.add((huciri, GEO.hasGeometry, geomiri))
@@ -143,7 +149,7 @@ if __name__ == '__main__':
         vpu_start_time = time.time()
         logger.info(f'Processing VPU {vpunum}')
         gpkg_handle = f'/vsizip/{wbd}/{gpkg}'
-        kg = initial_kg(_PREFIX)
+        kg = initial_kg(_PREFIX, vpunum)
         for huclevel in [2, 4, 6, 8, 10, 12]: # Only triplify up to level 12 as it is the last conterminous level
             kg = process_huc(gpkg_handle, huclevel, kg, _PREFIX)
         write_graph_to_ttl(kg, outfile)
