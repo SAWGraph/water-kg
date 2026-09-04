@@ -38,7 +38,6 @@ log_dir = cwd / 'logs'
 sys.path.insert(0, str(ns_dir))
 from namespaces import _PREFIX
 ontologyStem = 'http://sawgraph.spatialai.org/v1/me-mgs-data'
-ontologyIRI = URIRef(ontologyStem)
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
@@ -152,6 +151,7 @@ def get_attributes(row: tuple, _PREFIX: dict) -> dict:
 ## triplify the abox
 def triplify_well_data(df: pd.DataFrame, _PREFIX: dict, dataset: str) -> tuple:
     kg = initial_kg(_PREFIX)
+    ontologyIRI = URIRef(f'{ontologyStem}/{dataset}')
     kg = add_provenance(kg, dataset)
     kg2 = initial_kg(_PREFIX)
 
