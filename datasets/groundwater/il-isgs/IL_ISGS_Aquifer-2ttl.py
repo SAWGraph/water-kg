@@ -22,7 +22,7 @@ Functions:
 import geopandas as gpd
 from pathlib import Path
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import GEO, OWL, RDF, RDFS, XSD
+from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, XSD
 
 import logging
 import time
