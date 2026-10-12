@@ -37,7 +37,7 @@ import os
 
 ## Variables
 ttl_issued_date = '2026-02-10'
-ttl_modified_date = '2026-08-20'
+ttl_modified_date = '2026-10-12'
 ttl_version = '0.1'
 data_issued_date = '2020-06-25'
 
@@ -55,8 +55,8 @@ log_dir = cwd / "logs"
 
 # Modify the system path to find namespaces.py
 sys.path.insert(0, str(ns_dir))
-from namespaces import _PREFIX
-ontologyIRI = URIRef('http://sawgraph.spatialai.org/v1/co-cgs-data')
+from namespaces2 import _PREFIX
+ontologyIRI = URIRef('http://w3id.org/hyfo/co-cgs/v1/co-cgs-data')
 
 # Set the current directory to this file's directory
 os.chdir(cwd)
@@ -69,7 +69,7 @@ epsg_out = 4326
 
 ### OUTPUT Filenames ###
 # aq_ttl_file: the resulting (output) .ttl file
-aq_ttl_file = ttl_dir / 'co_08_cgs_alluvial_aquifers.ttl'
+aq_ttl_file = ttl_dir / 'co_08_cgs_alluvial_aquifers2.ttl'
 
 logname = log_dir / 'log_CO_CGS_Alluvial_Aquifers2ttl.txt'
 logging.basicConfig(filename=logname,
