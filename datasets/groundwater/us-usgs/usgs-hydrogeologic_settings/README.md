@@ -1,4 +1,4 @@
-# Secondary Hydrogeologic Regions of the Conterminous US - United States Geological Survey (USGS)
+# Hydrogeologic Settings of the Conterminous US - United States Geological Survey (USGS)
 
 ## Dataset Overview
 | Dataset Attribute | Description |
