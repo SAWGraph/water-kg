@@ -106,17 +106,19 @@ def initial_kg(_PREFIX: dict) -> Graph:
 
 
 def add_provenance(kg: Graph) -> Graph:
+    prefix = 'co_cgs_data'
+    dataset = 'sourceDataset.AlluvialAquifers'
     kg.add((ontologyIRI, RDF.type, OWL.Ontology))
     kg.add((ontologyIRI, _PREFIX['dcterms']['issued'], Literal(ttl_issued_date, datatype=XSD.date)))
     kg.add((ontologyIRI, _PREFIX['dcterms']['modified'], Literal(ttl_modified_date, datatype=XSD.date)))
-    kg.add((ontologyIRI, _PREFIX['prov']['wasDerivedFrom'], _PREFIX['co_cgs_data']['sourceDataset']))
+    kg.add((ontologyIRI, _PREFIX['prov']['wasDerivedFrom'], _PREFIX[prefix][dataset]))
     kg.add((ontologyIRI, OWL.versionInfo, Literal(ttl_version, datatype=XSD.string)))
-    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], RDF.type, _PREFIX['stad']['Dataset']))
-    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], RDFS.label, Literal('Colorado Statewide Alluvial Aquifers', datatype=XSD.string)))
-    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], _PREFIX['dcterms']['issued'], Literal(data_issued_date, datatype=XSD.date)))
-    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], _PREFIX['dcterms']['source'], URIRef('https://cdss.colorado.gov/gis-data/gis-data-by-category')))
-    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], RDFS.comment, Literal('Statewide Alluvial Aquifers (zipped shapefile) under Groundwater', datatype=XSD.string)))
-    kg.add((_PREFIX['co_cgs_data']['sourceDataset'], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.08']))
+    kg.add((_PREFIX[prefix][dataset], RDF.type, _PREFIX['stad']['Dataset']))
+    kg.add((_PREFIX[prefix][dataset], RDFS.label, Literal('Colorado Statewide Alluvial Aquifers', datatype=XSD.string)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['dcterms']['issued'], Literal(data_issued_date, datatype=XSD.date)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['dcterms']['source'], URIRef('https://cdss.colorado.gov/gis-data/gis-data-by-category')))
+    kg.add((_PREFIX[prefix][dataset], RDFS.comment, Literal('Statewide Alluvial Aquifers (zipped shapefile) under Groundwater', datatype=XSD.string)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.08']))
     return kg
 
 
