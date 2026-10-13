@@ -2,7 +2,7 @@
 
 This is part of an extensive dataset on the depth of groundwater used for drinking water in the US. It essentially combines the Principal Aquifers dataset and the Secondary Hydrogeologic Regions dataset. In so doing it merges many rows based on aquifer name and overlay (see controlled vocabulary below). Some attributes are retained, some changed, and others added. The primary additions median depths and open intervals (see the attribute table below).
 
-Recommendation: Triplify this dataset and the glacial/alluvial dataset (see Principal Aquifers) and ignore principal aquifers and secondary hydrogeologic settings.
+Recommendation: Triplify this dataset and the [glacial/alluvial dataset](../usgs-principal_aquifers) and ignore principal aquifers and secondary hydrogeologic settings.
 
 ## Dataset Overview
 | Dataset Attribute | Description |
