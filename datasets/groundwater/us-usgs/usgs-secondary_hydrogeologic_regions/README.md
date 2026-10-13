@@ -1,5 +1,9 @@
 # Secondary Hydrogeologic Regions of the Conterminous US - United States Geological Survey (USGS)
 
+The secondary hydrogeologic regions dataset is repeated in the hydrogeologic settings data with additional attributes.
+
+Recommendation: Triplify the [glacial/alluvial dataset](../usgs-principal_aquifers) and the [hydrogeologic settings dataset](../usgs-hydrogeologic_settings). Do not triplify this dataset.
+
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
