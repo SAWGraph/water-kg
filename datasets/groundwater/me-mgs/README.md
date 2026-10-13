@@ -41,7 +41,7 @@
 | QUADNAME |  | No |  |  |
 | COMPID |  | No |  |  |
 | ATYPE |  | No |  | integer IDs for SYMBOLOGY categories |
-| SYMBOLOGY |  | Yes | `hyfo:hasAquiferYield hyfo:AquiferFieldMin` <br/> `hyfo:hasAquiferYield hyfo:hasAquiferYieldMax` | Values are intervals |
+| SYMBOLOGY |  | Yes | `hyfo:hasAquiferYield hyfo:AquiferFieldMin` <br/> `hyfo:hasAquiferYield hyfo:hasAquiferYieldMax` | Values are intervals <br/> Data is filtered to include 10 GPM and above (see below) |
 | DRAW |  | No |  |  |
 | SOURCE |  | No |  | 12 records (of 9253) |
 | COMMENTS |  | No |  | 32 records (of 9253) |
@@ -70,7 +70,7 @@
 **List 2. SYMBOLOGY** [count]
 - \>50 GPM [298]
 - 10-50 GPM [4691]
-- Non-plotting water [4264]
+- Non-plotting water [4264] ("island of non-aquifer material within an area mapped as an aquifer")
 
 ## Sample Data
 
