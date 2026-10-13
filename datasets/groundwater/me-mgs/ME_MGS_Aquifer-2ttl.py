@@ -105,7 +105,7 @@ def initial_kg(_PREFIX):
 
 def add_provenance(kg: Graph) -> Graph:
     prefix = 'me_mgs_data'
-    dataset = 'sourceDataset.Aquifers'
+    dataset = 'sourceDataset.SandGravelAquifers'
     kg.add((ontologyIRI, RDF.type, OWL.Ontology))
     kg.add((ontologyIRI, _PREFIX['dcterms']['issued'], Literal(ttl_issued_date, datatype=XSD.date)))
     kg.add((ontologyIRI, _PREFIX['dcterms']['modified'], Literal(ttl_modified_date, datatype=XSD.date)))
