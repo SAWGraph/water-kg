@@ -1,5 +1,9 @@
 # Principal Aquifers & Alluvial and Glacial Aquifers of the US - United States Geological Survey (USGS)
 
+The principal aquifers data is repeated in the hydrogeologic settings data with additional attributes.
+
+Recommendation: Triplify the glacial/alluvial dataset (see below) and the [hydrogeologic settings dataset](../usgs-hydrogeologic_settings).
+
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
