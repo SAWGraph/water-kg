@@ -1,5 +1,9 @@
 # Hydrogeologic Settings of the Conterminous US - United States Geological Survey (USGS)
 
+This is part of an extensive dataset on the depth of groundwater used for drinking water in the US. It essentially combines the Principal Aquifers dataset and the Secondary Hydrogeologic Regions dataset. In so doing it merges many rows based on aquifer name and overlay (see controlled vocabulary below). Some attributes are retained, some changed, and others added. The primary additions median depths and open intervals (see the attribute table below).
+
+Recommendation: Triplify this dataset and the glacial/alluvial dataset (see Principal Aquifers) and ignore principal aquifers and secondary hydrogeologic settings.
+
 ## Dataset Overview
 | Dataset Attribute | Description |
 | --- | --- |
@@ -9,7 +13,7 @@
 | **Metadata description**: | [Metadata](https://www.sciencebase.gov/catalog/file/get/5e43efc3e4b0edb47be84c3d?f=__disk__f6%2Fb5%2F6e%2Ff6b56ecf03139fd16996eebce6a7e5ef7e15266a&transform=1&allowOpen=true) |
 | **Other metadata** |  |
 | **Format of data**: | .shp files |
-| **Data Update Interval**: | Last updated November 15, 2021 |
+| **Data Update Interval**: | Last updated January 6, 2026 (v2.0) |
 | **Location of triples:** |  |
 
 ## Schema Diagram (TO ADD)
