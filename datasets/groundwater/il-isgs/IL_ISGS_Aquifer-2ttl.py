@@ -99,17 +99,19 @@ def initial_kg(_PREFIX):
 
 
 def add_provenance(kg: Graph) -> Graph:
+    prefix = 'il_isgs_data'
+    dataset = 'sourceDataset.Aquifers'
     kg.add((ontologyIRI, RDF.type, OWL.Ontology))
     kg.add((ontologyIRI, _PREFIX['dcterms']['issued'], Literal(ttl_issued_date, datatype=XSD.date)))
     kg.add((ontologyIRI, _PREFIX['dcterms']['modified'], Literal(ttl_modified_date, datatype=XSD.date)))
-    kg.add((ontologyIRI, _PREFIX['prov']['wasDerivedFrom'], _PREFIX['il_isgs_data']['sourceDataset']))
+    kg.add((ontologyIRI, _PREFIX['prov']['wasDerivedFrom'], _PREFIX[prefix][dataset]))
     kg.add((ontologyIRI, OWL.versionInfo, Literal(ttl_version, datatype=XSD.string)))
-    kg.add((_PREFIX['il_isgs_data']['sourceDataset'], RDF.type, _PREFIX['stad']['Dataset']))
-    kg.add((_PREFIX['il_isgs_data']['sourceDataset'], RDFS.label, Literal('Illinois Major Aquifers', datatype=XSD.string)))
-    kg.add((_PREFIX['il_isgs_data']['sourceDataset'], _PREFIX['dcterms']['issued'], Literal(data_issued_date, datatype=XSD.date)))
-    kg.add((_PREFIX['il_isgs_data']['sourceDataset'], _PREFIX['dcterms']['source'], URIRef('https://clearinghouse.isgs.illinois.edu/data/hydrology/major-aquifers')))
-    kg.add((_PREFIX['il_isgs_data']['sourceDataset'], RDFS.comment, Literal('Generalized Statewide Location of Major Bedrock, Sand and Gravel, and Potential Shallow Aquifers in Illinois', datatype=XSD.string)))
-    kg.add((_PREFIX['il_isgs_data']['sourceDataset'], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.17']))
+    kg.add((_PREFIX[prefix][dataset], RDF.type, _PREFIX['stad']['Dataset']))
+    kg.add((_PREFIX[prefix][dataset], RDFS.label, Literal('Illinois Major Aquifers', datatype=XSD.string)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['dcterms']['issued'], Literal(data_issued_date, datatype=XSD.date)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['dcterms']['source'], URIRef('https://clearinghouse.isgs.illinois.edu/data/hydrology/major-aquifers')))
+    kg.add((_PREFIX[prefix][dataset], RDFS.comment, Literal('Generalized Statewide Location of Major Bedrock, Sand and Gravel, and Potential Shallow Aquifers in Illinois', datatype=XSD.string)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.17']))
     return kg
 
 
