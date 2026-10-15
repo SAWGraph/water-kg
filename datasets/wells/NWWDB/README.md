@@ -25,8 +25,8 @@
 ## IRIs
 | Instance Class | IRI Format |
 | --- | --- |
-| `nwwdb:NWWDB_Well` | `nwwdb_data:d.NWWDB_Well.<Well ID>` |
-| `geo:Geometry` | `nwwdb_data:d.NWWDB_Well.geometry.<Well ID>` |
+| `nwwdb:NWWDB_Well` | `nwwdb_data:d.NWWDB_Well.<gwWellName>` |
+| `geo:Geometry` | `nwwdb_data:d.NWWDB_Well.geometry.<gwWellName>` |
 
 ## Raw Data Attribute List and Mapping with Ontology Concepts (NWWDB_Lite layer)
 
@@ -35,64 +35,64 @@ The NWWDB_Lite table is a flattened version of the NWWDB dataset. It stores basi
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | fid |  |  |  |  |
-| gwWellName | Unique name or identifier of the well, typically a registration number assigned by the state agency that issued the well permit. |  |  |  |
-| gwWellOtherName | Alternate name or identifier of the well, for example, if the same well has been assigned more than one identifier by different organizations. |  |  |  |
-| gwWellPermitAgency | Agency that issued the permit for well construction, identified using the Research Organization Registry (ROR). |  |  |  |
-| gwUnitName | The name or identifier of the primary hydrogeologic unit contributing water to the well. |  |  |  |
-| gwWellTotalLength | Total length of the well relative to the reference elevation. |  |  |  |
-| gwWellConstructedDepth | Constructed depth of the well relative to the reference elevation. |  |  |  |
-| gwYield | Measurement of the yield of the well. |  |  |  |
-| gwYieldType | Type of well yield, for example, the specific or safe yield. |  |  |  |
-| gwWellBedrockDepth | Depth to bedrock from reference elevation. |  |  |  |
-| xCoordinate | Horizontal x-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). |  |  |  |
-| yCoordinate | Horizontal y-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). |  |  |  |
-| latitude | Latitude of the well location using the WGS84 geodetic datum (EPSG:4326). |  |  |  |
-| longitude | Longitude of the well location using the WGS84 geodetic datum (EPSG:4326). |  |  |  |
-| positionalAccuracy | Description of the accuracy of the location measurement. |  |  |  |
-| locationCRS | Coordinate reference system (CRS) associated with the horizontal coordinates of the well location. The CRS is identified using a code from the EPSG registry. |  |  |  |
-| locationMeasurementMethod | Method used to determine the well location, for example, GPS, differential leveling, or topographic map. |  |  |  |
-| locationSource | Organization that determined or reported the well location, identified using the Research Organization Registry (ROR). |  |  |  |
-| locationDate | Date that the location of the well was determined using ISO 8601 formatting (YYYY-MM-DD). |  |  |  |
-| elevation | The reference elevation for the well. |  |  |  |
-| elevationAccuracy | Description of the accuracy of the elevation measurement. |  |  |  |
-| elevationCRS | Coordinate reference system of the elevation measurement. |  |  |  |
-| elevationMeasurementMethod | Method used to determine the reference elevation for the well, for example, GPS, Survey, or DEM. |  |  |  |
-| elevationType | The type of reference elevation for the well, for example, top of casing or land surface. |  |  |  |
-| elevationSource | Organization that determined or reported the elevation, identified using the Research Organization Registry (ROR). |  |  |  |
-| elevationDate | Date that the reference elevation was determined using ISO 8601 formatting (YYYY-MM-DD). |  |  |  |
-| casingFromDepth | Depth to the top of the first (shallowest) casing component relative to the borehole start point. |  |  |  |
-| casingToDepth | Depth to the bottom of the last (deepest) casing component relative to the borehole start point. |  |  |  |
-| casingMinDiameter | The smallest internal diameter of all casing component(s) in the well. |  |  |  |
-| casingMaxDiameter | The largest internal diameter of all casing component(s) in the well. |  |  |  |
+| gwWellName | Unique name or identifier of the well, typically a registration number assigned by the state agency that issued the well permit. | Yes | `gwml2:gwWellName` | also make part of IRI per above |
+| gwWellOtherName | Alternate name or identifier of the well, for example, if the same well has been assigned more than one identifier by different organizations. | ? | `gwml2:gwWellOthername` |  |
+| gwWellPermitAgency | Agency that issued the permit for well construction, identified using the Research Organization Registry (ROR). | Yes | `gwml2:gwWellPermitAgency` |  |
+| gwUnitName | The name or identifier of the primary hydrogeologic unit contributing water to the well. | Yes | `gwml2:gwUnitName` | This is a potential connector to aquifers |
+| gwWellTotalLength | Total length of the well relative to the reference elevation. | Yes | `gwml2:gwWellTotalLength` | ft |
+| gwWellConstructedDepth | Constructed depth of the well relative to the reference elevation. | Yes | `gwml2:gwWellConstructedDepth` | ft |
+| gwYield | Measurement of the yield of the well. | ? | `gwml2:gwYield` | gpm |
+| gwYieldType | Type of well yield, for example, the specific or safe yield. | ? | `gwml2:gwYieldType` |  |
+| gwWellBedrockDepth | Depth to bedrock from reference elevation. | Yes | `gwml2:gwWellBedrockDepth` | ft |
+| xCoordinate | Horizontal x-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
+| yCoordinate | Horizontal y-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
+| latitude | Latitude of the well location using the WGS84 geodetic datum (EPSG:4326). | Yes | `geo:hasGeometry/geo:asWKT` |  |
+| longitude | Longitude of the well location using the WGS84 geodetic datum (EPSG:4326). | Yes | `geo:hasGeometry/geo:asWKT` |  |
+| positionalAccuracy | Description of the accuracy of the location measurement. | No |  |  |
+| locationCRS | Coordinate reference system (CRS) associated with the horizontal coordinates of the well location. The CRS is identified using a code from the EPSG registry. | No |  | Use as needed during triplification, but coordinates are always output in EPSG:4326 |
+| locationMeasurementMethod | Method used to determine the well location, for example, GPS, differential leveling, or topographic map. | ? |  |  |
+| locationSource | Organization that determined or reported the well location, identified using the Research Organization Registry (ROR). | ? |  |  |
+| locationDate | Date that the location of the well was determined using ISO 8601 formatting (YYYY-MM-DD). | ? |  |  |
+| elevation | The reference elevation for the well. | Yes | `gwml2:elevation` | ft |
+| elevationAccuracy | Description of the accuracy of the elevation measurement. | ? |  |  |
+| elevationCRS | Coordinate reference system of the elevation measurement. | ? |  |  |
+| elevationMeasurementMethod | Method used to determine the reference elevation for the well, for example, GPS, Survey, or DEM. | ? |  |  |
+| elevationType | The type of reference elevation for the well, for example, top of casing or land surface. | Yes | `gwml2:elevationType` |  |
+| elevationSource | Organization that determined or reported the elevation, identified using the Research Organization Registry (ROR). | ? |  |  |
+| elevationDate | Date that the reference elevation was determined using ISO 8601 formatting (YYYY-MM-DD). | ? |  |  |
+| casingFromDepth | Depth to the top of the first (shallowest) casing component relative to the borehole start point. |  |  | ft |
+| casingToDepth | Depth to the bottom of the last (deepest) casing component relative to the borehole start point. |  |  | ft |
+| casingMinDiameter | The smallest internal diameter of all casing component(s) in the well. |  |  | in |
+| casingMaxDiameter | The largest internal diameter of all casing component(s) in the well. |  |  | in |
 | casingCount | Number of casing components in the well. |  |  |  |
-| screenFromDepth | Depth to the top of the first (shallowest) screen component relative to the borehole start point. |  |  |  |
-| screenToDepth | Depth to the bottom of the last (deepest) screen component relative to the borehole start point. |  |  |  |
-| screenMinDiameter | The smallest internal diameter of all screen component(s) in the well. |  |  |  |
-| screenMaxDiameter | The largest internal diameter of all screen component(s) in the well. |  |  |  |
+| screenFromDepth | Depth to the top of the first (shallowest) screen component relative to the borehole start point. |  |  | ft |
+| screenToDepth | Depth to the bottom of the last (deepest) screen component relative to the borehole start point. |  |  | ft |
+| screenMinDiameter | The smallest internal diameter of all screen component(s) in the well. |  |  | in |
+| screenMaxDiameter | The largest internal diameter of all screen component(s) in the well. |  |  | in |
 | screenCount | Number of screen components in the well. |  |  |  |
 | boreholeDateOfDrilling | The earliest date of drilling reported for the well, if more than one drilling event occurred. |  |  |  |
-| boreholeFromDepth | Depth to the top of the first (shallowest) borehole core interval relative to the borehole start point. |  |  |  |
-| boreholeToDepth | Depth to the bottom of the last (deepest) borehole core interval relative to the borehole start point. |  |  |  |
-| boreholeMinDiameter | The smallest internal diameter of all borehole core interval(s). |  |  |  |
-| boreholeMaxDiameter | The largest internal diameter of all borehole core interval(s). |  |  |  |
+| boreholeFromDepth | Depth to the top of the first (shallowest) borehole core interval relative to the borehole start point. |  |  | ft |
+| boreholeToDepth | Depth to the bottom of the last (deepest) borehole core interval relative to the borehole start point. |  |  | ft |
+| boreholeMinDiameter | The smallest internal diameter of all borehole core interval(s). |  |  | in |
+| boreholeMaxDiameter | The largest internal diameter of all borehole core interval(s). |  |  | in |
 | boreholeCount | Number of borehole core intervals, for example, in the case of telescoping wells or wells that have been deepened. |  |  |  |
 | aquiferTestName | Name or identifier of the first aquifer test performed at the well (if more than one). |  |  |  |
 | aquiferTestDate | Date that the aquifer test was performed. |  |  |  |
-| aquiferFromDepth | Depth to the top of the aquifer that contributes water to the well. |  |  |  |
-| aquiferToDepth | Depth to the bottom of the aquifer that contributes water to the well. |  |  |  |
-| gwAquiferType | The type of aquifer that contributes water to the well, for example, unconfined vs. confined. |  |  |  |
-| gwTransmissivity | Transmissivity estimate for the aquifer that contributes water to the well. |  |  |  |
-| gwHydraulicConductivity | Hydraulic conductivity estimate for the aquifer that contributes water to the well. |  |  |  |
+| aquiferFromDepth | Depth to the top of the aquifer that contributes water to the well. | Yes | `nwwdb:aquiferFromDepth` | ft |
+| aquiferToDepth | Depth to the bottom of the aquifer that contributes water to the well. | Yes | `nwwdb:aquiferToDepth` | ft |
+| gwAquiferType | The type of aquifer that contributes water to the well, for example, unconfined vs. confined. | Yes | `gwml2:gwAquiferType` |  |
+| gwTransmissivity | Transmissivity estimate for the aquifer that contributes water to the well. | No |  | ft<sup>2</sup>/day |
+| gwHydraulicConductivity | Hydraulic conductivity estimate for the aquifer that contributes water to the well. | No |  | ft/day |
 | aquiferTestCount | Number of aquifer tests performed at the well. |  |  |  |
-| staticWaterDepthMin | The minimum (shallowest) of all water level measurement(s) recorded for the well. Negative water levels are indicative of artesian/flowing conditions. |  |  |  |
+| staticWaterDepthMin | The minimum (shallowest) of all water level measurement(s) recorded for the well. Negative water levels are indicative of artesian/flowing conditions. |  |  | ft |
 | staticWaterDepthMinDate | Date associated with the minimum water level recorded for the well. |  |  |  |
-| staticWaterDepthMax | The maximum (deepest) of all water level measurement(s) recorded for the well. Negative water levels are indicative of artesian/flowing conditions. |  |  |  |
+| staticWaterDepthMax | The maximum (deepest) of all water level measurement(s) recorded for the well. Negative water levels are indicative of artesian/flowing conditions. |  |  | ft |
 | staticWaterDepthMaxDate | Date associated with the maximum water level recorded for the well. |  |  |  |
 | staticWaterDepthCount | Number of water level measurement(s) recorded for the well. |  |  |  |
-| unconsolidatedThicknessMin | The minimum thickness of unconsolidated deposits observed at the location of the well and evidenced by the lithologic log. |  |  |  |
-| unconsolidatedThicknessMax | The maximum or "actual" thickness of unconsolidated deposits observed at the location of the well and evidenced by the lithologic log. This value can only be reported for wells that fully penetrate the unconsolidated deposits. |  |  |  |
-| coarseGrainedThicknessMin | The minimum thickness of coarse-grained deposits observed at the location of the well and evidenced by the lithologic log. |  |  |  |
-| coarseGrainedThicknessMax | The maximum or "actual" thickness of coarse-grained deposits observed at the location of the well and evidenced by the lithologic log. This value can only be reported for wells that fully penetrate the unconsolidated deposits. |  |  |  |
+| unconsolidatedThicknessMin | The minimum thickness of unconsolidated deposits observed at the location of the well and evidenced by the lithologic log. | ? |  | ft |
+| unconsolidatedThicknessMax | The maximum or "actual" thickness of unconsolidated deposits observed at the location of the well and evidenced by the lithologic log. This value can only be reported for wells that fully penetrate the unconsolidated deposits. | ? |  | ft |
+| coarseGrainedThicknessMin | The minimum thickness of coarse-grained deposits observed at the location of the well and evidenced by the lithologic log. | ?? |  | ft |
+| coarseGrainedThicknessMax | The maximum or "actual" thickness of coarse-grained deposits observed at the location of the well and evidenced by the lithologic log. This value can only be reported for wells that fully penetrate the unconsolidated deposits. | ? |  | ft |
 | bedrockSurfaceLithology | Lithology of the first consolidated unit encountered in the well. The first consolidated unit is assumed to represent the bedrock surface, however, this may not be true for all geologic settings in the United States. |  |  |  |
 | firstLithology | First lithology (nearest to the borehole start) encountered in the well. |  |  |  |
 | lastLithology | Last lithology (farthest from the borehole start) encountered in the well. |  |  |  |
@@ -103,11 +103,47 @@ The NWWDB_Lite table is a flattened version of the NWWDB dataset. It stores basi
 
 ## Controlled Vocabularies - See Descriptions above
 **List 1. Lithology Codes
-| Code | Description | Vocabulary |
-| --- | --- | --- |
-| 0 | complete and consistent | `usgwd:FlagCounty.CompleteConsistent` |
-| 1 | inconsistent | `usgwd:FlagCounty.Inconsistent` |
-| 2 | incomparable due to missing coordinates or state-reported county | `usgwd:FlagCounty.IncomparableMissingInfo` |
+| Code | Description |
+| --- | --- |
+| BLDR | Boulders |
+| BLSD | Boulders and sand |
+| CLAY | Clay |
+| CLSD | Clay, some sand |
+| COBB | Cobbles |
+| COSD | Cobbles and sand |
+| GRVL | Gravel |
+| GRCL | Gravel and clay |
+| GRDS | Gravel, sand, and silt |
+| GRSC | Gravel, silt and clay |
+| HRDP | Hard pan |
+| MUD | Mud |
+| PEAT | Peat |
+| SAND | Sand |
+| SDCL | Sand and clay |
+| SDGL | Sand and gravel |
+| SDST | Sand and silt |
+| SGVC | Sand, gravel, and clay |
+| SILT | Silt |
+| STCL | Silt and clay |
+| SOIL | Soil |
+| BSLT | Basalt |
+| COAL | Coal |
+| CGLM | Conglomerate |
+| DLMT | Dolomite |
+| DMSH | Dolomite and shale |
+| GRNT | Granite |
+| GNST | Greenstone |
+| LMSN | Limestone |
+| LMDM | Limestone and Dolomite |
+| LMSH | Limestone and shale |
+| MARL | Marl |
+| OTHR | Other |
+| QRTZ | Quartzite |
+| SNDS | Sandstone |
+| SDSL | Sandstone and shale |
+| SCST | Schist |
+| SHLE | Shale |
+| SLTE | Slate |
 
 ## Sample Data
 
