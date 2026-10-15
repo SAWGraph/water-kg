@@ -3,18 +3,18 @@ import geopandas as gpd
 import logging
 import pandas as pd
 from pathlib import Path
-from rdflib.namespace import OWL, RDF, RDFS, XSD
+from rdflib.namespace import OWL, PROV, RDF, RDFS, XSD
 from rdflib import Graph, Literal, URIRef
-from sodapy import Socrata
+from sodapy import Socrata # for accessing the API
 import sys
 import time
 
 ## Variables
 inputtype = 'api' # api, csv, or shp - preferred in that order (note: shp does not offer a unique key)
 ttl_issued_date = '2026-07-08'
-ttl_modified_date = '2026-07-08'
+ttl_modified_date = '2026-10-15'
 ttl_version = '0.1'
-data_issued_date = str(date.today())
+data_issued_date = str(date.today()) # the API data appears to be updated daily
 
 ## Set working path variables and output for verification
 cwd = Path(__file__).resolve().parent
@@ -25,10 +25,11 @@ log_dir = cwd / 'logs'
 
 # Modify the system path to find namespaces.py
 sys.path.insert(0, str(ns_dir))
-from namespaces import _PREFIX
-ontologyIRI = URIRef('http://sawgraph.spatialai.org/v1/co-dwr-data')
+from namespaces2 import _PREFIX
+ontologyIRI = URIRef('http://w3id.org/hyfo/co-dwr/v1/co-dwr-data')
 
 ## INPUT Filename ###
+# See inputtype variable above to choose input source
 wells_file_shp = data_dir / 'WellPermitPublic.zip'
 wells_file_csv = data_dir / 'DWR_Well_Application_Permit_20260708.csv' # Preferred due to unique IDKey field
 api_domain = 'data.colorado.gov'
@@ -38,9 +39,9 @@ epsg_csv = 4326
 epsg_out = 4326
 
 ### OUTPUT Filename ###
-output_file_shp = ttl_dir / 'co-dwr_wells_from-shp.ttl'
-output_file_csv = ttl_dir / 'co-dwr_wells_from-csv.ttl'
-output_file_api = ttl_dir / 'co-dwr_wells_from-api.ttl'
+output_file_shp = ttl_dir / 'co-dwr_wells_from-shp2.ttl'
+output_file_csv = ttl_dir / 'co-dwr_wells_from-csv2.ttl'
+output_file_api = ttl_dir / 'co-dwr_wells_from-api2.ttl'
 
 logname = log_dir / f'log_co-wells.txt'
 logging.basicConfig(filename=logname,
@@ -169,18 +170,20 @@ def get_loc_accuracy(accuracy: str) -> str:
     return ''.join(accuracy.title().split())
 
 
-def add_provenance(kg: Graph) -> Graph:
+def add_provenance(kg: Graph) -> Graph: # this is currently set up for the API
+    prefix = 'co_dwr_data'
+    dataset = 'sourceDataset.WellApplicationPermit'
     kg.add((ontologyIRI, RDF.type, OWL.Ontology))
     kg.add((ontologyIRI, _PREFIX['dcterms']['issued'], Literal(ttl_issued_date, datatype=XSD.date)))
     kg.add((ontologyIRI, _PREFIX['dcterms']['modified'], Literal(ttl_modified_date, datatype=XSD.date)))
-    kg.add((ontologyIRI, _PREFIX['prov']['wasDerivedFrom'], _PREFIX['co_dwr_data']['sourceDataset']))
+    kg.add((ontologyIRI, PROV.wasDerivedFrom, _PREFIX[prefix][dataset]))
     kg.add((ontologyIRI, OWL.versionInfo, Literal(ttl_version, datatype=XSD.string)))
-    kg.add((_PREFIX['co_dwr_data']['sourceDataset'], RDF.type, _PREFIX['stad']['Dataset']))
-    kg.add((_PREFIX['co_dwr_data']['sourceDataset'], RDFS.label, Literal('CO DWR Well Application Permits', datatype=XSD.string)))
-    kg.add((_PREFIX['co_dwr_data']['sourceDataset'], _PREFIX['dcterms']['issued'], Literal(data_issued_date, datatype=XSD.date)))
-    kg.add((_PREFIX['co_dwr_data']['sourceDataset'], _PREFIX['dcterms']['source'], URIRef('https://data.colorado.gov/Water/DWR-Well-Application-Permit/wumm-7awb/data_preview')))
-    # kg.add((_PREFIX['co_dwr_data']['sourceDataset'], _PREFIX['dcterms']['source'], URIRef('https://cdss.colorado.gov/gis-data/gis-data-by-category')))
-    kg.add((_PREFIX['co_dwr_data']['sourceDataset'], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.08']))
+    kg.add((_PREFIX[prefix][dataset], RDF.type, _PREFIX['stad']['Dataset']))
+    kg.add((_PREFIX[prefix][dataset], RDFS.label, Literal('CO DWR Well Application Permit', datatype=XSD.string)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['dcterms']['issued'], Literal(data_issued_date, datatype=XSD.date)))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['dcterms']['source'], URIRef('https://data.colorado.gov/Water/DWR-Well-Application-Permit/wumm-7awb/data_preview')))
+    # kg.add((_PREFIX[prefix][dataset], _PREFIX['dcterms']['source'], URIRef('https://cdss.colorado.gov/gis-data/gis-data-by-category')))
+    kg.add((_PREFIX[prefix][dataset], _PREFIX['stad']['hasSpatialCoverage'], _PREFIX['kwgr']['admininstrativeRegion.USA.08']))
     return kg
 
 
