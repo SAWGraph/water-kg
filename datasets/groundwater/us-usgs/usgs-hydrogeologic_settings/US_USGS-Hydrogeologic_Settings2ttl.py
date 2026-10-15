@@ -119,28 +119,26 @@ def build_iris(objectid: int | str, _PREFIX: dict) -> tuple:
 def get_lithology(lith: str) -> str:
     if lith == 'Carbonate-rock aquifers':
         return 'CarbonateRock'
-    elif lith == 'Crystalline':
-        return 'Crystalline'
+    elif lith == 'Crystalline':  # This is a secondary hydrogeologic region value, not an aquifer value
+        return 'lith_flag'
     elif lith == 'Igneous and metamorphic-rock aquifers':
         return 'IgneousMetamorphic'
-    elif lith == 'Mixed':
-        return 'Mixed'
+    elif lith == 'Mixed':  # This is a secondary hydrogeologic region value, not an aquifer value
+        return 'lith_flag'
     elif lith == 'Sandstone and carbonate-rock aquifers':
         return 'SandstoneCarbonateRock'
     elif lith == 'Sandstone aquifers':
         return 'Sandstone'
-    elif lith == 'Sedimentary':
-        return 'Sedimentary'
+    elif lith == 'Sedimentary':  # This is a secondary hydrogeologic region value, not an aquifer value
+        return 'lith_flag'
     elif lith == 'Semiconsolidated sand aquifers':
         return 'SemiconsolidatedSand'
     elif lith == 'Unconsolidated sand and gravel aquifers':
         return 'UnconsolidatedSandGravel'
-    elif lith == 'Volcanic':
-        return 'Volcanic'
-    elif lith == None:
-        return 'Unspecified'
+    elif lith == 'Volcanic':  # This is a secondary hydrogeologic region value, not an aquifer value
+        return 'lith_flag'
     else:
-        raise ValueError('Unexpected Lithology from hydrogeologic settings shape file')
+        raise ValueError(f'Unexpected Lithology {lith} from hydrogeologic settings shape file')
 
 
 def process_hgsetting_shp2ttl(infile: Path, outfile: Path, epsg_in: int, epsg_out: int):
@@ -161,6 +159,10 @@ def process_hgsetting_shp2ttl(infile: Path, outfile: Path, epsg_in: int, epsg_ou
     kg = add_provenance(kg)
     logger.info(f'Triplify hydrogeologic settings')
     for row in gdf_hgsettings.itertuples():
+        if get_lithology(row.Lithology) == 'lith_flag':
+            # Check to see if the entity is a principal aquifer (triplify the row) or
+            #    a secondary hydrogeologic region (move on to next row)
+            continue
         # Get IRIs for the current HG setting and its geometry
         hgsiri, geomiri = build_iris(row.PASHR_ID + '-' + row.Overlay, _PREFIX)
         kg.add((hgsiri, RDF.type, _PREFIX['gwml2']['GW_Aquifer']))
