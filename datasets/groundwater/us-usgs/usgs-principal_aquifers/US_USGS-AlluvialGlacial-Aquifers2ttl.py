@@ -117,26 +117,8 @@ def build_iris(objectid, _PREFIX):
 
 
 def get_lithology(lith):
-    if lith == 'Carbonate-rock aquifers':
-        return 'CarbonateRock'
-    elif lith == 'Crystalline':
-        return 'Crystalline'
-    elif lith == 'Igneous and metamorphic-rock aquifers':
-        return 'IgneousMetamorphic'
-    elif lith == 'Mixed':
-        return 'Mixed'
-    elif lith == 'Sandstone and carbonate-rock aquifers':
-        return 'SandstoneCarbonateRock'
-    elif lith == 'Sandstone aquifers':
-        return 'Sandstone'
-    elif lith == 'Sedimentary':
-        return 'Sedimentary'
-    elif lith == 'Semiconsolidated sand aquifers':
-        return 'SemiconsolidatedSand'
-    elif lith == 'Unconsolidated sand and gravel aquifers':
+    if lith == 'Unconsolidated sand and gravel aquifers':
         return 'UnconsolidatedSandGravel'
-    elif lith == 'Volcanic':
-        return 'Volcanic'
     elif lith == None or pd.isna(lith):
         return 'Unspecified'
     else:
