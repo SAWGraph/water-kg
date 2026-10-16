@@ -32,18 +32,20 @@
 
 The NWWDB_Lite table is a flattened version of the NWWDB dataset. It stores basic information about a water well such as its name and geographic location in addition to derived attributes summarizing the well construction details, water level measurements, lithologic material, and aquifer properties. Each water well is represented as a single row in the NWWDB_Lite table.
 
+For reference, the USGS .gpkg file also includes a GW_Well layer and the following tables: Borehole, Casing, GW_AquiferTest, GW_LithologyLog, GW_StaticWaterDepth, GW_StratigraphyLog, and Screen. This arrangement, from which NWWDB_Lite is derived, contains additional details about the wells.
+
 | Attribute | Description | Lift to graph | Ontology Property | Comments |
 | --- | --- | --- | --- | --- |
 | fid |  |  |  |  |
 | gwWellName | Unique name or identifier of the well, typically a registration number assigned by the state agency that issued the well permit. | Yes | `gwml2:gwWellName` | also make part of IRI per above |
-| gwWellOtherName | Alternate name or identifier of the well, for example, if the same well has been assigned more than one identifier by different organizations. | ? | `gwml2:gwWellOthername` |  |
-| gwWellPermitAgency | Agency that issued the permit for well construction, identified using the Research Organization Registry (ROR). | Yes | `gwml2:gwWellPermitAgency` |  |
+| gwWellOtherName | Alternate name or identifier of the well, for example, if the same well has been assigned more than one identifier by different organizations. | ? | `nwwdb:gwWellOthername` | No similar attribute in GMWL2 |
+| gwWellPermitAgency | Agency that issued the permit for well construction, identified using the Research Organization Registry (ROR). | Yes | `nwwdb:gwWellPermitAgency` | Permitting agency not part of `gwml2:GW_Licence` |
 | gwUnitName | The name or identifier of the primary hydrogeologic unit contributing water to the well. | Yes | `gwml2:gwUnitName` | This is a potential connector to aquifers |
 | gwWellTotalLength | Total length of the well relative to the reference elevation. | Yes | `gwml2:gwWellTotalLength` | ft |
 | gwWellConstructedDepth | Constructed depth of the well relative to the reference elevation. | Yes | `gwml2:gwWellConstructedDepth` | ft |
-| gwYield | Measurement of the yield of the well. | ? | `gwml2:gwYield` | gpm |
-| gwYieldType | Type of well yield, for example, the specific or safe yield. | ? | `gwml2:gwYieldType` |  |
-| gwWellBedrockDepth | Depth to bedrock from reference elevation. | Yes | `gwml2:gwWellBedrockDepth` | ft |
+| gwYield | Measurement of the yield of the well. | ? | `gwml2:gwWellYield/gwml2:gwYield` <value> | gpm (NWWDB) <br/> m<sup>3</sup> ? (GWML2)|
+| gwYieldType | Type of well yield, for example, the specific or safe yield. | ? | `gwml2:gwWellYield/gwml2:gwWellYieldType` | controlled vocab ? |
+| gwWellBedrockDepth | Depth to bedrock from reference elevation. | Yes | `nwwdb:gwWellBedrockDepth` | ft <br/> No similar attribute in GWML2 |
 | xCoordinate | Horizontal x-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
 | yCoordinate | Horizontal y-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
 | latitude | Latitude of the well location using the WGS84 geodetic datum (EPSG:4326). | Yes | `geo:hasGeometry/geo:asWKT` |  |
@@ -53,11 +55,11 @@ The NWWDB_Lite table is a flattened version of the NWWDB dataset. It stores basi
 | locationMeasurementMethod | Method used to determine the well location, for example, GPS, differential leveling, or topographic map. | ? |  |  |
 | locationSource | Organization that determined or reported the well location, identified using the Research Organization Registry (ROR). | ? |  |  |
 | locationDate | Date that the location of the well was determined using ISO 8601 formatting (YYYY-MM-DD). | ? |  |  |
-| elevation | The reference elevation for the well. | Yes | `gwml2:elevation` | ft |
+| elevation | The reference elevation for the well. | Yes | `nwwdb:elevation` | ft <br/> GWML2 notion of elevation (`gwml2:gwWellReferenceElevation/gwml2:elevation` requires value, CRS, and unit |
 | elevationAccuracy | Description of the accuracy of the elevation measurement. | ? |  |  |
 | elevationCRS | Coordinate reference system of the elevation measurement. | ? |  |  |
 | elevationMeasurementMethod | Method used to determine the reference elevation for the well, for example, GPS, Survey, or DEM. | ? |  |  |
-| elevationType | The type of reference elevation for the well, for example, top of casing or land surface. | Yes | `gwml2:elevationType` |  |
+| elevationType | The type of reference elevation for the well, for example, top of casing or land surface. | Yes | `gwml2:gwWellReferenceElevation/gwml2:elevationType` | controlled vocab ? |
 | elevationSource | Organization that determined or reported the elevation, identified using the Research Organization Registry (ROR). | ? |  |  |
 | elevationDate | Date that the reference elevation was determined using ISO 8601 formatting (YYYY-MM-DD). | ? |  |  |
 | casingFromDepth | Depth to the top of the first (shallowest) casing component relative to the borehole start point. |  |  | ft |
@@ -80,7 +82,7 @@ The NWWDB_Lite table is a flattened version of the NWWDB dataset. It stores basi
 | aquiferTestDate | Date that the aquifer test was performed. |  |  |  |
 | aquiferFromDepth | Depth to the top of the aquifer that contributes water to the well. | Yes | `nwwdb:aquiferFromDepth` | ft |
 | aquiferToDepth | Depth to the bottom of the aquifer that contributes water to the well. | Yes | `nwwdb:aquiferToDepth` | ft |
-| gwAquiferType | The type of aquifer that contributes water to the well, for example, unconfined vs. confined. | Yes | `gwml2:gwAquiferType` |  |
+| gwAquiferType | The type of aquifer that contributes water to the well, for example, unconfined vs. confined. | Yes | `gwml2:gwAquiferType` | Controlled vocab (see below) |
 | gwTransmissivity | Transmissivity estimate for the aquifer that contributes water to the well. | No |  | ft<sup>2</sup>/day |
 | gwHydraulicConductivity | Hydraulic conductivity estimate for the aquifer that contributes water to the well. | No |  | ft/day |
 | aquiferTestCount | Number of aquifer tests performed at the well. |  |  |  |
@@ -102,7 +104,10 @@ The NWWDB_Lite table is a flattened version of the NWWDB dataset. It stores basi
 - 
 
 ## Controlled Vocabularies - See Descriptions above
-**List 1. Lithology Codes
+**List 1. Aquifer Types
+unconfined, confined, artesian, subartesian, aquitard
+
+**List 2. Lithology Codes
 | Code | Description |
 | --- | --- |
 | BLDR | Boulders |
