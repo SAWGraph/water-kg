@@ -1,5 +1,6 @@
 @prefix coso: <http://w3id.org/coso/v1/contaminoso#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
