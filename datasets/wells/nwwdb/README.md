@@ -43,8 +43,8 @@ For reference, the USGS .gpkg file also includes a GW_Well layer and the followi
 | gwUnitName | The name or identifier of the primary hydrogeologic unit contributing water to the well. | Yes | `gwml2:gwUnitName` | This is a potential connector to aquifers |
 | gwWellTotalLength | Total length of the well relative to the reference elevation. | Yes | `gwml2:gwWellTotalLength` | ft |
 | gwWellConstructedDepth | Constructed depth of the well relative to the reference elevation. | Yes | `gwml2:gwWellConstructedDepth` | ft |
-| gwYield | Measurement of the yield of the well. | ? | `gwml2:gwWellYield/gwml2:gwYield` <value> | gpm (NWWDB) <br/> m<sup>3</sup> ? (GWML2)|
-| gwYieldType | Type of well yield, for example, the specific or safe yield. | ? | `gwml2:gwWellYield/gwml2:gwWellYieldType` | controlled vocab ? |
+| gwYield | Measurement of the yield of the well. | ? | `gwml2:gwWellYield/ gwml2:gwYield` <value> | gpm (NWWDB) <br/> m<sup>3</sup> ? (GWML2)|
+| gwYieldType | Type of well yield, for example, the specific or safe yield. | ? | `gwml2:gwWellYield/ gwml2:gwWellYieldType` | controlled vocab ? |
 | gwWellBedrockDepth | Depth to bedrock from reference elevation. | Yes | `nwwdb:gwWellBedrockDepth` | ft <br/> No similar attribute in GWML2 |
 | xCoordinate | Horizontal x-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
 | yCoordinate | Horizontal y-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
@@ -55,11 +55,11 @@ For reference, the USGS .gpkg file also includes a GW_Well layer and the followi
 | locationMeasurementMethod | Method used to determine the well location, for example, GPS, differential leveling, or topographic map. | ? |  |  |
 | locationSource | Organization that determined or reported the well location, identified using the Research Organization Registry (ROR). | ? |  |  |
 | locationDate | Date that the location of the well was determined using ISO 8601 formatting (YYYY-MM-DD). | ? |  |  |
-| elevation | The reference elevation for the well. | Yes | `nwwdb:elevation` | ft <br/> GWML2 notion of elevation (`gwml2:gwWellReferenceElevation/gwml2:elevation` requires value, CRS, and unit |
+| elevation | The reference elevation for the well. | Yes | `nwwdb:elevation` | ft <br/> GWML2 notion of elevation requires value, CRS, and unit |
 | elevationAccuracy | Description of the accuracy of the elevation measurement. | ? |  |  |
 | elevationCRS | Coordinate reference system of the elevation measurement. | ? |  |  |
 | elevationMeasurementMethod | Method used to determine the reference elevation for the well, for example, GPS, Survey, or DEM. | ? |  |  |
-| elevationType | The type of reference elevation for the well, for example, top of casing or land surface. | Yes | `gwml2:gwWellReferenceElevation/gwml2:elevationType` | controlled vocab ? |
+| elevationType | The type of reference elevation for the well, for example, top of casing or land surface. | Yes | `gwml2:gwWellReferenceElevation/ gwml2:elevationType` | controlled vocab ? |
 | elevationSource | Organization that determined or reported the elevation, identified using the Research Organization Registry (ROR). | ? |  |  |
 | elevationDate | Date that the reference elevation was determined using ISO 8601 formatting (YYYY-MM-DD). | ? |  |  |
 | casingFromDepth | Depth to the top of the first (shallowest) casing component relative to the borehole start point. |  |  | ft |
