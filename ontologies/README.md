@@ -1,9 +1,11 @@
 Ontologies and datasets (triples) produced for this repository are licensed as [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
-# SAWGraph Water Ontology
+# HyFOPlus Ontology
 
-This directory includes the current RDF/OWL version of the SAWGraph water ontology and a corresponding schema diagram.
+This directory includes the current draft of the HyFOPlus ontology and a corresponding schema diagram.
 
-The ontology represents both surface water (e.g., lakes and rivers) and groundwater (e.g., wells and aquifers) features. For surface water features it primarily reuses concepts from [HY_Features](http://www.opengis.net/doc/IS/hy-features/1.0) (OGC WaterML 2: Part 3), which aligns with the Internet of Water (Geoconnex). A distinction is made between features (`hyfo:WaterFeature` and `hyf:HY_HydroFeature`) and their representations (`hyfo:WaterFeatureRepresenation`). For groundwater features it primarily reuses concepts from [GroundWaterML2 (GWML2)](http://www.opengis.net/doc/IS/GWML/2.2.1) (OGC WaterML 2: Part 4) as well as concepts from the [Hydro Foundational Ontology (HyFO)](https://www.tandfonline.com/doi/pdf/10.1080/13658816.2018.1443751), which builds on GWML2. Additional HyFO concepts are used to unify the surface water and groundwater features in a single ontology.
+The ontology represents both surface water (e.g., lakes and rivers) and groundwater (e.g., wells and aquifers) features. For surface water features it primarily reuses concepts from [HY_Features](http://www.opengis.net/doc/IS/hy-features/1.0) (OGC WaterML 2: Part 3), which aligns with the Internet of Water (Geoconnex). A distinction is made between features (`hyfo:WaterFeature` and `hyf:HY_HydroFeature`) and their representations (`hyfo:WaterFeatureRepresenation`). For groundwater features it primarily reuses concepts from [GroundWaterML2 (GWML2)](http://www.opengis.net/doc/IS/GWML/2.2.1) (OGC WaterML 2: Part 4) as well as concepts from the [Hydro Foundational Ontology (HyFO)](https://www.tandfonline.com/doi/pdf/10.1080/13658816.2018.1443751), which shares concepts with yet is distinct from GWML2. Additional HyFOPlus concepts are used to unify the surface water and groundwater features in a single ontology.
 
-Some basic development notes are available on Google Drive: [SAWGraph Water Ontology Notes](https://docs.google.com/document/d/1-DUNe41diY9mB8gODSLW2k3QojXrILb7j69sPutICpI/view?tab=t.pg8ntc1tqjgg).
+Schema and small ontologies that connect specific datasets to HyFOPlus can be found in the [datasets](../datasets) directory of this repo.
+
+<!-- Some basic development notes are available on Google Drive: [SAWGraph Water Ontology Notes](https://docs.google.com/document/d/1-DUNe41diY9mB8gODSLW2k3QojXrILb7j69sPutICpI/view?tab=t.pg8ntc1tqjgg). -->
