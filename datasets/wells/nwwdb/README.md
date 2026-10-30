@@ -50,7 +50,7 @@ For reference, the USGS .gpkg file also includes a GW_Well layer and the followi
 | gwWellBedrockDepth | Depth to bedrock from reference elevation. | Yes | `nwwdb:gwWellBedrockDepth` | ft <br/> No similar attribute in GWML2 |
 | xCoordinate | Horizontal x-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
 | yCoordinate | Horizontal y-coordinate of the well location using a projected coordinate reference system, for example, Albers equal-area conic projection for the conterminous United States (EPSG:5070). | No |  |  |
-| latitude | Latitude of the well location using the WGS84 geodetic datum (EPSG:4326). | Yes | `geo:hasGeometry/geo:asWKT` |  |
+| latitude | Latitude of the well location using the WGS84 geodetic datum (EPSG:4326). | Yes | `geo:hasGeometry/geo:asWKT` | There is a `gwml2:gwWellLocation` attribute as well |
 | longitude | Longitude of the well location using the WGS84 geodetic datum (EPSG:4326). | Yes | `geo:hasGeometry/geo:asWKT` |  |
 | *positionalAccuracy* | *Description of the accuracy of the location measurement.* | *No* |  |  |
 | locationCRS | Coordinate reference system (CRS) associated with the horizontal coordinates of the well location. The CRS is identified using a code from the EPSG registry. | No |  | Use as needed during triplification, but coordinates are always output in EPSG:4326 |
@@ -85,8 +85,8 @@ For reference, the USGS .gpkg file also includes a GW_Well layer and the followi
 | *aquiferFromDepth* | *Depth to the top of the aquifer that contributes water to the well.* |  |  | *ft* |
 | *aquiferToDepth* | *Depth to the bottom of the aquifer that contributes water to the well.* |  |  | *ft* |
 | gwAquiferType | The type of aquifer that contributes water to the well, for example, unconfined vs. confined. | Yes | `gwml2:gwAquiferType` | Controlled vocab (see below) |
-| gwTransmissivity | Transmissivity estimate for the aquifer that contributes water to the well. | No |  | ft<sup>2</sup>/day |
-| gwHydraulicConductivity | Hydraulic conductivity estimate for the aquifer that contributes water to the well. | No |  | ft/day |
+| gwTransmissivity | Transmissivity estimate for the aquifer that contributes water to the well. | No | `gwml2:gwTransmissivity` | ft<sup>2</sup>/day |
+| gwHydraulicConductivity | Hydraulic conductivity estimate for the aquifer that contributes water to the well. | No | `gwHydraulicConductivity` | ft/day |
 | aquiferTestCount | Number of aquifer tests performed at the well. |  |  |  |
 | staticWaterDepthMin | The minimum (shallowest) of all water level measurement(s) recorded for the well. Negative water levels are indicative of artesian/flowing conditions. |  |  | ft |
 | staticWaterDepthMinDate | Date associated with the minimum water level recorded for the well. |  |  |  |
